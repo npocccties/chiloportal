@@ -31,7 +31,7 @@ corepack yarn dev # 開発サーバーの起動
 動作環境を用意したのち、本番環境にて以下のコマンドを実行すると本番サーバーが起動します。
 
 ```shell
-corepack yarn install # NPM パッケージのインストール
+corepack yarn install --immutable # NPM パッケージのインストール
 corepack yarn build # アプリケーションのビルド
 corepack yarn start # 本番サーバーの起動
 ```
