@@ -17,14 +17,14 @@ jobs:
           node-version: "16"
           cache: "yarn"
           cache-dependency-path: "frontend/yarn.lock"
-      - run: yarn install --check-files --frozen-lockfile --non-interactive
-      - run: yarn lint
+      - run: corepack yarn install --immutable
+      - run: corepack yarn lint
       - id: format
         continue-on-error: true
         run: |
-          yarn format
+          corepack yarn format
           echo "::set-output name=status::$(git status --porcelain)"
       - if: steps.format.outputs.status != ''
         run: |
           git -c "user.name=github-actions[bot]" -c "user.email=github-actions[bot]@users.noreply.github.com" comit -a -m "bot: format"
-      - run: yarn build
+      - run: corepack yarn build
