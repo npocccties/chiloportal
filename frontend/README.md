@@ -1,36 +1,63 @@
 # frontend
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## 動作環境
 
-## Getting Started
+- OS: Unix 系（Windows では [WSL](https://docs.microsoft.com/ja-jp/windows/wsl/install) 等をお使いください）
+- Node.js: [Active LTS](https://nodejs.org/en/about/releases/)
 
-First, run the development server:
+## 開発
 
-```bash
-npm run dev
-# or
-yarn dev
+動作環境を用意したのち、ローカル環境にて以下のコマンドを実行すると開発サーバーが起動します。
+
+```shell
+corepack yarn install # NPM パッケージのインストール
+corepack yarn dev # 開発サーバーの起動
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+[http://localhost:3000](http://localhost:3000) にブラウザーでアクセスすることで、開発中のアプリケーションを確認することができます。
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## デプロイ
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+### Vercel
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+以下のデプロイボタンから、 Vercel に Next.js プロジェクトを作成してデプロイすることができます。
 
-## Learn More
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fnpocccties%2Fchiloportal%2Ftree%2Fmain%2Ffrontend)
 
-To learn more about Next.js, take a look at the following resources:
+詳細は [Next.js の公式ドキュメント](https://nextjs.org/docs/deployment#managed-nextjs-with-vercel)を参照してください。
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### セルフホスティング
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+動作環境を用意したのち、本番環境にて以下のコマンドを実行すると本番サーバーが起動します。
 
-## Deploy on Vercel
+```shell
+corepack yarn install --immutable # NPM パッケージのインストール
+corepack yarn build # アプリケーションのビルド
+corepack yarn start # 本番サーバーの起動
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+詳細は [Next.js の公式ドキュメント](https://nextjs.org/docs/deployment#self-hosting)を参照してください。
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## スクリプト
+
+Yarn が提供するサブコマンドについては [Yarn の公式ドキュメント](https://yarnpkg.com/cli)を参照してください。
+
+### `corepack yarn build`
+
+アプリケーションをビルドします。
+
+### `corepack yarn dev`
+
+開発サーバーを起動します。
+
+### `corepack yarn format`
+
+テキストファイルを整形します。
+
+### `corepack yarn lint`
+
+静的コード解析します。
+
+### `corepack yarn start`
+
+本番サーバーを起動します。
