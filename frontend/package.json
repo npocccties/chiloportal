@@ -1,0 +1,55 @@
+{
+  "name": "frontend",
+  "description": "frontend of chiloportal",
+  "version": "0.0.0",
+  "author": "Kimiaki Kuno <knokmki612@gmail.com>",
+  "bugs": "https://github.com/npocccties/chiloportal/issues",
+  "dependencies": {
+    "next": "^12.2.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@headlessui/react": "^1.6.6",
+    "@iconify/react": "^3.2.2",
+    "@jumpu-ui/tailwindcss": "^1.0.1-alpha.5",
+    "@types/node": "^18.7.5",
+    "@types/react": "^18.0.17",
+    "@types/react-dom": "^18.0.6",
+    "autoprefixer": "^10.4.8",
+    "clsx": "^1.2.1",
+    "eslint": "^8.22.0",
+    "eslint-config-next": "^12.2.5",
+    "eslint-config-prettier": "^8.5.0",
+    "fixpack": "^4.0.0",
+    "npm-check-updates": "^16.0.5",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^8.4.16",
+    "prettier": "^2.7.1",
+    "tailwindcss": "^3.1.8",
+    "typescript": "^4.7.4"
+  },
+  "engines": {
+    "node": "^16.16.0"
+  },
+  "homepage": "https://github.com/npocccties/chiloportal#readme",
+  "keywords": [
+    "Open Badge"
+  ],
+  "main": "",
+  "packageManager": "yarn@3.2.2",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/npocccties/chiloportal.git"
+  },
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev",
+    "format": "run-s format:\\{code,package\\}",
+    "format:code": "prettier --write .",
+    "format:package": "fixpack",
+    "lint": "next lint",
+    "start": "next start"
+  }
+}
