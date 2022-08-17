@@ -2,7 +2,7 @@ drop table if exists zxc;
 drop table if exists badges;
 create table badges (
 	id		serial		not null,	-- バッジID
-	badge_class_id	int		not null,	-- BadgeClass ID
+	badge_class	int		not null,	-- BadgeClass ID
 	badge_name	varchar(128)	not null,	-- バッジ名称
 	description	varchar(512)	null,		-- 説明
 	image_id	varchar(256)	null,		-- 画像 ID
@@ -20,29 +20,29 @@ create table badge_relation (
 	knowledge_badge_id	int		not null	REFERENCES badges,	-- Knowlwdge Badge ID
 	primary key (id)
 ); -- '関連バッジ'
-drop table if exists course_detail;
-create table course_detail (
+drop table if exists training;
+create table training (
 	id		serial		not null,	-- 研修内容 ID
 	badge_id	int		not null	REFERENCES badges,	-- Badge ID
-	course_type	varchar(32)	not null,	-- 種類
-	course_name	varchar(256)	not null,	-- 名称
+	training_type	varchar(32)	not null,	-- 種類
+	training_name	varchar(256)	not null,	-- 名称
 	primary key (id)
 ); -- '研修内容'
 drop table if exists consumer;
 create table consumer (
-	id		serial		not null,	-- コンシューマ ID
-	consumer_name	varchar(256)	not null,	-- 名称
-	consumer_url	varchar(256)	null,		-- URL
-	consumer_email	varchar(256)	null,		-- 連絡先メールアドレス
+	id			serial		not null,	-- コンシューマ ID
+	consumer_name		varchar(256)	not null,	-- 名称
+	consumer_url		varchar(256)	null,		-- URL
+	consumer_mailaddr	varchar(256)	null,		-- 連絡先メールアドレス
 	primary key (id)
 ); -- 'コンシューマ'
 drop table if exists category;
 create table category (
 	id		serial		not null,	-- カテゴリID
 	consumer_id	int		not null	REFERENCES consumer,	-- コンシューマ ID
-	category_name1	varchar(128)	not null,	-- カテゴリ1
-	category_name2	varchar(128)	not null,	-- カテゴリ2
-	category_name3	varchar(128)	not null,	-- カテゴリ3
+	category1_name	varchar(128)	not null,	-- カテゴリ1
+	category2_name	varchar(128)	not null,	-- カテゴリ2
+	category3_name	varchar(128)	not null,	-- カテゴリ3
 	primary key (id)
 ); -- 'カテゴリ'
 drop table if exists course;
@@ -57,7 +57,7 @@ drop table if exists course_level;
 create table course_level (
 	id		serial		not null,	-- 受講レベルID
 	consumer_id	int		not null	REFERENCES consumer,	-- コンシューマ ID
-	course_name	varchar(256)	not null,	-- 名称
+	level_name	varchar(256)	not null,	-- 名称
 	description	varchar(512)	not null,	-- 説明
 	primary key (id)
 ); -- '受講レベル'
