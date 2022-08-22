@@ -2,7 +2,9 @@ import aspida from "@aspida/fetch";
 import api from "../api/$api";
 import { restGet } from "./rest";
 
-const client = api(aspida(fetch, { baseURL: process.env.NEXT_PUBLIC_API_BASE_URL }));
+const client = api(
+  aspida(fetch, { baseURL: process.env.NEXT_PUBLIC_API_BASE_URL })
+);
 
 export const handlers = [
   restGet(client.consumer, (_req, res, ctx) => {
