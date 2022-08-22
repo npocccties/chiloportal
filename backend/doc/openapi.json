@@ -20,11 +20,11 @@
       "description": "コンシューマ情報一覧"
     },
     {
-      "name": "categoly list",
+      "name": "category list",
       "description": "カテゴリ一覧"
     },
     {
-      "name": "categoly",
+      "name": "category",
       "description": "カテゴリ取得"
     },
     {
@@ -133,10 +133,10 @@
         }
       }
     },
-    "/categoly/list": {
+    "/category/list": {
       "get": {
         "tags": [
-          "categoly list"
+          "category list"
         ],
         "description": "登録されているカテゴリ情報を一覧で返却します",
         "operationId": "findCategolyList",
@@ -160,18 +160,18 @@
         }
       }
     },
-    "/categoly": {
+    "/category": {
       "get": {
         "tags": [
-          "categoly"
+          "category"
         ],
         "description": "指定されたカテゴリIDに該当するカテゴリ情報を返却します",
         "operationId": "findCategoly",
         "parameters": [
           {
-            "name": "categoly_id",
+            "name": "category_id",
             "in": "query",
-            "description": "categoly id",
+            "description": "category id",
             "required": true,
             "schema": {
               "type": "number"
@@ -602,22 +602,22 @@
       "Categoly": {
         "type": "object",
         "properties": {
-          "categoly_id": {
+          "category_id": {
             "type": "integer",
             "format": "int64",
             "example": 101
           },
-          "categoly1_name": {
+          "category1_name": {
             "type": "string",
-            "example": "categoly1011"
+            "example": "category1011"
           },
-          "categoly2_name": {
+          "category2_name": {
             "type": "string",
-            "example": "categoly1012"
+            "example": "category1012"
           },
-          "categoly3_name": {
+          "category3_name": {
             "type": "string",
-            "example": "categoly1013"
+            "example": "category1013"
           }
         }
       },
