@@ -26,5 +26,6 @@ jobs:
           echo "::set-output name=status::$(git status --porcelain)"
       - if: steps.format.outputs.status != ''
         run: |
-          git -c "user.name=github-actions[bot]" -c "user.email=github-actions[bot]@users.noreply.github.com" comit -a -m "bot: format"
+          git -c "user.name=github-actions[bot]" -c "user.email=github-actions[bot]@users.noreply.github.com" commit -a -m "bot: format"
+          git push origin HEAD
       - run: corepack yarn build
