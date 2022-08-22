@@ -16,6 +16,15 @@ corepack yarn dev # 開発サーバーの起動
 
 [http://localhost:3000](http://localhost:3000) にブラウザーでアクセスすることで、開発中のアプリケーションを確認することができます。
 
+## 環境変数
+
+| 変数名                   | 説明                                        | デフォルト値 |
+| :----------------------- | :------------------------------------------ | :----------- |
+| NEXT_PUBLIC_API_MOCKING  | API モックの使用をするか否か（真偽値[^yn]） | 偽           |
+| NEXT_PUBLIC_API_BASE_URL | API のベースとなる URL                      | なし         |
+
+[^yn]: [yn](https://github.com/sindresorhus/yn#readme)によって truly/falsy な値として解釈されます
+
 ## デプロイ
 
 ### Vercel

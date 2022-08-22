@@ -50,3 +50,6 @@ next-env.d.ts
 
 # aspida
 api
+
+# msw
+public/mockServiceWorker.js
