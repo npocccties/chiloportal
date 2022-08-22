@@ -29,24 +29,24 @@ export const handlers = [
       ])
     );
   }),
-  restGet(client.categoly, (_req, res, ctx) => {
+  restGet(client.category, (_req, res, ctx) => {
     return res(
       ctx.json({
-        categoly_id: 101,
-        categoly1_name: "categoly1011",
-        categoly2_name: "categoly1012",
-        categoly3_name: "categoly1013",
+        category_id: 101,
+        category1_name: "category1011",
+        category2_name: "category1012",
+        category3_name: "category1013",
       })
     );
   }),
-  restGet(client.categoly.list, (_req, res, ctx) => {
+  restGet(client.category.list, (_req, res, ctx) => {
     return res(
       ctx.json([
         {
-          categoly_id: 101,
-          categoly1_name: "categoly1011",
-          categoly2_name: "categoly1012",
-          categoly3_name: "categoly1013",
+          category_id: 101,
+          category1_name: "category1011",
+          category2_name: "category1012",
+          category3_name: "category1013",
         },
       ])
     );
