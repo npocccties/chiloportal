@@ -17,7 +17,9 @@ create table badges (
 	image_id	text		null,		-- 画像 ID
 	image_author	text		null,		-- 画像 author
 	ob_version	text		null,		-- OBバージョン
-	issuer_name	varchar(128)	null,		-- 発行者
+	issuer_name	varchar(256)	null,		-- 発行者
+	issuer_url	text		null,		-- issuer url
+	issuer_email	text		null,		-- issuer email
 	issuer_id	text		null,		-- issuer id
 	type		char(9)		not null,	-- バッジ種別(wisdom or knowledge)
 	url		text		null,		-- URL
@@ -40,7 +42,7 @@ create table consumer (
 	id		serial		not null,	-- コンシューマ ID
 	name		varchar(256)	not null,	-- 名称
 	url		text		null,		-- URL
-	mailaddr	varchar(256)	null,		-- 連絡先メールアドレス
+	email		varchar(256)	null,		-- 連絡先メールアドレス
 	primary key (id)
 ); -- 'コンシューマ'
 create table category (
