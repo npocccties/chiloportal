@@ -139,7 +139,7 @@
           "category list"
         ],
         "description": "登録されているカテゴリ情報を一覧で返却します",
-        "operationId": "findCategolyList",
+        "operationId": "findCategoryList",
         "responses": {
           "200": {
             "description": "successful operation",
@@ -148,7 +148,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Categoly"
+                    "$ref": "#/components/schemas/Category"
                   }
                 }
               }
@@ -166,7 +166,7 @@
           "category"
         ],
         "description": "指定されたカテゴリIDに該当するカテゴリ情報を返却します",
-        "operationId": "findCategoly",
+        "operationId": "findCategory",
         "parameters": [
           {
             "name": "category_id",
@@ -184,7 +184,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Categoly"
+                  "$ref": "#/components/schemas/Category"
                 }
               }
             }
@@ -599,7 +599,7 @@
           }
         }
       },
-      "Categoly": {
+      "Category": {
         "type": "object",
         "properties": {
           "category_id": {
