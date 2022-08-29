@@ -1,13 +1,13 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "Portal Badge API",
-    "description": "This is a sample",
-    "version": "0.1.0"
+    "title": "Portal Badges API",
+    "description": "教員研修システム向けバッジ関連データ取得API",
+    "version": "0.9.0"
   },
   "servers": [
     {
-      "url": "https://example.com/api/v1"
+      "url": "https://chiloportal.example.com/api/v1"
     }
   ],
   "tags": [
@@ -26,6 +26,10 @@
     {
       "name": "category",
       "description": "カテゴリ取得"
+    },
+    {
+      "name": "categorised badge",
+      "description": "カテゴライズドバッジ情報取得"
     },
     {
       "name": "course",
@@ -52,6 +56,10 @@
       "description": "バッジ検索（バッジ名称）"
     },
     {
+      "name": "badges",
+      "description": "バッジ情報取得"
+    },
+    {
       "name": "badges list",
       "description": "バッジ一覧取得"
     },
@@ -60,8 +68,8 @@
       "description": "バッジを承認しているコンシューマの一覧取得"
     },
     {
-      "name": "badges",
-      "description": "バッジ関連情報取得"
+      "name": "badges training list",
+      "description": "バッジの研修内容一覧取得"
     }
   ],
   "paths": {
@@ -138,8 +146,19 @@
         "tags": [
           "category list"
         ],
-        "description": "登録されているカテゴリ情報を一覧で返却します",
+        "description": "指定されたコンシューマIDで登録されているカテゴリ情報を一覧で返却します",
         "operationId": "findCategoryList",
+        "parameters": [
+          {
+            "name": "consumer_id",
+            "in": "query",
+            "description": "consumer id",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "successful operation",
@@ -154,8 +173,14 @@
               }
             }
           },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
           "404": {
             "description": "Consumer not found"
+          },
+          "405": {
+            "description": "Validation exception"
           }
         }
       }
@@ -193,7 +218,48 @@
             "description": "Invalid ID supplied"
           },
           "404": {
-            "description": "Consumer not found"
+            "description": "Category not found"
+          },
+          "405": {
+            "description": "Validation exception"
+          }
+        }
+      }
+    },
+    "/categorisedBadge": {
+      "get": {
+        "tags": [
+          "categorised badge"
+        ],
+        "description": "指定されたカテゴリIDに該当するカテゴライズドバッジ情報を返却します",
+        "operationId": "findCategorisedbadge",
+        "parameters": [
+          {
+            "name": "category_id",
+            "in": "query",
+            "description": "category id",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategorisedBadge"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Category not found"
           },
           "405": {
             "description": "Validation exception"
@@ -309,7 +375,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Badges"
+                    "$ref": "#/components/schemas/CategorisedBadgeDetail"
                   }
                 }
               }
@@ -353,7 +419,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Badges"
+                    "$ref": "#/components/schemas/CategorisedBadgeDetail"
                   }
                 }
               }
@@ -397,7 +463,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Badges"
+                    "$ref": "#/components/schemas/CategorisedBadgeDetail"
                   }
                 }
               }
@@ -441,7 +507,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Badges"
+                    "$ref": "#/components/schemas/CategorisedBadgeDetail"
                   }
                 }
               }
@@ -452,80 +518,6 @@
           },
           "404": {
             "description": "Data not found"
-          },
-          "405": {
-            "description": "Validation exception"
-          }
-        }
-      }
-    },
-    "/badges/list": {
-      "get": {
-        "tags": [
-          "badges list"
-        ],
-        "description": "指定されたバッジIDのバッジ一覧を返却します",
-        "operationId": "Badges",
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Badges"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid ID supplied"
-          },
-          "404": {
-            "description": "Consumer not found"
-          },
-          "405": {
-            "description": "Validation exception"
-          }
-        }
-      }
-    },
-    "/badges/consumer": {
-      "get": {
-        "tags": [
-          "badges consumer list"
-        ],
-        "description": "指定されたコンシューマIDに関連するバッジのバッジ情報を返却します",
-        "operationId": "findBadgesConsumer",
-        "parameters": [
-          {
-            "name": "badge_id",
-            "in": "query",
-            "description": "Badge id",
-            "required": true,
-            "schema": {
-              "type": "number"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Consumer"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid ID supplied"
-          },
-          "404": {
-            "description": "Consumer not found"
           },
           "405": {
             "description": "Validation exception"
@@ -566,7 +558,122 @@
             "description": "Invalid ID supplied"
           },
           "404": {
-            "description": "Consumer not found"
+            "description": "Badge not found"
+          },
+          "405": {
+            "description": "Validation exception"
+          }
+        }
+      }
+    },
+    "/badges/list": {
+      "get": {
+        "tags": [
+          "badges list"
+        ],
+        "description": "バッジ一覧を返却します",
+        "operationId": "Badges",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Badges"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Badge not found"
+          }
+        }
+      }
+    },
+    "/badges/consumer": {
+      "get": {
+        "tags": [
+          "badges consumer list"
+        ],
+        "description": "指定されたバッジIDに関連するコンシューマのリストを返却します",
+        "operationId": "findBadgesConsumer",
+        "parameters": [
+          {
+            "name": "badge_id",
+            "in": "query",
+            "description": "Badge id",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Consumer"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Badge not found"
+          },
+          "405": {
+            "description": "Validation exception"
+          }
+        }
+      }
+    },
+    "/badges/training": {
+      "get": {
+        "tags": [
+          "badges training list"
+        ],
+        "description": "指定されたバッジIDに関連する研修内容のリストを返却します",
+        "operationId": "findBadgesTraining",
+        "parameters": [
+          {
+            "name": "badge_id",
+            "in": "query",
+            "description": "Badge id",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Training"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Badge not found"
           },
           "405": {
             "description": "Validation exception"
@@ -593,7 +700,7 @@
             "type": "string",
             "example": "https://example.com/consumer101/"
           },
-          "consumer_mailaddr": {
+          "consumer_email": {
             "type": "string",
             "example": "consumer101@example.com"
           }
@@ -618,6 +725,79 @@
           "category3_name": {
             "type": "string",
             "example": "category1013"
+          }
+        }
+      },
+      "CategorisedBadge": {
+        "type": "object",
+        "properties": {
+          "category_id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 101
+          },
+          "consumer_id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 101
+          },
+          "badge_id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 101
+          },
+          "course_id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 101
+          },
+          "course_level_id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 101
+          },
+          "description": {
+            "type": "string",
+            "example": "categorised badge description..."
+          }
+        }
+      },
+      "CategorisedBadgeDetail": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "object",
+            "items": {
+              "$ref": "#/components/schemas/Category"
+            }
+          },
+          "consumer": {
+            "type": "object",
+            "items": {
+              "$ref": "#/components/schemas/Consumer"
+            }
+          },
+          "badge": {
+            "type": "object",
+            "items": {
+              "$ref": "#/components/schemas/BadgeDetail"
+            }
+          },
+          "course": {
+            "type": "object",
+            "items": {
+              "$ref": "#/components/schemas/Course"
+            }
+          },
+          "course_level": {
+            "type": "object",
+            "items": {
+              "$ref": "#/components/schemas/Course_level"
+            }
+          },
+          "description": {
+            "type": "string",
+            "example": "categorised badge description..."
           }
         }
       },
@@ -654,6 +834,24 @@
           "level_description": {
             "type": "string",
             "example": "course_level101 description..."
+          }
+        }
+      },
+      "Training": {
+        "type": "object",
+        "properties": {
+          "badge_id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 101
+          },
+          "training_type": {
+            "type": "string",
+            "example": "training_type101"
+          },
+          "training_name": {
+            "type": "string",
+            "example": "trainig_name101"
           }
         }
       },
@@ -720,6 +918,10 @@
                 "$ref": "#/components/schemas/wisdom"
               }
             ]
+          },
+          "badge_url": {
+            "type": "string",
+            "example": "https://example/knowledge/url/sample"
           }
         }
       },
@@ -744,10 +946,6 @@
           "training_name": {
             "type": "string",
             "example": "training name"
-          },
-          "badge_url": {
-            "type": "string",
-            "example": "https://example/knowledge/url/sample"
           }
         }
       }
