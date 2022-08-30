@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: Portal Badges API
   description: 教員研修システム向けバッジ関連データ取得API
-  version: 0.9.0
+  version: 0.9.1
 servers:
   - url: https://chiloportal.example.com/api/v1
 tags:
@@ -16,15 +16,15 @@ tags:
     description: カテゴリ取得
   - name: categorised badge
     description: カテゴライズドバッジ情報取得
-  - name: course
+  - name: target occupations
     description: 受講対象取得
-  - name: course_level
+  - name: target job level
     description: 受講レベル取得
   - name: find
     description: バッジ検索（すべて）
-  - name: find course
+  - name: find target occupations
     description: バッジ検索（受講対象）
-  - name: find course level
+  - name: find target job level
     description: バッジ検索（受講レベル）
   - name: find badges
     description: バッジ検索（バッジ名称）
@@ -34,7 +34,7 @@ tags:
     description: バッジ一覧取得
   - name: badges consumer list
     description: バッジを承認しているコンシューマの一覧取得
-  - name: badges training list
+  - name: badges course list
     description: バッジの研修内容一覧取得
 paths:
   /consumer:
@@ -160,16 +160,16 @@ paths:
           description: Category not found
         '405':
           description: Validation exception
-  /course:
+  /target_occupations:
     get:
       tags:
-        - course
+        - target occupations
       description: 指定された受講対象IDに該当する受講対象情報を返却します
-      operationId: findCourse
+      operationId: findTargetOccupations
       parameters:
-        - name: course_id
+        - name: target_occupations_id
           in: query
-          description: course id
+          description: target occupations id
           required: true
           schema:
             type: number
@@ -179,23 +179,23 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Course'
+                $ref: '#/components/schemas/Target_Occupations'
         '400':
           description: Invalid ID supplied
         '404':
-          description: Consumer not found
+          description: Target occupations not found
         '405':
           description: Validation exception
-  /course_level:
+  /target_job_level:
     get:
       tags:
-        - course_level
+        - target job level
       description: 指定された受講レベルIDに該当する受講レベル情報を返却します
-      operationId: findCourseLevel
+      operationId: findTargetJobLevel
       parameters:
-        - name: course_level_id
+        - name: target_job_level_id
           in: query
-          description: course level id
+          description: target job level id
           required: true
           schema:
             type: number
@@ -205,11 +205,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Course_level'
+                $ref: '#/components/schemas/Target_Job_Level'
         '400':
           description: Invalid ID supplied
         '404':
-          description: Consumer not found
+          description: Target Job Level not found
         '405':
           description: Validation exception
   /find:
@@ -240,12 +240,12 @@ paths:
           description: Data not found
         '405':
           description: Validation exception
-  /find/course:
+  /find/target_occupations:
     get:
       tags:
-        - find course
+        - find target occupations
       description: 指定されたキーワードに関連する受講対象のバッジ情報を返却します
-      operationId: findKeywordCourse
+      operationId: findKeywordTargetOccupations
       parameters:
         - name: keyword
           in: query
@@ -268,12 +268,12 @@ paths:
           description: Data not found
         '405':
           description: Validation exception
-  /find/level:
+  /find/target_job_level:
     get:
       tags:
-        - find course level
+        - find target job level
       description: 指定されたキーワードに関連する受講レベルのバッジ情報を返却します
-      operationId: findKeywordCourseLevel
+      operationId: findKeywordTargetJobLevel
       parameters:
         - name: keyword
           in: query
@@ -395,12 +395,12 @@ paths:
           description: Badge not found
         '405':
           description: Validation exception
-  /badges/training:
+  /badges/course:
     get:
       tags:
-        - badges training list
+        - badges course list
       description: 指定されたバッジIDに関連する研修内容のリストを返却します
-      operationId: findBadgesTraining
+      operationId: findBadgesCourse
       parameters:
         - name: badge_id
           in: query
@@ -416,7 +416,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Training'
+                  $ref: '#/components/schemas/Course'
         '400':
           description: Invalid ID supplied
         '404':
@@ -432,13 +432,13 @@ components:
           type: integer
           format: int64
           example: 101
-        consumer_name:
+        name:
           type: string
           example: consumer101
-        consumer_url:
+        url:
           type: string
           example: https://example.com/consumer101/
-        consumer_email:
+        email:
           type: string
           example: consumer101@example.com
     Category:
@@ -472,11 +472,11 @@ components:
           type: integer
           format: int64
           example: 101
-        course_id:
+        target_occupations_id:
           type: integer
           format: int64
           example: 101
-        course_level_id:
+        target_job_level_id:
           type: integer
           format: int64
           example: 101
@@ -498,56 +498,56 @@ components:
           type: object
           items:
             $ref: '#/components/schemas/BadgeDetail'
-        course:
+        target_occupations:
           type: object
           items:
-            $ref: '#/components/schemas/Course'
-        course_level:
+            $ref: '#/components/schemas/Target_Occupations'
+        target_job_level:
           type: object
           items:
-            $ref: '#/components/schemas/Course_level'
+            $ref: '#/components/schemas/Target_Job_Level'
         description:
           type: string
           example: categorised badge description...
+    Target_Occupations:
+      type: object
+      properties:
+        target_occupations_id:
+          type: integer
+          format: int64
+          example: 101
+        name:
+          type: string
+          example: targetOccupations101
+        description:
+          type: string
+          example: TargetOccupations101 description...
+    Target_Job_Level:
+      type: object
+      properties:
+        target_job_level_id:
+          type: integer
+          format: int64
+          example: 101
+        name:
+          type: string
+          example: targetJobLevel101
+        description:
+          type: string
+          example: targetJobLevel101 description...
     Course:
-      type: object
-      properties:
-        course_id:
-          type: integer
-          format: int64
-          example: 101
-        course_name:
-          type: string
-          example: course101
-        course_description:
-          type: string
-          example: course101 description...
-    Course_level:
-      type: object
-      properties:
-        course_level_id:
-          type: integer
-          format: int64
-          example: 101
-        level_name:
-          type: string
-          example: course_level101
-        level_description:
-          type: string
-          example: course_level101 description...
-    Training:
       type: object
       properties:
         badge_id:
           type: integer
           format: int64
           example: 101
-        training_type:
+        type:
           type: string
-          example: training_type101
-        training_name:
+          example: course_type101
+        name:
           type: string
-          example: trainig_name101
+          example: course_name101
     Badges:
       type: object
       properties:
@@ -555,10 +555,10 @@ components:
           type: integer
           format: int64
           example: 101
-        badge_name:
+        name:
           type: string
           example: degitalbadge101
-        badge_image:
+        image:
           type: string
           example: degitalbadge101.jpg
     BadgeList:
@@ -572,43 +572,43 @@ components:
           type: integer
           format: int64
           example: 101
-        badge_type:
+        type:
           type: string
           enum:
             - knowledge
             - wisdom
-        badge_name:
+        name:
           type: string
           example: degitalbadge101
-        badge_description:
+        description:
           type: string
           example: degitalbadge101_description
-        badge_image:
+        image:
           type: string
           example: degitalbadge101.jpg
-        badge_class:
+        degital_badge_class_id:
           type: string
           example: degitalbadge_classID
-        badge_detail:
+        detail:
           oneOf:
             - $ref: '#/components/schemas/knowledge'
             - $ref: '#/components/schemas/wisdom'
-        badge_url:
+        url:
           type: string
           example: https://example/knowledge/url/sample
     wisdom:
       type: object
       properties:
-        knowledge_badge:
+        knowledge_badge_list:
           type: array
           items:
             $ref: '#/components/schemas/BadgeList'
     knowledge:
       type: object
       properties:
-        training_type:
+        course_type:
           type: string
-          example: training type
-        training_name:
+          example: course type
+        course_name:
           type: string
-          example: training name
+          example: course name
