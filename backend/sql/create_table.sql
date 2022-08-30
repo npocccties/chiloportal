@@ -2,11 +2,11 @@
 drop table if exists badges cascade;
 drop table if exists categorized_badge cascade;
 drop table if exists badge_relation cascade;
-drop table if exists training cascade;
+drop table if exists course cascade;
 drop table if exists consumer cascade;
 drop table if exists category cascade;
-drop table if exists course cascade;
-drop table if exists course_level cascade;
+drop table if exists target_occupations cascade;
+drop table if exists target_job_level cascade;
 */
 create table badges (
 	id		serial		not null,	-- バッジID
@@ -31,7 +31,7 @@ create table badge_relation (
 	knowledge_badge_id	int		not null	REFERENCES badges,	-- Knowlwdge Badge ID
 	primary key (id)
 ); -- '関連バッジ'
-create table training (
+create table course (
 	id		serial		not null,	-- 研修内容 ID
 	badge_id	int		not null	REFERENCES badges,	-- Badge ID
 	type		varchar(32)	not null,	-- 種類
@@ -53,14 +53,14 @@ create table category (
 	category3_name	varchar(128)	not null,	-- カテゴリ3
 	primary key (id)
 ); -- 'カテゴリ'
-create table course (
+create table target_occupations (
 	id		serial		not null,	-- 受講対象ID
 	consumer_id	int		not null	REFERENCES consumer,	-- コンシューマ ID
 	name		varchar(256)	not null,	-- 名称
 	description	text		not null,	-- 説明
 	primary key (id)
 ); -- '受講対象'
-create table course_level (
+create table target_job_level (
 	id		serial		not null,	-- 受講レベルID
 	consumer_id	int		not null	REFERENCES consumer,	-- コンシューマ ID
 	name		varchar(256)	not null,	-- 名称
@@ -72,8 +72,8 @@ create table categorized_badge (
 	consumer_id	int		not null	REFERENCES consumer,		-- コンシューマ ID
 	category_id	int		not null	REFERENCES category,		-- Category ID
 	badge_id	int		not null	REFERENCES badges,		-- Badge ID
-	course_id	int		not null	REFERENCES course,		-- 受講対象 ID
-	course_level_id	int		not null	REFERENCES course_level,	-- 受講レベル ID
+	target_occupations_id	int	not null	REFERENCES target_occupations,	-- 受講対象 ID
+	target_job_level_id	int	not null	REFERENCES target_job_level,	-- 受講レベル ID
 	description	text		not null,	-- 説明
 	primary key (id)
 ); -- 'カテゴライズドバッジ'
