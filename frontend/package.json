@@ -65,6 +65,7 @@
     "format:code": "prettier --write .",
     "format:package": "fixpack",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "update": "yarn up '*' && yarn up --recursive '*' && yarn dedupe"
   }
 }
