@@ -11,9 +11,9 @@ export const handlers = [
     return res(
       ctx.json({
         consumer_id: 101,
-        consumer_name: "consumer101",
-        consumer_url: "https://example.com/consumer101/",
-        consumer_mailaddr: "consumer101@example.com",
+        name: "consumer101",
+        url: "https://example.com/consumer101/",
+        email: "consumer101@example.com",
       })
     );
   }),
@@ -22,9 +22,9 @@ export const handlers = [
       ctx.json([
         {
           consumer_id: 101,
-          consumer_name: "consumer101",
-          consumer_url: "https://example.com/consumer101/",
-          consumer_mailaddr: "consumer101@example.com",
+          name: "consumer101",
+          url: "https://example.com/consumer101/",
+          email: "consumer101@example.com",
         },
       ])
     );
@@ -51,21 +51,33 @@ export const handlers = [
       ])
     );
   }),
-  restGet(client.course, (_req, res, ctx) => {
+  restGet(client.categorisedBadge, (_req, res, ctx) => {
     return res(
       ctx.json({
-        course_id: 101,
-        course_name: "course101",
-        course_description: "course101 description...",
+        category_id: 101,
+        consumer_id: 101,
+        badge_id: 101,
+        target_occupations_id: 101,
+        target_job_level_id: 101,
+        description: "categorised badge description...",
       })
     );
   }),
-  restGet(client.course_level, (_req, res, ctx) => {
+  restGet(client.target_occupations, (_req, res, ctx) => {
     return res(
       ctx.json({
-        course_level_id: 101,
-        level_name: "course_level101",
-        level_description: "course_level101 description...",
+        target_occupations_id: 101,
+        name: "targetOccupations101",
+        description: "TargetOccupations101 description...",
+      })
+    );
+  }),
+  restGet(client.target_job_level, (_req, res, ctx) => {
+    return res(
+      ctx.json({
+        target_job_level_id: 101,
+        name: "targetJobLevel101",
+        description: "targetJobLevel101 description...",
       })
     );
   }),
@@ -73,31 +85,40 @@ export const handlers = [
     return res(
       ctx.json([
         {
-          badge_id: 101,
-          badge_name: "degitalbadge101",
-          badge_image: "degitalbadge101.jpg",
+          category: {},
+          consumer: {},
+          badge: {},
+          target_occupations: {},
+          target_job_level: {},
+          description: "categorised badge description...",
         },
       ])
     );
   }),
-  restGet(client.find.course, (_req, res, ctx) => {
+  restGet(client.find.target_occupations, (_req, res, ctx) => {
     return res(
       ctx.json([
         {
-          badge_id: 101,
-          badge_name: "degitalbadge101",
-          badge_image: "degitalbadge101.jpg",
+          category: {},
+          consumer: {},
+          badge: {},
+          target_occupations: {},
+          target_job_level: {},
+          description: "categorised badge description...",
         },
       ])
     );
   }),
-  restGet(client.find.level, (_req, res, ctx) => {
+  restGet(client.find.target_job_level, (_req, res, ctx) => {
     return res(
       ctx.json([
         {
-          badge_id: 101,
-          badge_name: "degitalbadge101",
-          badge_image: "degitalbadge101.jpg",
+          category: {},
+          consumer: {},
+          badge: {},
+          target_occupations: {},
+          target_job_level: {},
+          description: "categorised badge description...",
         },
       ])
     );
@@ -106,9 +127,12 @@ export const handlers = [
     return res(
       ctx.json([
         {
-          badge_id: 101,
-          badge_name: "degitalbadge101",
-          badge_image: "degitalbadge101.jpg",
+          category: {},
+          consumer: {},
+          badge: {},
+          target_occupations: {},
+          target_job_level: {},
+          description: "categorised badge description...",
         },
       ])
     );
@@ -117,8 +141,8 @@ export const handlers = [
     return res(
       ctx.json({
         badge_id: 101,
-        badge_name: "degitalbadge101",
-        badge_image: "degitalbadge101.jpg",
+        name: "degitalbadge101",
+        image: "degitalbadge101.jpg",
       })
     );
   }),
@@ -127,20 +151,41 @@ export const handlers = [
       ctx.json([
         {
           badge_id: 101,
-          badge_name: "degitalbadge101",
-          badge_image: "degitalbadge101.jpg",
+          type: "knowledge",
+          name: "degitalbadge101",
+          description: "degitalbadge101_description",
+          image: "degitalbadge101.jpg",
+          degital_badge_class_id: "degitalbadge_classID",
+          detail: {
+            course_type: "course type",
+            course_name: "course name",
+          },
+          url: "https://example/knowledge/url/sample",
         },
       ])
     );
   }),
   restGet(client.badges.consumer, (_req, res, ctx) => {
     return res(
-      ctx.json({
-        consumer_id: 101,
-        consumer_name: "consumer101",
-        consumer_url: "https://example.com/consumer101/",
-        consumer_mailaddr: "consumer101@example.com",
-      })
+      ctx.json([
+        {
+          consumer_id: 101,
+          name: "consumer101",
+          url: "https://example.com/consumer101/",
+          email: "consumer101@example.com",
+        },
+      ])
+    );
+  }),
+  restGet(client.badges.course, (_req, res, ctx) => {
+    return res(
+      ctx.json([
+        {
+          badge_id: 101,
+          type: "course_type101",
+          name: "course_name101",
+        },
+      ])
     );
   }),
 ];

@@ -53,7 +53,7 @@
   },
   "scripts": {
     "api": "run-s api:clean api:build",
-    "api:build": "openapi2aspida -i ../backend/doc/openapi.json",
+    "api:build": "openapi2aspida -i ../backend/doc/openapi.yaml",
     "api:clean": "rimraf api",
     "build": "run-s api build:clean build:app",
     "build:app": "next build",
