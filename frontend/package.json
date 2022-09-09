@@ -5,6 +5,7 @@
   "author": "Kimiaki Kuno <knokmki612@gmail.com>",
   "bugs": "https://github.com/npocccties/chiloportal/issues",
   "dependencies": {
+    "@yarnpkg/pnpify": "^4.0.0-rc.18",
     "next": "^12.2.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
@@ -20,21 +21,19 @@
     "aspida": "^1.11.0",
     "autoprefixer": "^10.4.8",
     "clsx": "^1.2.1",
-    "eslint": "^8.22.0",
+    "eslint": "^8.23.0",
     "eslint-config-next": "^12.2.5",
     "eslint-config-prettier": "^8.5.0",
     "fixpack": "^4.0.0",
-    "graphql": "^16.6.0",
     "minimist": "^1.2.6",
-    "msw": "^0.45.0",
-    "npm-check-updates": "^16.0.5",
+    "msw": "^0.46.1",
     "npm-run-all": "^4.1.5",
     "openapi2aspida": "^0.19.0",
     "postcss": "^8.4.16",
     "prettier": "^2.7.1",
     "rimraf": "^3.0.2",
     "tailwindcss": "^3.1.8",
-    "typescript": "^4.7.4",
+    "typescript": "^4.8.2",
     "yn": "^5.0.0"
   },
   "engines": {
@@ -53,18 +52,19 @@
   },
   "scripts": {
     "api": "run-s api:clean api:build",
-    "api:build": "openapi2aspida -i ../backend/doc/openapi.json",
+    "api:build": "openapi2aspida -i ../backend/doc/openapi.yaml",
     "api:clean": "rimraf api",
     "build": "run-s api build:clean build:app",
-    "build:app": "next build",
+    "build:app": "pnpify next build",
     "build:clean": "rimraf public/mockServiceWorker.js",
     "dev": "run-s api dev:mock dev:app",
-    "dev:app": "next dev",
+    "dev:app": "pnpify next dev",
     "dev:mock": "msw init public --no-save",
     "format": "run-s format:code format:package",
     "format:code": "prettier --write .",
     "format:package": "fixpack",
-    "lint": "next lint",
-    "start": "next start"
+    "lint": "pnpify next lint",
+    "start": "pnpify next start",
+    "update": "yarn up '*' && yarn up --recursive '*' && yarn dedupe"
   }
 }
