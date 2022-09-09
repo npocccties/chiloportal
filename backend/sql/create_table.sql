@@ -47,10 +47,7 @@ create table knowledge_badges (
 	image_id	text		null,		-- 画像 ID
 	image_author	text		null,		-- 画像 author
 	ob_version	text		null,		-- OBバージョン
-	issuer_name	varchar(256)	null,		-- 発行者
-	issuer_url	text		null,		-- issuer url
-	issuer_email	text		null,		-- issuer email
-	issuer_id	text		null,		-- issuer id
+	issuer_id	int		null		REFERENCES issuer,	-- 発行者のID
 	primary key (id)
 ); -- '知識バッジ'
 create table course (
