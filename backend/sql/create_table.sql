@@ -1,5 +1,3 @@
-drop table if exists course cascade;
-
 drop table if exists portal_category cascade;
 drop table if exists issuer cascade;
 drop table if exists wisdom_badges cascade;
