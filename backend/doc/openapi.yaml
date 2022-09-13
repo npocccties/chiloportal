@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: Portal Badges API
   description: 教員研修システム向けバッジ関連データ取得API
-  version: 0.9.1
+  version: 0.9.2
 servers:
   - url: https://chiloportal.example.com/api/v1
 tags:
@@ -10,32 +10,36 @@ tags:
     description: コンシューマ情報取得
   - name: consumer list
     description: コンシューマ情報一覧
-  - name: category list
-    description: カテゴリ一覧
-  - name: category
-    description: カテゴリ取得
+  - name: target occupations category list
+    description: 受講対象に関連するカテゴリ一覧
+  - name: target carrier stage category list
+    description: 受講レベルに関連するカテゴリ一覧
+  - name: portal category list
+    description: ポータルカテゴリ一覧
   - name: categorised badge
     description: カテゴライズドバッジ情報取得
   - name: target occupations
     description: 受講対象取得
-  - name: target job level
-    description: 受講レベル取得
-  - name: find
+  - name: target carrier stage list
+    description: 受講対象に関連する受講レベル一覧
+  - name: keyword find
     description: バッジ検索（すべて）
-  - name: find target occupations
+  - name: keyword find target occupations
     description: バッジ検索（受講対象）
-  - name: find target job level
+  - name: keyword find target carrier stage
     description: バッジ検索（受講レベル）
-  - name: find badges
+  - name: keyword find badges
     description: バッジ検索（バッジ名称）
   - name: badges
     description: バッジ情報取得
-  - name: badges list
-    description: バッジ一覧取得
+  - name: wisdom badges list
+    description: 能力バッジ一覧取得
   - name: badges consumer list
-    description: バッジを承認しているコンシューマの一覧取得
-  - name: badges course list
+    description: バッジを承認しているコンシューマの一覧
+  - name: badges criteria list
     description: バッジの研修内容一覧取得
+  - name: consumer target occupations list
+    description: 指定したコンシューマIDの受講対象一覧
 paths:
   /consumer:
     get:
@@ -80,16 +84,16 @@ paths:
                   $ref: '#/components/schemas/Consumer'
         '404':
           description: Consumer not found
-  /category/list:
+  /targetOccupations/category/list:
     get:
       tags:
-        - category list
-      description: 指定されたコンシューマIDで登録されているカテゴリ情報を一覧で返却します
+        - target occupations category list
+      description: 指定された受講対象IDに関連するカテゴリ情報を一覧で返却します
       operationId: findCategoryList
       parameters:
-        - name: consumer_id
+        - name: target_occupations_id
           in: query
-          description: consumer id
+          description: target occupations id
           required: true
           schema:
             type: number
@@ -105,19 +109,19 @@ paths:
         '400':
           description: Invalid ID supplied
         '404':
-          description: Consumer not found
+          description: not found
         '405':
           description: Validation exception
-  /category:
+  /targetCarrierStage/category/list:
     get:
       tags:
-        - category
-      description: 指定されたカテゴリIDに該当するカテゴリ情報を返却します
+        - target carrier stage category list
+      description: 指定された受講レベルIDに関連するカテゴリ情報を返却します
       operationId: findCategory
       parameters:
-        - name: category_id
+        - name: target_carrier_stage_id
           in: query
-          description: category id
+          description: target carrier stage id
           required: true
           schema:
             type: number
@@ -127,11 +131,41 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Category'
+                type: array
+                items:
+                  type: object
+                  properties:
+                    category:
+                      $ref: '#/components/schemas/Category'
+                    wisdom_badges:
+                      type: integer
+                      format: int64
+                      example: 101
         '400':
           description: Invalid ID supplied
         '404':
-          description: Category not found
+          description: Data not found
+        '405':
+          description: Validation exception
+  /portalCategory/list:
+    get:
+      tags:
+        - portal category list
+      description: 登録されているポータルカテゴリ情報を一覧で返却します
+      operationId: findPortalCategoryList
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PortalCategory'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Data not found
         '405':
           description: Validation exception
   /categorisedBadge:
@@ -153,14 +187,16 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CategorisedBadge'
+                type: array
+                items:
+                  $ref: '#/components/schemas/CategorisedBadge'
         '400':
           description: Invalid ID supplied
         '404':
           description: Category not found
         '405':
           description: Validation exception
-  /target_occupations:
+  /targetOccupations:
     get:
       tags:
         - target occupations
@@ -186,16 +222,16 @@ paths:
           description: Target occupations not found
         '405':
           description: Validation exception
-  /target_job_level:
+  /targetCarrierStage/list:
     get:
       tags:
-        - target job level
-      description: 指定された受講レベルIDに該当する受講レベル情報を返却します
-      operationId: findTargetJobLevel
+        - target carrier stage list
+      description: 指定された受講対象IDに関連する受講レベル情報を返却します
+      operationId: findTargetCarrierStage
       parameters:
-        - name: target_job_level_id
+        - name: target_occupations_id
           in: query
-          description: target job level id
+          description: target occupations id
           required: true
           schema:
             type: number
@@ -205,17 +241,19 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Target_Job_Level'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Target_Carrier_Stage'
         '400':
           description: Invalid ID supplied
         '404':
-          description: Target Job Level not found
+          description: Data not found
         '405':
           description: Validation exception
   /find:
     get:
       tags:
-        - find
+        - keyword find
       description: 指定されたキーワードに関連する受講対象/受講レベル/バッジ情報のすべてからバッジ情報を返却します
       operationId: findKeywordAll
       parameters:
@@ -240,10 +278,10 @@ paths:
           description: Data not found
         '405':
           description: Validation exception
-  /find/target_occupations:
+  /find/targetOccupations:
     get:
       tags:
-        - find target occupations
+        - keyword find target occupations
       description: 指定されたキーワードに関連する受講対象のバッジ情報を返却します
       operationId: findKeywordTargetOccupations
       parameters:
@@ -268,12 +306,12 @@ paths:
           description: Data not found
         '405':
           description: Validation exception
-  /find/target_job_level:
+  /find/targetCarrierStage:
     get:
       tags:
-        - find target job level
+        - keyword find target carrier stage
       description: 指定されたキーワードに関連する受講レベルのバッジ情報を返却します
-      operationId: findKeywordTargetJobLevel
+      operationId: findKeywordTargetCarrierStage
       parameters:
         - name: keyword
           in: query
@@ -299,7 +337,7 @@ paths:
   /find/badges:
     get:
       tags:
-        - find badges
+        - keyword find badges
       description: 指定されたキーワードに関連するバッジのバッジ情報を返却します
       operationId: findKeywordBadges
       parameters:
@@ -331,12 +369,18 @@ paths:
       description: 指定されたバッジIDのバッジ関連情報を返却します
       operationId: findBadges
       parameters:
-        - name: badge_id
+        - name: badges_id
           in: query
-          description: badge id
+          description: badges id
           required: true
           schema:
             type: number
+        - name: badges_type
+          in: query
+          description: badges type
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: Successful operation
@@ -347,14 +391,14 @@ paths:
         '400':
           description: Invalid ID supplied
         '404':
-          description: Badge not found
+          description: Badges not found
         '405':
           description: Validation exception
-  /badges/list:
+  /wisdomBadges/list:
     get:
       tags:
-        - badges list
-      description: バッジ一覧を返却します
+        - wisdom badges list
+      description: 能力バッジ一覧を返却します
       operationId: Badges
       responses:
         '200':
@@ -366,17 +410,17 @@ paths:
                 items:
                   $ref: '#/components/schemas/Badges'
         '404':
-          description: Badge not found
-  /badges/consumer:
+          description: Badges not found
+  /badges/consumer/list:
     get:
       tags:
         - badges consumer list
       description: 指定されたバッジIDに関連するコンシューマのリストを返却します
       operationId: findBadgesConsumer
       parameters:
-        - name: badge_id
+        - name: badges_id
           in: query
-          description: Badge id
+          description: Badges id
           required: true
           schema:
             type: number
@@ -392,19 +436,19 @@ paths:
         '400':
           description: Invalid ID supplied
         '404':
-          description: Badge not found
+          description: Badges not found
         '405':
           description: Validation exception
-  /badges/course:
+  /badges/criteria/list:
     get:
       tags:
-        - badges course list
-      description: 指定されたバッジIDに関連する研修内容のリストを返却します
-      operationId: findBadgesCourse
+        - badges criteria list
+      description: 指定された知識バッジIDに関連する研修内容のリストを返却します
+      operationId: findBadgesCriteria
       parameters:
-        - name: badge_id
+        - name: badges_id
           in: query
-          description: Badge id
+          description: Badges id
           required: true
           schema:
             type: number
@@ -416,13 +460,42 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Course'
+                  $ref: '#/components/schemas/Criteria'
         '400':
           description: Invalid ID supplied
         '404':
-          description: Badge not found
+          description: Knowledge Badges not found
         '405':
           description: Validation exception
+  /consumer/targetOccupations/list:
+    get:
+      tags:
+        - consumer target occupations list
+      description: 指定されたコンシューマIDに関連する受講対象リストを返却します
+      operationId: TargetOccupationsList
+      parameters:
+        - name: consumer_id
+          in: query
+          description: consumer id
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Target_Occupations'
+        '400':
+          description: Invalid keyword supplied
+        '404':
+          description: Data not found
+        '405':
+          description: Validation exception
+
 components:
   schemas:
     Consumer:
@@ -444,45 +517,68 @@ components:
     Category:
       type: object
       properties:
-        category_id:
-          type: integer
-          format: int64
-          example: 101
+        category1:
+          type: array
+          items:
+            $ref: '#/components/schemas/Category1'
+    Category1:
+      type: object
+      properties:
         category1_name:
           type: string
           example: category1011
+        category2:
+          type: array
+          items:
+            $ref: '#/components/schemas/Category2'
+    Category2:
+      properties:
         category2_name:
           type: string
           example: category1012
-        category3_name:
-          type: string
-          example: category1013
-    CategorisedBadge:
-      type: object
+        category3:
+          type: array
+          items:
+            $ref: '#/components/schemas/Category3'
+    Category3:
       properties:
         category_id:
           type: integer
           format: int64
-          example: 101
-        consumer_id:
+          example: 101123
+        category3_name:
+          type: string
+          example: category1013
+    PortalCategory:
+      type: object
+      properties:
+        portal_category_id:
           type: integer
           format: int64
           example: 101
-        badge_id:
+        name:
+          type: string
+          example: portalCategory101
+        description:
+          type: string
+          example: PortalCategory101 description...
+        badges_count:
+          type: integer
+          example: 5
+    CategorisedBadge:
+      type: object
+      properties:
+        badges_id:
           type: integer
           format: int64
           example: 101
-        target_occupations_id:
-          type: integer
-          format: int64
-          example: 101
-        target_job_level_id:
+        cell_id:
           type: integer
           format: int64
           example: 101
         description:
           type: string
-          example: categorised badge description...
+          example: categorised badges description...
     CategorisedBadgeDetail:
       type: object
       properties:
@@ -502,13 +598,13 @@ components:
           type: object
           items:
             $ref: '#/components/schemas/Target_Occupations'
-        target_job_level:
+        target_carrier_stage:
           type: object
           items:
-            $ref: '#/components/schemas/Target_Job_Level'
+            $ref: '#/components/schemas/Target_Carrier_Stage'
         description:
           type: string
-          example: categorised badge description...
+          example: categorised badges description...
     Target_Occupations:
       type: object
       properties:
@@ -522,36 +618,36 @@ components:
         description:
           type: string
           example: TargetOccupations101 description...
-    Target_Job_Level:
+    Target_Carrier_Stage:
       type: object
       properties:
-        target_job_level_id:
+        target_carrier_stage_id:
           type: integer
           format: int64
           example: 101
         name:
           type: string
-          example: targetJobLevel101
+          example: targetCarrierStage101
         description:
           type: string
-          example: targetJobLevel101 description...
-    Course:
+          example: targetCarrierStage101 description...
+    Criteria:
       type: object
       properties:
-        badge_id:
+        criteria_id:
           type: integer
           format: int64
           example: 101
         type:
           type: string
-          example: course_type101
+          example: criteria_type101
         name:
           type: string
-          example: course_name101
+          example: criteria_name101
     Badges:
       type: object
       properties:
-        badge_id:
+        badges_id:
           type: integer
           format: int64
           example: 101
@@ -561,6 +657,9 @@ components:
         image:
           type: string
           example: degitalbadge101.jpg
+        knowledge_badges_count:
+          type: integer
+          example: 7
     BadgeList:
       type: integer
       format: int64
@@ -568,7 +667,7 @@ components:
     BadgeDetail:
       type: object
       properties:
-        badge_id:
+        badges_id:
           type: integer
           format: int64
           example: 101
@@ -599,16 +698,11 @@ components:
     wisdom:
       type: object
       properties:
-        knowledge_badge_list:
+        knowledge_badges_list:
           type: array
           items:
             $ref: '#/components/schemas/BadgeList'
     knowledge:
-      type: object
-      properties:
-        course_type:
-          type: string
-          example: course type
-        course_name:
-          type: string
-          example: course name
+      type: array
+      items:
+        $ref: '#/components/schemas/Criteria'
