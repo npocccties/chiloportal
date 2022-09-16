@@ -4,11 +4,10 @@ drop table if exists wisdom_badges cascade;
 drop table if exists knowledge_badges cascade;
 drop table if exists criteria cascade;
 drop table if exists consumer cascade;
-drop table if exists target_occupations cascade;
+drop table if exists training_index cascade;
 drop table if exists category cascade;
-drop table if exists target_carrier_stage cascade;
-drop table if exists cell cascade;
-drop table if exists categorised_badges cascade;
+drop table if exists stage cascade;
+drop table if exists compitency cascade;
 -- ----------------------------------------------------------------------------------------------------
 create table portal_category (
 	id		serial		not null,	-- カテゴリ ID
@@ -67,7 +66,7 @@ create table consumer (
 	email		varchar(256)	null,		-- 連絡先メールアドレス
 	primary key (id)
 ); -- 'コンシューマ'
-create table target_occupations (
+create table training_index (
 	id		serial		not null,	-- 受講対象ID
 	consumer_id	int		not null	REFERENCES consumer,	-- コンシューマ ID
 	name		varchar(256)	not null,	-- 名称
@@ -85,7 +84,7 @@ create table category (
 	sort_key	int		not null,	-- 表示順
 	primary key (id)
 ); -- 'カテゴリ'
-create table target_carrier_stage (
+create table stage (
 	id		serial		not null,	-- 受講レベルID
 	name		varchar(256)	not null,	-- 名称
 	sub_name	text		not null,	-- 自由記述欄
@@ -94,19 +93,19 @@ create table target_carrier_stage (
 	primary key (id)
 ); -- '受講レベル'
 -- ----------------------------------------------------------------------------------------------------
-create table cell (
+create table compitency (
 	id			serial	not null,	-- セルID
-	target_occupations_id	int	not null	REFERENCES target_occupations,	-- 受講対象 ID
+	training_index_id	int	not null	REFERENCES training_index,	-- 受講対象 ID
 	category_id		int	not null	REFERENCES category,	-- カテゴリ ID
-	target_carrier_stage_id	int	not null	REFERENCES target_carrier_stage,	-- 受講レベル ID
+	stage_id		int	not null	REFERENCES stage,	-- 受講レベル ID
 	description		text	not null,	-- 説明
 	primary key (id)
 ); -- 'セル'
 -- ----------------------------------------------------------------------------------------------------
 create table categorised_badges (
-	id		serial		not null,	-- カテゴライズID
+	id			serial	not null,	-- カテゴライズID
 	wisdom_badges_id	int	not null	REFERENCES wisdom_badges,	-- 能力バッジのID
-	cell_id		int		not null	REFERENCES cell,	-- セル ID
-	description	text		not null,	-- 説明
+	compitency_id		int	not null	REFERENCES compitency,	-- セル ID
+	description		text	not null,	-- 説明
 	primary key (id)
 ); -- 'カテゴライズドバッジ'
