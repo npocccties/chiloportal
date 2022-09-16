@@ -30,12 +30,12 @@ create table wisdom_badges (
 	badge_class_id	text		not null,	-- BadgeClass ID
 	name		varchar(512)	not null,	-- バッジ名称
 	description	text		null,		-- 説明
-	criteria_narrative	text	null,		-- 基準
 	image_id	text		null,		-- 画像 ID
 	image_author	text		null,		-- 画像 author
 	version		text		null,		-- OBバージョン
 	issuer_id	int		null		REFERENCES issuer,	-- 発行者のID
-	alignments_targeturl	text	null,		-- URL
+	alignments_targetname	text	null,		-- targetName
+	alignments_targeturl	text	null,		-- targetUrl
 	primary key (id)
 ); -- '能力バッジ'
 create table knowledge_badges (
@@ -56,6 +56,7 @@ create table criteria (
 	knowledge_badges_id	int	not null	REFERENCES knowledge_badges,	-- 知識バッジのID
 	type		varchar(32)	not null,	-- 種類
 	name		varchar(256)	not null,	-- 名称
+	sort_key	int		not null,	-- 表示順
 	primary key (id)
 ); -- '研修内容'
 -- ----------------------------------------------------------------------------------------------------
