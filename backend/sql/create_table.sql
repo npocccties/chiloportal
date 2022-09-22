@@ -14,6 +14,7 @@ create table portal_category (
 	id		serial		not null,	-- ポータルカテゴリID
 	name		varchar(128)	not null,	-- ポータルカテゴリ名
 	description	text		null,		-- 説明
+	image_url_path	text		null,		-- 画像のURLパス
 	sort_key	int		not null,	-- 表示順
 	primary key (id)
 ); -- 'ポータル独自カテゴリ'
