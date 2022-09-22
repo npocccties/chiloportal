@@ -6,7 +6,7 @@ drop table if exists criteria cascade;
 drop table if exists categorised_badges cascade;
 drop table if exists consumer cascade;
 drop table if exists framework cascade;
-drop table if exists competency cascade;
+drop table if exists field cascade;
 drop table if exists stage cascade;
 drop table if exists goal cascade;
 -- ----------------------------------------------------------------------------------------------------
@@ -90,11 +90,11 @@ create table stage (
 	sort_key	int		not null,	-- 表示順
 	primary key (id)
 ); -- '成長段階'
-create table competency (
+create table field (
 	id		serial		not null,	-- 指標項目ID
-	group1_name	varchar(128)	not null,	-- 指標項目グループ1
-	group2_name	varchar(128)	not null,	-- 指標項目グループ2
-	group3_name	varchar(128)	not null,	-- 指標項目グループ3
+	field1_name	varchar(128)	not null,	-- 指標項目1
+	field2_name	varchar(128)	not null,	-- 指標項目2
+	field3_name	varchar(128)	not null,	-- 指標項目3
 	sort_key	int		not null,	-- 表示順
 	primary key (id)
 ); -- '指標項目'
@@ -102,8 +102,8 @@ create table competency (
 create table goal (
 	id			serial	not null,	-- 目標ID
 	framework_id		int	not null	REFERENCES framework,	-- 教員育成指標ID
-	competency_id		int	not null	REFERENCES competency,	-- 指標項目ID
 	stage_id		int	not null	REFERENCES stage,	-- 成長段階ID
+	field_id		int	not null	REFERENCES field,	-- 指標項目ID
 	description		text	not null,	-- 説明
 	primary key (id)
 ); -- '指標項目の成長段階毎の目標'
