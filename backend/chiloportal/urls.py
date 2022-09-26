@@ -18,6 +18,7 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('consumer/', ConsumerDetail.as_view(), name='consumer-detail'),
+    path('consumer/list/', ConsumerList.as_view(), name='consumer-list'),
 ]
 
 if settings.DEBUG:
