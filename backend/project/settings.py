@@ -26,9 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-debug = os.environ.get('DEBUG')
-if debug == None:
-    debug = 'False'
+debug = os.environ.get('DEBUG', 'False')
 DEBUG = strtobool(debug)
 
 logger_level = os.environ.get('LOGGER_LEVEL')
@@ -166,8 +164,8 @@ LOGGING = {
     # ログ出力フォーマットの設定
     'formatters': {
         'default': {
-            'format': '%(asctime)s [%(levelname)s] %(process)d %(thread)d '
-                      '%(pathname)s:%(lineno)d %(message)s'
+            'format': '%(asctime)s\t%(levelname)s\t%(process)d\t%(thread)d\t'
+                      '%(pathname)s\t%(lineno)d\t%(funcName)s\t%(message)s'
         },
     },
     # ハンドラの設定

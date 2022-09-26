@@ -110,6 +110,8 @@ DBの認証情報やdjangoの秘密鍵を含めてますので、本番環境で
 |DEBUG|デバッグ用でブラウザからAPI参照できたり、例外発生時のエラー内容が参照できるようになる|True: 有効, False: 無効<br>※本番リリース時は必ず「False」を設定してください|
 |ALLOWED_HOSTS|公開ホスト名|本番リリースする際は本番サーバーのホスト名を設定してください|
 |LOGGER_LEVEL|ロガーレベル|ログファイルの出力基準<br>以下を指定可能<br>DEBUG/INFO/WARNING/ERROR/CRITICAL|
+|IMAGE_DIR|画像ファイルの公開ディレクトリ|本番リリースする際は本番サーバーの公開ディレクトリを設定してください|
+|JUDGE_BADGE|バッジ判定方法|version: JSONのversionフィールド値の末尾がwisdomならば能力バッジとみなす ※本番リリース用<br>alignments: JSONにalignmentsがあれば能力バッジとみなす ※versionフィールドが作成されるまでの代替とする|
 |POSTGRES_DB|DB名|-|
 |POSTGRES_USER|DBのユーザ名|-|
 |POSTGRES_PASSWORD|DBのパスワード|-|
@@ -134,4 +136,20 @@ DBの認証情報やdjangoの秘密鍵を含めてますので、本番環境で
 1. インポートコマンド
    ```
    /var/log/chiloportal/import.log
+   ```
+
+
+# Pythonの追加パッケージのインストール時
+
+1. pipコマンドによりPythonのパッケージをインストールした場合、下記コマンドを実行しrequirements.txtを更新しておくこと
+   ```
+   pip freeze > requirements.txt
+   ```
+
+
+# 単体テストのカバレッジ取得
+
+1. 下記コマンド実行後、htmlcov/index.html にカバレッジが出力されるので、未走行パスを確認して必要に応じて消化すること。
+   ```
+   coverage run --source='.' manage.py test && coverage report && coverage html
    ```

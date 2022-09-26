@@ -30,12 +30,36 @@
             "django": true
         },
         {
-            "name": "Unit Test",
+            "name": "Unit Test (All)",
             "type": "python",
             "request": "launch",
             "program": "${workspaceFolder}/manage.py",
             "args": [
                 "test"
+            ],
+            "django": true,
+            "justMyCode": true
+        },
+        {
+            "name": "Unit Test (Import Command)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/manage.py",
+            "args": [
+                "test",
+                "chiloportal.tests.test_import_badge"
+            ],
+            "django": true,
+            "justMyCode": true
+        },
+        {
+            "name": "Unit Test (Backend API)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/manage.py",
+            "args": [
+                "test",
+                "chiloportal.tests.test_views"
             ],
             "django": true,
             "justMyCode": true

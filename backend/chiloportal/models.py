@@ -1,17 +1,17 @@
 #
-# DBの内容からModelを生成するときは下記コマンドを実行し、models.py.txtの内容から不要なテーブル(djangoが生成するテーブル)を除外し、chiloportal/models.pyに転記してください。
-#   python manage.py inspectdb > models.py.txt
+# DBの内容からModelを生成するときは下記コマンドを実行し、models.py.txtの内容から不要なテーブル(djangoが生成する)を除外し、chiloportal/models.pyに転記してください。
+#   python manage.py inspectdb > chiloportal/models.py.txt
 #
-# 以下転記の際に行ってください。
-# ・models.ForeignKeyを同じクラス内で2つ以上使用している場合、related_nameに重複しないように名前を指定してください。（migrateの際にエラーとなるため）
-# ・managedにFalseを入れているので、managed = True に変更してください。（単体テストでDBを作成したいため）
+# 注意事項：
+# ・models.pyのrelated_nameはそのままにしておいてください。（クエリで使用しているため）
+# ・models.pyのmanaged = True はそのままにしておいてください。（テストで動的にテーブル作成するため）
 #
 from django.db import models
 
 
 class CategorisedBadges(models.Model):
     wisdom_badges = models.ForeignKey('WisdomBadges', models.DO_NOTHING, related_name='categorised_badges_wisdom_badges')
-    cell = models.ForeignKey('Cell', models.DO_NOTHING, related_name='categorised_badges_cell')
+    goal = models.ForeignKey('Goal', models.DO_NOTHING, related_name='categorised_badges_goal')
     description = models.TextField()
 
     class Meta:
@@ -19,26 +19,26 @@ class CategorisedBadges(models.Model):
         db_table = 'categorised_badges'
 
 
-class Category(models.Model):
-    category1_name = models.CharField(max_length=128)
-    category2_name = models.CharField(max_length=128)
-    category3_name = models.CharField(max_length=128)
+class Field(models.Model):
+    field1_name = models.CharField(max_length=128)
+    field2_name = models.CharField(max_length=128)
+    field3_name = models.CharField(max_length=128)
     sort_key = models.IntegerField()
 
     class Meta:
         managed = True
-        db_table = 'category'
+        db_table = 'field'
 
 
-class Cell(models.Model):
-    target_occupations = models.ForeignKey('TargetOccupations', models.DO_NOTHING, related_name='cell_target_occupations')
-    category = models.ForeignKey(Category, models.DO_NOTHING, related_name='cell_category')
-    target_carrier_stage = models.ForeignKey('TargetCarrierStage', models.DO_NOTHING, related_name='cell_target_carrier_stage')
+class Goal(models.Model):
+    framework = models.ForeignKey('Framework', models.DO_NOTHING, related_name='goal_framework')
+    field = models.ForeignKey(Field, models.DO_NOTHING, related_name='goal_field')
+    stage = models.ForeignKey('Stage', models.DO_NOTHING, related_name='goal_stage')
     description = models.TextField()
 
     class Meta:
         managed = True
-        db_table = 'cell'
+        db_table = 'goal'
 
 
 class Consumer(models.Model):
@@ -55,6 +55,7 @@ class Criteria(models.Model):
     knowledge_badges = models.ForeignKey('KnowledgeBadges', models.DO_NOTHING, related_name='criteria_knowledge_badges')
     type = models.CharField(max_length=32)
     name = models.CharField(max_length=256)
+    sort_key = models.IntegerField()
 
     class Meta:
         managed = True
@@ -76,6 +77,7 @@ class KnowledgeBadges(models.Model):
     badge_class_id = models.TextField()
     name = models.CharField(max_length=512)
     description = models.TextField(blank=True, null=True)
+    tags = models.TextField(blank=True, null=True)
     criteria_narrative = models.TextField(blank=True, null=True)
     image_id = models.TextField(blank=True, null=True)
     image_author = models.TextField(blank=True, null=True)
@@ -90,6 +92,7 @@ class KnowledgeBadges(models.Model):
 class PortalCategory(models.Model):
     name = models.CharField(max_length=128)
     description = models.TextField(blank=True, null=True)
+    image_url_path = models.TextField(blank=True, null=True)
     sort_key = models.IntegerField()
 
     class Meta:
@@ -97,7 +100,7 @@ class PortalCategory(models.Model):
         db_table = 'portal_category'
 
 
-class TargetCarrierStage(models.Model):
+class Stage(models.Model):
     name = models.CharField(max_length=256)
     sub_name = models.TextField()
     description = models.TextField()
@@ -105,19 +108,20 @@ class TargetCarrierStage(models.Model):
 
     class Meta:
         managed = True
-        db_table = 'target_carrier_stage'
+        db_table = 'stage'
 
 
-class TargetOccupations(models.Model):
-    consumer = models.ForeignKey(Consumer, models.DO_NOTHING, related_name='target_occupations_consumer')
+class Framework(models.Model):
+    consumer = models.ForeignKey(Consumer, models.DO_NOTHING, related_name='framework_consumer')
     name = models.CharField(max_length=256)
     description = models.TextField()
     supplementary = models.TextField()
+    url = models.TextField()
     sort_key = models.IntegerField()
 
     class Meta:
         managed = True
-        db_table = 'target_occupations'
+        db_table = 'framework'
 
 
 class WisdomBadges(models.Model):
@@ -125,11 +129,12 @@ class WisdomBadges(models.Model):
     badge_class_id = models.TextField()
     name = models.CharField(max_length=512)
     description = models.TextField(blank=True, null=True)
-    criteria_narrative = models.TextField(blank=True, null=True)
+    tags = models.TextField(blank=True, null=True)
     image_id = models.TextField(blank=True, null=True)
     image_author = models.TextField(blank=True, null=True)
     version = models.TextField(blank=True, null=True)
     issuer = models.ForeignKey(Issuer, models.DO_NOTHING, blank=True, null=True, related_name='wisdom_badges_issuer')
+    alignments_targetname = models.TextField(blank=True, null=True)
     alignments_targeturl = models.TextField(blank=True, null=True)
 
     class Meta:
