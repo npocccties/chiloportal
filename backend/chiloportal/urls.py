@@ -22,6 +22,7 @@ urlpatterns = [
     path('portalCategory/list/', PortalCategoryList.as_view(), name='portalCategory-list'),
     path('badges/', BadgesDetail.as_view(), name='badges-detail'),
     path('wisdomBadges/list/', WisdomBadgesList.as_view(), name='wisdomBadges-list'),
+    path('knowledgeBadges/criteria/list/', KnowledgeBadgesCriteriaList.as_view(), name='knowledgeBadges-criteria-list'),
 ]
 
 if settings.DEBUG:
