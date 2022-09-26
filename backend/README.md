@@ -16,7 +16,7 @@
 
 ## デバッグ方法
 ### バックエンドAPI
-1. 実行とデバッグで「Backend API」を選択し、F5キーを押下したのち、ブラウザから「http://localhost:8000/api/v1/swagger/」を参照することでSwaggerUIを使用可能
+1. 実行とデバッグで「Backend API」を選択し、F5キーを押下したのち、ブラウザから http://localhost:8000/api/v1/swagger/ を参照することでSwaggerUIを使用可能
 ※SwaggerUIは環境変数「DEBUG=True」とすることで有効になります
 
 ### インポートコマンド
@@ -61,7 +61,7 @@ DBの認証情報やdjangoの秘密鍵を含めてますので、本番環境で
    ※本番環境の管理者の認証情報は類推されにくいユーザ名およびパスワードを設定してください。
 
 1. APIキーの作成
-   ブラウザで`http://dev-portal.oku.cccties.org/admin`を参照し、作成した管理者でログインしたうえで、「API Keys」の追加からAPIキーを作成してください。
+   ブラウザで http://dev-portal.oku.cccties.org/admin を参照し、作成した管理者でログインしたうえで、「API Keys」の追加からAPIキーを作成してください。
    作成すると、ブラウザのアドレスバーの下（Chromeの場合）にAPIキーが表示されるので、それをメモしてフロントエンドチームに配布してください。
    RESTful APIのヘッダーに指定する認証情報は以下の通りです。
    なお、本番環境でも同じことが言えますので、本番環境でもAPIキーの作成および配布は必要です。
@@ -112,6 +112,7 @@ DBの認証情報やdjangoの秘密鍵を含めてますので、本番環境で
 |LOGGER_LEVEL|ロガーレベル|ログファイルの出力基準<br>以下を指定可能<br>DEBUG/INFO/WARNING/ERROR/CRITICAL|
 |IMAGE_DIR|画像ファイルの公開ディレクトリ|本番リリースする際は本番サーバーの公開ディレクトリを設定してください|
 |JUDGE_BADGE|バッジ判定方法|version: JSONのversionフィールド値の末尾がwisdomならば能力バッジとみなす ※本番リリース用<br>alignments: JSONにalignmentsがあれば能力バッジとみなす ※versionフィールドが作成されるまでの代替とする|
+|PER_PAGE|APIのクエリパラメータとしてページ番号(page_number)が指定な場合、同APIの1ページあたりのデータ数|-|
 |POSTGRES_DB|DB名|-|
 |POSTGRES_USER|DBのユーザ名|-|
 |POSTGRES_PASSWORD|DBのパスワード|-|
