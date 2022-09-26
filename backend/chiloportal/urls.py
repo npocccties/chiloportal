@@ -20,6 +20,7 @@ urlpatterns = [
     path('consumer/', ConsumerDetail.as_view(), name='consumer-detail'),
     path('consumer/list/', ConsumerList.as_view(), name='consumer-list'),
     path('portalCategory/list/', PortalCategoryList.as_view(), name='portalCategory-list'),
+    path('badges/', BadgesDetail.as_view(), name='badges-detail'),
     path('wisdomBadges/list/', WisdomBadgesList.as_view(), name='wisdomBadges-list'),
 ]
 
