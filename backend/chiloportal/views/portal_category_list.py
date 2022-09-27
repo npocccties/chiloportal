@@ -11,7 +11,4 @@ class PortalCategoryList(BaseAPIView):
         queryset = PortalCategory.objects.all().order_by('pk').annotate(Count('wisdom_badges_portal_category'))
         if queryset.exists() == False:
             raise NotFound('Data not found')
-        result = []
-        for pc in queryset:
-            result.append(to_portal_category(pc))
-        return Response(result)
+        return Response(to_portal_categories(queryset))

@@ -112,7 +112,7 @@ DBの認証情報やdjangoの秘密鍵を含めてますので、本番環境で
 |LOGGER_LEVEL|ロガーレベル|ログファイルの出力基準<br>以下を指定可能<br>DEBUG/INFO/WARNING/ERROR/CRITICAL|
 |IMAGE_DIR|画像ファイルの公開ディレクトリ|本番リリースする際は本番サーバーの公開ディレクトリを設定してください|
 |JUDGE_BADGE|バッジ判定方法|version: JSONのversionフィールド値の末尾がwisdomならば能力バッジとみなす ※本番リリース用<br>alignments: JSONにalignmentsがあれば能力バッジとみなす ※versionフィールドが作成されるまでの代替とする|
-|PER_PAGE|APIのクエリパラメータとしてページ番号(page_number)が指定な場合、同APIの1ページあたりのデータ数|-|
+|PER_PAGE|APIのクエリパラメータとしてページ番号(page_number)が指定可能な場合、同APIの1ページあたりのデータ数|-|
 |POSTGRES_DB|DB名|-|
 |POSTGRES_USER|DBのユーザ名|-|
 |POSTGRES_PASSWORD|DBのパスワード|-|

@@ -16,7 +16,4 @@ class KnowledgeBadgesCriteriaList(BaseAPIView):
         queryset = Criteria.objects.filter(knowledge_badges = id).order_by('sort_key')
         if queryset.exists() == False:
             raise NotFound('Criteria not found')
-        result = []
-        for criteria in queryset:
-            result.append(to_criteria(criteria))
-        return Response(result)
+        return Response(to_criterias(queryset))

@@ -1,5 +1,8 @@
 from collections import defaultdict
 
+def to_portal_categories(queryset):
+    return [to_portal_category(pc) for pc in queryset]
+
 def to_portal_category(pc):
     return {
         'portal_category_id': pc.id,
@@ -20,6 +23,9 @@ def to_consumer(consumer):
         'email': consumer.email,
     }
 
+def to_criterias(queryset):
+    return [to_criteria(criteria) for criteria in queryset]
+
 def to_criteria(criteria):
     return {
         'criteria_id': criteria.id,
@@ -27,7 +33,7 @@ def to_criteria(criteria):
         'name': criteria.name,
     }
 
-def to_wisdom_badges_by_page(page):
+def to_pager_wisdom_badges(page):
     badge_array = []
     for wisdom_badge in page.object_list:
         badge_array.append(to_wisdom_badge(wisdom_badge))
@@ -37,6 +43,18 @@ def to_wisdom_badges_by_page(page):
         'start': page.start_index(),
         'end': page.end_index()
     }
+
+def to_pager_wisdom_badges_all(queryset):
+    badge_array = [to_wisdom_badge(badge) for badge in queryset]
+    return {
+        'badges': badge_array,
+        'total_count': len(badge_array),
+        'start': 1,
+        'end': len(badge_array)
+    }
+
+def to_wisdom_badges(queryset):
+    return [to_wisdom_badge(wisdom_badge) for wisdom_badge in queryset]
 
 def to_wisdom_badge(wisdom_badge):
     knowledge_badges = wisdom_badge.knowledge_badges_wisdom_badges
@@ -58,6 +76,9 @@ def to_wisdom_badge(wisdom_badge):
             'knowledge_badges_list': knowledge_badges_id_list,
         }
     }
+
+def to_knowledge_badges(queryset):
+    return [to_knowledge_badge(knowledge_badge) for knowledge_badge in queryset]
 
 def to_knowledge_badge(knowledge_badge):
     criterias = knowledge_badge.criteria_knowledge_badges

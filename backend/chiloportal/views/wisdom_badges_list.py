@@ -13,7 +13,7 @@ class WisdomBadgesList(BaseAPIView):
         field_id = self.request.GET.get('field_id')
         stage_id = self.request.GET.get('stage_id')
         if field_id == None or utils.is_int(field_id) == False or stage_id == None or utils.is_int(stage_id) == False:
-            raise ParseError('Invalid ID supplied')
+            raise ParseError('Invalid parameters supplied')
         queryset = WisdomBadges.objects.filter(
             categorised_badges_wisdom_badges__goal__field_id = field_id,
             categorised_badges_wisdom_badges__goal__stage_id = stage_id
@@ -24,7 +24,4 @@ class WisdomBadgesList(BaseAPIView):
         )
         if queryset.exists() == False:
             raise NotFound('Badges not found')
-        result = []
-        for wisdome_badge in queryset:
-            result.append(to_wisdom_badge(wisdome_badge))
-        return Response(result)
+        return Response(to_wisdom_badges(queryset))
