@@ -18,7 +18,7 @@ class BadgesDetail(BaseAPIView):
         id_array = id_str.split(',')
         for id in id_array:
             if utils.is_int(id) == False:
-                self.logger.error('Invalid badges_id')
+                self.logger.error(f'Invalid badges_id: {id}')
                 raise ParseError('Invalid parameters supplied')
         result = []
         if type == 'wisdom':
@@ -29,8 +29,7 @@ class BadgesDetail(BaseAPIView):
             )
             if queryset.exists() == False:
                 raise NotFound('Badges not found')
-            for wisdom_badge in queryset:
-                result.append(to_wisdom_badge(wisdom_badge))
+            result = to_wisdom_badges(queryset)
         elif type == 'knowledge':
             queryset = KnowledgeBadges.objects.filter(pk__in = id_array).order_by('pk').distinct().prefetch_related(
                 'criteria_knowledge_badges'
@@ -39,8 +38,7 @@ class BadgesDetail(BaseAPIView):
             )
             if queryset.exists() == False:
                 raise NotFound('Badges not found')
-            for knowledge_badge in queryset:
-                result.append(to_knowledge_badge(knowledge_badge))
+            result = to_knowledge_badges(queryset)
         else:
             self.logger.error(f'Unknown badges_type: {type}')
             raise ParseError('Invalid parameters supplied')

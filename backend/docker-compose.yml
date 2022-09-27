@@ -20,6 +20,7 @@ services:
       - LOGGER_LEVEL=$LOGGER_LEVEL
       - ALLOWED_HOSTS=$ALLOWED_HOSTS
       - JUDGE_BADGE=$JUDGE_BADGE
+      - PER_PAGE=$PER_PAGE
     depends_on:
       - db
       - migration
