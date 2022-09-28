@@ -27,6 +27,7 @@ urlpatterns = [
     path('framework/stage/list/', FrameworkStageList.as_view(), name='framework-stage-list'),
     path('badges/', BadgesDetail.as_view(), name='badges-detail'),
     path('wisdomBadges/list/', WisdomBadgesList.as_view(), name='wisdomBadges-list'),
+    path('wisdomBadges/list/keyword/', WisdomBadgesListKeyword.as_view(), name='wisdomBadges-list-keyword'),
     path('knowledgeBadges/criteria/list/', KnowledgeBadgesCriteriaList.as_view(), name='knowledgeBadges-criteria-list'),
 ]
 
