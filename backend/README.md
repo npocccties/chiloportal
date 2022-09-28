@@ -37,11 +37,14 @@
 
 1. dockerおよびdocker-composeをインストール（詳細はググってください。「Rocky docker docker-compose」等で）  
 
-1. ファイル転送ソフトで「chiloportal/backend」の内容を開発サーバーにコピー  
+1. chiloportal のソースを git で取得
+   ```
+   git clone https://github.com/npocccties/chiloportal.git
+   ```
 
 1. docker-compose.ymlのあるbackendフォルダに移動  
    ```
-   cd backend
+   cd chiloportal/backend
    ```
 
 1. `.env.dev-server-debug`を複製し、複製したファイルを`.env`にリネーム  
