@@ -8,7 +8,7 @@ services:
       - ${APP_PORT}:8000
     volumes:
       - ./:/workspace
-      - ${IMAGE_DIR}:/workspace/output/images/
+      -  ${PWD}/${IMAGE_DIR}:/workspace/output/images/
     environment:
       - SECRET_KEY=$SECRET_KEY
       - DB_HOST=$DB_HOST
