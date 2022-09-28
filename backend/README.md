@@ -96,6 +96,19 @@
    ```
    docker-compose exec app python /workspace/manage.py import_badge --url {能力バッジを取得するURL} --pcid {ポータル独自カテゴリの主キー}
    ```
+
+
+## 動作確認
+### バックエンドAPI
+1. ブラウザから http://dev-portal.oku.cccties.org/api/v1/swagger/ にアクセス
+
+1. 該当のAPIを開いてから、「Try it out」を押下
+
+1. 必要に応じてパラメータ入力を行う
+
+1. 「Execute」ボタンを押下し、期待する値が得られているか確認する
+
+### インポートコマンド
 1. 能力バッジIDの確認  
    インポート実行するとコンソールに処理経過が出力され、最後に「wisdom_badge.id: {能力バッジID}」と出力されるので、その能力バッジIDをもとに関連データを作成してください。   
    出力例：
