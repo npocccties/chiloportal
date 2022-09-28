@@ -28,6 +28,7 @@ urlpatterns = [
     path('badges/', BadgesDetail.as_view(), name='badges-detail'),
     path('wisdomBadges/list/', WisdomBadgesList.as_view(), name='wisdomBadges-list'),
     path('wisdomBadges/list/keyword/', WisdomBadgesListKeyword.as_view(), name='wisdomBadges-list-keyword'),
+    path('wisdomBadges/consumer/list/', WisdomBadgesConsumerList.as_view(), name='wisdomBadges-consumer-list'),
     path('knowledgeBadges/criteria/list/', KnowledgeBadgesCriteriaList.as_view(), name='knowledgeBadges-criteria-list'),
     path('consumer/framework/list/', ConsumerFrameworkList.as_view(), name='consumer-framework-list'),
 ]
