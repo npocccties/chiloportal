@@ -177,7 +177,7 @@ paths:
                   badges:
                     type: array
                     items:
-                      $ref: '#/components/schemas/BadgeDetail'
+                      $ref: '#/components/schemas/BadgeDetail2'
                   total_count:
                     type: integer
                     format: int64
@@ -308,7 +308,7 @@ paths:
                   badges:
                     type: array
                     items:
-                      $ref: '#/components/schemas/BadgeDetail'
+                      $ref: '#/components/schemas/BadgeDetail2'
         '400':
           description: Invalid parameters supplied
         '404':
@@ -344,7 +344,7 @@ paths:
                   badges:
                     type: array
                     items:
-                      $ref: '#/components/schemas/BadgeDetail'
+                      $ref: '#/components/schemas/BadgeDetail2'
                   total_count:
                     type: integer
                     format: int64
@@ -604,6 +604,58 @@ components:
       format: int64
       example: 101, 102, 103
     BadgeDetail:
+      type: object
+      properties:
+        badges_id:
+          type: integer
+          format: int64
+          example: 101
+        type:
+          type: string
+          enum:
+            - wisdom
+            - knowledge
+        name:
+          type: string
+          example: degitalbadge101
+        description:
+          type: string
+          example: degitalbadge101 description ...
+        tags:
+          type: string
+          example: degitalbadge101 tag ...
+        image:
+          type: string
+          example: degitalbadge101.jpg
+        image_author:
+          type: string
+          example: degitalbadge101 author
+        issuer_name:
+          type: string
+          example: degitalbadge101 issuer_name
+        issuer_url:
+          type: string
+          example: degitalbadge101 issuer_url
+        issuer_email:
+          type: string
+          example: degitalbadge101 issuer_email
+        portal_category_name:
+          type: string
+          example: portalCategory101
+        portal_category_description:
+          type: string
+          example: PortalCategory101 description...
+        portal_category_image_url_path:
+          type: string
+          example: /img/img001.png
+        degital_badge_class_id:
+          type: string
+          example: degitalbadge_classID
+        detail:
+          oneOf:
+            - $ref: '#/components/schemas/wisdom'
+            - $ref: '#/components/schemas/knowledge'
+    BadgeDetail2:
       type: object
       properties:
         badges_id:
