@@ -63,6 +63,11 @@
    ```
    
    * 本番環境の管理者の認証情報は類推されにくいユーザ名およびパスワードを設定してください。
+   * 上記コマンド実行時に、エラー「relation "auth_user" does not exist」が発生する場合、マイグレーションが正しく行われてない可能性があるので、下記コマンドを実行してください。
+   ```
+   docker-compose exec app python /workspace/manage.py makemigrations
+   docker-compose exec app python /workspace/manage.py migrate
+   ```
 
 1. APIキーの作成  
    ブラウザで http://dev-portal.oku.cccties.org/admin を参照し、作成した管理者でログインしたうえで、「API Keys」の追加からAPIキーを作成してください。  
