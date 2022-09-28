@@ -25,11 +25,12 @@ class BadgesDetail(BaseAPIView):
             queryset = WisdomBadges.objects.filter(pk__in = id_array).order_by('pk').distinct().prefetch_related(
                 'knowledge_badges_wisdom_badges__criteria_knowledge_badges'
             ).select_related(
-                'issuer'
+                'issuer',
+                'portal_category'
             )
             if queryset.exists() == False:
                 raise NotFound('Badges not found')
-            result = to_wisdom_badges(queryset)
+            result = to_wisdom_badges(queryset, output_portal_category=True)
         elif type == 'knowledge':
             queryset = KnowledgeBadges.objects.filter(pk__in = id_array).order_by('pk').distinct().prefetch_related(
                 'criteria_knowledge_badges'

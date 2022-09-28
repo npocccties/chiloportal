@@ -19,7 +19,8 @@ class PortalCategoryBadgesList(BaseAPIView):
             self.logger.error(f'Invalid page_number: {page_number}')
             raise ParseError('Invalid parameters supplied')
         queryset = WisdomBadges.objects.filter(portal_category_id = id).order_by('pk').distinct().select_related(
-            'issuer'
+            'issuer',
+            'portal_category'
         ).prefetch_related(
             'knowledge_badges_wisdom_badges'
         )
