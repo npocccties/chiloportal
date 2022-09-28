@@ -36,7 +36,8 @@ class WisdomBadgesListKeyword(BaseAPIView):
         queryset = WisdomBadges.objects.filter(filter_args).order_by('pk').distinct().prefetch_related(
             'knowledge_badges_wisdom_badges', 
         ).select_related(
-            'issuer'
+            'issuer',
+            'portal_category'
         )
         if queryset.exists() == False:
             raise NotFound('Badges not found')

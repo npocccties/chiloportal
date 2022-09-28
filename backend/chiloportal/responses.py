@@ -53,14 +53,15 @@ def to_pager_wisdom_badges_all(queryset):
         'end': len(badge_array)
     }
 
-def to_wisdom_badges(queryset):
-    return [to_wisdom_badge(wisdom_badge) for wisdom_badge in queryset]
+def to_wisdom_badges(queryset, output_portal_category = False):
+    return [to_wisdom_badge(wisdom_badge, output_portal_category) for wisdom_badge in queryset]
 
-def to_wisdom_badge(wisdom_badge):
+def to_wisdom_badge(wisdom_badge, output_portal_category = False):
     knowledge_badges = wisdom_badge.knowledge_badges_wisdom_badges
     knowledge_badges_id_list = sorted([knowledge_badge.id for knowledge_badge in knowledge_badges.all()])
     issuer = wisdom_badge.issuer
-    return {
+    portal_category = wisdom_badge.portal_category
+    result = {
         'badges_id': wisdom_badge.id,
         'type': 'wisdom',
         'name': wisdom_badge.name,
@@ -76,6 +77,11 @@ def to_wisdom_badge(wisdom_badge):
             'knowledge_badges_list': knowledge_badges_id_list,
         }
     }
+    if output_portal_category and portal_category:
+        result['portal_category_name'] = portal_category.name
+        result['portal_category_description'] = portal_category.description
+        result['portal_category_image_url_path'] = portal_category.image_url_path
+    return result
 
 def to_knowledge_badges(queryset):
     return [to_knowledge_badge(knowledge_badge) for knowledge_badge in queryset]
