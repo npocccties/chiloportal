@@ -251,9 +251,9 @@ paths:
       description: 指定されたバッジIDのバッジ関連情報を返却します
       operationId: findBadges
       parameters:
-        - name: badges_id
+        - name: badges_ids
           in: query
-          description: badges id (カンマ区切りの文字列)
+          description: Multiple badges IDs (カンマ区切りの文字列)
           required: true
           schema:
             type: string
@@ -271,7 +271,9 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/BadgeDetail'
+                  oneOf:
+                    - $ref: '#/components/schemas/BadgeDetail1'
+                    - $ref: '#/components/schemas/BadgeDetail2'
         '400':
           description: Invalid parameters supplied
         '404':
@@ -603,7 +605,7 @@ components:
       type: integer
       format: int64
       example: 101, 102, 103
-    BadgeDetail:
+    BadgeDetail1:
       type: object
       properties:
         badges_id:
@@ -639,6 +641,10 @@ components:
         issuer_email:
           type: string
           example: degitalbadge101 issuer_email
+        portal_category_id:
+          type: integer
+          format: int64
+          example: 101
         portal_category_name:
           type: string
           example: portalCategory101
