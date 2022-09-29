@@ -1,9 +1,5 @@
 from rest_framework.views import APIView
-from rest_framework_api_key.permissions import HasAPIKey
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import NotFound,ParseError
-from django.db.models import Q
-from django.conf import settings
 from ..models import *
 from ..swagger import *
 from ..responses import *
@@ -16,10 +12,6 @@ from django.db import connection,reset_queries
 
 
 class BaseAPIView(APIView):
-    if settings.DEBUG:
-        permission_classes = [HasAPIKey | IsAuthenticated]
-    else:
-        permission_classes = [HasAPIKey]
     per_page = int(os.getenv('PER_PAGE', '30'))
     logger = logging.getLogger(__name__)
 
