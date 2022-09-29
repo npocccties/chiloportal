@@ -1,7 +1,7 @@
 # Visual Studio Code
 ## 環境構築手順
 
-1. Visual Studio Code に拡張機能「Remote - Containers」をインストール  
+1. Visual Studio Code に拡張機能「Dev - Containers」をインストール  
 
 1. `.env.local-debug`を複製し、複製したファイルを`.env`にリネーム  
 
