@@ -47,7 +47,7 @@
             "program": "${workspaceFolder}/manage.py",
             "args": [
                 "test",
-                "chiloportal.tests.test_import_badge"
+                "chiloportal.tests.commands.test_import_badge"
             ],
             "django": true,
             "justMyCode": true
@@ -59,7 +59,7 @@
             "program": "${workspaceFolder}/manage.py",
             "args": [
                 "test",
-                "chiloportal.tests.test_views"
+                "chiloportal.tests.views"
             ],
             "django": true,
             "justMyCode": true
