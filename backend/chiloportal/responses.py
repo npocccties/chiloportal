@@ -78,6 +78,7 @@ def to_wisdom_badge(wisdom_badge, output_portal_category = False):
         }
     }
     if output_portal_category and portal_category:
+        result['portal_category_id'] = portal_category.id
         result['portal_category_name'] = portal_category.name
         result['portal_category_description'] = portal_category.description
         result['portal_category_image_url_path'] = portal_category.image_url_path
