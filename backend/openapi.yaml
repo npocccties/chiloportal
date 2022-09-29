@@ -1,0 +1,829 @@
+openapi: 3.0.3
+info:
+  title: Portal Badges API
+  description: 教員研修システム向けバッジ関連データ取得API
+  version: 0.9.4
+servers:
+  - url: https://chiloportal.example.com/api/v1
+tags:
+  - name: consumer
+    description: コンシューマ情報取得
+  - name: consumer list
+    description: コンシューマ情報一覧
+  - name: framework field list
+    description: 育成指標に関連する指標項目一覧
+  - name: stage field list
+    description: 成長段階に関連する指標項目一覧
+  - name: portal category list
+    description: ポータルカテゴリ一覧
+  - name: portal category badges list
+    description: ポータルカテゴリーに属するバッジ一覧取得
+  - name: framework
+    description: 育成指標取得
+  - name: stage list
+    description: 育成指標に関連する成長段階一覧
+  - name: badges
+    description: バッジ情報取得
+  - name: wisdom badges list
+    description: 能力バッジ一覧取得
+  - name: keyword search
+    description: キーワードバッジ検索
+  - name: badges consumer list
+    description: バッジを承認しているコンシューマの一覧
+  - name: badges criteria list
+    description: バッジの研修内容一覧取得
+  - name: consumer framework list
+    description: 指定したコンシューマIDの育成指標一覧
+paths:
+  /consumer:
+    get:
+      tags:
+        - consumer
+      description: 指定されたコンシューマIDに該当するコンシューマ情報を返却します
+      operationId: findConsumer
+      parameters:
+        - name: consumer_id
+          in: query
+          description: consumer id
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Consumer'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Consumer not found
+  /consumer/list:
+    get:
+      tags:
+        - consumer list
+      description: 登録されているコンシューマ情報を一覧で返却します
+      operationId: findConsumerList
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Consumer'
+        '404':
+          description: Data not found
+  /framework/field/list:
+    get:
+      tags:
+        - framework field list
+      description: 指定された育成指標IDに関連する指標項目を一覧で返却します
+      operationId: findFrameworkFieldList
+      parameters:
+        - name: framework_id
+          in: query
+          description: framework id
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Field'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Field not found
+  /stage/field/list:
+    get:
+      tags:
+        - stage field list
+      description: 指定された成長段階IDに関連する指標項目情報を返却します
+      operationId: findStageFieldList
+      parameters:
+        - name: stage_id
+          in: query
+          description: stage id
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FieldDetail'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Field not found
+  /portalCategory/list:
+    get:
+      tags:
+        - portal category list
+      description: 登録されているポータルカテゴリ情報を一覧で返却します
+      operationId: findPortalCategoryList
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PortalCategory'
+        '404':
+          description: Data not found
+  /portalCategory/badges/list:
+    get:
+      tags:
+        - portal category badges list
+      description: 能力バッジ一覧を返却します
+      operationId: findPortalCategoryBadgesList
+      parameters:
+        - name: portal_category_id
+          in: query
+          description: portal category id
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: page_number
+          in: query
+          description: page number
+          required: false
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  badges:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/BadgeDetail2'
+                  total_count:
+                    type: integer
+                    format: int64
+                    example: 101
+                  start:
+                    type: integer
+                    format: int64
+                    example: 1
+                  end:
+                    type: integer
+                    format: int64
+                    example: 30
+                additionalProperties: false
+                required:
+                  - badges
+                  - total_count
+                  - start
+                  - end
+        '400':
+          description: Invalid parameters supplied
+        '404':
+          description: Badges not found
+  /framework:
+    get:
+      tags:
+        - framework
+      description: 指定された育成指標IDに該当する育成指標情報を返却します
+      operationId: findFramework
+      parameters:
+        - name: framework_id
+          in: query
+          description: framework id
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Framework'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: framework not found
+  /framework/stage/list:
+    get:
+      tags:
+        - stage list
+      description: 指定された育成指標IDに関連する成長段階情報を返却します
+      operationId: findFrameworkStageList
+      parameters:
+        - name: framework_id
+          in: query
+          description: framework id
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Stage'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Stage not found
+  /badges:
+    get:
+      tags:
+        - badges
+      description: 指定されたバッジIDのバッジ関連情報を返却します
+      operationId: findBadges
+      parameters:
+        - name: badges_ids
+          in: query
+          description: Multiple badges IDs (カンマ区切りの文字列)
+          required: true
+          schema:
+            type: string
+        - name: badges_type
+          in: query
+          description: badges type
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  oneOf:
+                    - $ref: '#/components/schemas/BadgeDetail1'
+                    - $ref: '#/components/schemas/BadgeDetail2'
+        '400':
+          description: Invalid parameters supplied
+        '404':
+          description: Badges not found
+  /wisdomBadges/list:
+    get:
+      tags:
+        - wisdom badges list
+      description: 能力バッジ一覧を返却します
+      operationId: findBadgesList
+      parameters:
+        - name: field_id
+          in: query
+          description: field id
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: stage_id
+          in: query
+          description: stage id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  badges:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/BadgeDetail2'
+                additionalProperties: false
+                required:
+                  - badges
+        '400':
+          description: Invalid parameters supplied
+        '404':
+          description: Badges not found
+  /wisdomBadges/list/keyword:
+    get:
+      tags:
+        - keyword search
+      description: 指定されたキーワードに関連する能力バッジ一覧を返却します
+      operationId: findBadgesListKeyword
+      parameters:
+        - name: keyword
+          in: query
+          description: keyword
+          required: true
+          schema:
+            type: string
+        - name: page_number
+          in: query
+          description: page number
+          required: false
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  badges:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/BadgeDetail2'
+                  total_count:
+                    type: integer
+                    format: int64
+                    example: 101
+                  start:
+                    type: integer
+                    format: int64
+                    example: 1
+                  end:
+                    type: integer
+                    format: int64
+                    example: 30
+                additionalProperties: false
+                required:
+                  - badges
+                  - total_count
+                  - start
+                  - end
+        '400':
+          description: Invalid keyword supplied
+        '404':
+          description: Badges not found
+  /wisdomBadges/consumer/list:
+    get:
+      tags:
+        - badges consumer list
+      description: 指定されたバッジIDに関連するコンシューマのリストを返却します
+      operationId: findBadgesConsumerList
+      parameters:
+        - name: badges_id
+          in: query
+          description: Badges id
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Consumer'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Consumer not found
+  /knowledgeBadges/criteria/list:
+    get:
+      tags:
+        - badges criteria list
+      description: 指定された知識バッジIDに関連する研修内容のリストを返却します
+      operationId: findBadgesCriteriaList
+      parameters:
+        - name: badges_id
+          in: query
+          description: Badges id
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Criteria'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Criteria not found
+  /consumer/framework/list:
+    get:
+      tags:
+        - consumer framework list
+      description: 指定されたコンシューマIDに関連する育成指標リストを返却します
+      operationId: findConsumerFrameworkList
+      parameters:
+        - name: consumer_id
+          in: query
+          description: consumer id
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Framework'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Framework not found
+
+components:
+  schemas:
+    Consumer:
+      type: object
+      properties:
+        consumer_id:
+          type: integer
+          format: int64
+          example: 101
+        name:
+          type: string
+          example: consumer101
+        url:
+          type: string
+          example: https://example.com/consumer101/
+        email:
+          type: string
+          example: consumer101@example.com
+      additionalProperties: false
+      required:
+        - consumer_id
+        - name
+        - url
+        - email
+    Field:
+      type: object
+      properties:
+        field1:
+          type: array
+          items:
+            $ref: '#/components/schemas/Field1'
+      additionalProperties: false
+      required:
+        - field1
+    Field1:
+      type: object
+      properties:
+        field1_name:
+          type: string
+          example: field1011
+        field2:
+          type: array
+          items:
+            $ref: '#/components/schemas/Field2'
+      additionalProperties: false
+      required:
+        - field1_name
+        - field2
+    Field2:
+      properties:
+        field2_name:
+          type: string
+          example: field1012
+        field3:
+          type: array
+          items:
+            $ref: '#/components/schemas/Field3'
+      additionalProperties: false
+      required:
+        - field2_name
+        - field3
+    Field3:
+      properties:
+        field_id:
+          type: integer
+          format: int64
+          example: 101123
+        field3_name:
+          type: string
+          example: field1013
+      additionalProperties: false
+      required:
+        - field_id
+        - field3_name
+    FieldDetail:
+      type: object
+      properties:
+        field1:
+          type: array
+          items:
+            $ref: '#/components/schemas/Field1d'
+      additionalProperties: false
+      required:
+        - field1
+    Field1d:
+      type: object
+      properties:
+        field1_name:
+          type: string
+          example: field1011
+        field2:
+          type: array
+          items:
+            $ref: '#/components/schemas/Field2d'
+      additionalProperties: false
+      required:
+        - field1_name
+        - field2
+    Field2d:
+      properties:
+        field2_name:
+          type: string
+          example: field1012
+        field3:
+          type: array
+          items:
+            $ref: '#/components/schemas/Field3d'
+      additionalProperties: false
+      required:
+        - field2_name
+        - field3
+    Field3d:
+      properties:
+        field_id:
+          type: integer
+          format: int64
+          example: 101123
+        field3_name:
+          type: string
+          example: field1013
+        wisdom_badges:
+          type: array
+          items:
+            $ref: '#/components/schemas/BadgesList'
+      additionalProperties: false
+      required:
+        - field_id
+        - field3_name
+        - wisdom_badges
+    PortalCategory:
+      type: object
+      properties:
+        portal_category_id:
+          type: integer
+          format: int64
+          example: 101
+        name:
+          type: string
+          example: portalCategory101
+        description:
+          type: string
+          example: PortalCategory101 description...
+        image_url_path:
+          type: string
+          example: /img/img001.png
+        badges_count:
+          type: integer
+          example: 5
+      additionalProperties: false
+      required:
+        - portal_category_id
+        - name
+        - description
+        - image_url_path
+        - badges_count
+    Framework:
+      type: object
+      properties:
+        framework_id:
+          type: integer
+          format: int64
+          example: 101
+        name:
+          type: string
+          example: framework101
+        description:
+          type: string
+          example: Framework101 description...
+        supplementary:
+          type: string
+          example: Framework101 supplementary...
+        url:
+          type: string
+          example: path to document framework101
+      additionalProperties: false
+      required:
+        - framework_id
+        - name
+        - description
+        - supplementary
+        - url
+    Stage:
+      type: object
+      properties:
+        stage_id:
+          type: integer
+          format: int64
+          example: 101
+        name:
+          type: string
+          example: stage101
+        sub_name:
+          type: string
+          example: stage101 sub_name...
+        description:
+          type: string
+          example: stage101 description...
+      additionalProperties: false
+      required:
+        - stage_id
+        - name
+        - sub_name
+        - description
+    Criteria:
+      type: object
+      properties:
+        criteria_id:
+          type: integer
+          format: int64
+          example: 101
+        type:
+          type: string
+          example: criteria_type101
+        name:
+          type: string
+          example: criteria_name101
+      additionalProperties: false
+      required:
+        - criteria_id
+        - type
+        - name
+    BadgesList:
+      type: integer
+      format: int64
+      example: 101, 102, 103
+    BadgeDetail1:
+      type: object
+      properties:
+        badges_id:
+          type: integer
+          format: int64
+          example: 101
+        type:
+          type: string
+          enum:
+            - wisdom
+            - knowledge
+        name:
+          type: string
+          example: degitalbadge101
+        description:
+          type: string
+          example: degitalbadge101 description ...
+        tags:
+          type: string
+          example: degitalbadge101 tag ...
+        image:
+          type: string
+          example: degitalbadge101.jpg
+        image_author:
+          type: string
+          example: degitalbadge101 author
+        issuer_name:
+          type: string
+          example: degitalbadge101 issuer_name
+        issuer_url:
+          type: string
+          example: degitalbadge101 issuer_url
+        issuer_email:
+          type: string
+          example: degitalbadge101 issuer_email
+        portal_category_id:
+          type: integer
+          format: int64
+          example: 101
+        portal_category_name:
+          type: string
+          example: portalCategory101
+        portal_category_description:
+          type: string
+          example: PortalCategory101 description...
+        portal_category_image_url_path:
+          type: string
+          example: /img/img001.png
+        degital_badge_class_id:
+          type: string
+          example: degitalbadge_classID
+        detail:
+          oneOf:
+            - $ref: '#/components/schemas/wisdom'
+            - $ref: '#/components/schemas/knowledge'
+      additionalProperties: false
+      required:
+        - badges_id
+        - type
+        - name
+        - description
+        - tags
+        - image
+        - image_author
+        - issuer_name
+        - issuer_url
+        - issuer_email
+        - portal_category_id
+        - portal_category_name
+        - portal_category_description
+        - portal_category_image_url_path
+        - degital_badge_class_id
+        - detail
+    BadgeDetail2:
+      type: object
+      properties:
+        badges_id:
+          type: integer
+          format: int64
+          example: 101
+        type:
+          type: string
+          enum:
+            - wisdom
+            - knowledge
+        name:
+          type: string
+          example: degitalbadge101
+        description:
+          type: string
+          example: degitalbadge101 description ...
+        tags:
+          type: string
+          example: degitalbadge101 tag ...
+        image:
+          type: string
+          example: degitalbadge101.jpg
+        image_author:
+          type: string
+          example: degitalbadge101 author
+        issuer_name:
+          type: string
+          example: degitalbadge101 issuer_name
+        issuer_url:
+          type: string
+          example: degitalbadge101 issuer_url
+        issuer_email:
+          type: string
+          example: degitalbadge101 issuer_email
+        degital_badge_class_id:
+          type: string
+          example: degitalbadge_classID
+        detail:
+          oneOf:
+            - $ref: '#/components/schemas/wisdom'
+            - $ref: '#/components/schemas/knowledge'
+      additionalProperties: false
+      required:
+        - badges_id
+        - type
+        - name
+        - description
+        - tags
+        - image
+        - image_author
+        - issuer_name
+        - issuer_url
+        - issuer_email
+        - degital_badge_class_id
+        - detail
+    wisdom:
+      type: object
+      properties:
+        knowledge_badges_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/BadgesList'
+      additionalProperties: false
+      required:
+        - knowledge_badges_list
+    knowledge:
+      type: array
+      items:
+        $ref: '#/components/schemas/Criteria'
