@@ -190,6 +190,12 @@ paths:
                     type: integer
                     format: int64
                     example: 30
+                additionalProperties: false
+                required:
+                  - badges
+                  - total_count
+                  - start
+                  - end
         '400':
           description: Invalid parameters supplied
         '404':
@@ -311,6 +317,9 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/BadgeDetail2'
+                additionalProperties: false
+                required:
+                  - badges
         '400':
           description: Invalid parameters supplied
         '404':
@@ -359,6 +368,12 @@ paths:
                     type: integer
                     format: int64
                     example: 30
+                additionalProperties: false
+                required:
+                  - badges
+                  - total_count
+                  - start
+                  - end
         '400':
           description: Invalid keyword supplied
         '404':
@@ -460,6 +475,12 @@ components:
         email:
           type: string
           example: consumer101@example.com
+      additionalProperties: false
+      required:
+        - consumer_id
+        - name
+        - url
+        - email
     Field:
       type: object
       properties:
@@ -467,6 +488,9 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Field1'
+      additionalProperties: false
+      required:
+        - field1
     Field1:
       type: object
       properties:
@@ -477,6 +501,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Field2'
+      additionalProperties: false
+      required:
+        - field1_name
+        - field2
     Field2:
       properties:
         field2_name:
@@ -486,6 +514,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Field3'
+      additionalProperties: false
+      required:
+        - field2_name
+        - field3
     Field3:
       properties:
         field_id:
@@ -495,6 +527,10 @@ components:
         field3_name:
           type: string
           example: field1013
+      additionalProperties: false
+      required:
+        - field_id
+        - field3_name
     FieldDetail:
       type: object
       properties:
@@ -502,6 +538,9 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Field1d'
+      additionalProperties: false
+      required:
+        - field1
     Field1d:
       type: object
       properties:
@@ -512,6 +551,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Field2d'
+      additionalProperties: false
+      required:
+        - field1_name
+        - field2
     Field2d:
       properties:
         field2_name:
@@ -521,6 +564,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Field3d'
+      additionalProperties: false
+      required:
+        - field2_name
+        - field3
     Field3d:
       properties:
         field_id:
@@ -534,6 +581,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/BadgesList'
+      additionalProperties: false
+      required:
+        - field_id
+        - field3_name
+        - wisdom_badges
     PortalCategory:
       type: object
       properties:
@@ -553,6 +605,13 @@ components:
         badges_count:
           type: integer
           example: 5
+      additionalProperties: false
+      required:
+        - portal_category_id
+        - name
+        - description
+        - image_url_path
+        - badges_count
     Framework:
       type: object
       properties:
@@ -572,6 +631,13 @@ components:
         url:
           type: string
           example: path to document framework101
+      additionalProperties: false
+      required:
+        - framework_id
+        - name
+        - description
+        - supplementary
+        - url
     Stage:
       type: object
       properties:
@@ -588,6 +654,12 @@ components:
         description:
           type: string
           example: stage101 description...
+      additionalProperties: false
+      required:
+        - stage_id
+        - name
+        - sub_name
+        - description
     Criteria:
       type: object
       properties:
@@ -601,6 +673,11 @@ components:
         name:
           type: string
           example: criteria_name101
+      additionalProperties: false
+      required:
+        - criteria_id
+        - type
+        - name
     BadgesList:
       type: integer
       format: int64
@@ -661,6 +738,24 @@ components:
           oneOf:
             - $ref: '#/components/schemas/wisdom'
             - $ref: '#/components/schemas/knowledge'
+      additionalProperties: false
+      required:
+        - badges_id
+        - type
+        - name
+        - description
+        - tags
+        - image
+        - image_author
+        - issuer_name
+        - issuer_url
+        - issuer_email
+        - portal_category_id
+        - portal_category_name
+        - portal_category_description
+        - portal_category_image_url_path
+        - degital_badge_class_id
+        - detail
     BadgeDetail2:
       type: object
       properties:
@@ -704,6 +799,20 @@ components:
           oneOf:
             - $ref: '#/components/schemas/wisdom'
             - $ref: '#/components/schemas/knowledge'
+      additionalProperties: false
+      required:
+        - badges_id
+        - type
+        - name
+        - description
+        - tags
+        - image
+        - image_author
+        - issuer_name
+        - issuer_url
+        - issuer_email
+        - degital_badge_class_id
+        - detail
     wisdom:
       type: object
       properties:
@@ -711,6 +820,9 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/BadgesList'
+      additionalProperties: false
+      required:
+        - knowledge_badges_list
     knowledge:
       type: array
       items:
