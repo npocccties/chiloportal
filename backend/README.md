@@ -17,8 +17,6 @@
 ## デバッグ方法
 ### バックエンドAPI
 1. 実行とデバッグで「Backend API」を選択し、F5キーを押下したのち、ブラウザから http://localhost:8000/api/v1/swagger/ を参照することでSwaggerUIを使用可能  
-   
-   * SwaggerUIは環境変数「DEBUG=True」とすることで有効になります  
 
 ### インポートコマンド
 1. 実行とデバッグで「Import command」を選択し、F5キーを押下  
@@ -71,14 +69,6 @@
    docker-compose exec app python /workspace/manage.py makemigrations
    docker-compose exec app python /workspace/manage.py migrate
    ```
-
-1. APIキーの作成  
-   ブラウザで http://dev-portal.oku.cccties.org/admin を参照し、作成した管理者でログインしたうえで、「API Keys」の追加からAPIキーを作成してください。  
-   作成すると、ブラウザのアドレスバーの下（Chromeの場合）にAPIキーが表示されるので、それをメモしてフロントエンドチームに配布してください。  
-   RESTful APIのヘッダーに指定する認証情報は以下の通りです。(本番環境でも同じことが言えますので、本番環境でもAPIキーの作成および配布は必要です。)  
-
-   * キー名：Authorization
-   * 値：Api-Key {APIキーの値} ※Api-Keyの後ろは半角スペースを入れる
 
 1. コンテナログの確認  
    ```
@@ -138,7 +128,7 @@
 |DB_USER|DBのユーザ名|POSTGRES_USERと合わせること|
 |DB_PASS|DBのパスワード|POSTGRES_PASSWORDと合わせること|
 |DB_PORT|DBのポート番号|5432固定|
-|DEBUG|デバッグ機能|デバッグ用でブラウザからAPI参照できたり、例外発生時のエラー内容が参照できるようになる<br>True: 有効<br>False: 無効<br>※本番リリース時は必ず「False」を設定してください|
+|DEBUG|デバッグ機能|デバッグ用で例外発生時のエラー内容が参照できるようになる<br>True: 有効<br>False: 無効<br>※本番リリース時は必ず「False」を設定してください|
 |ALLOWED_HOSTS|公開ホスト名|本番リリースする際は本番サーバーのホスト名を設定してください|
 |LOGGER_LEVEL|ロガーレベル|ログファイルの出力基準で以下を指定可能<br>DEBUG/INFO/WARNING/ERROR/CRITICAL|
 |IMAGE_DIR|画像ファイルの公開ディレクトリ（相対パス指定）|本番リリースする際は本番サーバーの公開ディレクトリを設定してください|
