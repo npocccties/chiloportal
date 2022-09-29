@@ -1,3 +1,7 @@
+# 開発環境
+* Visual Studio Code
+* Django REST Framework
+
 # Visual Studio Code
 ## 環境構築手順
 
