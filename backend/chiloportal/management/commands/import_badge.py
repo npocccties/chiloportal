@@ -1,5 +1,4 @@
 import os
-import re
 import requests
 import logging
 from django.core.management.base import BaseCommand
@@ -226,12 +225,18 @@ class Command(BaseCommand):
 
     def parse_narrative(self, criteria_narrative):
         criteria_list = []
+        delimiter = ' - '
         if criteria_narrative != None:
             nlist = criteria_narrative.replace('\"', '').split('\n')
             for n in nlist:
-                m = re.match(r'(.+) - (.+)', n)
-                if m != None:
-                    criteria_list.append(m.groups())
+                index = n.find(delimiter)
+                if index == -1:
+                    continue
+                criteria_type = n[:index]
+                criteria_name = n[index + len(delimiter):]
+                if not criteria_type or not criteria_name:
+                    continue
+                criteria_list.append([criteria_type, criteria_name])
         return criteria_list
 
 
