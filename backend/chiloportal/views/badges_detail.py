@@ -7,18 +7,18 @@ from .base_api_view import *
 from .. import utils
 
 class BadgesDetail(BaseAPIView):
-    swagger_query_params = [SwaggerQueryParam('badges_id', True), SwaggerQueryParam('badges_type', True)]
+    swagger_query_params = [SwaggerQueryParam('badges_ids', True), SwaggerQueryParam('badges_type', True)]
     filter_backends = (SwaggerQueryParamFilter,)
     def _get(self, request):
-        id_str = self.request.GET.get('badges_id')
+        id_str = self.request.GET.get('badges_ids')
         type = self.request.GET.get('badges_type')
         if id_str == None:
-            self.logger.error('Not exist badges_id')
+            self.logger.error('Not exist badges_ids')
             raise ParseError('Invalid parameters supplied')
         id_array = id_str.split(',')
         for id in id_array:
             if utils.is_int(id) == False:
-                self.logger.error(f'Invalid badges_id: {id}')
+                self.logger.error(f'Invalid badges_ids: {id}')
                 raise ParseError('Invalid parameters supplied')
         result = []
         if type == 'wisdom':
