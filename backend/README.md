@@ -31,7 +31,8 @@
 1. 実行とデバッグで「Unit Test」を選択し、F5キーを押下し、エラーがないことを確認  
 
    * エラーがあればエラー発生箇所を修正してください  
-   * ソース修正した場合は、適宜「chiloportal/tests/*.py」にテストコードを追加してください  
+   * インポートコマンドの単体テスト：chiloportal/tests/commands/*.py
+   * バックエンドAPIの単体テスト：chiloportal/tests/views/*.py
 
 
 # 開発サーバー
