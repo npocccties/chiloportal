@@ -164,9 +164,12 @@
    ```
 
 # djangoの管理画面
-```
-{ドメイン}/admin
-```
+ブラウザから下記のURLを参照してください。
+## ローカル環境
+http://localhost:8000/admin
+
+## 開発サーバー
+http://dev-portal.oku.cccties.org/admin
 
 * SQLを使用せずともdjangoの管理画面からデータを作成することは可能です（1件毎の手入力となりますので効率は下がります）
 
