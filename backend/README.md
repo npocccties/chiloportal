@@ -6,25 +6,26 @@
 ## 環境構築手順
 
 1. Visual Studio Code に拡張機能「Dev - Containers」をインストール  
-
 1. `.env.local-debug`を複製し、複製したファイルを`.env`にリネーム  
-
 1. 表示 ⇒ コマンドパレット で「Remote-Containers: Open Folder in Container...」を選択し、backendフォルダを選択  
-
 1. コンテナのビルドが終了したら、ターミナル ⇒ 新しいターミナル で以降のコマンドを実行  
-
 1. 管理者作成  
    ```
+   python /workspace/manage.py makemigrations
+   python /workspace/manage.py migrate
    python /workspace/manage.py createsuperuser
    ```
 
 ## デバッグ方法
 ### バックエンドAPI
-1. 実行とデバッグで「Backend API」を選択し、F5キーを押下したのち、ブラウザから http://localhost:8000/api/v1/swagger/ を参照することでSwaggerUIを使用可能  
+1. 実行とデバッグで「Backend API」を選択し、F5キーを押下
+1. ブラウザから http://localhost:8000/api/v1/swagger/ を参照する
+1. 該当のAPIを開いてから、「Try it out」を押下
+1. 必要に応じてパラメータ入力を行う
+1. 「Execute」を押下し、期待する値が得られているか確認する
 
 ### インポートコマンド
 1. 実行とデバッグで「Import command」を選択し、F5キーを押下  
-
    * 能力バッジを取得するURLは .vscode/launch.json にて定義しているので、適宜変更してください
 
 ## テスト方法
@@ -39,21 +40,16 @@
 ## 環境構築手順
 
 1. dockerおよびdocker-composeをインストール（詳細はググってください。「Rocky docker docker-compose」等で）  
-
 1. chiloportal のソースを git で取得
    ```
    git clone https://github.com/npocccties/chiloportal.git
    ```
-
 1. docker-compose.ymlのあるbackendフォルダに移動  
    ```
    cd chiloportal/backend
    ```
-
 1. `.env.dev-server-debug`を複製し、複製したファイルを`.env`にリネーム  
-
    * DBの認証情報やdjangoの秘密鍵を含めてますので、本番環境でも使用する場合は適宜変更してください  
-
 1. コンテナの起動  
    ```
    docker-compose up -d
@@ -62,24 +58,17 @@
    ```
    docker-compose build --no-cache
    ```
-
 1. 管理者作成  
-   ```
-   docker-compose exec app python /workspace/manage.py createsuperuser
-   ```
-   
-   * 本番環境の管理者の認証情報は類推されにくいユーザ名およびパスワードを設定してください。
-   * 上記コマンド実行時に、エラー「relation "auth_user" does not exist」が発生する場合、マイグレーションが正しく行われてない可能性があるので、下記コマンドを実行してください。
    ```
    docker-compose exec app python /workspace/manage.py makemigrations
    docker-compose exec app python /workspace/manage.py migrate
+   docker-compose exec app python /workspace/manage.py createsuperuser
    ```
-
+   * 本番環境の管理者の認証情報は類推されにくいユーザ名およびパスワードを設定してください。
 1. コンテナログの確認  
    ```
    docker-compose logs -f
    ```
-
 1. コンテナの停止  
    ```
    docker-compose stop
@@ -97,11 +86,8 @@
 ## 動作確認
 ### バックエンドAPI
 1. ブラウザから http://dev-portal.oku.cccties.org/api/v1/swagger/ にアクセス
-
 1. 該当のAPIを開いてから、「Try it out」を押下
-
 1. 必要に応じてパラメータ入力を行う
-
 1. 「Execute」を押下し、期待する値が得られているか確認する
 
 ### インポートコマンド
@@ -194,16 +180,16 @@ http://dev-portal.oku.cccties.org/admin
    ```
 
 # Pythonの追加パッケージのインストール時
-
 1. pipコマンドにより Python のパッケージをインストールした場合、下記コマンドを実行し requirements.txt を更新してください。  
    ```
    pip freeze > requirements.txt
    ```
 
-
 # 単体テストのカバレッジ取得
-
-1. 下記コマンド実行後、htmlcov/index.html にカバレッジが出力されるので、未走行パスを確認して必要に応じて消化してください。  
+1. 下記コマンド実行  
    ```
    coverage run --source='.' manage.py test && coverage report && coverage html
    ```
+   * htmlcov/index.html にカバレッジが出力  
+1. 未走行パスを確認して必要に応じてテストコードを追加
+1. 再度、カバレッジを出力する
