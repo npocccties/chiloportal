@@ -9,6 +9,7 @@ services:
     volumes:
       - ./:/workspace
       -  ${PWD}/${IMAGE_DIR}:/workspace/output/images/
+      -  ./logs:/var/log/chiloportal/
     environment:
       - SECRET_KEY=$SECRET_KEY
       - DB_HOST=$DB_HOST
@@ -50,6 +51,8 @@ services:
       - POSTGRES_DB=$POSTGRES_DB
       - POSTGRES_USER=$POSTGRES_USER
       - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+      # initdbÇ≈é∏îsÇµÇƒÇ¢ÇΩÇÃÇ≈ÉpÉXÇïœçX
+      - PGDATA=/var/lib/postgresql/data/pgdata
     ports:
       - 5433:5432
     volumes:

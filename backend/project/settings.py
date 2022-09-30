@@ -152,9 +152,9 @@ if os.path.exists(log_dir) == False:
 log_fname = ''
 args = sys.argv
 if 'runserver' in args:
-    log_fname = 'backend-api.log'
-elif 'import' in args:
-    log_fname = 'import.log'
+    log_fname = 'backend_api.log'
+elif 'import_badge' in args:
+    log_fname = 'import_badge.log'
 else:
     log_fname = 'default.log'
 
