@@ -160,7 +160,7 @@ http://dev-portal.oku.cccties.org/admin
 * SQLを使用せずとも Django の管理画面からデータを作成することは可能です（1件毎の手入力となりますので効率は下がります）
 
 # ログファイル
-ファイルサイズ上限は 100MB でローリングし、7日間バックアップを行います。(下記ログは app コンテナに格納)  
+ファイルサイズ上限は 100MB でローリングし、7日間バックアップを行います。  
 1. バックエンドAPI
    ```
    chiloportal/backend/logs/backend_api.log
