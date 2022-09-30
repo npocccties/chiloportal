@@ -48,7 +48,7 @@
    cd chiloportal/backend
    ```
 1. `.env.dev-server-debug`を複製し、複製したファイルを`.env`にリネーム  
-   * DBの認証情報やdjangoの秘密鍵を含めてますので、本番環境でも使用する場合は適宜変更してください  
+   * DBの認証情報や Django の秘密鍵を含めてますので、本番環境でも使用する場合は適宜変更してください  
 1. コンテナの起動  
    ```
    docker-compose up -d
@@ -149,7 +149,7 @@
    Password:postgres
    ```
 
-# djangoの管理画面
+# Django の管理画面
 ブラウザから下記のURLを参照してください。
 ## ローカル環境
 http://localhost:8000/admin
@@ -157,26 +157,17 @@ http://localhost:8000/admin
 ## 開発サーバー
 http://dev-portal.oku.cccties.org/admin
 
-* SQLを使用せずともdjangoの管理画面からデータを作成することは可能です（1件毎の手入力となりますので効率は下がります）
+* SQLを使用せずとも Django の管理画面からデータを作成することは可能です（1件毎の手入力となりますので効率は下がります）
 
 # ログファイル
-ファイルサイズ上限は100MBでローリングし、7日間バックアップを行います。(下記ログは Python が入っているコンテナ「app」に格納)  
+ファイルサイズ上限は 100MB でローリングし、7日間バックアップを行います。(下記ログは app コンテナに格納)  
 1. バックエンドAPI
    ```
-   /var/log/chiloportal/backend-api.log
+   chiloportal/backend/logs/backend_api.log
    ```
 1. インポートコマンド
    ```
-   /var/log/chiloportal/import.log
-   ```
-1. 備考  
-   app コンテナに入るためのコマンド
-   ```
-   docker-compose exec app sh
-   ```
-   コンテナから出るためのコマンド
-   ```
-   exit
+   chiloportal/backend/logs/import_badge.log
    ```
 
 # Pythonの追加パッケージのインストール時
