@@ -145,8 +145,23 @@
 
 
 # DBの確認
-環境変数に設定しているDBのホスト名/DB名/DBのユーザ名/DBのパスワードおよび、ポート番号に「5433」を使用して、SQLツールにて接続可能です。  
+## ローカル環境
+1. SQLクライアントツールから参照
+   * サーバー名: 127.0.0.1
+   * データベース名: develop
+   * ユーザID/パスワード: postgres
+   * ポート番号: 5433
 
+## 開発サーバー
+1. db コンテナを通してコマンド実行
+   例えば、スキーマとデータのエクスポートを行う場合は以下。
+   ```
+   docker-compose exec db pg_dump -h 127.0.0.1 -p 5432 -d develop -U postgres -t portal_category -t issuer -t wisdom_badges -t knowledge_badges -t criteria -t categorised_badges -t consumer -t framework -t field -t stage -t goal --data-only > /tmp/chiloportal.dump
+   ```
+   パスワードを入力する。
+   ```
+   Password:postgres
+   ```
 
 # djangoの管理画面
 ```
