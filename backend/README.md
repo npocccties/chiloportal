@@ -30,7 +30,6 @@
 
 ## テスト方法
 1. 実行とデバッグで「Unit Test」を選択し、F5キーを押下し、エラーがないことを確認  
-
    * エラーがあればエラー発生箇所を修正してください  
    * インポートコマンドの単体テスト：chiloportal/tests/commands/*.py
    * バックエンドAPIの単体テスト：chiloportal/tests/views/*.py
@@ -39,8 +38,8 @@
 # 開発サーバー
 ## 環境構築手順
 
-1. dockerおよびdocker-composeをインストール（詳細はググってください。「Rocky docker docker-compose」等で）  
-1. chiloportal のソースを git で取得
+1. dockerおよびdocker-composeをインストール  
+1. chiloportal のソースを git で取得  
    ```
    git clone https://github.com/npocccties/chiloportal.git
    ```
@@ -64,12 +63,13 @@
    docker-compose exec app python /workspace/manage.py migrate
    docker-compose exec app python /workspace/manage.py createsuperuser
    ```
-   * 本番環境の管理者の認証情報は類推されにくいユーザ名およびパスワードを設定してください。
-1. コンテナログの確認  
+   * 本番環境の管理者の認証情報は類推されにくいユーザ名およびパスワードを設定してください。  
+1. 備考  
+   コンテナログの確認  
    ```
    docker-compose logs -f
    ```
-1. コンテナの停止  
+   コンテナの停止  
    ```
    docker-compose stop
    ```
@@ -113,7 +113,7 @@
 |環境変数名|説明|備考|
 |:--|:--|:--|
 |APP_PORT|バックエンドAPIのサービスの公開ポート番号|-|
-|SECRET_KEY|djangoで使用される署名用の秘密鍵|-|
+|SECRET_KEY|Django で使用される署名用の秘密鍵|-|
 |DB_HOST|DBのホスト名|localhostや開発サーバーではdocker-compose.ymlに記載されている`db`がホスト名|
 |DB_NAME|DB名|POSTGRES_DBと合わせること|
 |DB_USER|DBのユーザ名|POSTGRES_USERと合わせること|
@@ -140,7 +140,7 @@
 
 ## 開発サーバー
 1. db コンテナを通してコマンド実行  
-   例えば、データのエクスポートを行う場合は以下。
+   例えば、データのバックアップを行う場合は以下を実行してください。
    ```
    docker-compose exec db pg_dump -h 127.0.0.1 -p 5432 -d develop -U postgres -t portal_category -t issuer -t wisdom_badges -t knowledge_badges -t criteria -t categorised_badges -t consumer -t framework -t field -t stage -t goal --data-only > /tmp/chiloportal.dump
    ```
