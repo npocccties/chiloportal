@@ -1,1 +1,10 @@
-{}
+{
+  "coc.preferences.formatOnSaveFiletypes": [
+    "javscript",
+    "javascript.react",
+    "typescript",
+    "typescript.react",
+    "json",
+    "yaml"
+  ]
+}
