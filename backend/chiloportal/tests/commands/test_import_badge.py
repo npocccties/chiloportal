@@ -4,7 +4,7 @@ from django.test import TestCase
 from django.core import management
 from django.db.models import Q
 from ...management.commands import import_badge
-from ...management.commands.enums import *
+from ...enums import *
 from ...exceptions import *
 from ...models import *
 import os

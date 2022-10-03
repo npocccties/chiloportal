@@ -17,7 +17,8 @@ class ConsumerDetailTests(BaseAPIViewTests):
     def test_consumer_detail_400_invalid_value(self):
         factory = APIRequestFactory()
         view = ConsumerDetail.as_view()
-        self.request_invalid_value(factory, view, self.consumer_detail_url, {'consumer_id': 'hogehoge'})
+        self.request_invalid_value(factory, view, self.consumer_detail_url, {'consumer_id': self.invalid_param_alpha})
+        self.request_invalid_value(factory, view, self.consumer_detail_url, {'consumer_id': self.invalid_param_fullchar})
 
     def test_consumer_detail_400_no_param(self):
         factory = APIRequestFactory()

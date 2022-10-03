@@ -1,4 +1,5 @@
 from collections import defaultdict
+from .enums import *
 
 def to_portal_categories(queryset):
     return [to_portal_category(pc) for pc in queryset]
@@ -63,7 +64,7 @@ def to_wisdom_badge(wisdom_badge, output_portal_category = False):
     portal_category = wisdom_badge.portal_category
     result = {
         'badges_id': wisdom_badge.id,
-        'type': 'wisdom',
+        'type': BadgeType.WISDOM.name.lower(),
         'name': wisdom_badge.name,
         'description': wisdom_badge.description,
         'image': wisdom_badge.image_id,
@@ -92,7 +93,7 @@ def to_knowledge_badge(knowledge_badge):
     issuer = knowledge_badge.issuer
     return {
         'badges_id': knowledge_badge.id,
-        'type': 'knowledge',
+        'type': BadgeType.KNOWLEDGE.name.lower(),
         'name': knowledge_badge.name,
         'description': knowledge_badge.description,
         'image': knowledge_badge.image_id,
