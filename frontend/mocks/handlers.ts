@@ -1,191 +1,84 @@
 import aspida from "@aspida/fetch";
 import api from "../api/$api";
 import { restGet } from "./rest";
+import { faker } from "@faker-js/faker";
+import {
+  consumer,
+  field,
+  portalCategory,
+  wisdomBadges,
+  knowledgeBadges,
+  framework,
+  stage,
+  criteria,
+} from "./faker";
 
 const client = api(
   aspida(fetch, { baseURL: process.env.NEXT_PUBLIC_API_BASE_URL })
 );
 
 export const handlers = [
-  restGet(client.consumer, (_req, res, ctx) => {
-    return res(
+  restGet(client.consumer, (_req, res, ctx) => res(ctx.json(consumer()))),
+  restGet(client.consumer.list, (_req, res, ctx) =>
+    res(ctx.json([...Array(10)].map(consumer)))
+  ),
+  restGet(client.framework.field.list, (_req, res, ctx) =>
+    res(ctx.json([...Array(3)].map(field)))
+  ),
+  restGet(client.stage.field.list, (_req, res, ctx) =>
+    res(ctx.json([...Array(3)].map(field)))
+  ),
+  restGet(client.portalCategory.list, (_req, res, ctx) =>
+    res(ctx.json([...Array(10)].map(portalCategory)))
+  ),
+  restGet(client.portalCategory.badges.list, (_req, res, ctx) =>
+    res(
       ctx.json({
-        consumer_id: 101,
-        name: "consumer101",
-        url: "https://example.com/consumer101/",
-        email: "consumer101@example.com",
+        badges: [...Array(30)].map(wisdomBadges),
+        total_count: faker.datatype.number(),
+        start: faker.datatype.number(),
+        end: faker.datatype.number(),
       })
-    );
+    )
+  ),
+  restGet(client.framework, (_req, res, ctx) => res(ctx.json(framework()))),
+  restGet(client.framework.stage.list, (_req, res, ctx) =>
+    res(ctx.json([...Array(3)].map(stage)))
+  ),
+  restGet(client.badges, (req, res, ctx) => {
+    switch (req.url.searchParams.get("badges_type")) {
+      case "wisdom":
+        return res(ctx.json([...Array(10)].map(wisdomBadges)));
+      case "knowledge":
+        return res(ctx.json([...Array(10)].map(knowledgeBadges)));
+      default:
+        return res(ctx.status(400));
+    }
   }),
-  restGet(client.consumer.list, (_req, res, ctx) => {
-    return res(
-      ctx.json([
-        {
-          consumer_id: 101,
-          name: "consumer101",
-          url: "https://example.com/consumer101/",
-          email: "consumer101@example.com",
-        },
-      ])
-    );
-  }),
-  restGet(client.category, (_req, res, ctx) => {
-    return res(
+  restGet(client.wisdomBadges.list, (_req, res, ctx) =>
+    res(
       ctx.json({
-        category_id: 101,
-        category1_name: "category1011",
-        category2_name: "category1012",
-        category3_name: "category1013",
+        badges: [...Array(3)].map(wisdomBadges),
       })
-    );
-  }),
-  restGet(client.category.list, (_req, res, ctx) => {
-    return res(
-      ctx.json([
-        {
-          category_id: 101,
-          category1_name: "category1011",
-          category2_name: "category1012",
-          category3_name: "category1013",
-        },
-      ])
-    );
-  }),
-  restGet(client.categorisedBadge, (_req, res, ctx) => {
-    return res(
+    )
+  ),
+  restGet(client.wisdomBadges.list.keyword, (_req, res, ctx) =>
+    res(
       ctx.json({
-        category_id: 101,
-        consumer_id: 101,
-        badge_id: 101,
-        target_occupations_id: 101,
-        target_job_level_id: 101,
-        description: "categorised badge description...",
+        badges: [...Array(30)].map(wisdomBadges),
+        total_count: faker.datatype.number(),
+        start: faker.datatype.number(),
+        end: faker.datatype.number(),
       })
-    );
-  }),
-  restGet(client.target_occupations, (_req, res, ctx) => {
-    return res(
-      ctx.json({
-        target_occupations_id: 101,
-        name: "targetOccupations101",
-        description: "TargetOccupations101 description...",
-      })
-    );
-  }),
-  restGet(client.target_job_level, (_req, res, ctx) => {
-    return res(
-      ctx.json({
-        target_job_level_id: 101,
-        name: "targetJobLevel101",
-        description: "targetJobLevel101 description...",
-      })
-    );
-  }),
-  restGet(client.find, (_req, res, ctx) => {
-    return res(
-      ctx.json([
-        {
-          category: {},
-          consumer: {},
-          badge: {},
-          target_occupations: {},
-          target_job_level: {},
-          description: "categorised badge description...",
-        },
-      ])
-    );
-  }),
-  restGet(client.find.target_occupations, (_req, res, ctx) => {
-    return res(
-      ctx.json([
-        {
-          category: {},
-          consumer: {},
-          badge: {},
-          target_occupations: {},
-          target_job_level: {},
-          description: "categorised badge description...",
-        },
-      ])
-    );
-  }),
-  restGet(client.find.target_job_level, (_req, res, ctx) => {
-    return res(
-      ctx.json([
-        {
-          category: {},
-          consumer: {},
-          badge: {},
-          target_occupations: {},
-          target_job_level: {},
-          description: "categorised badge description...",
-        },
-      ])
-    );
-  }),
-  restGet(client.find.badges, (_req, res, ctx) => {
-    return res(
-      ctx.json([
-        {
-          category: {},
-          consumer: {},
-          badge: {},
-          target_occupations: {},
-          target_job_level: {},
-          description: "categorised badge description...",
-        },
-      ])
-    );
-  }),
-  restGet(client.badges, (_req, res, ctx) => {
-    return res(
-      ctx.json({
-        badge_id: 101,
-        name: "degitalbadge101",
-        image: "degitalbadge101.jpg",
-      })
-    );
-  }),
-  restGet(client.badges.list, (_req, res, ctx) => {
-    return res(
-      ctx.json([
-        {
-          badge_id: 101,
-          type: "knowledge",
-          name: "degitalbadge101",
-          description: "degitalbadge101_description",
-          image: "degitalbadge101.jpg",
-          degital_badge_class_id: "degitalbadge_classID",
-          detail: {
-            course_type: "course type",
-            course_name: "course name",
-          },
-          url: "https://example/knowledge/url/sample",
-        },
-      ])
-    );
-  }),
-  restGet(client.badges.consumer, (_req, res, ctx) => {
-    return res(
-      ctx.json([
-        {
-          consumer_id: 101,
-          name: "consumer101",
-          url: "https://example.com/consumer101/",
-          email: "consumer101@example.com",
-        },
-      ])
-    );
-  }),
-  restGet(client.badges.course, (_req, res, ctx) => {
-    return res(
-      ctx.json([
-        {
-          badge_id: 101,
-          type: "course_type101",
-          name: "course_name101",
-        },
-      ])
-    );
-  }),
+    )
+  ),
+  restGet(client.wisdomBadges.consumer.list, (_req, res, ctx) =>
+    res(ctx.json([...Array(10)].map(consumer)))
+  ),
+  restGet(client.knowledgeBadges.criteria.list, (_req, res, ctx) =>
+    res(ctx.json([...Array(10)].map(criteria)))
+  ),
+  restGet(client.consumer.framework.list, (_req, res, ctx) =>
+    res(ctx.json([...Array(3)].map(framework)))
+  ),
 ];
