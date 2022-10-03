@@ -30,6 +30,16 @@
             "django": true
         },
         {
+            "name": "Create test data command",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/manage.py",
+            "args": [
+                "create_test_data",
+            ],
+            "django": true
+        },
+        {
             "name": "Unit Test (All)",
             "type": "python",
             "request": "launch",

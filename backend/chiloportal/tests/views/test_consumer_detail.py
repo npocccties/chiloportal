@@ -14,7 +14,7 @@ class ConsumerDetailTests(BaseAPIViewTests):
         data = response.data
         self.assert_consumer(data, self.cons3)
 
-    def test_consumer_detail_200_many(self):
+    def test_consumer_detail_200_first_and_last(self):
         factory = APIRequestFactory()
         view = ConsumerDetail.as_view()
         consumers = self.create_test_consumer_data(self.test_data_count)
