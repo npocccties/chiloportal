@@ -3,7 +3,7 @@ import requests
 import logging
 from django.core.management.base import BaseCommand
 from django.db import transaction
-from .enums import *
+from ...enums import *
 from ...models import *
 from ...utils import *
 from ...exceptions import *

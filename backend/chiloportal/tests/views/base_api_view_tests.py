@@ -1,9 +1,8 @@
 from django.test import TestCase
-from rest_framework.views import APIView
-from rest_framework.test import APIRequestFactory
 from rest_framework import status
 from ...models import *
 from ...views import *
+from ...enums import *
 from urllib.parse import urljoin
 
 class BaseAPIViewTests(TestCase):
@@ -23,6 +22,8 @@ class BaseAPIViewTests(TestCase):
     knowledge_badges_criteria_list_url = urljoin(base_url, 'knowledgeBadges/criteria/list/')
     consumer_framework_list_url = urljoin(base_url, 'consumer/framework/list/')
     not_found_id = 99999
+    invalid_param_alpha = 'hogehoge'
+    invalid_param_fullchar = 'ほげほげ'
 
     def request_normal(self, factory, view, url, params = {}):
         request = factory.get(url, params)
@@ -63,15 +64,24 @@ class BaseAPIViewTests(TestCase):
         self.field6 = Field.objects.create(field1_name='ほげふぃーるど3', field2_name='ほげふぃーるど1', field3_name='ほげほげF', sort_key=6)
         self.field7 = Field.objects.create(field1_name='ほげふぃーるど4', field2_name='ほげふぃーるど3', field3_name='ほげほげG', sort_key=7)
         self.field8 = Field.objects.create(field1_name='ほげふぃーるど5', field2_name='ほげふぃーるど3', field3_name='ほげほげH', sort_key=8)
+        self.field9 = Field.objects.create(field1_name='ほげふぃーるど6', field2_name='ほげふぃーるど4', field3_name='ほげほげI', sort_key=9)
+        self.field10 = Field.objects.create(field1_name='ほげふぃーるど7', field2_name='ほげふぃーるど5', field3_name='ほげほげJ', sort_key=9)
         self.cons1 = Consumer.objects.create(name='hoge', url='hogehoge.com', email='hoge@hogehoge.com')
         self.cons2 = Consumer.objects.create(name='fuga', url='fugafuga.com', email='fuga@fugafuga.com')
         self.cons3 = Consumer.objects.create(name='fuga2', url='fugafuga.com', email='fuga2@fugafuga.com')
+        self.cons4 = Consumer.objects.create(name='hoge4', url='hogehoge.com', email='hoge4@hogehoge.com')
         self.frm1 = Framework.objects.create(consumer=self.cons1, name='ほげふれーむわーく1', description='これはほげふれーむわーく1です', supplementary='さぷりめんたり1', sort_key=1, url='url1')
         self.frm2 = Framework.objects.create(consumer=self.cons2, name='ほげふれーむわーく2', description='これはほげふれーむわーく2です', supplementary='さぷりめんたり2', sort_key=2, url='url2')
         self.frm3 = Framework.objects.create(consumer=self.cons2, name='ほげふれーむわーく3', description='これはほげふれーむわーく3です', supplementary='さぷりめんたり3', sort_key=3, url='url3')
         self.frm4 = Framework.objects.create(consumer=self.cons3, name='ほげふれーむわーく4', description='これはほげふれーむわーく4です', supplementary='さぷりめんたり4', sort_key=4, url='url4')
+        self.frm5 = Framework.objects.create(consumer=self.cons4, name='ほげふれーむわーく5', description='これはほげふれーむわーく5です', supplementary='さぷりめんたり5', sort_key=5, url='url5')
+        self.frm6 = Framework.objects.create(consumer=self.cons4, name='ほげふれーむわーく6', description='これはほげふれーむわーく6です', supplementary='さぷりめんたり6', sort_key=6, url='url6')
         self.stg1 = Stage.objects.create(name='ほげすてーじ1', sub_name='さぶねーむ1', description='これはほげすてーじ1です。', sort_key=1)
         self.stg2 = Stage.objects.create(name='ほげすてーじ2', sub_name='さぶねーむ2', description='これはほげすてーじ2です。', sort_key=2)
+        self.stg3 = Stage.objects.create(name='ほげすてーじ3', sub_name='さぶねーむ3', description='これはほげすてーじ3です。', sort_key=3)
+        self.stg4 = Stage.objects.create(name='ほげすてーじ4', sub_name='さぶねーむ4', description='これはほげすてーじ4です。', sort_key=4)
+        self.stg5 = Stage.objects.create(name='ほげすてーじ5', sub_name='さぶねーむ5', description='これはほげすてーじ5です。', sort_key=5)
+        self.stg6 = Stage.objects.create(name='ほげすてーじ6', sub_name='さぶねーむ6', description='これはほげすてーじ6です。', sort_key=6)
         self.goal1 = Goal.objects.create(framework=self.frm1, field=self.field1, stage=self.stg1, description='ほげごーる1のせつめいです')
         self.goal2 = Goal.objects.create(framework=self.frm1, field=self.field2, stage=self.stg1, description='ほげごーる2のせつめいです')
         self.goal3 = Goal.objects.create(framework=self.frm1, field=self.field3, stage=self.stg1, description='ほげごーる3のせつめいです')
@@ -83,9 +93,15 @@ class BaseAPIViewTests(TestCase):
         self.goal9 = Goal.objects.create(framework=self.frm2, field=self.field1, stage=self.stg2, description='ほげごーる9のせつめいです')
         self.goal10 = Goal.objects.create(framework=self.frm3, field=self.field2, stage=self.stg2, description='ほげごーる10のせつめいです')
         self.goal11 = Goal.objects.create(framework=self.frm4, field=self.field2, stage=self.stg2, description='ほげごーる11のせつめいです')
+        self.goal12 = Goal.objects.create(framework=self.frm5, field=self.field9, stage=self.stg3, description='ほげごーる12のせつめいです')
+        self.goal13 = Goal.objects.create(framework=self.frm6, field=self.field10, stage=self.stg4, description='ほげごーる13のせつめいです')
+        self.goal14 = Goal.objects.create(framework=self.frm6, field=self.field10, stage=self.stg5, description='ほげごーる14のせつめいです')
+        self.goal15 = Goal.objects.create(framework=self.frm6, field=self.field10, stage=self.stg6, description='ほげごーる15のせつめいです')
         self.pc1 = PortalCategory.objects.create(name='ほげぽーたる1', description='ほげぽーたる1のせつめいです', image_url_path='hogep-img-url1', sort_key=1)
         self.pc2 = PortalCategory.objects.create(name='ほげぽーたる2', description='ほげぽーたる2のせつめいです', image_url_path='hogep-img-url2', sort_key=2)
         self.pc3 = PortalCategory.objects.create(name='ほげぽーたる3', description='ほげぽーたる3のせつめいです', image_url_path='hogep-img-url3', sort_key=3)
+        self.pc4 = PortalCategory.objects.create(name='ほげぽーたる4', description='ほげぽーたる4のせつめいです', image_url_path='hogep-img-url4', sort_key=4)
+        self.pc5 = PortalCategory.objects.create(name='ほげぽーたる5', description='ほげぽーたる5のせつめいです', image_url_path='hogep-img-url5', sort_key=5)
         self.iss = Issuer.objects.create(name='ほげほげだいがく', url='hogehoge.ac.jp', email='hogehoge@ac.jp')
         self.wb1 = WisdomBadges.objects.create(portal_category=self.pc1, issuer=self.iss, name='hogebadge1-ねーむ+ほげばっじ1', badge_class_id='hogehoge.ac.jp/hoge.php?badge_id=999', description='hoge1', image_id='hogehoge.ac.jp/image/36/fuga1', alignments_targetname='あらいめんつ1', tags='wbtags1')
         self.wb2 = WisdomBadges.objects.create(portal_category=self.pc1, issuer=self.iss, name='hogebadge2-ねーむ+ほげばっじ2', badge_class_id='hogehoge.ac.jp/hoge.php?badge_id=998', description='hoge2', image_id='hogehoge.ac.jp/image/36/fuga2', alignments_targetname='あらいめんつ2', tags='wbtags2')
@@ -97,6 +113,12 @@ class BaseAPIViewTests(TestCase):
         self.wb8 = WisdomBadges.objects.create(portal_category=self.pc3, issuer=self.iss, name='hogebadge5-ねーむ+ほげばっじ8', badge_class_id='hogehoge.ac.jp/hoge.php?badge_id=992', description='hoge8', image_id='hogehoge.ac.jp/image/36/fuga8', alignments_targetname='あらいめんつ8', tags='wbtags8')
         self.wb9 = WisdomBadges.objects.create(portal_category=self.pc3, issuer=self.iss, name='hogebadge5-ねーむ+ほげばっじ9', badge_class_id='hogehoge.ac.jp/hoge.php?badge_id=991', description='hoge9', image_id='hogehoge.ac.jp/image/36/fuga9', alignments_targetname='あらいめんつ9', tags='wbtags9')
         self.wb10 = WisdomBadges.objects.create(portal_category=self.pc3, issuer=self.iss, name='hogebadge5-ねーむ+ほげばっじ_10', badge_class_id='hogehoge.ac.jp/hoge.php?badge_id=990', description='hoge_10', image_id='hogehoge.ac.jp/image/36/fuga10', alignments_targetname='あらいめんつ_10', tags='tags10')
+        self.wb11 = WisdomBadges.objects.create(portal_category=self.pc4, issuer=self.iss, name='hogebadge5-ねーむ+ほげばっじ_11', badge_class_id='hogehoge.ac.jp/hoge.php?badge_id=989', description='hoge_11', image_id='hogehoge.ac.jp/image/36/fuga11', alignments_targetname='あらいめんつ_11', tags='tags11')
+        self.wb12 = WisdomBadges.objects.create(portal_category=self.pc4, issuer=self.iss, name='hogebadge5-ねーむ+ほげばっじ_12', badge_class_id='hogehoge.ac.jp/hoge.php?badge_id=988', description='hoge_12', image_id='hogehoge.ac.jp/image/36/fuga12', alignments_targetname='あらいめんつ_12', tags='tags12')
+        self.wb13 = WisdomBadges.objects.create(portal_category=self.pc4, issuer=self.iss, name='hogebadge5-ねーむ+ほげばっじ_13', badge_class_id='hogehoge.ac.jp/hoge.php?badge_id=987', description='hoge_13', image_id='hogehoge.ac.jp/image/36/fuga13', alignments_targetname='あらいめんつ_13', tags='tags13')
+        self.wb14 = WisdomBadges.objects.create(portal_category=self.pc5, issuer=self.iss, name='hogebadge5-ねーむ+ほげばっじ_14', badge_class_id='hogehoge.ac.jp/hoge.php?badge_id=986', description='hoge_14', image_id='hogehoge.ac.jp/image/36/fuga14', alignments_targetname='あらいめんつ_14', tags='tags14')
+        self.wb15 = WisdomBadges.objects.create(portal_category=self.pc5, issuer=self.iss, name='hogebadge5-ねーむ+ほげばっじ_15', badge_class_id='hogehoge.ac.jp/hoge.php?badge_id=985', description='hoge_15', image_id='hogehoge.ac.jp/image/36/fuga15', alignments_targetname='あらいめんつ_15', tags='tags15')
+        self.wb16 = WisdomBadges.objects.create(portal_category=self.pc5, issuer=self.iss, name='hogebadge5-ねーむ+ほげばっじ_16', badge_class_id='hogehoge.ac.jp/hoge.php?badge_id=984', description='hoge_16', image_id='hogehoge.ac.jp/image/36/fuga16', alignments_targetname='あらいめんつ_16', tags='tags16')
         self.cb1 = CategorisedBadges.objects.create(wisdom_badges=self.wb1, goal=self.goal1, description='ほげかてごらいずど1')
         self.cb2 = CategorisedBadges.objects.create(wisdom_badges=self.wb1, goal=self.goal2, description='ほげかてごらいずど2')
         self.cb3 = CategorisedBadges.objects.create(wisdom_badges=self.wb2, goal=self.goal3, description='ほげかてごらいずど3')
@@ -108,12 +130,16 @@ class BaseAPIViewTests(TestCase):
         self.cb9 = CategorisedBadges.objects.create(wisdom_badges=self.wb5, goal=self.goal9, description='ほげかてごらいずど9')
         self.cb10 = CategorisedBadges.objects.create(wisdom_badges=self.wb5, goal=self.goal10, description='ほげかてごらいずど10')
         self.cb11 = CategorisedBadges.objects.create(wisdom_badges=self.wb5, goal=self.goal11, description='ほげかてごらいずど11')
+        self.cb12 = CategorisedBadges.objects.create(wisdom_badges=self.wb11, goal=self.goal12, description='ほげかてごらいずど12')
+        self.cb13 = CategorisedBadges.objects.create(wisdom_badges=self.wb12, goal=self.goal12, description='ほげかてごらいずど13')
+        self.cb14 = CategorisedBadges.objects.create(wisdom_badges=self.wb13, goal=self.goal12, description='ほげかてごらいずど14')
         self.kb1 = KnowledgeBadges.objects.create(wisdom_badges=self.wb1, badge_class_id='hogehoge.ac.jp/hoge.php?badge_id=800', name='fugabadge1', description='ふがふが１!ふがふが-ふがふが', image_id='hogehoge.ac.jp/image/36/fuga1', criteria_narrative='くらいてりあならてぃぶ1', tags='kbtags1')
         self.kb2 = KnowledgeBadges.objects.create(wisdom_badges=self.wb1, badge_class_id='hogehoge.ac.jp/hoge.php?badge_id=801', name='fugabadge2', description='ふがふが+ふがふが2@ふがふが', image_id='hogehoge.ac.jp/image/36/fuga2', criteria_narrative='くらいてりあならてぃぶ2', tags='kbtags2')
         self.kb3 = KnowledgeBadges.objects.create(wisdom_badges=self.wb2, badge_class_id='hogehoge.ac.jp/hoge.php?badge_id=802', name='fugabadge3', description='ふがふが-ふがふが=ふがふが3', image_id='hogehoge.ac.jp/image/36/fuga3', criteria_narrative='くらいてりあならてぃぶ3', tags='kbtags3')
         self.kb4 = KnowledgeBadges.objects.create(wisdom_badges=self.wb2, badge_class_id='hogehoge.ac.jp/hoge.php?badge_id=803', name='fugabadge4', description='ふがふがふがふがふがふが4', image_id='hogehoge.ac.jp/image/36/fuga4', criteria_narrative='くらいてりあならてぃぶ4', tags='kbtags4')
         self.kb5 = KnowledgeBadges.objects.create(wisdom_badges=self.wb5, badge_class_id='hogehoge.ac.jp/hoge.php?badge_id=804', name='fugabadge5', description='ふがふがふがふがふがふが5', image_id='hogehoge.ac.jp/image/36/fuga5', criteria_narrative='くらいてりあならてぃぶ5', tags='kbtags5')
         self.kb6 = KnowledgeBadges.objects.create(wisdom_badges=self.wb5, badge_class_id='hogehoge.ac.jp/hoge.php?badge_id=805', name='fugabadge6', description='ふがふがふがふがふがふが6', image_id='hogehoge.ac.jp/image/36/fuga6', criteria_narrative='くらいてりあならてぃぶ6', tags='kbtags6')
+        self.kb7 = KnowledgeBadges.objects.create(wisdom_badges=self.wb13, badge_class_id='hogehoge.ac.jp/hoge.php?badge_id=806', name='fugabadge7', description='ふがふがふがふがふがふが7', image_id='hogehoge.ac.jp/image/36/fuga7', criteria_narrative='くらいてりあならてぃぶ7', tags='kbtags7')
         self.ct1 = Criteria.objects.create(knowledge_badges=self.kb1, type='ほげ', name='ほげコースA', sort_key=1)
         self.ct2 = Criteria.objects.create(knowledge_badges=self.kb1, type='ほげ', name='ほげコースB', sort_key=2)
         self.ct3 = Criteria.objects.create(knowledge_badges=self.kb2, type='ほげ', name='ほげコースC', sort_key=3)
@@ -153,7 +179,7 @@ class BaseAPIViewTests(TestCase):
 
     def assert_wisdom_badge(self, data, wisdom_badge, knowledge_badges):
         self.assertEqual(data['badges_id'], wisdom_badge.id)
-        self.assertEqual(data['type'], 'wisdom')
+        self.assertEqual(data['type'], BadgeType.WISDOM.name.lower())
         self.assertEqual(data['name'], wisdom_badge.name)
         self.assertEqual(data['description'], wisdom_badge.description)
         self.assertEqual(data['image'], wisdom_badge.image_id)
@@ -179,7 +205,7 @@ class BaseAPIViewTests(TestCase):
 
     def assert_knowledge_badge(self, data, knowledge_badge, criteria_list):
         self.assertEqual(data['badges_id'], knowledge_badge.id)
-        self.assertEqual(data['type'], 'knowledge')
+        self.assertEqual(data['type'], BadgeType.KNOWLEDGE.name.lower())
         self.assertEqual(data['name'], knowledge_badge.name)
         self.assertEqual(data['description'], knowledge_badge.description)
         self.assertEqual(data['image'], knowledge_badge.image_id)

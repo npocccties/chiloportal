@@ -3,6 +3,7 @@ from rest_framework.exceptions import NotFound
 from ..models import *
 from ..swagger import *
 from ..responses import *
+from ..enums import *
 from .base_api_view import *
 from .. import utils
 
@@ -21,7 +22,7 @@ class BadgesDetail(BaseAPIView):
                 self.logger.error(f'Invalid badges_ids: {id}')
                 raise ParseError('Invalid parameters supplied')
         result = []
-        if type == 'wisdom':
+        if type == BadgeType.WISDOM.name.lower():
             queryset = WisdomBadges.objects.filter(pk__in = id_array).order_by('pk').distinct().prefetch_related(
                 'knowledge_badges_wisdom_badges__criteria_knowledge_badges'
             ).select_related(
@@ -31,7 +32,7 @@ class BadgesDetail(BaseAPIView):
             if queryset.exists() == False:
                 raise NotFound('Badges not found')
             result = to_wisdom_badges(queryset, output_portal_category=True)
-        elif type == 'knowledge':
+        elif type == BadgeType.KNOWLEDGE.name.lower():
             queryset = KnowledgeBadges.objects.filter(pk__in = id_array).order_by('pk').distinct().prefetch_related(
                 'criteria_knowledge_badges'
             ).select_related(

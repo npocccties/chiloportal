@@ -184,3 +184,8 @@ http://dev-portal.oku.cccties.org/admin
    * htmlcov/index.html にカバレッジが出力  
 1. 未走行パスを確認して必要に応じてテストコードを追加
 1. 再度、カバレッジを出力する
+
+# 補足
+## Visual Studio Code
+### 静的解析ツール
+* mypy
