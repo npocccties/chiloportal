@@ -12,6 +12,7 @@
   },
   "devDependencies": {
     "@aspida/fetch": "^1.11.0",
+    "@faker-js/faker": "^7.5.0",
     "@headlessui/react": "^1.6.6",
     "@iconify/react": "^3.2.2",
     "@jumpu-ui/tailwindcss": "^1.0.1-alpha.5",
