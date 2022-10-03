@@ -4,6 +4,7 @@ from ...models import *
 from ...views import *
 from ...enums import *
 from urllib.parse import urljoin
+import random
 
 class BaseAPIViewTests(TestCase):
     base_url = 'http://localhost:8000'
@@ -24,6 +25,7 @@ class BaseAPIViewTests(TestCase):
     not_found_id = 99999
     invalid_param_alpha = 'hogehoge'
     invalid_param_fullchar = 'ほげほげ'
+    test_data_count = 100
 
     def request_normal(self, factory, view, url, params = {}):
         request = factory.get(url, params)
@@ -55,7 +57,7 @@ class BaseAPIViewTests(TestCase):
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
         self.assertEqual(response.data.get('detail'), 'Page is empty')
 
-    def create_test_data(self):
+    def create_test_relation_data(self):
         self.field1 = Field.objects.create(field1_name='ほげふぃーるど1', field2_name='ほげふぃーるど2', field3_name='ほげほげA', sort_key=1)
         self.field2 = Field.objects.create(field1_name='ほげふぃーるど1', field2_name='ほげふぃーるど2', field3_name='ほげほげB', sort_key=2)
         self.field3 = Field.objects.create(field1_name='ほげふぃーるど2', field2_name='ほげふぃーるど1', field3_name='ほげほげC', sort_key=3)
@@ -145,6 +147,17 @@ class BaseAPIViewTests(TestCase):
         self.ct3 = Criteria.objects.create(knowledge_badges=self.kb2, type='ほげ', name='ほげコースC', sort_key=3)
         self.ct4 = Criteria.objects.create(knowledge_badges=self.kb3, type='ほげ', name='ほげコースD', sort_key=4)
 
+    def get_random_value(self, data_count):
+        return random.uniform(1, data_count)
+
+    def assert_consumers(self, array, expect_array):
+        self.assertEqual(len(array), len(expect_array))
+        i = 0
+        for consumer in expect_array:
+            data = array[i]
+            self.assert_consumer(data, consumer)
+            i += 1
+
     def assert_consumer(self, data, consumer):
         self.assertEqual(data['consumer_id'], consumer.id)
         self.assertEqual(data['name'], consumer.name)
@@ -160,12 +173,29 @@ class BaseAPIViewTests(TestCase):
             wisdom_badge_id_list = field3.get('wisdom_badges')
             self.assertEqual(set(wisdom_badge_id_list), set(expect_wisdom_badge_id_list))
 
+    def assert_portal_categories(self, array):
+        queryset = PortalCategory.objects.all().order_by('pk').annotate(Count('wisdom_badges_portal_category'))
+        self.assertEqual(len(array), queryset.count())
+        i = 0
+        for category in queryset:
+            data = array[i]
+            self.assert_portal_category(data, category, category.wisdom_badges_portal_category__count)
+            i += 1
+
     def assert_portal_category(self, data, portal_category, badges_count):
         self.assertEqual(data['portal_category_id'], portal_category.id)
         self.assertEqual(data['name'], portal_category.name)
         self.assertEqual(data['description'], portal_category.description)
         self.assertEqual(data['image_url_path'], portal_category.image_url_path)
         self.assertEqual(data['badges_count'], badges_count)
+
+    def assert_stages(self, array, expect_array):
+        self.assertEqual(len(array), len(expect_array))
+        i = 0
+        for stage in expect_array:
+            data = array[i]
+            self.assert_stage(data, stage)
+            i += 1
 
     def assert_stage(self, data, stage):
         self.assertEqual(data['stage_id'], stage.id)
@@ -229,8 +259,178 @@ class BaseAPIViewTests(TestCase):
         self.assertEqual(data['name'], criteria.name)
         self.assertEqual(data['type'], criteria.type)
 
+    def assert_frameworks(self, array, expect_array):
+        self.assertEqual(len(array), len(expect_array))
+        i = 0
+        for framework in expect_array:
+            data = array[i]
+            self.assert_framework(data, framework)
+            i += 1
+
     def assert_framework(self, data, framework):
         self.assertEqual(data['framework_id'], framework.id)
         self.assertEqual(data['name'], framework.name)
         self.assertEqual(data['description'], framework.description)
         self.assertEqual(data['url'], framework.url)
+
+    def create_test_consumer_data(self, data_count):
+        consumers = []
+        for i in range(data_count):
+            randam_value = self.get_random_value(data_count)
+            cons = Consumer.objects.create(
+                name=f'hoge{randam_value}',
+                url=f'hogehoge{randam_value}.com',
+                email=f'hoge{randam_value}@hogehoge.com'
+            )
+            consumers.append(cons)
+        return consumers
+
+    def create_test_stage_data(self, data_count):
+        stages = []
+        for i in range(data_count):
+            randam_value = self.get_random_value(data_count)
+            stage = Stage.objects.create(
+                name=f'ほげすてーじ{randam_value}',
+                sub_name=f'さぶねーむ{randam_value}',
+                description=f'これはほげすてーじです. {randam_value}',
+                sort_key=i
+            )
+            stages.append(stage)
+        return stages
+
+    def create_test_framework_data(self, data_count):
+        consumers = self.create_test_consumer_data(data_count)
+        frameworks = []
+        for i in range(data_count):
+            randam_value = self.get_random_value(data_count)
+            cons = consumers[i]
+            frm = Framework.objects.create(
+                consumer=cons,
+                name=f'ほげふれーむわーく{randam_value}',
+                description=f'これはほげふれーむわーくです. {randam_value}',
+                supplementary=f'さぷりめんたり{randam_value}',
+                sort_key=i,
+                url=f'url{randam_value}'
+            )
+            consumers.append(cons)
+            frameworks.append(frm)
+        return consumers, frameworks
+
+    def create_test_field_data(self, data_count):
+        fields = []
+        for i in range(data_count):
+            randam_value = self.get_random_value(data_count)
+            field = Field.objects.create(
+                field1_name=f'ほげふぃーるどA_{randam_value}',
+                field2_name=f'ほげふぃーるどB_{randam_value}',
+                field3_name=f'ほげふぃーるどC_{randam_value}',
+                sort_key=i
+            )
+            fields.append(field)
+        return fields
+
+    def create_test_goal_data(self, data_count):
+        consumers, frameworks = self.create_test_framework_data(data_count)
+        fields = self.create_test_field_data(data_count)
+        stages = self.create_test_stage_data(data_count)
+        goals = []
+        for i in range(data_count):
+            randam_value = self.get_random_value(data_count)
+            goal = Goal.objects.create(
+                framework=frameworks[i],
+                field=fields[i],
+                stage=stages[i],
+                description=f'ほげごーるのせつめいです. {randam_value}'
+            )
+            goals.append(goal)
+        return consumers, frameworks, fields, stages, goals
+
+    def create_test_portal_category_data(self, data_count):
+        portal_categories = []
+        for i in range(data_count):
+            randam_value = self.get_random_value(data_count)
+            pc = PortalCategory.objects.create(
+                name=f'ほげぽーたる{randam_value}',
+                description=f'ほげぽーたるのせつめいです. {randam_value}',
+                image_url_path=f'hogep-img-url{randam_value}',
+                sort_key=i
+            )
+            portal_categories.append(pc)
+        return portal_categories
+
+    def create_test_issuer_data(self, data_count):
+        issuers = []
+        for i in range(data_count):
+            randam_value = self.get_random_value(data_count)
+            issuer = Issuer.objects.create(
+                name=f'ほげほげだいがく{randam_value}',
+                url=f'hogehoge.ac.jp/{randam_value}',
+                email=f'hogehoge{randam_value}@ac.jp'
+            )
+            issuers.append(issuer)
+        return issuers
+
+    def create_test_wisdom_badges_data(self, data_count):
+        portal_categories = self.create_test_portal_category_data(data_count)
+        issuers = self.create_test_issuer_data(data_count)
+        wisdom_badgees = []
+        for i in range(data_count):
+            randam_value = self.get_random_value(data_count)
+            wb = WisdomBadges.objects.create(
+                portal_category=portal_categories[i],
+                issuer=issuers[i],
+                name=f'hogebadge-ねーむ+ほげばっじ{randam_value}',
+                badge_class_id=f'hogehoge.ac.jp/hoge.php?badge_id={randam_value}',
+                description=f'hoge{randam_value}',
+                image_id=f'hogehoge.ac.jp/image/36/fuga{randam_value}',
+                alignments_targetname=f'あらいめんつ{randam_value}',
+                tags=f'wbtags{randam_value}'
+            )
+            wisdom_badgees.append(wb)
+        return portal_categories, issuers, wisdom_badgees
+
+    def create_test_knowledge_badges_data(self, data_count):
+        portal_categories, issuers, wisdom_badgees = self.create_test_wisdom_badges_data(data_count)
+        knowledge_badges = []
+        for i in range(data_count):
+            randam_value = self.get_random_value(data_count)
+            kb = KnowledgeBadges.objects.create(
+                wisdom_badges=wisdom_badgees[i],
+                badge_class_id=f'hogehoge.ac.jp/hoge.php?badge_id={randam_value}',
+                name=f'fugabadge{randam_value}',
+                description=f'ふがふが!ふがふが-ふがふが {randam_value}',
+                image_id=f'hogehoge.ac.jp/image/36/fuga{randam_value}',
+                criteria_narrative=f'くらいてりあならてぃぶ{randam_value}',
+                tags=f'kbtags{randam_value}'
+            )
+            knowledge_badges.append(kb)
+        return portal_categories, issuers, wisdom_badgees, knowledge_badges
+
+    def create_test_criteria_data(self, data_count):
+        portal_categories, issuers, wisdom_badgees, knowledge_badges = self.create_test_knowledge_badges_data(data_count)
+        criterias = []
+        for i in range(data_count):
+            randam_value = self.get_random_value(data_count)
+            cri = Criteria.objects.create(
+                knowledge_badges=knowledge_badges[i],
+                type=f'ほげ{randam_value}',
+                name=f'ほげコース{randam_value}',
+                sort_key=i
+            )
+            criterias.append(cri)
+        return portal_categories, issuers, wisdom_badgees, knowledge_badges, criterias
+
+    def create_test_categorised_badges_data(self, data_count):
+        consumers, frameworks, fields, stages, goals = self.create_test_goal_data(data_count)
+        portal_categories, issuers, wisdom_badgees, knowledge_badges, criterias = self.create_test_criteria_data(data_count)
+        categorised_badges = []
+        for i in range(data_count):
+            randam_value = self.get_random_value(data_count)
+            cb = CategorisedBadges.objects.create(
+                wisdom_badges=wisdom_badgees[i],
+                goal=goals[i],
+                description=f'ほげかてごらいずど{randam_value}'
+            )
+            categorised_badges.append(cb)
+        return consumers, frameworks, fields, stages, goals, categorised_badges, portal_categories, issuers, wisdom_badgees, knowledge_badges, criterias
+

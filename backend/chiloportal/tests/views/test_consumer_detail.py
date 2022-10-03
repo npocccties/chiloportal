@@ -6,13 +6,26 @@ class ConsumerDetailTests(BaseAPIViewTests):
     def test_consumer_detail_200(self):
         factory = APIRequestFactory()
         view = ConsumerDetail.as_view()
-        self.create_test_data()
+        self.create_test_relation_data()
         response = self.request_normal(factory, view, self.consumer_detail_url, {'consumer_id': self.cons1.id})
         data = response.data
         self.assert_consumer(data, self.cons1)
         response = self.request_normal(factory, view, self.consumer_detail_url, {'consumer_id': self.cons3.id})
         data = response.data
         self.assert_consumer(data, self.cons3)
+
+    def test_consumer_detail_200_many(self):
+        factory = APIRequestFactory()
+        view = ConsumerDetail.as_view()
+        consumers = self.create_test_consumer_data(self.test_data_count)
+        first = consumers[0]
+        response = self.request_normal(factory, view, self.consumer_detail_url, {'consumer_id': first.id})
+        data = response.data
+        self.assert_consumer(data, first)
+        last = consumers[-1]
+        response = self.request_normal(factory, view, self.consumer_detail_url, {'consumer_id': last.id})
+        data = response.data
+        self.assert_consumer(data, last)
 
     def test_consumer_detail_400_invalid_value(self):
         factory = APIRequestFactory()
@@ -28,5 +41,5 @@ class ConsumerDetailTests(BaseAPIViewTests):
     def test_consumer_detail_404(self):
         factory = APIRequestFactory()
         view = ConsumerDetail.as_view()
-        self.create_test_data()
+        self.create_test_relation_data()
         self.request_not_found(factory, view, self.consumer_detail_url, {'consumer_id': self.not_found_id}, 'Consumer')
