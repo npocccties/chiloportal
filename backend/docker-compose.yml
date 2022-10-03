@@ -51,7 +51,6 @@ services:
       - POSTGRES_DB=$POSTGRES_DB
       - POSTGRES_USER=$POSTGRES_USER
       - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
-      # initdbÇ≈é∏îsÇµÇƒÇ¢ÇΩÇÃÇ≈ÉpÉXÇïœçX
       - PGDATA=/var/lib/postgresql/data/pgdata
     ports:
       - 5433:5432
