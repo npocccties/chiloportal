@@ -115,9 +115,9 @@
 |APP_PORT|バックエンドAPIのサービスの公開ポート番号|-|
 |SECRET_KEY|Django で使用される署名用の秘密鍵|-|
 |DB_HOST|DBのホスト名|localhostや開発サーバーではdocker-compose.ymlに記載されている`db`がホスト名|
-|DB_NAME|DB名|POSTGRES_DBと合わせること|
-|DB_USER|DBのユーザ名|POSTGRES_USERと合わせること|
-|DB_PASS|DBのパスワード|POSTGRES_PASSWORDと合わせること|
+|DB_NAME|DB名|-|
+|DB_USER|DBのユーザ名|-|
+|DB_PASS|DBのパスワード|-|
 |DB_PORT|DBのポート番号|5432固定|
 |DEBUG|デバッグ機能|デバッグ用で例外発生時のエラー内容が参照できるようになる<br>True: 有効<br>False: 無効<br>※本番リリース時は必ず「False」を設定してください|
 |ALLOWED_HOSTS|公開ホスト名|本番リリースする際は本番サーバーのホスト名を設定してください|
@@ -125,9 +125,6 @@
 |IMAGE_DIR|画像ファイルの公開ディレクトリ（相対パス指定）|本番リリースする際は本番サーバーの公開ディレクトリを設定してください|
 |JUDGE_BADGE|バッジ判定方法|version:<br>JSONのversionフィールド値の末尾がwisdomならば能力バッジとみなす<br>※本番リリース用<br><br>alignments:<br>JSONにalignmentsがあれば能力バッジとみなす<br>※動作確認用|
 |PER_PAGE|1ページあたりのデータ数|APIのクエリパラメータとしてページ番号(page_number)が指定可能な場合、同APIの1ページあたりのデータ数|
-|POSTGRES_DB|DB名|-|
-|POSTGRES_USER|DBのユーザ名|-|
-|POSTGRES_PASSWORD|DBのパスワード|-|
 
 
 # DBの確認
