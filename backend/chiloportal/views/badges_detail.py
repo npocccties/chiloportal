@@ -8,7 +8,7 @@ from .base_api_view import *
 from .. import utils
 
 class BadgesDetail(BaseAPIView):
-    swagger_query_params = [SwaggerQueryParam('badges_ids', True), SwaggerQueryParam('badges_type', True)]
+    swagger_query_params = [SwaggerQueryParam('badges_ids', True, schema=coreschema.String()), SwaggerQueryParam('badges_type', True, schema=coreschema.String())]
     filter_backends = (SwaggerQueryParamFilter,)
     def _get(self, request):
         id_str = self.request.GET.get('badges_ids')

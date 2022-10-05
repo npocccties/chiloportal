@@ -9,7 +9,7 @@ import re
 from django.db.models import Q
 
 class WisdomBadgesListKeyword(BaseAPIView):
-    swagger_query_params = [SwaggerQueryParam('keyword', True),SwaggerQueryParam('page_number', False)]
+    swagger_query_params = [SwaggerQueryParam('keyword', True, schema=coreschema.String()),SwaggerQueryParam('page_number', False)]
     filter_backends = (SwaggerQueryParamFilter,)
     def _get(self, request):
         keyword = request.GET.get('keyword')
