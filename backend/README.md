@@ -143,7 +143,7 @@ db コンテナを通してコマンド実行
    pg_dump -h 127.0.0.1 -p 5432 -d develop -U postgres -t portal_category -t issuer -t wisdom_badges -t knowledge_badges -t criteria -t categorised_badges -t consumer -t framework -t field -t stage -t goal -Fc -v > /var/lib/postgresql/chiloportal.dump
    exit
    ```
-   * 上記コンテナ内の出力ファイルは chiloportal/backend//postgresql/data に出力されます
+   * 上記コンテナ内の出力ファイルは chiloportal/backend/postgresql/data に出力されます
 1. リストア
    ```
    docker-compose exec db sh
