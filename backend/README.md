@@ -139,11 +139,15 @@
 db コンテナを通してコマンド実行  
 1. バックアップ
    ```
-   docker-compose exec db pg_dump -h 127.0.0.1 -p 5432 -d develop -U postgres -t portal_category -t issuer -t wisdom_badges -t knowledge_badges -t criteria -t categorised_badges -t consumer -t framework -t field -t stage -t goal --data-only > /tmp/chiloportal.dump
+   docker-compose exec db sh
+   pg_dump -h 127.0.0.1 -p 5432 -d develop -U postgres -t portal_category -t issuer -t wisdom_badges -t knowledge_badges -t criteria -t categorised_badges -t consumer -t framework -t field -t stage -t goal -Fc -v > /var/lib/postgresql/chiloportal.dump
+   exit
    ```
-   パスワードを入力する。
+1. リストア
    ```
-   Password:postgres
+   docker-compose exec db sh
+   pg_restore --clean -h 127.0.0.1 -p 5432 -d develop -U postgres -v /var/lib/postgresql/chiloportal.dump
+   exit
    ```
 
 # Django の管理画面

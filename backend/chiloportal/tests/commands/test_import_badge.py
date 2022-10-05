@@ -8,10 +8,7 @@ from ...enums import *
 from ...exceptions import *
 from ...models import *
 import os
-import logging
 import shutil
-
-logger = logging.getLogger(__name__)
 
 class ImportBadgeCommandTests(TestCase):
     wisdom_badge_url = 'https://opedu.lib.osaka-kyoiku.ac.jp/badges/badge_json.php?id=41'
