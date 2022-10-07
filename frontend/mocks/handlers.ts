@@ -1,5 +1,4 @@
-import aspida from "@aspida/fetch";
-import api from "../api/$api";
+import { client } from "lib/client";
 import { restGet } from "./rest";
 import { faker } from "@faker-js/faker";
 import {
@@ -12,10 +11,6 @@ import {
   stage,
   criteria,
 } from "./faker";
-
-const client = api(
-  aspida(fetch, { baseURL: process.env.NEXT_PUBLIC_API_BASE_URL })
-);
 
 export const handlers = [
   restGet(client.consumer, (_req, res, ctx) => res(ctx.json(consumer()))),

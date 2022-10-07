@@ -1,13 +1,22 @@
 import { faker } from "@faker-js/faker";
+import {
+  Consumer,
+  FieldDetail,
+  PortalCategory,
+  BadgeDetail1,
+  Framework,
+  Stage,
+  Criteria,
+} from "api/@types";
 
-export const consumer = () => ({
+export const consumer = (): Consumer => ({
   consumer_id: faker.datatype.number(),
   name: faker.company.name(),
   url: faker.internet.url(),
   email: faker.internet.email(),
 });
 
-export const field = () => ({
+export const field = (): FieldDetail => ({
   field1: [...Array(3)].map(() => ({
     field1_name: faker.animal.bear(),
     field2: [...Array(3)].map(() => ({
@@ -15,20 +24,21 @@ export const field = () => ({
       field3: [...Array(3)].map(() => ({
         field_id: faker.datatype.number(),
         field3_name: faker.animal.bear(),
+        wisdom_badges: [...Array(3)].map(faker.datatype.number),
       })),
     })),
   })),
 });
 
-export const portalCategory = () => ({
+export const portalCategory = (): PortalCategory => ({
   portal_category_id: faker.datatype.number(),
   name: faker.animal.bird(),
-  descritpion: faker.lorem.paragraphs(),
+  description: faker.lorem.paragraphs(),
   image_url_path: faker.system.filePath(),
   badges_count: faker.datatype.number(),
 });
 
-export const wisdomBadges = () => ({
+export const wisdomBadges = (): BadgeDetail1 => ({
   badges_id: faker.datatype.number(),
   type: "wisdom" as const,
   name: faker.animal.cat(),
@@ -39,13 +49,17 @@ export const wisdomBadges = () => ({
   issuer_name: faker.company.name(),
   issuer_url: faker.internet.url(),
   issuer_email: faker.internet.email(),
+  portal_category_id: faker.datatype.number(),
+  portal_category_name: faker.animal.bird(),
+  portal_category_description: faker.lorem.paragraphs(),
+  portal_category_image_url_path: faker.system.filePath(),
   degital_badge_class_id: faker.datatype.string(),
   detail: {
     knowledge_badges_list: [...Array(3)].map(faker.datatype.number),
   },
 });
 
-export const knowledgeBadges = () => ({
+export const knowledgeBadges = (): BadgeDetail1 => ({
   badges_id: faker.datatype.number(),
   type: "knowledge" as const,
   name: faker.animal.cat(),
@@ -56,11 +70,15 @@ export const knowledgeBadges = () => ({
   issuer_name: faker.company.name(),
   issuer_url: faker.internet.url(),
   issuer_email: faker.internet.email(),
+  portal_category_id: faker.datatype.number(),
+  portal_category_name: faker.animal.bird(),
+  portal_category_description: faker.lorem.paragraphs(),
+  portal_category_image_url_path: faker.system.filePath(),
   degital_badge_class_id: faker.datatype.string(),
   detail: [...Array(3)].map(criteria),
 });
 
-export const framework = () => ({
+export const framework = (): Framework => ({
   framework_id: faker.datatype.number(),
   name: faker.animal.cow(),
   description: faker.lorem.paragraphs(),
@@ -68,14 +86,14 @@ export const framework = () => ({
   url: faker.internet.url(),
 });
 
-export const stage = () => ({
+export const stage = (): Stage => ({
   stage_id: faker.datatype.number(),
   name: faker.animal.crocodilia(),
   sub_name: faker.animal.crocodilia(),
   description: faker.lorem.paragraphs(),
 });
 
-export const criteria = () => ({
+export const criteria = (): Criteria => ({
   criteria_id: faker.datatype.number(),
   type: faker.datatype.string(),
   name: faker.animal.cetacean(),
