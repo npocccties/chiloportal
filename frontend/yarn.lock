@@ -2061,6 +2061,7 @@ __metadata:
     next: ^12.3.1
     npm-run-all: ^4.1.5
     openapi2aspida: ^0.19.0
+    pathpida: ^0.18.1
     postcss: ^8.4.17
     prettier: ^2.7.1
     react: ^18.2.0
@@ -3062,7 +3063,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimist@npm:^1.2.0, minimist@npm:^1.2.6":
+"minimist@npm:^1.2.0, minimist@npm:^1.2.5, minimist@npm:^1.2.6":
   version: 1.2.6
   resolution: "minimist@npm:1.2.6"
   checksum: d15428cd1e11eb14e1233bcfb88ae07ed7a147de251441d61158619dfb32c4d7e9061d09cab4825fdee18ecd6fce323228c8c47b5ba7cd20af378ca4048fb3fb
@@ -3767,6 +3768,19 @@ __metadata:
   version: 4.0.0
   resolution: "path-type@npm:4.0.0"
   checksum: 5b1e2daa247062061325b8fdbfd1fb56dde0a448fb1455453276ea18c60685bdad23a445dc148cf87bc216be1573357509b7d4060494a6fd768c7efad833ee45
+  languageName: node
+  linkType: hard
+
+"pathpida@npm:^0.18.1":
+  version: 0.18.1
+  resolution: "pathpida@npm:0.18.1"
+  dependencies:
+    chokidar: ^3.5.3
+    ignore: ^5.2.0
+    minimist: ^1.2.5
+  bin:
+    pathpida: bin/index.js
+  checksum: f5ef01ea4eac7407ada8057fe8efc49ccf6c97a1d4e349486201bb71518caaad969d2c79794db6a383bdaea680e72a3d8d1a242c4d0266e6df0a2a6b0e0f22f1
   languageName: node
   linkType: hard
 

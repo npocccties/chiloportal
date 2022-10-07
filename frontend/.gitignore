@@ -43,3 +43,7 @@ api
 
 # msw
 public/mockServiceWorker.js
+
+# pathpida
+
+lib/$path.ts
