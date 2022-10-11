@@ -700,7 +700,7 @@ class BaseAPIViewTests(TestCase):
                 data["portal_category_image_url_path"],
                 portal_category.image_url_path if portal_category else None,
             )
-        self.assertEqual(data["degital_badge_class_id"], wisdom_badge.badge_class_id)
+        self.assertEqual(data["digital_badge_class_id"], wisdom_badge.badge_class_id)
         detail = data.get("detail")
         knowledge_badge_id_list = detail.get("knowledge_badges_list")
         self.assertEqual(set(knowledge_badge_id_list), set(knowledge_badges))
@@ -717,7 +717,7 @@ class BaseAPIViewTests(TestCase):
         self.assertEqual(data["issuer_name"], issuer.name if issuer else None)
         self.assertEqual(data["issuer_url"], issuer.url if issuer else None)
         self.assertEqual(data["issuer_email"], issuer.email if issuer else None)
-        self.assertEqual(data["degital_badge_class_id"], knowledge_badge.badge_class_id)
+        self.assertEqual(data["digital_badge_class_id"], knowledge_badge.badge_class_id)
         list = data.get("detail")
         self.assertEqual(len(list), len(criteria_list))
         for criteria in list:

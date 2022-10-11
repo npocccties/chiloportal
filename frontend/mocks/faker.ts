@@ -53,7 +53,7 @@ export const wisdomBadges = (): BadgeDetail1 => ({
   portal_category_name: faker.animal.bird(),
   portal_category_description: faker.lorem.paragraphs(),
   portal_category_image_url_path: faker.system.filePath(),
-  degital_badge_class_id: faker.datatype.string(),
+  digital_badge_class_id: faker.datatype.string(),
   detail: {
     knowledge_badges_list: [...Array(3)].map(faker.datatype.number),
   },
@@ -74,7 +74,7 @@ export const knowledgeBadges = (): BadgeDetail1 => ({
   portal_category_name: faker.animal.bird(),
   portal_category_description: faker.lorem.paragraphs(),
   portal_category_image_url_path: faker.system.filePath(),
-  degital_badge_class_id: faker.datatype.string(),
+  digital_badge_class_id: faker.datatype.string(),
   detail: [...Array(3)].map(criteria),
 });
 

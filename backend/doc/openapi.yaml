@@ -696,28 +696,28 @@ components:
             - knowledge
         name:
           type: string
-          example: degitalbadge101
+          example: digitalbadge101
         description:
           type: string
-          example: degitalbadge101 description ...
+          example: digitalbadge101 description ...
         tags:
           type: string
-          example: degitalbadge101 tag ...
+          example: digitalbadge101 tag ...
         image:
           type: string
-          example: degitalbadge101.jpg
+          example: digitalbadge101.jpg
         image_author:
           type: string
-          example: degitalbadge101 author
+          example: digitalbadge101 author
         issuer_name:
           type: string
-          example: degitalbadge101 issuer_name
+          example: digitalbadge101 issuer_name
         issuer_url:
           type: string
-          example: degitalbadge101 issuer_url
+          example: digitalbadge101 issuer_url
         issuer_email:
           type: string
-          example: degitalbadge101 issuer_email
+          example: digitalbadge101 issuer_email
         portal_category_id:
           type: integer
           format: int64
@@ -731,9 +731,9 @@ components:
         portal_category_image_url_path:
           type: string
           example: /img/img001.png
-        degital_badge_class_id:
+        digital_badge_class_id:
           type: string
-          example: degitalbadge_classID
+          example: digitalbadge_classID
         detail:
           oneOf:
             - $ref: '#/components/schemas/wisdom'
@@ -754,7 +754,7 @@ components:
         - portal_category_name
         - portal_category_description
         - portal_category_image_url_path
-        - degital_badge_class_id
+        - digital_badge_class_id
         - detail
     BadgeDetail2:
       type: object
@@ -770,31 +770,31 @@ components:
             - knowledge
         name:
           type: string
-          example: degitalbadge101
+          example: digitalbadge101
         description:
           type: string
-          example: degitalbadge101 description ...
+          example: digitalbadge101 description ...
         tags:
           type: string
-          example: degitalbadge101 tag ...
+          example: digitalbadge101 tag ...
         image:
           type: string
-          example: degitalbadge101.jpg
+          example: digitalbadge101.jpg
         image_author:
           type: string
-          example: degitalbadge101 author
+          example: digitalbadge101 author
         issuer_name:
           type: string
-          example: degitalbadge101 issuer_name
+          example: digitalbadge101 issuer_name
         issuer_url:
           type: string
-          example: degitalbadge101 issuer_url
+          example: digitalbadge101 issuer_url
         issuer_email:
           type: string
-          example: degitalbadge101 issuer_email
-        degital_badge_class_id:
+          example: digitalbadge101 issuer_email
+        digital_badge_class_id:
           type: string
-          example: degitalbadge_classID
+          example: digitalbadge_classID
         detail:
           oneOf:
             - $ref: '#/components/schemas/wisdom'
@@ -811,7 +811,7 @@ components:
         - issuer_name
         - issuer_url
         - issuer_email
-        - degital_badge_class_id
+        - digital_badge_class_id
         - detail
     wisdom:
       type: object

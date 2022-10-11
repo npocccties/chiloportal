@@ -88,7 +88,7 @@ def to_wisdom_badge(wisdom_badge, output_portal_category=False):
         "issuer_name": issuer.name if issuer else None,
         "issuer_url": issuer.url if issuer else None,
         "issuer_email": issuer.email if issuer else None,
-        "degital_badge_class_id": wisdom_badge.badge_class_id,
+        "digital_badge_class_id": wisdom_badge.badge_class_id,
         "detail": {
             "knowledge_badges_list": knowledge_badges_id_list,
         },
@@ -119,7 +119,7 @@ def to_knowledge_badge(knowledge_badge):
         "issuer_name": issuer.name if issuer else None,
         "issuer_url": issuer.url if issuer else None,
         "issuer_email": issuer.email if issuer else None,
-        "degital_badge_class_id": knowledge_badge.badge_class_id,
+        "digital_badge_class_id": knowledge_badge.badge_class_id,
         "detail": [to_criteria(criteria) for criteria in criterias.all()],
     }
 
