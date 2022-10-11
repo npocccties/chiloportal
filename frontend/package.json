@@ -60,7 +60,7 @@
     "build:app": "next build",
     "build:clean": "rimraf public/mockServiceWorker.js",
     "build:path": "pathpida --ignorePath .gitignore",
-    "dev": "run-s api dev:mock dev:path dev:app",
+    "dev": "npm-run-all -s api dev:mock -p dev:path dev:app",
     "dev:app": "next dev",
     "dev:mock": "msw init public --no-save",
     "dev:path": "pathpida --ignorePath .gitignore --watch",
