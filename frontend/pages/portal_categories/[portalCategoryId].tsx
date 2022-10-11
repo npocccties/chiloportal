@@ -2,6 +2,8 @@ import Error from "next/error";
 import { client } from "lib/client";
 import { PortalCategory, BadgeDetail2 } from "api/@types";
 import Template from "templates/PortalCategory";
+import { NEXT_PUBLIC_API_MOCKING } from "lib/env";
+import { portalCategory as fakePortalCategory } from "mocks/faker";
 
 export type Context = {
   params: { portalCategoryId: string };
@@ -23,10 +25,12 @@ export async function getServerSideProps({
   query: { p },
 }: Context): Promise<{ props: ErrorProps | Props }> {
   const { body: portalCategories } = await client.portalCategory.list.get();
-  const portalCategory = portalCategories.find(
-    (portalCategory) =>
-      portalCategory.portal_category_id === Number(portalCategoryId)
-  );
+  const portalCategory = NEXT_PUBLIC_API_MOCKING
+    ? fakePortalCategory()
+    : portalCategories.find(
+        (portalCategory) =>
+          portalCategory.portal_category_id === Number(portalCategoryId)
+      );
   if (!portalCategory)
     return { props: { title: "PortalCategory Not Found", statusCode: 404 } };
   const { body: wisdomBadgesList } =
