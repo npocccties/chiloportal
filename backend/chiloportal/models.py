@@ -10,13 +10,19 @@ from django.db import models
 
 
 class CategorisedBadges(models.Model):
-    wisdom_badges = models.ForeignKey('WisdomBadges', models.DO_NOTHING, related_name='categorised_badges_wisdom_badges')
-    goal = models.ForeignKey('Goal', models.DO_NOTHING, related_name='categorised_badges_goal')
+    wisdom_badges = models.ForeignKey(
+        "WisdomBadges",
+        models.DO_NOTHING,
+        related_name="categorised_badges_wisdom_badges",
+    )
+    goal = models.ForeignKey(
+        "Goal", models.DO_NOTHING, related_name="categorised_badges_goal"
+    )
     description = models.TextField()
 
     class Meta:
         managed = True
-        db_table = 'categorised_badges'
+        db_table = "categorised_badges"
 
 
 class Field(models.Model):
@@ -27,18 +33,20 @@ class Field(models.Model):
 
     class Meta:
         managed = True
-        db_table = 'field'
+        db_table = "field"
 
 
 class Goal(models.Model):
-    framework = models.ForeignKey('Framework', models.DO_NOTHING, related_name='goal_framework')
-    field = models.ForeignKey(Field, models.DO_NOTHING, related_name='goal_field')
-    stage = models.ForeignKey('Stage', models.DO_NOTHING, related_name='goal_stage')
+    framework = models.ForeignKey(
+        "Framework", models.DO_NOTHING, related_name="goal_framework"
+    )
+    field = models.ForeignKey(Field, models.DO_NOTHING, related_name="goal_field")
+    stage = models.ForeignKey("Stage", models.DO_NOTHING, related_name="goal_stage")
     description = models.TextField()
 
     class Meta:
         managed = True
-        db_table = 'goal'
+        db_table = "goal"
 
 
 class Consumer(models.Model):
@@ -48,18 +56,20 @@ class Consumer(models.Model):
 
     class Meta:
         managed = True
-        db_table = 'consumer'
+        db_table = "consumer"
 
 
 class Criteria(models.Model):
-    knowledge_badges = models.ForeignKey('KnowledgeBadges', models.DO_NOTHING, related_name='criteria_knowledge_badges')
+    knowledge_badges = models.ForeignKey(
+        "KnowledgeBadges", models.DO_NOTHING, related_name="criteria_knowledge_badges"
+    )
     type = models.CharField(max_length=32)
     name = models.CharField(max_length=256)
     sort_key = models.IntegerField()
 
     class Meta:
         managed = True
-        db_table = 'criteria'
+        db_table = "criteria"
 
 
 class Issuer(models.Model):
@@ -69,11 +79,13 @@ class Issuer(models.Model):
 
     class Meta:
         managed = True
-        db_table = 'issuer'
+        db_table = "issuer"
 
 
 class KnowledgeBadges(models.Model):
-    wisdom_badges = models.ForeignKey('WisdomBadges', models.DO_NOTHING, related_name='knowledge_badges_wisdom_badges')
+    wisdom_badges = models.ForeignKey(
+        "WisdomBadges", models.DO_NOTHING, related_name="knowledge_badges_wisdom_badges"
+    )
     badge_class_id = models.TextField()
     name = models.CharField(max_length=512)
     description = models.TextField(blank=True, null=True)
@@ -82,11 +94,17 @@ class KnowledgeBadges(models.Model):
     image_id = models.TextField(blank=True, null=True)
     image_author = models.TextField(blank=True, null=True)
     version = models.TextField(blank=True, null=True)
-    issuer = models.ForeignKey(Issuer, models.DO_NOTHING, blank=True, null=True, related_name='knowledge_badges_issuer')
+    issuer = models.ForeignKey(
+        Issuer,
+        models.DO_NOTHING,
+        blank=True,
+        null=True,
+        related_name="knowledge_badges_issuer",
+    )
 
     class Meta:
         managed = True
-        db_table = 'knowledge_badges'
+        db_table = "knowledge_badges"
 
 
 class PortalCategory(models.Model):
@@ -97,7 +115,7 @@ class PortalCategory(models.Model):
 
     class Meta:
         managed = True
-        db_table = 'portal_category'
+        db_table = "portal_category"
 
 
 class Stage(models.Model):
@@ -108,11 +126,13 @@ class Stage(models.Model):
 
     class Meta:
         managed = True
-        db_table = 'stage'
+        db_table = "stage"
 
 
 class Framework(models.Model):
-    consumer = models.ForeignKey(Consumer, models.DO_NOTHING, related_name='framework_consumer')
+    consumer = models.ForeignKey(
+        Consumer, models.DO_NOTHING, related_name="framework_consumer"
+    )
     name = models.CharField(max_length=256)
     description = models.TextField()
     supplementary = models.TextField()
@@ -121,11 +141,17 @@ class Framework(models.Model):
 
     class Meta:
         managed = True
-        db_table = 'framework'
+        db_table = "framework"
 
 
 class WisdomBadges(models.Model):
-    portal_category = models.ForeignKey(PortalCategory, models.DO_NOTHING, blank=True, null=True, related_name='wisdom_badges_portal_category')
+    portal_category = models.ForeignKey(
+        PortalCategory,
+        models.DO_NOTHING,
+        blank=True,
+        null=True,
+        related_name="wisdom_badges_portal_category",
+    )
     badge_class_id = models.TextField()
     name = models.CharField(max_length=512)
     description = models.TextField(blank=True, null=True)
@@ -133,10 +159,16 @@ class WisdomBadges(models.Model):
     image_id = models.TextField(blank=True, null=True)
     image_author = models.TextField(blank=True, null=True)
     version = models.TextField(blank=True, null=True)
-    issuer = models.ForeignKey(Issuer, models.DO_NOTHING, blank=True, null=True, related_name='wisdom_badges_issuer')
+    issuer = models.ForeignKey(
+        Issuer,
+        models.DO_NOTHING,
+        blank=True,
+        null=True,
+        related_name="wisdom_badges_issuer",
+    )
     alignments_targetname = models.TextField(blank=True, null=True)
     alignments_targeturl = models.TextField(blank=True, null=True)
 
     class Meta:
         managed = True
-        db_table = 'wisdom_badges'
+        db_table = "wisdom_badges"

@@ -1,141 +1,166 @@
 from collections import defaultdict
 from .enums import *
 
+
 def to_portal_categories(queryset):
     return [to_portal_category(pc) for pc in queryset]
 
+
 def to_portal_category(pc):
     return {
-        'portal_category_id': pc.id,
-        'name': pc.name,
-        'description': pc.description,
-        'image_url_path': pc.image_url_path,
-        'badges_count': pc.wisdom_badges_portal_category__count,
+        "portal_category_id": pc.id,
+        "name": pc.name,
+        "description": pc.description,
+        "image_url_path": pc.image_url_path,
+        "badges_count": pc.wisdom_badges_portal_category__count,
     }
+
 
 def to_consumers(queryset):
     return [to_consumer(consumer) for consumer in queryset]
 
+
 def to_consumer(consumer):
     return {
-        'consumer_id': consumer.id,
-        'name': consumer.name,
-        'url': consumer.url,
-        'email': consumer.email,
+        "consumer_id": consumer.id,
+        "name": consumer.name,
+        "url": consumer.url,
+        "email": consumer.email,
     }
+
 
 def to_criterias(queryset):
     return [to_criteria(criteria) for criteria in queryset]
 
+
 def to_criteria(criteria):
     return {
-        'criteria_id': criteria.id,
-        'type': criteria.type,
-        'name': criteria.name,
+        "criteria_id": criteria.id,
+        "type": criteria.type,
+        "name": criteria.name,
     }
+
 
 def to_pager_wisdom_badges(page):
     badge_array = []
     for wisdom_badge in page.object_list:
         badge_array.append(to_wisdom_badge(wisdom_badge))
     return {
-        'badges': badge_array,
-        'total_count': page.paginator.object_list.count(),
-        'start': page.start_index(),
-        'end': page.end_index()
+        "badges": badge_array,
+        "total_count": page.paginator.object_list.count(),
+        "start": page.start_index(),
+        "end": page.end_index(),
     }
+
 
 def to_pager_wisdom_badges_all(queryset):
     badge_array = [to_wisdom_badge(badge) for badge in queryset]
     return {
-        'badges': badge_array,
-        'total_count': len(badge_array),
-        'start': 1,
-        'end': len(badge_array)
+        "badges": badge_array,
+        "total_count": len(badge_array),
+        "start": 1,
+        "end": len(badge_array),
     }
 
-def to_wisdom_badges(queryset, output_portal_category = False):
-    return [to_wisdom_badge(wisdom_badge, output_portal_category) for wisdom_badge in queryset]
 
-def to_wisdom_badge(wisdom_badge, output_portal_category = False):
+def to_wisdom_badges(queryset, output_portal_category=False):
+    return [
+        to_wisdom_badge(wisdom_badge, output_portal_category)
+        for wisdom_badge in queryset
+    ]
+
+
+def to_wisdom_badge(wisdom_badge, output_portal_category=False):
     knowledge_badges = wisdom_badge.knowledge_badges_wisdom_badges
-    knowledge_badges_id_list = sorted([knowledge_badge.id for knowledge_badge in knowledge_badges.all()])
+    knowledge_badges_id_list = sorted(
+        [knowledge_badge.id for knowledge_badge in knowledge_badges.all()]
+    )
     issuer = wisdom_badge.issuer
     portal_category = wisdom_badge.portal_category
     result = {
-        'badges_id': wisdom_badge.id,
-        'type': BadgeType.WISDOM.name.lower(),
-        'name': wisdom_badge.name,
-        'description': wisdom_badge.description,
-        'image': wisdom_badge.image_id,
-        'image_author': wisdom_badge.image_author,
-        'tags': wisdom_badge.tags,
-        'issuer_name': issuer.name if issuer else None,
-        'issuer_url': issuer.url if issuer else None,
-        'issuer_email': issuer.email if issuer else None,
-        'degital_badge_class_id': wisdom_badge.badge_class_id,
-        'detail': {
-            'knowledge_badges_list': knowledge_badges_id_list,
-        }
+        "badges_id": wisdom_badge.id,
+        "type": BadgeType.WISDOM.name.lower(),
+        "name": wisdom_badge.name,
+        "description": wisdom_badge.description,
+        "image": wisdom_badge.image_id,
+        "image_author": wisdom_badge.image_author,
+        "tags": wisdom_badge.tags,
+        "issuer_name": issuer.name if issuer else None,
+        "issuer_url": issuer.url if issuer else None,
+        "issuer_email": issuer.email if issuer else None,
+        "degital_badge_class_id": wisdom_badge.badge_class_id,
+        "detail": {
+            "knowledge_badges_list": knowledge_badges_id_list,
+        },
     }
     if output_portal_category and portal_category:
-        result['portal_category_id'] = portal_category.id
-        result['portal_category_name'] = portal_category.name
-        result['portal_category_description'] = portal_category.description
-        result['portal_category_image_url_path'] = portal_category.image_url_path
+        result["portal_category_id"] = portal_category.id
+        result["portal_category_name"] = portal_category.name
+        result["portal_category_description"] = portal_category.description
+        result["portal_category_image_url_path"] = portal_category.image_url_path
     return result
+
 
 def to_knowledge_badges(queryset):
     return [to_knowledge_badge(knowledge_badge) for knowledge_badge in queryset]
+
 
 def to_knowledge_badge(knowledge_badge):
     criterias = knowledge_badge.criteria_knowledge_badges
     issuer = knowledge_badge.issuer
     return {
-        'badges_id': knowledge_badge.id,
-        'type': BadgeType.KNOWLEDGE.name.lower(),
-        'name': knowledge_badge.name,
-        'description': knowledge_badge.description,
-        'image': knowledge_badge.image_id,
-        'image_author': knowledge_badge.image_author,
-        'tags': knowledge_badge.tags,
-        'issuer_name': issuer.name if issuer else None,
-        'issuer_url': issuer.url if issuer else None,
-        'issuer_email': issuer.email if issuer else None,
-        'degital_badge_class_id': knowledge_badge.badge_class_id,
-        'detail': [to_criteria(criteria) for criteria in criterias.all()]
+        "badges_id": knowledge_badge.id,
+        "type": BadgeType.KNOWLEDGE.name.lower(),
+        "name": knowledge_badge.name,
+        "description": knowledge_badge.description,
+        "image": knowledge_badge.image_id,
+        "image_author": knowledge_badge.image_author,
+        "tags": knowledge_badge.tags,
+        "issuer_name": issuer.name if issuer else None,
+        "issuer_url": issuer.url if issuer else None,
+        "issuer_email": issuer.email if issuer else None,
+        "degital_badge_class_id": knowledge_badge.badge_class_id,
+        "detail": [to_criteria(criteria) for criteria in criterias.all()],
     }
+
 
 def to_frameworks(query_set):
     return [to_framework(framework) for framework in query_set]
 
+
 def to_framework(framework):
     return {
-        'framework_id': framework.id,
-        'name': framework.name,
-        'description': framework.description,
-        'url': framework.url,
-        'supplementary': framework.supplementary
+        "framework_id": framework.id,
+        "name": framework.name,
+        "description": framework.description,
+        "url": framework.url,
+        "supplementary": framework.supplementary,
     }
+
 
 def to_stages(query_set):
     return [to_stage(stage) for stage in query_set]
 
+
 def to_stage(stage):
     return {
-        'stage_id': stage.id,
-        'name': stage.name,
-        'sub_name': stage.sub_name,
-        'description': stage.description
+        "stage_id": stage.id,
+        "name": stage.name,
+        "sub_name": stage.sub_name,
+        "description": stage.description,
     }
 
-delimiter = '____$$$____'
+
+delimiter = "____$$$____"
+
 
 def make_field2_key(cp):
-    return f'{cp.field1_name}{delimiter}{cp.field2_name}'
+    return f"{cp.field1_name}{delimiter}{cp.field2_name}"
+
 
 def split_field2_key(key):
     return key.split(delimiter)
+
 
 def get_fields_keys(field_set):
     field1keys = set()
@@ -147,12 +172,14 @@ def get_fields_keys(field_set):
         field_dict[make_field2_key(field)].append(field)
     return field1keys, field2keys, field_dict
 
+
 def to_fields(field_set):
     field1keys, field2keys, field_dict = get_fields_keys(field_set)
     field1_array = []
     for field1key in sorted(list(field1keys)):
         field1_array.append(_to_field(field_dict, field1key, field2keys))
     return field1_array
+
 
 def _to_field(field_dict, field1key, field2keys):
     field2_array = []
@@ -162,10 +189,15 @@ def _to_field(field_dict, field1key, field2keys):
         fields = sorted(field_dict[field2key], key=lambda f: f.sort_key)
         field3_array = []
         for field in fields:
-            field3_array.append({'field_id': field.id, 'field3_name': field.field3_name})
-        field2_array.append({'field2_name': split_field2_key(field2key)[1], 'field3': field3_array})
-    field1 = {'field1_name': field1key, 'field2': field2_array}
-    return {'field1': field1}
+            field3_array.append(
+                {"field_id": field.id, "field3_name": field.field3_name}
+            )
+        field2_array.append(
+            {"field2_name": split_field2_key(field2key)[1], "field3": field3_array}
+        )
+    field1 = {"field1_name": field1key, "field2": field2_array}
+    return {"field1": field1}
+
 
 def get_fields_detail_keys(categorised_badge_set):
     field1keys = set()
@@ -180,12 +212,18 @@ def get_fields_detail_keys(categorised_badge_set):
         wisdom_dict[make_field2_key(field)].append(cb.wisdom_badges.id)
     return field1keys, field2keys, field_dict, wisdom_dict
 
+
 def to_fields_detail(categorised_badge_set):
-    field1keys, field2keys, field_dict, wisdom_dict = get_fields_detail_keys(categorised_badge_set)
+    field1keys, field2keys, field_dict, wisdom_dict = get_fields_detail_keys(
+        categorised_badge_set
+    )
     field1_list = []
     for field1key in sorted(list(field1keys)):
-        field1_list.append(_to_field_detail(field_dict, field1key, field2keys, wisdom_dict))
+        field1_list.append(
+            _to_field_detail(field_dict, field1key, field2keys, wisdom_dict)
+        )
     return field1_list
+
 
 def _to_field_detail(field_dict, field1key, field2keys, wisdom_dict):
     field2_array = []
@@ -196,7 +234,15 @@ def _to_field_detail(field_dict, field1key, field2keys, wisdom_dict):
         wisdom_badge_id_array = sorted(wisdom_dict[field2key])
         field3_array = []
         for field in fields:
-            field3_array.append({'field_id': field.id, 'field3_name': field.field3_name, 'wisdom_badges': wisdom_badge_id_array})
-        field2_array.append({'field2_name': split_field2_key(field2key)[1], 'field3': field3_array})
-    field1 = {'field1_name': field1key, 'field2': field2_array}
-    return {'field1': field1}
+            field3_array.append(
+                {
+                    "field_id": field.id,
+                    "field3_name": field.field3_name,
+                    "wisdom_badges": wisdom_badge_id_array,
+                }
+            )
+        field2_array.append(
+            {"field2_name": split_field2_key(field2key)[1], "field3": field3_array}
+        )
+    field1 = {"field1_name": field1key, "field2": field2_array}
+    return {"field1": field1}
