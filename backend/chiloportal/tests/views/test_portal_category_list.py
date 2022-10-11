@@ -2,6 +2,7 @@ from rest_framework.test import APIRequestFactory
 from .base_api_view_tests import BaseAPIViewTests
 from ...views import *
 
+
 class PortalCategoryListTests(BaseAPIViewTests):
     def test_portal_category_list_200(self):
         factory = APIRequestFactory()
@@ -20,4 +21,4 @@ class PortalCategoryListTests(BaseAPIViewTests):
     def test_portal_category_list_404(self):
         factory = APIRequestFactory()
         view = PortalCategoryList.as_view()
-        self.request_not_found(factory, view, self.portal_category_list_url, {}, 'Data')
+        self.request_not_found(factory, view, self.portal_category_list_url, {}, "Data")

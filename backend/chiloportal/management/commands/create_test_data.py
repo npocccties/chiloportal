@@ -7,6 +7,7 @@ from ...tests.views.base_api_view_tests import *
 
 logger = logging.getLogger(__name__)
 
+
 class Command(BaseCommand):
     help = "テストデータ作成コマンド"
 
