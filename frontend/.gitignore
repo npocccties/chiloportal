@@ -45,5 +45,8 @@ api
 public/mockServiceWorker.js
 
 # pathpida
-
 lib/$path.ts
+
+# images
+public/images/*
+!public/images/mock*

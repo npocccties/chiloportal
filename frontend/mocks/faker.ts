@@ -34,7 +34,7 @@ export const portalCategory = (): PortalCategory => ({
   portal_category_id: faker.datatype.number(),
   name: faker.animal.bird(),
   description: faker.lorem.paragraphs(),
-  image_url_path: faker.system.filePath(),
+  image_url_path: "mock-portal-category.png",
   badges_count: faker.datatype.number(),
 });
 
@@ -44,7 +44,7 @@ export const wisdomBadges = (): BadgeDetail1 => ({
   name: faker.animal.cat(),
   description: faker.lorem.paragraphs(),
   tags: faker.lorem.text(),
-  image: faker.system.filePath(),
+  image: "mock-wisdom-badge.png",
   image_author: faker.name.fullName(),
   issuer_name: faker.company.name(),
   issuer_url: faker.internet.url(),
@@ -52,7 +52,7 @@ export const wisdomBadges = (): BadgeDetail1 => ({
   portal_category_id: faker.datatype.number(),
   portal_category_name: faker.animal.bird(),
   portal_category_description: faker.lorem.paragraphs(),
-  portal_category_image_url_path: faker.system.filePath(),
+  portal_category_image_url_path: "mock-portal-category.png",
   digital_badge_class_id: faker.datatype.string(),
   detail: {
     knowledge_badges_list: [...Array(3)].map(faker.datatype.number),
@@ -65,7 +65,7 @@ export const knowledgeBadges = (): BadgeDetail1 => ({
   name: faker.animal.cat(),
   description: faker.lorem.paragraphs(),
   tags: faker.lorem.text(),
-  image: faker.system.filePath(),
+  image: "mock-knowledge-badge.png",
   image_author: faker.name.fullName(),
   issuer_name: faker.company.name(),
   issuer_url: faker.internet.url(),
@@ -73,7 +73,7 @@ export const knowledgeBadges = (): BadgeDetail1 => ({
   portal_category_id: faker.datatype.number(),
   portal_category_name: faker.animal.bird(),
   portal_category_description: faker.lorem.paragraphs(),
-  portal_category_image_url_path: faker.system.filePath(),
+  portal_category_image_url_path: "mock-portal-category.png",
   digital_badge_class_id: faker.datatype.string(),
   detail: [...Array(3)].map(criteria),
 });
