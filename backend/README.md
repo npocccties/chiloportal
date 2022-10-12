@@ -37,6 +37,22 @@
    * インポートコマンドの単体テスト：chiloportal/tests/commands/*.py
    * バックエンドAPIの単体テスト：chiloportal/tests/views/*.py
 
+## Pythonのパッケージのインストール時
+1. pipコマンドにより Python のパッケージをインストールした場合、下記コマンドを実行し requirements.txt を更新してください。  
+   ```
+   pip freeze > requirements.txt
+   ```
+
+## 単体テストのカバレッジ取得
+1. 下記コマンド実行  
+   ```
+   pytest --cov --cov-branch --cov-report=term-missing --cov-report=html
+   ```
+   * htmlcov/index.html にカバレッジを出力します  
+   * 上記 html の coverage 列（カバレッジ：網羅率）は C0（命令網羅）とC1（分岐網羅）を含みます  
+1. カバレッジを確認して必要に応じてテストコードを追加
+1. 再度、カバレッジを出力する
+
 
 # 開発サーバー
 ## 環境構築手順
@@ -66,7 +82,7 @@
    docker-compose exec app python /workspace/manage.py migrate
    docker-compose exec app python /workspace/manage.py createsuperuser
    ```
-   * 本番環境の管理者の認証情報は類推されにくいユーザ名およびパスワードを設定してください。  
+   * 本番環境の管理者の認証情報は類推されにくいユーザ名およびパスワードを設定してください  
 1. 備考  
    コンテナログの確認  
    ```
@@ -78,13 +94,12 @@
    ```
 
 ## デプロイ方法
-コンテナが起動している前提で下記を行ってください。  
-
 ### バックエンドAPI
 1. バックエンドAPIサービス実行  
    ```
    docker-compose exec -d app python /workspace/manage.py runserver --noreload --nothreading 0.0.0.0:8000
    ```
+   * コンテナは起動しておいてください
 
 ## 動作確認
 ### バックエンドAPI
@@ -155,7 +170,7 @@ db コンテナを通してコマンド実行
    ```
 
 # Django の管理画面
-ブラウザから下記のURLを参照してください。
+ブラウザから下記のURLを参照
 ## ローカル環境
 http://localhost:8000/admin
 
@@ -175,22 +190,9 @@ http://dev-portal.oku.cccties.org/admin
    chiloportal/backend/logs/import_badge.log
    ```
 
-# Pythonの追加パッケージのインストール時
-1. pipコマンドにより Python のパッケージをインストールした場合、下記コマンドを実行し requirements.txt を更新してください。  
-   ```
-   pip freeze > requirements.txt
-   ```
-
-# 単体テストのカバレッジ取得
-1. 下記コマンド実行  
-   ```
-   coverage run --source='.' manage.py test && coverage report && coverage html
-   ```
-   * htmlcov/index.html にカバレッジが出力  
-1. 未走行パスを確認して必要に応じてテストコードを追加
-1. 再度、カバレッジを出力する
-
 # 補足
 ## Visual Studio Code
 ### 静的解析ツール
 * mypy
+### テストフレームワーク
+* pytest
