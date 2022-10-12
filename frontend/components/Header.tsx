@@ -18,11 +18,13 @@ function Header({ className }: Props) {
   const { data: portalCategories } = usePortalCategories();
   const id = useId();
   return (
-    <header className={clsx("flex items-center gap-2 px-8 py-2", className)}>
+    <header
+      className={clsx("flex items-center gap-2 px-8 py-2 bg-white", className)}
+    >
       <Link href={pagesPath.$url()}>
-        <button className="px-2 mr-4">
+        <a className="px-2 mr-4">
           <Image src="/logo.png" width={142} height={44} alt="" />
-        </button>
+        </a>
       </Link>
       <Popover
         className="hidden lg:block"
@@ -32,19 +34,19 @@ function Header({ className }: Props) {
         <ul role="menu" className="jumpu-card">
           {consumers &&
             consumers.map((consumer) => (
-              <Link
+              <li
                 key={consumer.consumer_id}
-                href={pagesPath.consumers
-                  ._consumerId(consumer.consumer_id)
-                  .$url()}
+                role="menuitem"
+                className="cursor-pointer px-3 py-2 hover:bg-primary-50"
               >
-                <li
-                  role="menuitem"
-                  className="cursor-pointer px-3 py-2 hover:bg-primary-50"
+                <Link
+                  href={pagesPath.consumers
+                    ._consumerId(consumer.consumer_id)
+                    .$url()}
                 >
-                  {consumer.name}
-                </li>
-              </Link>
+                  <a>{consumer.name}の育成指標</a>
+                </Link>
+              </li>
             ))}
         </ul>
       </Popover>
@@ -56,25 +58,25 @@ function Header({ className }: Props) {
         <ul role="menu" className="jumpu-card">
           {portalCategories &&
             portalCategories.map((portalCategory) => (
-              <Link
+              <li
                 key={portalCategory.portal_category_id}
-                href={pagesPath.portal_categories
-                  ._portalCategoryId(portalCategory.portal_category_id)
-                  .$url()}
+                role="menuitem"
+                className="cursor-pointer px-3 py-2 hover:bg-primary-50"
               >
-                <li
-                  role="menuitem"
-                  className="cursor-pointer px-3 py-2 hover:bg-primary-50"
+                <Link
+                  href={pagesPath.portal_categories
+                    ._portalCategoryId(portalCategory.portal_category_id)
+                    .$url()}
                 >
-                  {portalCategory.name}
-                </li>
-              </Link>
+                  <a>{portalCategory.name}</a>
+                </Link>
+              </li>
             ))}
         </ul>
       </Popover>
       <div className="flex-1" />
       <Link href={pagesPath.search.$url()}>
-        <button
+        <a
           aria-describedby={id}
           className="jumpu-icon-button group text-2xl w-10 h-10 mr-4"
         >
@@ -86,7 +88,7 @@ function Header({ className }: Props) {
           >
             検索
           </span>
-        </button>
+        </a>
       </Link>
       <a
         className="hidden lg:inline text-primary-700 hover:underline"
