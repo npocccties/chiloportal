@@ -5,8 +5,7 @@ import { Consumer } from "api/@types";
 const key = "consumer/list" as const;
 
 async function fetcher(_: typeof key) {
-  const { body } = await client.consumer.list.get();
-  return body;
+  return client.consumer.list.$get();
 }
 
 export default function useConsumers() {

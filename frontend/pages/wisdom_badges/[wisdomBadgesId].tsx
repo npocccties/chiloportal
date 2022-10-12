@@ -21,9 +21,7 @@ export type Props = {
 export async function getServerSideProps({
   params: { wisdomBadgesId },
 }: Context): Promise<{ props: ErrorProps | Props }> {
-  const {
-    body: [wisdomBadges],
-  } = await client.badges.get({
+  const [wisdomBadges] = await client.badges.$get({
     query: {
       badges_ids: wisdomBadgesId,
       badges_type: "wisdom" as const,
@@ -35,7 +33,7 @@ export async function getServerSideProps({
     };
   if (!("knowledge_badges_list" in wisdomBadges.detail))
     return { props: { title: "KnowledgeBadges Not Found", statusCode: 404 } };
-  const { body: knowledgeBadgesList } = await client.badges.get({
+  const knowledgeBadgesList = await client.badges.$get({
     query: {
       badges_ids: wisdomBadges.detail.knowledge_badges_list.join(","),
       badges_type: "knowledge",
