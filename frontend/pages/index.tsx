@@ -13,8 +13,8 @@ export type Props = {
 export async function getServerSideProps(): Promise<{
   props: Props;
 }> {
-  const { body: consumers } = await client.consumer.list.get();
-  const { body: portalCategories } = await client.portalCategory.list.get();
+  const consumers = await client.consumer.list.$get();
+  const portalCategories = await client.portalCategory.list.$get();
   return {
     props: {
       articles: [],

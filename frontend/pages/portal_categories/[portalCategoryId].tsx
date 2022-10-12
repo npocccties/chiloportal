@@ -26,7 +26,7 @@ export async function getServerSideProps({
   params: { portalCategoryId },
   query: { p },
 }: Context): Promise<{ props: ErrorProps | Props }> {
-  const { body: portalCategories } = await client.portalCategory.list.get();
+  const portalCategories = await client.portalCategory.list.$get();
   const portalCategory = NEXT_PUBLIC_API_MOCKING
     ? fakePortalCategory()
     : portalCategories.find(
@@ -35,13 +35,12 @@ export async function getServerSideProps({
       );
   if (!portalCategory)
     return { props: { title: "PortalCategory Not Found", statusCode: 404 } };
-  const { body: wisdomBadgesList } =
-    await client.portalCategory.badges.list.get({
-      query: {
-        portal_category_id: portalCategory.portal_category_id,
-        page_number: Number(p),
-      },
-    });
+  const wisdomBadgesList = await client.portalCategory.badges.list.$get({
+    query: {
+      portal_category_id: portalCategory.portal_category_id,
+      page_number: Number(p),
+    },
+  });
   return {
     props: { portalCategory, wisdomBadgesList },
   };

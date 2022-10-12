@@ -16,11 +16,9 @@ export type Props = {
 export async function getServerSideProps({
   query: { q = "", p },
 }: Context): Promise<{ props: Props }> {
-  const { body: wisdomBadgesList } = await client.wisdomBadges.list.keyword.get(
-    {
-      query: { keyword: q, page_number: Number(p) },
-    }
-  );
+  const wisdomBadgesList = await client.wisdomBadges.list.keyword.$get({
+    query: { keyword: q, page_number: Number(p) },
+  });
   return {
     props: { keyword: q, wisdomBadgesList },
   };

@@ -24,18 +24,18 @@ export type Props = {
 export async function getServerSideProps({
   params: { consumerId, frameworkId, stageId },
 }: Context): Promise<{ props: ErrorProps | Props }> {
-  const { body: consumer } = await client.consumer.get({
+  const consumer = await client.consumer.$get({
     query: { consumer_id: Number(consumerId) },
   });
-  const { body: framework } = await client.framework.get({
+  const framework = await client.framework.$get({
     query: { framework_id: Number(frameworkId) },
   });
-  const { body: stages } = await client.framework.stage.list.get({
+  const stages = await client.framework.stage.list.$get({
     query: { framework_id: Number(frameworkId) },
   });
   const stage = stages.find((stage) => stage.stage_id === Number(stageId));
   if (!stage) return { props: { title: "Stage Not Found", statusCode: 404 } };
-  const { body: fields } = await client.stage.field.list.get({
+  const fields = await client.stage.field.list.$get({
     query: { stage_id: Number(stageId) },
   });
   const wisdomBadgesMap = new Map<number, BadgeDetail2[]>();
@@ -45,7 +45,7 @@ export async function getServerSideProps({
     )
   );
   for (const fieldId of fieldIds) {
-    const { body: wisdomBadges } = await client.wisdomBadges.list.get({
+    const wisdomBadges = await client.wisdomBadges.list.$get({
       query: { field_id: fieldId, stage_id: Number(stageId) },
     });
     wisdomBadgesMap.set(fieldId, wisdomBadges.badges);
