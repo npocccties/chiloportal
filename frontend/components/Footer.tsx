@@ -44,9 +44,7 @@ function Footer({ className }: Props) {
           <ul className="text-gray-700 leading-7 w-full sm:w-auto">
             {portalCategories &&
               portalCategories.map((portalCategory) => (
-                <li
-                  key={portalCategory.portal_category_id}
-                >
+                <li key={portalCategory.portal_category_id}>
                   <Link
                     href={pagesPath.portal_categories
                       ._portalCategoryId(portalCategory.portal_category_id)
@@ -59,7 +57,7 @@ function Footer({ className }: Props) {
           </ul>
         </section>
         <ul className="text-gray-700 leading-7 sm:columns-2 w-full sm:w-auto">
-	  {/* TODO: 各画面のルーティングを実装して */}
+          {/* TODO: 各画面のルーティングを実装して */}
           <li>
             <a>コンセプト</a>
           </li>
@@ -83,7 +81,9 @@ function Footer({ className }: Props) {
           </li>
         </ul>
       </div>
-      <div className="flex justify-center text-gray-400 text-xs px-2"><p>Copyright CCC-TIES 2022</p></div>
+      <div className="flex justify-center text-gray-400 text-xs px-2">
+        <p>Copyright CCC-TIES 2022</p>
+      </div>
     </footer>
   );
 }
