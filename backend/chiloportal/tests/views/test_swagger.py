@@ -5,7 +5,7 @@ from ...swagger import *
 
 
 class SwaggerTests(BaseAPIViewTests):
-    def test_run_ok(self):
+    def test_swager_query_param_filter(self):
         view = BadgesDetail()
         filter = SwaggerQueryParamFilter()
         fields = filter.get_schema_fields(view)

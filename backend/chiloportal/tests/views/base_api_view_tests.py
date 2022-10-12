@@ -25,7 +25,6 @@ class BaseAPIViewTests(TestCase):
         base_url, "knowledgeBadges/criteria/list/"
     )
     consumer_framework_list_url = urljoin(base_url, "consumer/framework/list/")
-    swagger_url = urljoin(base_url, "swagger/")
     not_found_id = 99999
     invalid_param_alpha = "hogehoge"
     invalid_param_fullchar = "ほげほげ"
