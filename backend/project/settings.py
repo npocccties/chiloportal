@@ -29,14 +29,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 debug = os.environ.get('DEBUG', 'False')
 DEBUG = strtobool(debug)
 
-logger_level = os.environ.get('LOGGER_LEVEL')
-if logger_level == None:
-    logger_level = 'INFO'
+logger_level = os.environ.get('LOGGER_LEVEL', 'INFO')
 
-allowed_host = os.environ.get('ALLOWED_HOSTS')
-if allowed_host == None:
-    allowed_host = 'localhost'
-ALLOWED_HOSTS = [allowed_host]
+ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOSTS', 'localhost')]
 
 
 # Application definition

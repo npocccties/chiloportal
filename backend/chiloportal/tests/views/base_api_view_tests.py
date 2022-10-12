@@ -25,6 +25,7 @@ class BaseAPIViewTests(TestCase):
         base_url, "knowledgeBadges/criteria/list/"
     )
     consumer_framework_list_url = urljoin(base_url, "consumer/framework/list/")
+    swagger_url = urljoin(base_url, "swagger/")
     not_found_id = 99999
     invalid_param_alpha = "hogehoge"
     invalid_param_fullchar = "ほげほげ"
@@ -744,6 +745,11 @@ class BaseAPIViewTests(TestCase):
         self.assertEqual(data["name"], framework.name)
         self.assertEqual(data["description"], framework.description)
         self.assertEqual(data["url"], framework.url)
+
+    def assert_swagger_param(self, field, param):
+        self.assertEqual(field.name, param.name)
+        self.assertEqual(field.required, param.required)
+        self.assertEqual(field.schema, param.schema)
 
     def create_test_consumer_data(self, data_count):
         consumers = []
