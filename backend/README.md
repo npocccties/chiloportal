@@ -1,13 +1,14 @@
-# 開発環境
+# 実行環境
 * Docker
-* Docker Compose
+* Django
+
+# 開発環境
 * Visual Studio Code
-* Django REST Framework
 
 # Visual Studio Code
 ## 環境構築手順
 
-1. Docker および Docker-compose をインストール  
+1. Docker および Docker Compose をインストール  
 1. Visual Studio Code に拡張機能「Dev - Containers」をインストール  
 1. `.env.local-debug`を複製し、複製したファイルを`.env`にリネーム  
 1. 表示 ⇒ コマンドパレット で「Remote-Containers: Open Folder in Container...」を選択し、backendフォルダを選択  
@@ -57,7 +58,7 @@
 # 開発サーバー
 ## 環境構築手順
 
-1. Docker および Docker-compose をインストール  
+1. Docker および Docker Compose をインストール  
 1. chiloportal のソースを git で取得  
    ```
    git clone https://github.com/npocccties/chiloportal.git
