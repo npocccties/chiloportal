@@ -2,8 +2,10 @@ import { client } from "lib/client";
 import { BadgeDetail2 } from "api/@types";
 import Template from "templates/Search";
 
+export type Query = { q?: string; p?: string };
+
 export type Context = {
-  query: { q: string; p: string };
+  query: Query;
 };
 
 export type Props = {

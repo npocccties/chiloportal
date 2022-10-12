@@ -66,7 +66,7 @@ function Header({ className }: Props) {
                 <Link
                   href={pagesPath.portal_categories
                     ._portalCategoryId(portalCategory.portal_category_id)
-                    .$url()}
+                    .$url({ query: {} })}
                 >
                   <a>{portalCategory.name}</a>
                 </Link>
@@ -75,7 +75,7 @@ function Header({ className }: Props) {
         </ul>
       </Popover>
       <div className="flex-1" />
-      <Link href={pagesPath.search.$url()}>
+      <Link href={pagesPath.search.$url({ query: {} })}>
         <a
           aria-describedby={id}
           className="jumpu-icon-button group text-2xl w-10 h-10 mr-4"

@@ -5,9 +5,11 @@ import Template from "templates/PortalCategory";
 import { NEXT_PUBLIC_API_MOCKING } from "lib/env";
 import { portalCategory as fakePortalCategory } from "mocks/faker";
 
+export type Query = { p?: string };
+
 export type Context = {
   params: { portalCategoryId: string };
-  query: { p: string };
+  query: Query;
 };
 
 type ErrorProps = {
