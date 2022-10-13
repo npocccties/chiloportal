@@ -1,17 +1,20 @@
+import clsx from "clsx";
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/future/image";
 import { Props } from "pages";
 import { pagesPath } from "lib/$path";
+import useConsumers from "lib/use-consumers";
+import usePortalCategories from "lib/use-portal-categories";
 
 export default function Top({
   articles,
   recommendedWisdomBadgesList,
   learningContents,
-  consumers,
-  portalCategories,
 }: Props) {
+  const { data: consumers } = useConsumers();
+  const { data: _ } = usePortalCategories();
   const [keyword, setKeyword] = useState("");
   const router = useRouter();
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -81,18 +84,34 @@ export default function Top({
         </section>
         <section className="jumpu-card px-4 py-6 mb-6">
           <h2 className="text-2xl text-gray-700 mb-2">育成指標から探す</h2>
-          <ul className="list-disc pl-8 text-gray-700 md:columns-2 lg:columns-3">
-            {consumers.map((consumer) => (
-              <li key={consumer.consumer_id}>
-                <Link
-                  href={pagesPath.consumers
-                    ._consumerId(consumer.consumer_id)
-                    .$url()}
-                >
-                  <a className="underline">{consumer.name}の育成指標</a>
-                </Link>
+          <ul
+            className={clsx({
+              ["list-disc pl-8 text-gray-700 md:columns-2 lg:columns-3"]:
+                consumers,
+            })}
+            aria-busy={!consumers}
+          >
+            {consumers ? (
+              consumers.map((consumer) => (
+                <li key={consumer.consumer_id} className="break-inside-avoid">
+                  <Link
+                    href={pagesPath.consumers
+                      ._consumerId(consumer.consumer_id)
+                      .$url()}
+                  >
+                    <a className="underline">{consumer.name}の育成指標</a>
+                  </Link>
+                </li>
+              ))
+            ) : (
+              <li className="flex justify-center items-center h-24" aria-hidden>
+                <div className="jumpu-spinner">
+                  <svg viewBox="24 24 48 48">
+                    <circle cx="48" cy="48" r="16" />
+                  </svg>
+                </div>
               </li>
-            ))}
+            )}
           </ul>
         </section>
         <section className="text-2xl text-gray-700">

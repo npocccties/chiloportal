@@ -24,39 +24,59 @@ function Footer({ className }: Props) {
         </div>
         <section>
           <h2 className="text-gray-400 text-xs mb-2">育成指標から探す</h2>
-          <ul className="text-gray-700 leading-7 w-full sm:w-auto">
-            {consumers &&
-              consumers.map((consumer) => (
-                <li key={consumer.consumer_id}>
-                  <Link
-                    href={pagesPath.consumers
-                      ._consumerId(consumer.consumer_id)
-                      .$url()}
-                  >
-                    <a>{consumer.name}の育成指標</a>
-                  </Link>
-                </li>
-              ))}
+          <ul
+            className="text-gray-700 leading-7 w-full sm:w-auto"
+            aria-busy={!consumers}
+          >
+            {consumers
+              ? consumers.map((consumer) => (
+                  <li key={consumer.consumer_id}>
+                    <Link
+                      href={pagesPath.consumers
+                        ._consumerId(consumer.consumer_id)
+                        .$url()}
+                    >
+                      <a>{consumer.name}の育成指標</a>
+                    </Link>
+                  </li>
+                ))
+              : [...Array(10)].map((_, index) => (
+                  <li
+                    key={index}
+                    className="animate-pulse bg-gray-300 w-64 h-4 my-3 rounded-full"
+                    aria-hidden
+                  />
+                ))}
           </ul>
         </section>
         <section>
           <h2 className="text-gray-400 text-xs mb-2">カテゴリから探す</h2>
-          <ul className="text-gray-700 leading-7 w-full sm:w-auto">
-            {portalCategories &&
-              portalCategories.map((portalCategory) => (
-                <li key={portalCategory.portal_category_id}>
-                  <Link
-                    href={pagesPath.portal_categories
-                      ._portalCategoryId(portalCategory.portal_category_id)
-                      .$url({ query: {} })}
-                  >
-                    <a>{portalCategory.name}</a>
-                  </Link>
-                </li>
-              ))}
+          <ul
+            className="text-gray-700 leading-7 w-full sm:w-auto"
+            aria-busy={!portalCategories}
+          >
+            {portalCategories
+              ? portalCategories.map((portalCategory) => (
+                  <li key={portalCategory.portal_category_id}>
+                    <Link
+                      href={pagesPath.portal_categories
+                        ._portalCategoryId(portalCategory.portal_category_id)
+                        .$url({ query: {} })}
+                    >
+                      <a>{portalCategory.name}</a>
+                    </Link>
+                  </li>
+                ))
+              : [...Array(10)].map((_, index) => (
+                  <li
+                    key={index}
+                    className="animate-pulse bg-gray-300 w-48 h-4 my-3 rounded-full"
+                    aria-hidden
+                  />
+                ))}
           </ul>
         </section>
-        <ul className="text-gray-700 leading-7 sm:columns-2 w-full sm:w-auto">
+        <ul className="text-gray-700 leading-7 sm:columns-2 w-full sm:w-auto [&>li]:break-inside-avoid">
           {/* TODO: 各画面のルーティングを実装して */}
           <li>
             <a>コンセプト</a>
