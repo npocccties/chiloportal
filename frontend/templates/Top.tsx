@@ -90,12 +90,18 @@ export default function Top({
             あなたが認められる能力バッジを獲得するために、いくつかの知識バッジを得なければなりません。少ない知識バッジで獲得できる能力バッジがあります。
           </p>
           <ul className="grid grid-cols-[repeat(auto-fill,275px)] gap-4">
-            {wisdomBadgesList &&
-              wisdomBadgesList.map((wisdomBadges) => (
-                <li key={wisdomBadges.badges_id}>
-                  <WisdomBadgesCard wisdomBadges={wisdomBadges} />
-                </li>
-              ))}
+            {wisdomBadgesList
+              ? wisdomBadgesList.map((wisdomBadges) => (
+                  <li key={wisdomBadges.badges_id}>
+                    <WisdomBadgesCard wisdomBadges={wisdomBadges} />
+                  </li>
+                ))
+              : [...Array(3)].map((_, index) => (
+                  <li
+                    key={index}
+                    className="animate-pulse bg-gray-300 h-72 rounded-lg"
+                  />
+                ))}
           </ul>
         </section>
         <section className="mb-8">
@@ -103,12 +109,18 @@ export default function Top({
             カテゴリから能力バッジを探しましょう
           </h2>
           <ul className="grid grid-cols-[repeat(auto-fill,275px)] gap-4">
-            {portalCategories &&
-              portalCategories.map((portalCategory) => (
-                <li key={portalCategory.portal_category_id}>
-                  <PortalCategoryCard portalCategory={portalCategory} />
-                </li>
-              ))}
+            {portalCategories
+              ? portalCategories.map((portalCategory) => (
+                  <li key={portalCategory.portal_category_id}>
+                    <PortalCategoryCard portalCategory={portalCategory} />
+                  </li>
+                ))
+              : [...Array(3)].map((_, index) => (
+                  <li
+                    key={index}
+                    className="animate-pulse bg-gray-300 h-72 rounded-lg"
+                  />
+                ))}
           </ul>
         </section>
         <section className="jumpu-card px-4 py-6 mb-8">
