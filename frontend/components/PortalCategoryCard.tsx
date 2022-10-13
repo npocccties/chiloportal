@@ -22,6 +22,16 @@ function PortalCategoryCard({ portalCategory }: Props) {
             fill
             style={{ objectFit: "cover" }}
           />
+          <Image
+            className="absolute top-2 left-2"
+            width={52}
+            height={53}
+            src="/badge-placeholder.png"
+            alt=""
+          />
+          <p className="text-lg absolute top-5 left-[0.375rem] text-center font-bold w-14">
+            {portalCategory.badges_count}
+          </p>
         </div>
         <section className="px-4 pt-2 pb-4">
           <h3 className="flex justify-center items-center text-2xl line-clamp-2 text-center mb-2">
