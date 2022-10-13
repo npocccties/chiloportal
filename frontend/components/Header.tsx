@@ -26,13 +26,9 @@ function Header({ className }: Props) {
           <Image src="/logo.png" width={142} height={44} alt="" />
         </a>
       </Link>
-      <Popover
-        className="hidden lg:block"
-        title="育成指標から探す"
-        disabled={!Boolean(consumers)}
-      >
-        <ul role="menu" className="jumpu-card">
-          {consumers &&
+      <Popover className="hidden lg:block" title="育成指標から探す">
+        <ul role="menu" className="jumpu-card" aria-busy={!consumers}>
+          {consumers ? (
             consumers.map((consumer) => (
               <li
                 key={consumer.consumer_id}
@@ -47,16 +43,24 @@ function Header({ className }: Props) {
                   <a>{consumer.name}の育成指標</a>
                 </Link>
               </li>
-            ))}
+            ))
+          ) : (
+            <li
+              className="flex justify-center items-center w-48 h-72"
+              aria-hidden
+            >
+              <div className="jumpu-spinner">
+                <svg viewBox="24 24 48 48">
+                  <circle cx="48" cy="48" r="16" />
+                </svg>
+              </div>
+            </li>
+          )}
         </ul>
       </Popover>
-      <Popover
-        className="hidden lg:block"
-        title="カテゴリから探す"
-        disabled={!Boolean(portalCategories)}
-      >
-        <ul role="menu" className="jumpu-card">
-          {portalCategories &&
+      <Popover className="hidden lg:block" title="カテゴリから探す">
+        <ul role="menu" className="jumpu-card" aria-busy={!portalCategories}>
+          {portalCategories ? (
             portalCategories.map((portalCategory) => (
               <li
                 key={portalCategory.portal_category_id}
@@ -71,7 +75,19 @@ function Header({ className }: Props) {
                   <a>{portalCategory.name}</a>
                 </Link>
               </li>
-            ))}
+            ))
+          ) : (
+            <li
+              className="flex justify-center items-center w-48 h-72"
+              aria-hidden
+            >
+              <div className="jumpu-spinner">
+                <svg viewBox="24 24 48 48">
+                  <circle cx="48" cy="48" r="16" />
+                </svg>
+              </div>
+            </li>
+          )}
         </ul>
       </Popover>
       <div className="flex-1" />
