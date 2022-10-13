@@ -10,7 +10,7 @@
 
 1. Docker および Docker Compose をインストール  
 1. Visual Studio Code に拡張機能「Dev - Containers」をインストール  
-1. `.env.local-debug`を複製し、複製したファイルを`.env`にリネーム  
+1. `.env.localhost`を複製し、複製したファイルを`.env`にリネーム  
 1. 表示 ⇒ コマンドパレット で「Remote-Containers: Open Folder in Container...」を選択し、backendフォルダを選択  
 1. コンテナのビルドが終了したら、ターミナル ⇒ 新しいターミナル で以降のコマンドを実行  
 1. 管理者作成  
@@ -63,19 +63,19 @@
    ```
    git clone https://github.com/npocccties/chiloportal.git
    ```
-1. docker-compose.ymlのあるbackendフォルダに移動  
+1. backendフォルダに移動  
    ```
    cd chiloportal/backend
    ```
-1. `.env.dev-server-debug`を複製し、複製したファイルを`.env`にリネーム  
+1. `.env.dev-server`を複製し、複製したファイルを`.env`にリネーム  
    * DBの認証情報や Django の秘密鍵を含めてますので、本番環境でも使用する場合は適宜変更してください  
 1. コンテナの起動  
    ```
-   docker-compose up -d
+   docker-compose up -d --file docker-compose.dev-server.yml
    ```
    ※ リビルドしたい場合は以下を実行（但しDBが消えるので必要に応じてバックアップをしてください）
    ```
-   docker-compose build --no-cache
+   docker-compose build --no-cache --file docker-compose.dev-server.yml
    ```
 1. 管理者作成  
    ```
@@ -133,7 +133,7 @@
 |:--|:--|:--|
 |APP_PORT|バックエンドAPIのサービスの公開ポート番号|-|
 |SECRET_KEY|Django で使用される署名用の秘密鍵|-|
-|DB_HOST|DBのホスト名|localhostや開発サーバーではdocker-compose.ymlに記載されている`db`がホスト名|
+|DB_HOST|DBのホスト名|docker-compose.*.yml に記載されている`db`がホスト名|
 |DB_NAME|DB名|-|
 |DB_USER|DBのユーザ名|-|
 |DB_PASS|DBのパスワード|-|

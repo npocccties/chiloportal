@@ -5,4 +5,3 @@ COPY ./ /workspace/
 RUN python -m pip install --upgrade pip
 RUN pip install -r /workspace/requirements.txt
 WORKDIR /workspace
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "project.wsgi:application"]
