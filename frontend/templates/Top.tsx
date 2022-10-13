@@ -7,14 +7,21 @@ import { Props } from "pages";
 import { pagesPath } from "lib/$path";
 import useConsumers from "lib/use-consumers";
 import usePortalCategories from "lib/use-portal-categories";
+import useBadges from "lib/use-badges";
+import WisdomBadgesCard from "components/WisdomBadgesCard";
+import PortalCategoryCard from "components/PortalCategoryCard";
 
 export default function Top({
   posts,
-  recommendedWisdomBadgesList,
+  recommendedWisdomBadgesIds,
   learningContents,
 }: Props) {
   const { data: consumers } = useConsumers();
-  const { data: _ } = usePortalCategories();
+  const { data: portalCategories } = usePortalCategories();
+  const { data: wisdomBadgesList } = useBadges(
+    "wisdom",
+    recommendedWisdomBadgesIds
+  );
   const [keyword, setKeyword] = useState("");
   const router = useRouter();
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,7 +35,7 @@ export default function Top({
     <>
       <header className="relative mb-16 h-96 overflow-hidden">
         <div className="absolute z-10 top-1/4 left-1/2 -translate-x-1/2">
-          <p className="mb-6 text-white font-bold text-3xl sm:text-4xl whitespace-nowrap">
+          <p className="mb-8 text-white font-bold text-3xl sm:text-4xl whitespace-nowrap">
             このポータルが与える価値、
             <br />
             ミッションとは
@@ -53,7 +60,7 @@ export default function Top({
         <Image src="/top.png" alt="" fill style={{ objectFit: "cover" }} />
       </header>
       <article className="max-w-4xl mx-auto mb-16 px-4">
-        <section className="mb-6">
+        <section className="mb-8">
           <div className="flex items-center mb-4">
             <h2 className="flex-1 text-2xl text-gray-700">
               OKUTEPからのおしらせ
@@ -74,7 +81,7 @@ export default function Top({
             </ul>
           </div>
         </section>
-        <section className="mb-6">
+        <section className="mb-8">
           <p className="mb-2">はじめての方におすすめ</p>
           <h2 className="text-2xl text-gray-700 mb-2">
             少ない回数で能力バッジを獲得しましょう
@@ -82,13 +89,29 @@ export default function Top({
           <p className="mb-4">
             あなたが認められる能力バッジを獲得するために、いくつかの知識バッジを得なければなりません。少ない知識バッジで獲得できる能力バッジがあります。
           </p>
+          <ul className="grid grid-cols-[repeat(auto-fill,275px)] gap-4">
+            {wisdomBadgesList &&
+              wisdomBadgesList.map((wisdomBadges) => (
+                <li key={wisdomBadges.badges_id}>
+                  <WisdomBadgesCard wisdomBadges={wisdomBadges} />
+                </li>
+              ))}
+          </ul>
         </section>
-        <section className="mb-6">
-          <h2 className="text-2xl text-gray-700 mb-2">
+        <section className="mb-8">
+          <h2 className="text-2xl text-gray-700 mb-6">
             カテゴリから能力バッジを探しましょう
           </h2>
+          <ul className="grid grid-cols-[repeat(auto-fill,275px)] gap-4">
+            {portalCategories &&
+              portalCategories.map((portalCategory) => (
+                <li key={portalCategory.portal_category_id}>
+                  <PortalCategoryCard portalCategory={portalCategory} />
+                </li>
+              ))}
+          </ul>
         </section>
-        <section className="jumpu-card px-4 py-6 mb-6">
+        <section className="jumpu-card px-4 py-6 mb-8">
           <h2 className="text-2xl text-gray-700 mb-4">育成指標から探す</h2>
           <ul
             className={clsx({
