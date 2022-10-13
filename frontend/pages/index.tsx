@@ -1,27 +1,30 @@
-import { client } from "lib/client";
-import { Consumer, PortalCategory, BadgeDetail1 } from "api/@types";
+import { readFile } from "node:fs/promises";
+import YAML from "yaml";
+import matter from "gray-matter";
+import { GetStaticPropsResult } from "next";
+import { BadgeDetail1 } from "api/@types";
 import Template from "templates/Top";
+import { readPosts } from "lib/post";
 
 export type Props = {
-  articles: { title: string; slug: string }[];
-  recommendedWisdomBadgesList: BadgeDetail1[];
+  posts: { title: string; slug: string }[];
+  recommendedWisdomBadgesList: BadgeDetail1["badges_id"][];
   learningContents: { name: string; url: string }[];
-  consumers: Consumer[];
-  portalCategories: PortalCategory[];
 };
 
-export async function getServerSideProps(): Promise<{
-  props: Props;
-}> {
-  const consumers = await client.consumer.list.$get();
-  const portalCategories = await client.portalCategory.list.$get();
+export async function getStaticProps(): Promise<GetStaticPropsResult<Props>> {
+  const posts = await readPosts();
+  const frontmatters = posts.map(
+    (post) => matter(post).data as Props["posts"][number]
+  );
+  const config = await readFile("config.yaml", "utf8");
+  const { recommendedWisdomBadgesList = [], learningContents = [] } =
+    YAML.parse(config);
   return {
     props: {
-      articles: [],
-      recommendedWisdomBadgesList: [],
-      learningContents: [],
-      consumers,
-      portalCategories,
+      posts: frontmatters,
+      recommendedWisdomBadgesList,
+      learningContents,
     },
   };
 }

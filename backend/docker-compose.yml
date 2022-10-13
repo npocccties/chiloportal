@@ -29,7 +29,6 @@ services:
       - DB_NAME=$DB_NAME
       - DB_USER=$DB_USER
       - DB_PASS=$DB_PASS
-      - DB_PORT=$DB_PORT
       - DEBUG=$DEBUG
       - LOGGER_LEVEL=$LOGGER_LEVEL
       - ALLOWED_HOSTS=$ALLOWED_HOSTS
@@ -53,7 +52,6 @@ services:
       - DB_NAME=$DB_NAME
       - DB_USER=$DB_USER
       - DB_PASS=$DB_PASS
-      - DB_PORT=$DB_PORT
       - DEBUG=$DEBUG
       - LOGGER_LEVEL=$LOGGER_LEVEL
       - ALLOWED_HOSTS=$ALLOWED_HOSTS
