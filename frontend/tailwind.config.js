@@ -7,5 +7,6 @@ module.exports = {
   plugins: [
     ...require("@jumpu-ui/tailwindcss"),
     require("@tailwindcss/typography"),
+    require("@tailwindcss/line-clamp"),
   ],
 };
