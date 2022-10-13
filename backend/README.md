@@ -137,7 +137,6 @@
 |DB_NAME|DB名|-|
 |DB_USER|DBのユーザ名|-|
 |DB_PASS|DBのパスワード|-|
-|DB_PORT|DBのポート番号|5432固定|
 |DEBUG|デバッグ機能|デバッグ用で例外発生時のエラー内容が参照できるようになる<br>True: 有効<br>False: 無効<br>※本番リリース時は必ず「False」を設定してください|
 |ALLOWED_HOSTS|公開ホスト名|本番リリースする際は本番サーバーのホスト名を設定してください|
 |LOGGER_LEVEL|ロガーレベル|ログファイルの出力基準で以下を指定可能<br>DEBUG/INFO/WARNING/ERROR/CRITICAL|
