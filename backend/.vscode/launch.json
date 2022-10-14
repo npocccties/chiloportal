@@ -45,7 +45,8 @@
             "request": "launch",
             "program": "${workspaceFolder}/manage.py",
             "args": [
-                "test"
+                "test",
+                "--exclude-tag=fuzzing"
             ],
             "django": true,
             "justMyCode": true
@@ -69,7 +70,20 @@
             "program": "${workspaceFolder}/manage.py",
             "args": [
                 "test",
-                "chiloportal.tests.views"
+                "chiloportal.tests.views",
+                "--exclude-tag=fuzzing"
+            ],
+            "django": true,
+            "justMyCode": true
+        },
+        {
+            "name": "Unit Test (Backend API fuzzing)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/manage.py",
+            "args": [
+                "test",
+                "chiloportal.tests.views.test_fuzzing"
             ],
             "django": true,
             "justMyCode": true
@@ -77,16 +91,16 @@
     ],
     "inputs": [
         {
-          "id": "badge_id",
-          "type": "promptString",
-          "description": "能力バッジIDを指定",
-          "default": "41"
+            "id": "badge_id",
+            "type": "promptString",
+            "description": "能力バッジIDを指定",
+            "default": "41"
         },
         {
-          "id": "portal_category_id",
-          "type": "promptString",
-          "description": "ポータル独自カテゴリIDを指定",
-          "default": "1"
+            "id": "portal_category_id",
+            "type": "promptString",
+            "description": "ポータル独自カテゴリIDを指定",
+            "default": "1"
         }
-      ]
-    }
+    ]
+}
