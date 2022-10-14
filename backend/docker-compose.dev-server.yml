@@ -4,7 +4,7 @@ services:
   web:
     image: nginx:1.23.1
     ports:
-      - ${APP_PORT}
+      - ${APP_PORT}:${APP_PORT}
     networks:
       - app_network
     volumes:

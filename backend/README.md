@@ -69,13 +69,14 @@
    ```
 1. `.env.dev-server`を複製し、複製したファイルを`.env`にリネーム  
    * DBの認証情報や Django の秘密鍵を含めてますので、本番環境でも使用する場合は適宜変更してください  
+1. `docker-compose.dev-server.yml`を複製し、複製したファイルを`docker-compose.yml`にリネーム  
 1. コンテナの起動  
    ```
-   docker-compose up -d --file docker-compose.dev-server.yml
+   docker-compose up -d
    ```
    ※ リビルドしたい場合は以下を実行（但しDBが消えるので必要に応じてバックアップをしてください）
    ```
-   docker-compose build --no-cache --file docker-compose.dev-server.yml
+   docker-compose build --no-cache
    ```
 1. 管理者作成  
    ```
@@ -92,6 +93,10 @@
    コンテナの停止  
    ```
    docker-compose stop
+   ```
+   コンテナの停止、削除  
+   ```
+   docker-compose down -v
    ```
 
 ## デプロイ方法
