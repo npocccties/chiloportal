@@ -80,17 +80,20 @@
    ```
    docker-compose up -d
    ```
-   ※ リビルドしたい場合は以下を実行（但しDBが消えるので必要に応じてバックアップをしてください）
-   ```
-   docker-compose build --no-cache
-   ```
-1. 管理者作成  
+1. マイグレーション  
    ```
    docker-compose exec app python /workspace/manage.py makemigrations
    docker-compose exec app python /workspace/manage.py migrate
+   ```
+1. 管理者作成（※必要に応じて）  
+   ```
    docker-compose exec app python /workspace/manage.py createsuperuser
    ```
    * 本番環境の管理者の認証情報は類推されにくいユーザ名およびパスワードを設定してください  
+1. static ファイルの収集
+   ```
+   docker-compose exec -d app python /workspace/manage.py collectstatic --no-input --clear
+   ```
 1. 備考  
    コンテナログの確認  
    ```
@@ -100,18 +103,14 @@
    ```
    docker-compose stop
    ```
-   コンテナの停止、削除  
+   コンテナの停止、削除（DBも消えます）  
    ```
    docker-compose down -v
    ```
-
-## デプロイ方法
-### バックエンドAPI
-1. バックエンドAPIサービス実行  
+   コンテナのリビルド（DBも消えます）
    ```
-   docker-compose exec -d app python /workspace/manage.py collectstatic --no-input --clear
+   docker-compose build --no-cache
    ```
-   * コンテナは起動しておいてください
 
 ## 動作確認
 ### バックエンドAPI
