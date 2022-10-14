@@ -109,7 +109,7 @@
 ### バックエンドAPI
 1. バックエンドAPIサービス実行  
    ```
-   docker-compose exec -d app python /workspace/manage.py runserver --noreload --nothreading 0.0.0.0:8000
+   docker-compose exec -d app python /workspace/manage.py collectstatic --no-input --clear
    ```
    * コンテナは起動しておいてください
 
