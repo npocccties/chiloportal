@@ -111,6 +111,11 @@
    ```
    docker-compose build --no-cache
    ```
+   毎回コピペするのが面倒な場合は以下のスクリプトに権限を与えて実行してください（管理者作成以外を実行します）
+   ```
+   sudo chmod 755 ./dev-server_start.sh
+   ./dev-server_start.sh
+   ```
 
 ## 動作確認
 ### バックエンドAPI
