@@ -67,9 +67,15 @@
    ```
    cd chiloportal/backend
    ```
-1. `.env.dev-server`を複製し、複製したファイルを`.env`にリネーム  
+1. .env の作成  
+   ```
+   cp .env.dev-server .env
+   ```
    * DBの認証情報や Django の秘密鍵を含めてますので、本番環境でも使用する場合は適宜変更してください  
-1. `docker-compose.dev-server.yml`を複製し、複製したファイルを`docker-compose.yml`にリネーム  
+1. docker-compose.yml の作成  
+   ```
+   cp docker-compose.dev-server.yml docker-compose.yml
+   ```
 1. コンテナの起動  
    ```
    docker-compose up -d
