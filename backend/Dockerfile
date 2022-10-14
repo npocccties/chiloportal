@@ -4,3 +4,4 @@ RUN apt install -y postgresql-client
 COPY ./ /workspace/
 RUN python -m pip install --upgrade pip
 RUN pip install -r /workspace/requirements.txt
+WORKDIR /workspace

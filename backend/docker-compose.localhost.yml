@@ -1,0 +1,58 @@
+version: '3.9'
+
+services:
+  app:
+    build: .
+    tty: true
+    ports:
+      - ${APP_PORT}:8000
+    volumes:
+      - ./:/workspace
+      -  ${PWD}/${IMAGE_DIR}:/workspace/output/images/
+      -  ./logs:/var/log/chiloportal/
+      - ./static:/workspace/static
+    environment:
+      - SECRET_KEY=$SECRET_KEY
+      - DB_HOST=$DB_HOST
+      - DB_NAME=$DB_NAME
+      - DB_USER=$DB_USER
+      - DB_PASS=$DB_PASS
+      - DEBUG=$DEBUG
+      - LOGGER_LEVEL=$LOGGER_LEVEL
+      - ALLOWED_HOSTS=$ALLOWED_HOSTS
+      - JUDGE_BADGE=$JUDGE_BADGE
+      - PER_PAGE=$PER_PAGE
+    depends_on:
+      - db
+      - migration
+
+  migration:
+    build: .
+    command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; python /workspace/manage.py makemigrations; python /workspace/manage.py migrate'
+    volumes:
+      - ./:/workspace
+    environment:
+      - SECRET_KEY=$SECRET_KEY
+      - DB_HOST=$DB_HOST
+      - DB_NAME=$DB_NAME
+      - DB_USER=$DB_USER
+      - DB_PASS=$DB_PASS
+      - DEBUG=$DEBUG
+      - LOGGER_LEVEL=$LOGGER_LEVEL
+      - ALLOWED_HOSTS=$ALLOWED_HOSTS
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13
+    environment:
+      - TZ=Asia/Tokyo
+      - POSTGRES_DB=$DB_NAME
+      - POSTGRES_USER=$DB_USER
+      - POSTGRES_PASSWORD=$DB_PASS
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    ports:
+      - 5433:5432
+    volumes:
+      - ./postgresql/data:/var/lib/postgresql
+      - ./sql:/docker-entrypoint-initdb.d
