@@ -12,13 +12,6 @@
 1. Visual Studio Code に拡張機能「Dev - Containers」をインストール  
 1. `.env.localhost`を複製し、複製したファイルを`.env`にリネーム  
 1. 表示 ⇒ コマンドパレット で「Remote-Containers: Open Folder in Container...」を選択し、backendフォルダを選択  
-1. コンテナのビルドが終了したら、ターミナル ⇒ 新しいターミナル で以降のコマンドを実行  
-1. 管理者作成  
-   ```
-   python /workspace/manage.py makemigrations
-   python /workspace/manage.py migrate
-   python /workspace/manage.py createsuperuser
-   ```
 
 ## デバッグ方法
 ### バックエンドAPI
@@ -85,11 +78,6 @@
    docker-compose exec app python /workspace/manage.py makemigrations
    docker-compose exec app python /workspace/manage.py migrate
    ```
-1. 管理者作成（※必要に応じて）  
-   ```
-   docker-compose exec app python /workspace/manage.py createsuperuser
-   ```
-   * 本番環境の管理者の認証情報は類推されにくいユーザ名およびパスワードを設定してください  
 1. static ファイルの収集
    ```
    docker-compose exec -d app python /workspace/manage.py collectstatic --no-input --clear
@@ -111,11 +99,16 @@
    ```
    docker-compose build --no-cache
    ```
-   毎回コピペするのが面倒な場合は以下のスクリプトに権限を与えて実行してください（管理者作成以外を実行します）
+   .env ファイルの作成 ～ static ファイルの収集までのスクリプト
    ```
    sudo chmod 755 ./dev-server_start.sh
    ./dev-server_start.sh
    ```
+   管理者作成（※必要に応じて）  
+   ```
+   docker-compose exec app python /workspace/manage.py createsuperuser
+   ```
+   * 本番環境の管理者の認証情報は類推されにくいユーザ名およびパスワードを設定してください  
 
 ## 動作確認
 ### バックエンドAPI
@@ -143,7 +136,7 @@
    ```
 
 
-# 環境変数の説明
+# 環境変数
 |環境変数名|説明|備考|
 |:--|:--|:--|
 |APP_PORT|バックエンドAPIのサービスの公開ポート番号|-|
@@ -188,6 +181,7 @@ db コンテナを通してコマンド実行
 ブラウザから下記のURLを参照
 ## ローカル環境
 http://localhost:8000/admin
+* ローカル環境で管理者を使用することはないと思いますが、使用する場合は 開発サーバー ⇒ 環境構築手順 ⇒ 備考 ⇒ 管理者作成を参照し、管理者作成を作成しておいてください
 
 ## 開発サーバー
 http://dev-portal.oku.cccties.org/admin
@@ -207,7 +201,16 @@ http://dev-portal.oku.cccties.org/admin
 
 # 補足
 ## Visual Studio Code
+### コード整形
+* black
 ### 静的解析ツール
 * mypy
 ### テストフレームワーク
 * pytest
+
+## 開発サーバー
+### サーバー構成
+* WEBサーバー: Nginx
+* WSGIサーバー: gunicorn
+* APIサーバー: Django REST framework
+* DBサーバー: PostgresSQL
