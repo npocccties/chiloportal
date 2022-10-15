@@ -1,10 +1,9 @@
 from django.test import TestCase
 from rest_framework import status
-from ...models import *
-from ...views import *
-from ...enums import *
+from ....models import *
+from ....views import *
+from ....enums import *
 from urllib.parse import urljoin
-import random
 
 
 class BaseAPIViewTests(TestCase):

@@ -1,6 +1,6 @@
 from rest_framework.test import APIRequestFactory
 from .base_api_view_tests import BaseAPIViewTests
-from ...views import *
+from ....views import *
 
 
 class WisdomBadgesConsumerListTests(BaseAPIViewTests):
