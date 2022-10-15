@@ -83,7 +83,7 @@
             "program": "${workspaceFolder}/manage.py",
             "args": [
                 "test",
-                "chiloportal.tests.views.dev-server.test_fuzzing"
+                "chiloportal.tests.views.dev_server.test_fuzzing"
             ],
             "django": true,
             "justMyCode": true
