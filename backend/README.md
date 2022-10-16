@@ -40,7 +40,7 @@
 ## 単体テストのカバレッジ取得
 1. 下記コマンド実行  
    ```
-   pytest --cov --cov-branch --cov-report=term-missing --cov-report=html
+   pytest --cov --cov-branch --cov-report=term-missing --cov-report=html --ignore=chiloportal/tests/views/dev_server
    ```
    * htmlcov/index.html にカバレッジを出力します  
    * 上記 html の coverage 列（カバレッジ：網羅率）は C0（命令網羅）とC1（分岐網羅）を含みます  
