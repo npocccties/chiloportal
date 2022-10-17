@@ -18,6 +18,14 @@ corepack yarn install # NPM パッケージのインストール
 corepack yarn dev # 開発サーバーの起動
 ```
 
+静的サイト生成の動作確認をする場合は以下の手順を実施してください。
+
+```shell
+corepack yarn install # NPM パッケージのインストール
+NODE_ENV=test corepack yarn build # テスト環境変数でのアプリケーションのビルド
+corepack yarn start # テストサーバーの起動
+```
+
 ### Docker 環境
 
 ```shell
@@ -57,6 +65,10 @@ docker run --rm -p 3000:3000 frontend # Docker コンテナの起動
 動作環境を用意したのち、本番環境にて以下のコマンドを実行すると本番サーバーが起動します。
 
 ```shell
+cat << EOL > .env # 環境変数の用意
+> NEXT_PUBLIC_API_BASE_URL=<API のベースとなる URL>
+> NEXT_PUBLIC_MOODLE_DASHBOARD_URL=<Moodle ダッシュボードの URL>
+> EOL
 corepack yarn install --immutable # NPM パッケージのインストール
 corepack yarn build # アプリケーションのビルド
 corepack yarn start # 本番サーバーの起動
