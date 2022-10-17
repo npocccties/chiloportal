@@ -3,7 +3,7 @@ from django.core.management.base import BaseCommand
 from ...models import *
 from ...utils import *
 from ...exceptions import *
-from ...tests.views.base_api_view_tests import *
+from ...tests.views.localhost.base_api_view_tests import *
 
 logger = logging.getLogger(__name__)
 

@@ -139,7 +139,6 @@
 # 環境変数
 |環境変数名|説明|備考|
 |:--|:--|:--|
-|APP_PORT|バックエンドAPIのサービスの公開ポート番号|-|
 |SECRET_KEY|Django で使用される署名用の秘密鍵|-|
 |DB_HOST|DBのホスト名|docker-compose.*.yml に記載されている`db`がホスト名|
 |DB_NAME|DB名|-|

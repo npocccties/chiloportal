@@ -1,10 +1,26 @@
 version: '3.9'
 
 services:
+  https-portal:
+    image: steveltn/https-portal:1
+    restart: always
+    volumes:
+      - ./ssl_certs:/var/lib/https-portal
+    ports:
+      - '80:80'
+      - '443:443'
+    networks:
+      - app_network
+    environment:
+      STAGE: ${STAGE}
+      DOMAINS: '${ALLOWED_HOSTS} -> http://web:8080/'
+    depends_on:
+      - app
+
   web:
     image: nginx:1.23.1
-    ports:
-      - ${APP_PORT}:${APP_PORT}
+    expose:
+      - 8080
     networks:
       - app_network
     volumes:
