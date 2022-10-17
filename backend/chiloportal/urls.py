@@ -3,18 +3,26 @@ from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 from .views import *
+from drf_yasg.generators import OpenAPISchemaGenerator
 
 app_name = "chiloportal"
 
+class BothHttpAndHttpsSchemaGenerator(OpenAPISchemaGenerator):
+    def get_schema(self, request=None, public=False):
+        schema = super().get_schema(request, public)
+        schema.schemes = ["http", "https"]
+        return schema
+ 
 schema_view = get_schema_view(
     openapi.Info(
         title="Chiloportal backend API",
         default_version="v1",
     ),
     public=True,
+    generator_class=BothHttpAndHttpsSchemaGenerator,
     permission_classes=(permissions.AllowAny,),
 )
-
+   
 urlpatterns = [
     path("consumer/", ConsumerDetail.as_view(), name="consumer-detail"),
     path("consumer/list/", ConsumerList.as_view(), name="consumer-list"),
