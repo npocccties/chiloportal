@@ -14,6 +14,7 @@ from django.db import connection, reset_queries
 class BaseAPIView(APIView):
     per_page = int(os.getenv("PER_PAGE", "30"))
     logger = logging.getLogger(__name__)
+    schemes = ["https"]
 
     def get(self, request):
         class_name = type(self).__name__
