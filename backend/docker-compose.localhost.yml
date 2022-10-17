@@ -1,11 +1,29 @@
 version: '3.9'
 
 services:
+  https-portal:
+    image: steveltn/https-portal:1
+    restart: always
+    volumes:
+      - ./ssl_certs:/var/lib/https-portal
+    ports:
+      - '80:80'
+      - '443:443'
+    networks:
+      - app_network
+    environment:
+      STAGE: ${STAGE}
+      DOMAINS: '${ALLOWED_HOSTS} -> http://app:8000/'
+    depends_on:
+      - app
+
   app:
     build: .
     tty: true
-    ports:
-      - ${APP_PORT}:8000
+    expose:
+      - 8000:8000
+    networks:
+      - app_network
     volumes:
       - ./:/workspace
       -  ${PWD}/${IMAGE_DIR}:/workspace/output/images/
@@ -29,6 +47,8 @@ services:
   migration:
     build: .
     command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; python /workspace/manage.py makemigrations; python /workspace/manage.py migrate'
+    networks:
+      - app_network
     volumes:
       - ./:/workspace
     environment:
@@ -45,6 +65,8 @@ services:
 
   db:
     image: postgres:13
+    networks:
+      - app_network
     environment:
       - TZ=Asia/Tokyo
       - POSTGRES_DB=$DB_NAME
@@ -56,3 +78,7 @@ services:
     volumes:
       - ./postgresql/data:/var/lib/postgresql
       - ./sql:/docker-entrypoint-initdb.d
+
+networks:
+  app_network:
+    driver: bridge
