@@ -9,12 +9,28 @@
 
 動作環境を用意したのち、ローカル環境にて以下のコマンドを実行すると開発サーバーが起動します。
 
+次のいずれかの手順を実行したのち、ブラウザーで[http://localhost:3000](http://localhost:3000) にアクセスすることで、開発中のアプリケーションを確認することができます。
+
+### ローカル環境
+
 ```shell
 corepack yarn install # NPM パッケージのインストール
 corepack yarn dev # 開発サーバーの起動
 ```
 
-[http://localhost:3000](http://localhost:3000) にブラウザーでアクセスすることで、開発中のアプリケーションを確認することができます。
+### Docker 環境
+
+```shell
+docker build -t frontend . # Docker イメージのビルド
+docker run --rm -p 3000:3000 frontend # Docker コンテナの起動
+```
+
+イメージのビルド時に以下のビルド変数を参照します。
+
+| ビルド変数名                     | 説明                        | デフォルト値                              |
+| :------------------------------- | :-------------------------- | :---------------------------------------- |
+| NEXT_PUBLIC_API_BASE_URL         | API のベースとなる URL      | http://dev-portal.oku.cccties.org/api/v1/ |
+| NEXT_PUBLIC_MOODLE_DASHBOARD_URL | Moodle ダッシュボードの URL | https://opedu.lib.osaka-kyoiku.ac.jp/my/  |
 
 ## 環境変数
 

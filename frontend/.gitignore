@@ -37,6 +37,7 @@ next-env.d.ts
 
 # yarn v2
 .yarn/*
+!.yarn/plugins
 
 # aspida
 api
