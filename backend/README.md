@@ -87,6 +87,10 @@
    ```
    docker-compose logs -f
    ```
+   コンテナの再起動  
+   ```
+   docker-compose restart
+   ```
    コンテナの停止  
    ```
    docker-compose stop
