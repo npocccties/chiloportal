@@ -8,9 +8,13 @@ from drf_yasg.generators import OpenAPISchemaGenerator
 app_name = "chiloportal"
 
 class BothHttpAndHttpsSchemaGenerator(OpenAPISchemaGenerator):
-    def get_schema(self, request=None, public=False):
+    def get_schema(self, request, public):
         schema = super().get_schema(request, public)
-        schema.schemes = ["http", "https"]
+        host = request.META.get("HTTP_HOST")
+        if "localhost" in host:
+            schema.schemes = ["http"]
+        else:
+            schema.schemes = ["https"]
         return schema
  
 schema_view = get_schema_view(
@@ -22,7 +26,7 @@ schema_view = get_schema_view(
     generator_class=BothHttpAndHttpsSchemaGenerator,
     permission_classes=(permissions.AllowAny,),
 )
-   
+
 urlpatterns = [
     path("consumer/", ConsumerDetail.as_view(), name="consumer-detail"),
     path("consumer/list/", ConsumerList.as_view(), name="consumer-list"),
