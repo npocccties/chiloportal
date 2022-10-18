@@ -154,7 +154,8 @@ if 'runserver' in args:
 elif 'import_badge' in args:
     log_fname = 'import_badge.log'
 else:
-    log_fname = 'default.log'
+    # サーバー環境だと runserver を使用しないので、APIのログにしておく
+    log_fname = 'backend_api.log'
 
 LOGGING = {
     'version': 1,
