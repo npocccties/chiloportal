@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "chiloportal.apps.ChiloportalConfig",
     "rest_framework",
     "rest_framework_api_key",
+    "corsheaders",
     "drf_yasg",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -50,6 +51,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -59,7 +61,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = "project.urls"
 
