@@ -35,10 +35,10 @@ docker run --rm -p 3000:3000 frontend # Docker コンテナの起動
 
 イメージのビルド時に以下のビルド変数を参照します。
 
-| ビルド変数名                     | 説明                        | デフォルト値                              |
-| :------------------------------- | :-------------------------- | :---------------------------------------- |
+| ビルド変数名                     | 説明                        | デフォルト値                               |
+| :------------------------------- | :-------------------------- | :----------------------------------------- |
 | NEXT_PUBLIC_API_BASE_URL         | API のベースとなる URL      | https://dev-portal.oku.cccties.org/api/v1/ |
-| NEXT_PUBLIC_MOODLE_DASHBOARD_URL | Moodle ダッシュボードの URL | https://opedu.lib.osaka-kyoiku.ac.jp/my/  |
+| NEXT_PUBLIC_MOODLE_DASHBOARD_URL | Moodle ダッシュボードの URL | https://opedu.lib.osaka-kyoiku.ac.jp/my/   |
 
 ## 環境変数
 
