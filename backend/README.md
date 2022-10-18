@@ -217,3 +217,8 @@ https://dev-portal.oku.cccties.org/admin
 * DBサーバー: PostgresSQL
 ### SSL証明書
 * Let's Encrypt の無料SSL証明書を使用
+### SSL証明書の更新ジョブ
+Let’Encrypt のSSL証明書は発行してから`90`日間有効で、有効期限の`30`日前を過ぎている場合、  
+コンテナを再起動することで SSL証明書が自動更新されますので、  
+crontab コマンドで毎月月初の日付が変わったタイミングでコンテナ再起動のジョブを登録する運用とします。
+* ジョブ:  `0 0 01 */1 * docker-compose -f /opt/chiloportal/backend/docker-compose.yml restart`
