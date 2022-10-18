@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { Props } from "pages/posts";
 import Breadcrumbs from "components/Breadcrumbs";
+import Container from "components/Container";
 import { pagesPath } from "lib/$path";
 
 function Posts({ posts }: Props) {
   return (
-    <article className="max-w-4xl mx-auto my-16 px-4 min-h-[33vh]">
+    <Container as="article">
       <Breadcrumbs
         className="mb-6"
         nodes={[{ name: "トップ", href: pagesPath.$url() }]}
@@ -21,7 +22,7 @@ function Posts({ posts }: Props) {
           </li>
         ))}
       </ul>
-    </article>
+    </Container>
   );
 }
 
