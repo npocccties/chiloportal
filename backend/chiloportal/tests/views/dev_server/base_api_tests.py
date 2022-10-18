@@ -5,7 +5,7 @@ from rest_framework import status
 
 
 class BaseApiTests(TestCase):
-    base_url = "http://dev-portal.oku.cccties.org/api/v1/"
+    base_url = "https://dev-portal.oku.cccties.org/api/v1/"
     consumer_detail_url = urljoin(base_url, "consumer/")
     consumer_list_url = urljoin(base_url, "consumer/list/")
     framework_field_list_url = urljoin(base_url, "framework/field/list/")

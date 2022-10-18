@@ -77,7 +77,7 @@
             "justMyCode": true
         },
         {
-            "name": "Unit Test (Backend API fuzzing)",
+            "name": "Fuzzing Test (Backend API)",
             "type": "python",
             "request": "launch",
             "program": "${workspaceFolder}/manage.py",
