@@ -113,6 +113,7 @@
 ## 動作確認
 ### バックエンドAPI
 1. ブラウザから https://dev-portal.oku.cccties.org/api/v1/swagger/ にアクセス
+1. Schemasのプルダウンで「HTTPS」を選択
 1. 該当のAPIを開いてから、「Try it out」を押下
 1. 必要に応じてパラメータ入力を行う
 1. 「Execute」を押下し、期待する値が得られているか確認する
@@ -144,12 +145,13 @@
 |DB_NAME|DB名|-|
 |DB_USER|DBのユーザ名|-|
 |DB_PASS|DBのパスワード|-|
-|DEBUG|デバッグ機能|デバッグ用で例外発生時のエラー内容が参照できるようになる<br>True: 有効<br>False: 無効<br>※本番リリース時は必ず「False」を設定してください|
+|DEBUG|デバッグ機能|デバッグ用で例外発生時のエラー内容が参照できるようになる<br>`True`: 有効<br>`False`: 無効<br>※本番リリース時は必ず「`False`」を設定してください|
 |ALLOWED_HOSTS|公開ホスト名|本番リリースする際は本番サーバーのホスト名を設定してください|
-|LOGGER_LEVEL|ロガーレベル|ログファイルの出力基準で以下を指定可能<br>DEBUG/INFO/WARNING/ERROR/CRITICAL|
+|LOGGER_LEVEL|ロガーレベル|ログファイルの出力基準で以下を指定可能<br>`DEBUG`/`INFO`/`WARNING`/`ERROR`/`CRITICAL`|
 |IMAGE_DIR|画像ファイルの公開ディレクトリ（相対パス指定）|本番リリースする際は本番サーバーの公開ディレクトリを設定してください|
-|JUDGE_BADGE|バッジ判定方法|version:<br>JSONのversionフィールド値の末尾がwisdomならば能力バッジとみなす<br>※本番リリース用<br><br>alignments:<br>JSONにalignmentsがあれば能力バッジとみなす<br>※動作確認用|
+|JUDGE_BADGE|バッジ判定方法|`version`:<br>JSONのversionフィールド値の末尾がwisdomならば能力バッジとみなす<br>※本番リリース用<br><br>`alignments`:<br>JSONにalignmentsがあれば能力バッジとみなす<br>※動作確認用|
 |PER_PAGE|1ページあたりのデータ数|APIのクエリパラメータとしてページ番号(page_number)が指定可能な場合、同APIの1ページあたりのデータ数|
+|STAGE|SSL証明書/自己署名証明書|`production`: SSL証明書を使用する ※本番リリース用<br>`local`: 自己署名証明書を使用する ※動作確認用<br>`staging`: 同上<br>証明書出力場所: `./ssl_certs`|
 
 
 # DBの確認
@@ -169,6 +171,7 @@ db コンテナを通してコマンド実行
    exit
    ```
    * 上記コンテナ内の出力ファイルは chiloportal/backend/postgresql/data に出力されます
+   * 出力ファイルは適当な場所にコピーしておいてください（理由：コンテナを down したりすると消えるため）
 1. リストア
    ```
    docker-compose exec db sh
@@ -213,3 +216,5 @@ https://dev-portal.oku.cccties.org/admin
 * WSGIサーバー: gunicorn
 * APIサーバー: Django REST framework
 * DBサーバー: PostgresSQL
+### SSL証明書
+* Let's Encrypt の無料SSL証明書を使用
