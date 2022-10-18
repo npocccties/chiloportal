@@ -33,7 +33,7 @@ export const field = (): FieldDetail => ({
 export const portalCategory = (): PortalCategory => ({
   portal_category_id: faker.datatype.number(),
   name: faker.animal.bird(),
-  description: faker.lorem.paragraphs(),
+  description: faker.lorem.paragraph(),
   image_url_path: "mock-portal-category.png",
   badges_count: faker.datatype.number(),
 });
@@ -42,7 +42,7 @@ export const wisdomBadges = (): BadgeDetail1 => ({
   badges_id: faker.datatype.number(),
   type: "wisdom" as const,
   name: faker.animal.cat(),
-  description: faker.lorem.paragraphs(),
+  description: faker.lorem.paragraph(),
   tags: faker.lorem.text(),
   image: "mock-wisdom-badge.png",
   image_author: faker.name.fullName(),
@@ -51,7 +51,7 @@ export const wisdomBadges = (): BadgeDetail1 => ({
   issuer_email: faker.internet.email(),
   portal_category_id: faker.datatype.number(),
   portal_category_name: faker.animal.bird(),
-  portal_category_description: faker.lorem.paragraphs(),
+  portal_category_description: faker.lorem.paragraph(),
   portal_category_image_url_path: "mock-portal-category.png",
   digital_badge_class_id: faker.datatype.string(),
   detail: {
@@ -63,7 +63,7 @@ export const knowledgeBadges = (): BadgeDetail1 => ({
   badges_id: faker.datatype.number(),
   type: "knowledge" as const,
   name: faker.animal.cat(),
-  description: faker.lorem.paragraphs(),
+  description: faker.lorem.paragraph(),
   tags: faker.lorem.text(),
   image: "mock-knowledge-badge.png",
   image_author: faker.name.fullName(),
@@ -72,7 +72,7 @@ export const knowledgeBadges = (): BadgeDetail1 => ({
   issuer_email: faker.internet.email(),
   portal_category_id: faker.datatype.number(),
   portal_category_name: faker.animal.bird(),
-  portal_category_description: faker.lorem.paragraphs(),
+  portal_category_description: faker.lorem.paragraph(),
   portal_category_image_url_path: "mock-portal-category.png",
   digital_badge_class_id: faker.datatype.string(),
   detail: [...Array(3)].map(criteria),
@@ -81,8 +81,8 @@ export const knowledgeBadges = (): BadgeDetail1 => ({
 export const framework = (): Framework => ({
   framework_id: faker.datatype.number(),
   name: faker.animal.cow(),
-  description: faker.lorem.paragraphs(),
-  supplementary: faker.lorem.paragraphs(),
+  description: faker.lorem.paragraph(),
+  supplementary: faker.lorem.paragraph(),
   url: faker.internet.url(),
 });
 
@@ -90,7 +90,7 @@ export const stage = (): Stage => ({
   stage_id: faker.datatype.number(),
   name: faker.animal.crocodilia(),
   sub_name: faker.animal.crocodilia(),
-  description: faker.lorem.paragraphs(),
+  description: faker.lorem.paragraph(),
 });
 
 export const criteria = (): Criteria => ({
