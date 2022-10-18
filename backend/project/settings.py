@@ -23,78 +23,80 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-debug = os.environ.get('DEBUG', 'False')
+debug = os.environ.get("DEBUG", "False")
 DEBUG = strtobool(debug)
 
-logger_level = os.environ.get('LOGGER_LEVEL', 'INFO')
+logger_level = os.environ.get("LOGGER_LEVEL", "INFO")
 
-ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOSTS', 'localhost')]
+ALLOWED_HOSTS = [os.environ.get("ALLOWED_HOSTS", "localhost")]
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'chiloportal.apps.ChiloportalConfig',
-    'rest_framework',
-    'rest_framework_api_key',
-    'drf_yasg',
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+    "chiloportal.apps.ChiloportalConfig",
+    "rest_framework",
+    "rest_framework_api_key",
+    "corsheaders",
+    "drf_yasg",
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-CORS_ALLOW_ALL_ORIGINS=True
+CORS_ORIGIN_ALLOW_ALL = True
 
-ROOT_URLCONF = 'project.urls'
+ROOT_URLCONF = "project.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'project.wsgi.application'
+WSGI_APPLICATION = "project.wsgi.application"
 
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'HOST': os.environ.get('DB_HOST'),
-        'NAME': os.environ.get('DB_NAME'),
-        'USER': os.environ.get('DB_USER'),
-        'PASSWORD': os.environ.get('DB_PASS'),
-        'PORT': 5432,
-        'TEST': {
-            'NAME': 'test_db',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "HOST": os.environ.get("DB_HOST"),
+        "NAME": os.environ.get("DB_NAME"),
+        "USER": os.environ.get("DB_USER"),
+        "PASSWORD": os.environ.get("DB_PASS"),
+        "PORT": 5432,
+        "TEST": {
+            "NAME": "test_db",
         },
     }
 }
@@ -105,16 +107,16 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
@@ -122,9 +124,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'ja'
+LANGUAGE_CODE = "ja"
 
-TIME_ZONE = 'Asia/Tokyo'
+TIME_ZONE = "Asia/Tokyo"
 
 USE_I18N = True
 
@@ -134,72 +136,72 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = "static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 APPEND_SLASH = True
 
-log_dir = '/var/log/chiloportal/'
+log_dir = "/var/log/chiloportal/"
 if os.path.exists(log_dir) == False:
     os.makedirs(log_dir)
-log_fname = ''
+log_fname = ""
 args = sys.argv
-if 'runserver' in args:
-    log_fname = 'backend_api.log'
-elif 'import_badge' in args:
-    log_fname = 'import_badge.log'
+if "runserver" in args:
+    log_fname = "backend_api.log"
+elif "import_badge" in args:
+    log_fname = "import_badge.log"
 else:
     # サーバー環境だと runserver を使用しないので、APIのログにしておく
-    log_fname = 'backend_api.log'
+    log_fname = "backend_api.log"
 
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
+    "version": 1,
+    "disable_existing_loggers": False,
     # ログ出力フォーマットの設定
-    'formatters': {
-        'default': {
-            'format': '%(asctime)s\t%(levelname)s\t%(process)d\t%(thread)d\t'
-                      '%(pathname)s\t%(lineno)d\t%(funcName)s\t%(message)s'
+    "formatters": {
+        "default": {
+            "format": "%(asctime)s\t%(levelname)s\t%(process)d\t%(thread)d\t"
+            "%(pathname)s\t%(lineno)d\t%(funcName)s\t%(message)s"
         },
     },
     # ハンドラの設定
-    'handlers': {
-        'file': {
-            'level': logger_level,
-            'class': 'logging.handlers.RotatingFileHandler',
-            'filename': os.path.join(log_dir, log_fname),
-            'maxBytes': 1024 * 1024 * 100,  # サイズ（100MB)
-            'backupCount': 7, # 世代数
-            'formatter': 'default',
+    "handlers": {
+        "file": {
+            "level": logger_level,
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": os.path.join(log_dir, log_fname),
+            "maxBytes": 1024 * 1024 * 100,  # サイズ（100MB)
+            "backupCount": 7,  # 世代数
+            "formatter": "default",
         },
-        'console': {
-            'level': logger_level,
-            'class': 'logging.StreamHandler',
+        "console": {
+            "level": logger_level,
+            "class": "logging.StreamHandler",
         },
     },
     # ロガーの設定
-    'loggers': {
+    "loggers": {
         # 自分で追加したアプリケーション全般のログを拾うロガー
-        '': {
-            'handlers': ['console','file'],
-            'level': logger_level,
-            'propagate': False,
+        "": {
+            "handlers": ["console", "file"],
+            "level": logger_level,
+            "propagate": False,
         },
         # Django自身が出力するログ全般を拾うロガー
-        'django': {
-            'handlers': ['console','file'],
-            'level': logger_level,
-            'propagate': False,
+        "django": {
+            "handlers": ["console", "file"],
+            "level": logger_level,
+            "propagate": False,
         },
-        'django.db.backends': {
-            'handlers': ['console','file'],
-            'level': logger_level,
-            'propagate': False,
+        "django.db.backends": {
+            "handlers": ["console", "file"],
+            "level": logger_level,
+            "propagate": False,
         },
     },
 }
