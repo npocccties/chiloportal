@@ -147,7 +147,7 @@
 |DEBUG|デバッグ機能|デバッグ用で例外発生時のエラー内容が参照できるようになる<br>`True`: 有効<br>`False`: 無効<br>※本番リリース時は必ず「`False`」を設定してください|
 |ALLOWED_HOSTS|公開ホスト名|本番リリースする際は本番サーバーのホスト名を設定してください|
 |LOGGER_LEVEL|ロガーレベル|ログファイルの出力基準で以下を指定可能<br>`DEBUG`/`INFO`/`WARNING`/`ERROR`/`CRITICAL`|
-|IMAGE_DIR|画像ファイルの公開ディレクトリ（相対パス指定）|本番リリースする際は本番サーバーの公開ディレクトリを設定してください|
+|IMAGE_DIR|画像ファイルの公開ディレクトリ（相対パス指定）|-|
 |JUDGE_BADGE|バッジ判定方法|`version`:<br>JSONのversionフィールド値の末尾がwisdomならば能力バッジとみなす<br>※本番リリース用<br><br>`alignments`:<br>JSONにalignmentsがあれば能力バッジとみなす<br>※動作確認用|
 |PER_PAGE|1ページあたりのデータ数|APIのクエリパラメータとしてページ番号(page_number)が指定可能な場合、同APIの1ページあたりのデータ数|
 |STAGE|SSL証明書/自己署名証明書|`production`: SSL証明書を使用する ※本番リリース用<br>`local`: 自己署名証明書を使用する ※動作確認用<br>`staging`: 同上<br>証明書出力場所: `./ssl_certs`|
