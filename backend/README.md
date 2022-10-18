@@ -113,7 +113,6 @@
 ## 動作確認
 ### バックエンドAPI
 1. ブラウザから https://dev-portal.oku.cccties.org/api/v1/swagger/ にアクセス
-1. Schemasのプルダウンで「HTTPS」を選択
 1. 該当のAPIを開いてから、「Try it out」を押下
 1. 必要に応じてパラメータ入力を行う
 1. 「Execute」を押下し、期待する値が得られているか確認する
