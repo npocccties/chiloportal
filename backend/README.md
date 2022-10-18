@@ -120,7 +120,7 @@
 ### インポートコマンド
 1. インポート実行  
    ```
-   docker-compose exec app python /workspace/manage.py import_badge --url {能力バッジを取得するURL} --pcid {ポータル独自カテゴリの主キー}
+   docker-compose exec app python /workspace/manage.py import_badge --url={能力バッジを取得するURL} --pcid={ポータル独自カテゴリの主キー}
    ```
    例
    ```
