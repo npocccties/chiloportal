@@ -112,7 +112,7 @@
 
 ## 動作確認
 ### バックエンドAPI
-1. ブラウザから http://dev-portal.oku.cccties.org/api/v1/swagger/ にアクセス
+1. ブラウザから https://dev-portal.oku.cccties.org/api/v1/swagger/ にアクセス
 1. 該当のAPIを開いてから、「Try it out」を押下
 1. 必要に応じてパラメータ入力を行う
 1. 「Execute」を押下し、期待する値が得られているか確認する
@@ -183,7 +183,7 @@ http://localhost:8000/admin
 * ローカル環境で管理者を使用することはないと思いますが、使用する場合は 開発サーバー ⇒ 環境構築手順 ⇒ 備考 ⇒ 管理者作成を参照し、管理者作成を作成しておいてください
 
 ## 開発サーバー
-http://dev-portal.oku.cccties.org/admin
+https://dev-portal.oku.cccties.org/admin
 
 * SQLを使用せずとも Django の管理画面からデータを作成することは可能です（1件毎の手入力となりますので効率は下がります）
 
