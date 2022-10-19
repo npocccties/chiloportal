@@ -14,7 +14,7 @@ function Footer({ className }: Props) {
   const { data: portalCategories } = usePortalCategories();
   return (
     <footer className={clsx("bg-gray-50 py-6", className)}>
-      <div className="max-w-6xl mx-auto px-4 flex flex-wrap gap-6 mb-6">
+      <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row flex-wrap gap-6 mb-6">
         <div className="w-full xl:w-auto">
           <Link href={pagesPath.$url()}>
             <a className="inline-block px-2">
@@ -24,10 +24,7 @@ function Footer({ className }: Props) {
         </div>
         <section>
           <h2 className="text-gray-400 text-xs mb-2">育成指標から探す</h2>
-          <ul
-            className="text-gray-700 leading-7 w-full sm:w-auto"
-            aria-busy={!consumers}
-          >
+          <ul className="text-gray-700 leading-7" aria-busy={!consumers}>
             {consumers
               ? consumers.map((consumer) => (
                   <li key={consumer.consumer_id}>
@@ -51,10 +48,7 @@ function Footer({ className }: Props) {
         </section>
         <section>
           <h2 className="text-gray-400 text-xs mb-2">カテゴリから探す</h2>
-          <ul
-            className="text-gray-700 leading-7 w-full sm:w-auto"
-            aria-busy={!portalCategories}
-          >
+          <ul className="text-gray-700 leading-7" aria-busy={!portalCategories}>
             {portalCategories
               ? portalCategories.map((portalCategory) => (
                   <li key={portalCategory.portal_category_id}>
@@ -76,28 +70,39 @@ function Footer({ className }: Props) {
                 ))}
           </ul>
         </section>
-        <ul className="text-gray-700 leading-7 sm:columns-2 w-full sm:w-auto [&>li]:break-inside-avoid">
-          {/* TODO: 各画面のルーティングを実装して */}
+        <ul className="text-gray-700 leading-7 sm:columns-2 [&>li]:break-inside-avoid">
           <li>
-            <a>コンセプト</a>
+            <Link href={pagesPath._slug("concept").$url()}>
+              <a>コンセプト</a>
+            </Link>
           </li>
           <li>
-            <a>免責事項</a>
+            <Link href={pagesPath._slug("disclaimer").$url()}>
+              <a>ご利用にあたって（免責事項）</a>
+            </Link>
           </li>
           <li>
-            <a>プライバシーポリシー</a>
+            <Link href={pagesPath._slug("privacy_policy").$url()}>
+              <a>プライバシーポリシー</a>
+            </Link>
           </li>
           <li>
-            <a>このサイトについて</a>
+            <Link href={pagesPath._slug("about_site").$url()}>
+              <a>このサイトについて</a>
+            </Link>
           </li>
           <li>
             <a>サイトマップ</a>
           </li>
           <li>
-            <a>運営元情報</a>
+            <Link href={pagesPath._slug("about_site").$url()}>
+              <a>私たちについて</a>
+            </Link>
           </li>
           <li>
-            <a>お問い合わせ</a>
+            <Link href={pagesPath._slug("contact").$url()}>
+              <a>お問い合わせ</a>
+            </Link>
           </li>
         </ul>
       </div>
