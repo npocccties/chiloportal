@@ -77,6 +77,10 @@
    ```
    docker-compose up -d
    ```
+1. corsパッケージのインストール（※コンテナ作成時にインストールできないため）  
+   ```
+   docker-compose exec app pip install django-cors-headers
+   ```
 1. マイグレーション  
    ```
    docker-compose exec app python /workspace/manage.py makemigrations
@@ -85,6 +89,10 @@
 1. static ファイルの収集
    ```
    docker-compose exec -d app python /workspace/manage.py collectstatic --no-input --clear
+   ```
+1. WSGIサーバー（gunicorn） の起動
+   ```
+   docker-compose exec -d app gunicorn project.wsgi:application --bind 0.0.0.0:8000
    ```
 1. 備考  
    コンテナログの確認  
@@ -107,7 +115,7 @@
    ```
    docker-compose build --no-cache
    ```
-   .env ファイルの作成 ～ static ファイルの収集までのスクリプト
+   .env ファイルの作成 ～ WSGIサーバー（gunicorn） の起動 までのスクリプト
    ```
    sudo chmod 755 ./dev-server_start.sh
    ./dev-server_start.sh
