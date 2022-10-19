@@ -56,6 +56,41 @@ docker build -t frontend --build-arg NEXT_PUBLIC_API_BASE_URL=<API のベース�
 
 [^yn]: [yn](https://github.com/sindresorhus/yn#readme)によって truly/falsy な値として解釈されます
 
+## 静的コンテンツ
+
+### config.yaml
+
+#### recommendedWisdomBadgesIds
+
+おすすめのバッジとして表示する能力バッジを指定します
+
+```yaml
+recommendedWisdomBadgesIds:
+  - 1
+  - 2
+  - 3
+```
+
+#### learningContents
+
+その他のコンテンツとして表示する学習コンテンツを指定します
+
+```yaml
+learningContents:
+  - name: Example 1
+    url: https://example.com/
+  - name: Example 2
+    url: https://example.com/
+```
+
+### contents/\*.md
+
+静的なページとして表示するマークダウンファイルを記述します
+
+### posts/\*.md
+
+おしらせとして表示するマークダウンファイルを記述します
+
 ## デプロイ
 
 ### Vercel
