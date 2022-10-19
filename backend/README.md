@@ -16,7 +16,7 @@
 ## デバッグ方法
 ### バックエンドAPI
 1. 実行とデバッグで「Backend API」を選択し、F5キーを押下
-1. ブラウザから http://localhost/api/v1/swagger/ を参照する
+1. ブラウザから http://localhost:8000/api/v1/swagger/ を参照する
 1. 該当のAPIを開いてから、「Try it out」を押下
 1. 必要に応じてパラメータ入力を行う
 1. 「Execute」を押下し、期待する値が得られているか確認する
@@ -52,6 +52,10 @@
 ## 環境構築手順
 
 1. Docker および Docker Compose をインストール  
+1. optフォルダに移動
+   ```
+   cd /opt
+   ```
 1. chiloportal のソースを git で取得  
    ```
    git clone https://github.com/npocccties/chiloportal.git
@@ -166,17 +170,19 @@
    * ポート番号: 5433
 
 ## 開発サーバー
-db コンテナを通してコマンド実行  
+あらかじめ/opt/chiloportal/backendに移動し、db コンテナを通してコマンド実行  
 1. バックアップ
    ```
    docker-compose exec db sh
    pg_dump -h 127.0.0.1 -p 5432 -d develop -U postgres -t portal_category -t issuer -t wisdom_badges -t knowledge_badges -t criteria -t categorised_badges -t consumer -t framework -t field -t stage -t goal -Fc -v > /var/lib/postgresql/chiloportal.dump
    exit
+   sudo cp /opt/chiloportal/backend/postgresql/data/chiloportal.dump /tmp
    ```
-   * 上記コンテナ内の出力ファイルは chiloportal/backend/postgresql/data に出力されます
+   * 上記コンテナ内の出力ファイルは /opt/chiloportal/backend/postgresql/data に出力されます
    * 出力ファイルは適当な場所にコピーしておいてください（理由：コンテナを down したりすると消えるため）
 1. リストア
    ```
+   sudo cp /tmp/chiloportal.dump /opt/chiloportal/backend/postgresql/data
    docker-compose exec db sh
    pg_restore --clean -h 127.0.0.1 -p 5432 -d develop -U postgres -v /var/lib/postgresql/chiloportal.dump
    exit
@@ -185,8 +191,8 @@ db コンテナを通してコマンド実行
 # Django の管理画面
 ブラウザから下記のURLを参照
 ## ローカル環境
-http://localhost/admin
-* ローカル環境で管理者を使用することはないと思いますが、使用する場合は 開発サーバー ⇒ 環境構築手順 ⇒ 備考 ⇒ 管理者作成を参照し、管理者を作成しておいてください
+http://localhost:8000/admin
+* ローカル環境で管理者を使用することはないと思いますが、使用する場合は 開発サーバー ⇒ 環境構築手順 ⇒ 備考 ⇒ 管理者作成 を参照し、管理者を作成しておいてください
 
 ## 開発サーバー
 https://dev-portal.oku.cccties.org/admin
