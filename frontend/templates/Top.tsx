@@ -1,7 +1,5 @@
 import clsx from "clsx";
-import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import Image from "next/future/image";
 import { Props } from "pages";
 import { pagesPath } from "lib/$path";
@@ -11,6 +9,7 @@ import useBadges from "lib/use-badges";
 import Container from "components/Container";
 import WisdomBadgesCard from "components/WisdomBadgesCard";
 import PortalCategoryCard from "components/PortalCategoryCard";
+import SearchForm from "components/SearchForm";
 
 export default function Top({
   posts,
@@ -23,15 +22,6 @@ export default function Top({
     "wisdom",
     recommendedWisdomBadgesIds
   );
-  const [keyword, setKeyword] = useState("");
-  const router = useRouter();
-  const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setKeyword(event.target.value);
-  };
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    router.push(pagesPath.search.$url({ query: { q: keyword } }));
-  };
   return (
     <>
       <header className="relative mb-16 h-96 overflow-hidden">
@@ -41,22 +31,7 @@ export default function Top({
             <br />
             ミッションとは
           </p>
-          <form>
-            <input
-              className="jumpu-input mr-2"
-              type="search"
-              name="q"
-              placeholder="学びたいキーワード"
-              onInput={handleInput}
-            />
-            <button
-              className="jumpu-button"
-              type="submit"
-              onClick={handleClick}
-            >
-              検索
-            </button>
-          </form>
+          <SearchForm />
         </div>
         <Image src="/top.png" alt="" fill style={{ objectFit: "cover" }} />
       </header>
