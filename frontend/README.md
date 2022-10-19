@@ -83,11 +83,11 @@ learningContents:
     url: https://example.com/
 ```
 
-### contents/*.md
+### contents/\*.md
 
 静的なページとして表示するマークダウンファイルを記述します
 
-### posts/*.md
+### posts/\*.md
 
 おしらせとして表示するマークダウンファイルを記述します
 
