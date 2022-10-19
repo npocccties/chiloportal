@@ -1,6 +1,6 @@
 import Error from "next/error";
 import { client } from "lib/client";
-import { PortalCategory, BadgeDetail2 } from "api/@types";
+import { PortalCategory } from "api/@types";
 import Template from "templates/PortalCategory";
 import { NEXT_PUBLIC_API_MOCKING } from "lib/env";
 import { portalCategory as fakePortalCategory } from "mocks/faker";
@@ -19,7 +19,9 @@ type ErrorProps = {
 
 export type Props = {
   portalCategory: PortalCategory;
-  wisdomBadgesList: { badges: BadgeDetail2[]; total_count: number };
+  wisdomBadgesList: Awaited<
+    ReturnType<typeof client.portalCategory.badges.list.$get>
+  >;
 };
 
 export async function getServerSideProps({

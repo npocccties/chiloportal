@@ -1,6 +1,7 @@
 import Image from "next/future/image";
 import Breadcrumbs from "components/Breadcrumbs";
 import Container from "components/Container";
+import Pagination from "components/Pagination";
 import WisdomBadgesItem from "components/WisdomBadgesItem";
 import { Props } from "pages/portal_categories/[portalCategoryId]";
 import { pagesPath } from "lib/$path";
@@ -9,6 +10,10 @@ export default function PortalCategory({
   portalCategory,
   wisdomBadgesList,
 }: Props) {
+  const handleHref = (page: number) =>
+    pagesPath.portal_categories
+      ._portalCategoryId(portalCategory.portal_category_id)
+      .$url({ query: { p: String(page) } });
   return (
     <Container>
       <Breadcrumbs
@@ -40,6 +45,12 @@ export default function PortalCategory({
             </li>
           ))}
         </ul>
+        <Pagination
+          totalCount={wisdomBadgesList.total_count}
+          start={wisdomBadgesList.start}
+          end={wisdomBadgesList.end}
+          handleHref={handleHref}
+        />
       </article>
     </Container>
   );
