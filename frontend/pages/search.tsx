@@ -1,5 +1,4 @@
 import { client } from "lib/client";
-import { BadgeDetail2 } from "api/@types";
 import Template from "templates/Search";
 
 export type Query = { q?: string; p?: string };
@@ -10,7 +9,9 @@ export type Context = {
 
 export type Props = {
   keyword: string;
-  wisdomBadgesList: { badges: BadgeDetail2[]; total_count: number };
+  wisdomBadgesList: Awaited<
+    ReturnType<typeof client.portalCategory.badges.list.$get>
+  >;
 };
 
 export async function getServerSideProps({
