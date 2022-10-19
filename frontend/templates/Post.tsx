@@ -1,10 +1,11 @@
 import { Props } from "pages/posts/[slug]";
 import Breadcrumbs from "components/Breadcrumbs";
+import Container from "components/Container";
 import { pagesPath } from "lib/$path";
 
 function Post({ title, content }: Props) {
   return (
-    <div className="max-w-4xl mx-auto my-16 px-4 min-h-[33vh]">
+    <Container>
       <Breadcrumbs
         className="mb-6"
         nodes={[
@@ -20,7 +21,7 @@ function Post({ title, content }: Props) {
         className="prose"
         dangerouslySetInnerHTML={{ __html: content }}
       />
-    </div>
+    </Container>
   );
 }
 

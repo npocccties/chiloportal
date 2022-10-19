@@ -26,16 +26,18 @@ export const handlers = [
   restGet(client.portalCategory.list, (_req, res, ctx) =>
     res(ctx.json([...Array(10)].map(portalCategory)))
   ),
-  restGet(client.portalCategory.badges.list, (_req, res, ctx) =>
-    res(
+  restGet(client.portalCategory.badges.list, (req, res, ctx) => {
+    const perPage = 30;
+    const pageNumber = Number(req.url.searchParams.get("page_number") ?? 1);
+    return res(
       ctx.json({
         badges: [...Array(30)].map(wisdomBadges),
-        total_count: faker.datatype.number(),
-        start: faker.datatype.number(),
-        end: faker.datatype.number(),
+        total_count: 3000,
+        start: perPage * (pageNumber - 1) + 1,
+        end: perPage * pageNumber,
       })
-    )
-  ),
+    );
+  }),
   restGet(client.framework, (_req, res, ctx) => res(ctx.json(framework()))),
   restGet(client.framework.stage.list, (_req, res, ctx) =>
     res(ctx.json([...Array(3)].map(stage)))
@@ -57,16 +59,18 @@ export const handlers = [
       })
     )
   ),
-  restGet(client.wisdomBadges.list.keyword, (_req, res, ctx) =>
-    res(
+  restGet(client.wisdomBadges.list.keyword, (req, res, ctx) => {
+    const perPage = 30;
+    const pageNumber = Number(req.url.searchParams.get("page_number") ?? 1);
+    return res(
       ctx.json({
         badges: [...Array(30)].map(wisdomBadges),
-        total_count: faker.datatype.number(),
-        start: faker.datatype.number(),
-        end: faker.datatype.number(),
+        total_count: 3000,
+        start: perPage * (pageNumber - 1) + 1,
+        end: perPage * pageNumber,
       })
-    )
-  ),
+    );
+  }),
   restGet(client.wisdomBadges.consumer.list, (_req, res, ctx) =>
     res(ctx.json([...Array(10)].map(consumer)))
   ),

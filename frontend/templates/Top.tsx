@@ -8,6 +8,7 @@ import { pagesPath } from "lib/$path";
 import useConsumers from "lib/use-consumers";
 import usePortalCategories from "lib/use-portal-categories";
 import useBadges from "lib/use-badges";
+import Container from "components/Container";
 import WisdomBadgesCard from "components/WisdomBadgesCard";
 import PortalCategoryCard from "components/PortalCategoryCard";
 
@@ -59,7 +60,7 @@ export default function Top({
         </div>
         <Image src="/top.png" alt="" fill style={{ objectFit: "cover" }} />
       </header>
-      <article className="max-w-4xl mx-auto mb-16 px-4">
+      <Container as="article">
         <section className="mb-8">
           <div className="flex items-center mb-4">
             <h2 className="flex-1 text-2xl text-gray-700">
@@ -172,7 +173,7 @@ export default function Top({
             ))}
           </ul>
         </section>
-      </article>
+      </Container>
     </>
   );
 }
