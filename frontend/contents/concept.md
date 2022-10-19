@@ -1,0 +1,4 @@
+---
+title: コンセプト
+slug: concept
+---

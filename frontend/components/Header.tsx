@@ -13,6 +13,29 @@ type Props = {
   className?: string;
 };
 
+const contents = [
+  {
+    title: "コンセプト",
+    slug: "concept",
+  },
+  {
+    title: "私たちについて",
+    slug: "about_us",
+  },
+  {
+    title: "プライバシーポリシー",
+    slug: "privacy_policy",
+  },
+  {
+    title: "ご利用にあたって（免責事項）",
+    slug: "disclaimer",
+  },
+  {
+    title: "お問い合わせ",
+    slug: "contact",
+  },
+] as const;
+
 function Header({ className }: Props) {
   const { data: consumers } = useConsumers();
   const { data: portalCategories } = usePortalCategories();
@@ -88,6 +111,21 @@ function Header({ className }: Props) {
               </div>
             </li>
           )}
+        </ul>
+      </Popover>
+      <Popover className="hidden lg:block" title="OKUTEPについて">
+        <ul role="menu" className="jumpu-card">
+          {contents.map((content) => (
+            <li
+              key={content.slug}
+              role="menuitem"
+              className="cursor-pointer px-3 py-2 hover:bg-primary-50"
+            >
+              <Link href={pagesPath._slug(content.slug).$url()}>
+                <a>{content.title}</a>
+              </Link>
+            </li>
+          ))}
         </ul>
       </Popover>
       <div className="flex-1" />
