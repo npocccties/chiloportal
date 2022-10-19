@@ -14,7 +14,7 @@ function Footer({ className }: Props) {
   const { data: portalCategories } = usePortalCategories();
   return (
     <footer className={clsx("bg-gray-50 py-6", className)}>
-      <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row flex-wrap gap-6 mb-6">
+      <div className="max-w-6xl xl:max-w-7xl mx-auto px-4 flex flex-col sm:flex-row flex-wrap gap-6 mb-6">
         <div className="w-full xl:w-auto">
           <Link href={pagesPath.$url()}>
             <a className="inline-block px-2">
