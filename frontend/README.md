@@ -40,6 +40,12 @@ docker run --rm -p 3000:3000 frontend # Docker コンテナの起動
 | NEXT_PUBLIC_API_BASE_URL         | API のベースとなる URL      | https://dev-portal.oku.cccties.org/api/v1/ |
 | NEXT_PUBLIC_MOODLE_DASHBOARD_URL | Moodle ダッシュボードの URL | https://opedu.lib.osaka-kyoiku.ac.jp/my/   |
 
+ビルド変数を変更してイメージをビルドする場合は以下のように実行してください。
+
+```shell
+docker build -t frontend --build-arg NEXT_PUBLIC_API_BASE_URL=<API のベースとなる URL> --build-arg NEXT_PUBLIC_MOODLE_DASHBOARD_URL=<Moodle ダッシュボードの URL> .
+```
+
 ## 環境変数
 
 | 変数名                           | 説明                                        | デフォルト値 |
