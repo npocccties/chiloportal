@@ -151,7 +151,7 @@ if os.path.exists(log_dir) == False:
     try:
         os.makedirs(log_dir)
     except OSError:
-        pass
+        log_dir = "logs"
 log_fname = ""
 args = sys.argv
 if "runserver" in args:
