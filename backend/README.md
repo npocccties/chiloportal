@@ -181,19 +181,14 @@
 あらかじめ/opt/chiloportal/backendに移動し、db コンテナを通してコマンド実行  
 1. バックアップ
    ```
-   docker-compose exec db sh
-   pg_dump -h 127.0.0.1 -p 5432 -d develop -U postgres -t portal_category -t issuer -t wisdom_badges -t knowledge_badges -t criteria -t categorised_badges -t consumer -t framework -t field -t stage -t goal -Fc -v > /var/lib/postgresql/chiloportal.dump
-   exit
+   docker-compose exec db pg_dump -h 127.0.0.1 -p 5432 -d develop -U postgres -t portal_category -t issuer -t wisdom_badges -t knowledge_badges -t criteria -t categorised_badges -t consumer -t framework -t field -t stage -t goal -Fc -v --file=/var/lib/postgresql/chiloportal.dump
    sudo cp /opt/chiloportal/backend/postgresql/data/chiloportal.dump /tmp
    ```
    * 上記コンテナ内の出力ファイルは /opt/chiloportal/backend/postgresql/data に出力されます
    * 出力ファイルは適当な場所にコピーしておいてください（理由：コンテナを down したりすると消えるため）
 1. リストア
    ```
-   sudo cp /tmp/chiloportal.dump /opt/chiloportal/backend/postgresql/data
-   docker-compose exec db sh
-   pg_restore --clean -h 127.0.0.1 -p 5432 -d develop -U postgres -v /var/lib/postgresql/chiloportal.dump
-   exit
+   docker-compose exec -T db pg_restore --clean -h 127.0.0.1 -p 5432 -d develop -U postgres -v < /tmp/chiloportal.dump
    ```
 
 # Django の管理画面
