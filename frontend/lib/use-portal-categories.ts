@@ -8,6 +8,6 @@ async function fetcher(_: typeof key) {
   return client.portalCategory.list.$get();
 }
 
-export default function useConsumers() {
+export default function usePortalCategories() {
   return useSWRImmutable<PortalCategory[]>(key, fetcher);
 }
