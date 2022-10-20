@@ -5,7 +5,6 @@ from ....views import *
 
 class BadgesTests(BaseAPIViewTests):
     def test_badges_200_type_wisdom(self):
-        #test10
         factory = APIRequestFactory()
         view = BadgesDetail.as_view()
         self.create_test_relation_data()
