@@ -734,6 +734,12 @@ components:
         digital_badge_class_id:
           type: string
           example: digitalbadge_classID
+        alignments_targetname:
+          type: string
+          example: digitalbadge101 alignments_targetname
+        alignments_targeturl:
+          type: string
+          example: digitalbadge101 alignments_targeturl
         detail:
           oneOf:
             - $ref: '#/components/schemas/wisdom'

@@ -329,6 +329,7 @@ class BaseAPIViewTests(TestCase):
             description="hoge1",
             image_id="hogehoge.ac.jp/image/36/fuga1",
             alignments_targetname="あらいめんつ1",
+            alignments_targeturl="あらいめんつURL1",
             tags="wbtags1",
         )
         self.wb2 = WisdomBadges.objects.create(
@@ -339,6 +340,7 @@ class BaseAPIViewTests(TestCase):
             description="hoge2",
             image_id="hogehoge.ac.jp/image/36/fuga2",
             alignments_targetname="あらいめんつ2",
+            alignments_targeturl="あらいめんつURL2",
             tags="wbtags2",
         )
         self.wb3 = WisdomBadges.objects.create(
@@ -349,6 +351,7 @@ class BaseAPIViewTests(TestCase):
             description="hoge3",
             image_id="hogehoge.ac.jp/image/36/fuga3",
             alignments_targetname="あらいめんつ3",
+            alignments_targeturl="あらいめんつURL3",
             tags="wbtags3",
         )
         self.wb4 = WisdomBadges.objects.create(
@@ -359,6 +362,7 @@ class BaseAPIViewTests(TestCase):
             description="hoge4",
             image_id="hogehoge.ac.jp/image/36/fuga4",
             alignments_targetname="あらいめんつ4",
+            alignments_targeturl="あらいめんつURL4",
             tags="wbtags4",
         )
         self.wb5 = WisdomBadges.objects.create(
@@ -369,6 +373,7 @@ class BaseAPIViewTests(TestCase):
             description="hoge5",
             image_id="hogehoge.ac.jp/image/36/fuga5",
             alignments_targetname="あらいめんつ5",
+            alignments_targeturl="あらいめんつURL5",
             tags="wbtags5",
         )
         self.wb6 = WisdomBadges.objects.create(
@@ -379,6 +384,7 @@ class BaseAPIViewTests(TestCase):
             description="hoge6",
             image_id="hogehoge.ac.jp/image/36/fuga6",
             alignments_targetname="あらいめんつ6",
+            alignments_targeturl="あらいめんつURL6",
             tags="wbtags6",
         )
         self.wb7 = WisdomBadges.objects.create(
@@ -389,6 +395,7 @@ class BaseAPIViewTests(TestCase):
             description="hoge7",
             image_id="hogehoge.ac.jp/image/36/fuga7",
             alignments_targetname="あらいめんつ7",
+            alignments_targeturl="あらいめんつURL7",
             tags="wbtags7",
         )
         self.wb8 = WisdomBadges.objects.create(
@@ -399,6 +406,7 @@ class BaseAPIViewTests(TestCase):
             description="hoge8",
             image_id="hogehoge.ac.jp/image/36/fuga8",
             alignments_targetname="あらいめんつ8",
+            alignments_targeturl="あらいめんつURL8",
             tags="wbtags8",
         )
         self.wb9 = WisdomBadges.objects.create(
@@ -409,6 +417,7 @@ class BaseAPIViewTests(TestCase):
             description="hoge9",
             image_id="hogehoge.ac.jp/image/36/fuga9",
             alignments_targetname="あらいめんつ9",
+            alignments_targeturl="あらいめんつURL9",
             tags="wbtags9",
         )
         self.wb10 = WisdomBadges.objects.create(
@@ -419,6 +428,7 @@ class BaseAPIViewTests(TestCase):
             description="hoge_10",
             image_id="hogehoge.ac.jp/image/36/fuga10",
             alignments_targetname="あらいめんつ_10",
+            alignments_targeturl="あらいめんつURL10",
             tags="tags10",
         )
         self.wb11 = WisdomBadges.objects.create(
@@ -429,6 +439,7 @@ class BaseAPIViewTests(TestCase):
             description="hoge_11",
             image_id="hogehoge.ac.jp/image/36/fuga11",
             alignments_targetname="あらいめんつ_11",
+            alignments_targeturl="あらいめんつURL11",
             tags="tags11",
         )
         self.wb12 = WisdomBadges.objects.create(
@@ -439,6 +450,7 @@ class BaseAPIViewTests(TestCase):
             description="hoge_12",
             image_id="hogehoge.ac.jp/image/36/fuga12",
             alignments_targetname="あらいめんつ_12",
+            alignments_targeturl="あらいめんつURL12",
             tags="tags12",
         )
         self.wb13 = WisdomBadges.objects.create(
@@ -449,6 +461,7 @@ class BaseAPIViewTests(TestCase):
             description="hoge_13",
             image_id="hogehoge.ac.jp/image/36/fuga13",
             alignments_targetname="あらいめんつ_13",
+            alignments_targeturl="あらいめんつURL13",
             tags="tags13",
         )
         self.wb14 = WisdomBadges.objects.create(
@@ -459,6 +472,7 @@ class BaseAPIViewTests(TestCase):
             description="hoge_14",
             image_id="hogehoge.ac.jp/image/36/fuga14",
             alignments_targetname="あらいめんつ_14",
+            alignments_targeturl="あらいめんつURL14",
             tags="tags14",
         )
         self.wb15 = WisdomBadges.objects.create(
@@ -469,6 +483,7 @@ class BaseAPIViewTests(TestCase):
             description="hoge_15",
             image_id="hogehoge.ac.jp/image/36/fuga15",
             alignments_targetname="あらいめんつ_15",
+            alignments_targeturl="あらいめんつURL15",
             tags="tags15",
         )
         self.wb16 = WisdomBadges.objects.create(
@@ -479,6 +494,7 @@ class BaseAPIViewTests(TestCase):
             description="hoge_16",
             image_id="hogehoge.ac.jp/image/36/fuga16",
             alignments_targetname="あらいめんつ_16",
+            alignments_targeturl="あらいめんつURL16",
             tags="tags16",
         )
         self.cb1 = CategorisedBadges.objects.create(
@@ -699,6 +715,16 @@ class BaseAPIViewTests(TestCase):
                 data["portal_category_image_url_path"],
                 portal_category.image_url_path if portal_category else None,
             )
+        if data.get("alignments_targetname"):
+            self.assertEqual(
+                data["alignments_targetname"],
+                wisdom_badge.alignments_targetname,
+            )
+        if data.get("alignments_targeturl"):
+            self.assertEqual(
+                data["alignments_targeturl"],
+                wisdom_badge.alignments_targeturl,
+            )
         self.assertEqual(data["digital_badge_class_id"], wisdom_badge.badge_class_id)
         detail = data.get("detail")
         knowledge_badge_id_list = detail.get("knowledge_badges_list")
@@ -852,6 +878,7 @@ class BaseAPIViewTests(TestCase):
                 description=f"hoge{i + 1}",
                 image_id=f"hogehoge.ac.jp/image/36/fuga{i + 1}",
                 alignments_targetname=f"あらいめんつ{i + 1}",
+                alignments_targeturl=f"あらいめんつURL{i + 1}",
                 tags=f"wbtags{i + 1}",
             )
             wisdom_badgees.append(wb)
