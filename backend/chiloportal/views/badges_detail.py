@@ -39,7 +39,7 @@ class BadgesDetail(BaseAPIView):
             )
             if queryset.exists() == False:
                 raise NotFound("Badges not found")
-            result = to_wisdom_badges(queryset, output_portal_category=True)
+            result = to_wisdom_badges(queryset, output_portal_category=True, output_alignments=True)
         elif type == BadgeType.KNOWLEDGE.name.lower():
             queryset = (
                 KnowledgeBadges.objects.filter(pk__in=id_array)
