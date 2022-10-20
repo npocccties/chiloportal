@@ -9,13 +9,7 @@ defaults:
     working-directory: backend
 jobs:
   build:
-
     runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 4
-      matrix:
-        python-version: [3.9]
-
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
@@ -27,3 +21,7 @@ jobs:
         cp .env.localhost .env
         cp docker-compose.github.yml docker-compose.yml
         docker-compose up -d
+    - name: Run tests 
+      run: |
+        docker-compose exec -T python /workspace/manage.py test --exclude-tag=fuzzing
+        
