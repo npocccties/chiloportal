@@ -30,4 +30,4 @@ jobs:
         docker-compose ps
     - name: Run Tests
       run: |
-        docker-compose exec app python /workspace/manage.py test --exclude-tag=fuzzing
+        docker-compose exec -T app python /workspace/manage.py test --exclude-tag=fuzzing
