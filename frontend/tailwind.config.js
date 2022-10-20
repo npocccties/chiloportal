@@ -19,6 +19,7 @@ module.exports = {
           900: "#541615",
         },
         gray: stone,
+        ...require("@jumpu-ui/tailwindcss/colors"),
       },
     },
   },
