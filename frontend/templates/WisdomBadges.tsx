@@ -1,6 +1,6 @@
 import { Props } from "pages/wisdom_badges/[wisdomBadgesId]";
 
-export default function Search({
+export default function WisdomBadges({
   wisdomBadges,
   knowledgeBadgesList,
   criteriasPerKnowledgeBadges,

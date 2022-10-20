@@ -5,7 +5,7 @@ import { NEXT_PUBLIC_API_MOCKING } from "lib/env";
 
 if (NEXT_PUBLIC_API_MOCKING) require("../mocks");
 
-function MyApp({ Component, pageProps }: AppProps) {
+function App({ Component, pageProps }: AppProps) {
   return (
     <Layout>
       <Component {...pageProps} />
@@ -13,4 +13,4 @@ function MyApp({ Component, pageProps }: AppProps) {
   );
 }
 
-export default MyApp;
+export default App;
