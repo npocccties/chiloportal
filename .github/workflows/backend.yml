@@ -11,12 +11,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
-      with:
-        python-version: ${{ matrix.python-version }}
-    - name: Docker Container Create
+    - name: Build docker containers
       run: |
         cp .env.localhost .env
         cp docker-compose.github.yml docker-compose.yml
