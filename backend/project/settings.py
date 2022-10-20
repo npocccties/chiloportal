@@ -148,10 +148,7 @@ APPEND_SLASH = True
 
 log_dir = "/var/log/chiloportal/"
 if os.path.exists(log_dir) == False:
-    try:
-        os.makedirs(log_dir)
-    except OSError:
-        pass
+    os.makedirs(log_dir)
 log_fname = ""
 args = sys.argv
 if "runserver" in args:
