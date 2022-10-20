@@ -26,8 +26,4 @@ jobs:
       run: |
         cp .env.localhost .env
         cp docker-compose.github.yml docker-compose.yml
-        docker-compose up -d
-        docker-compose ps
-    - name: Run Tests
-      run: |
-        docker-compose exec -T app python /workspace/manage.py test --exclude-tag=fuzzing
+        docker-compose up -d && docker-compose exec -T app python /workspace/manage.py test --exclude-tag=fuzzing
