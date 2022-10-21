@@ -58,12 +58,12 @@
    ```
 1. chiloportal のソースを git で取得  
    ```
-   git clone https://github.com/npocccties/chiloportal.git
+   sudo git clone https://github.com/npocccties/chiloportal.git
    ```
    既に取得済みの場合
    ```
    cd /opt/chiloportal
-   git pull
+   sudo git pull
    ```
 1. backendフォルダに移動  
    ```
@@ -77,6 +77,10 @@
    ```
    ./dev-server_start.sh
    ```
+   既に起動中の場合
+   ```
+   ./dev-server_restart.sh
+   ```
 1. 備考  
    コンテナ停止  
    ```
@@ -84,10 +88,6 @@
    ```
    * DBが `/var/chiloportal.dump` にバックアップされます  
    
-   コンテナ再起動  
-   ```
-   ./dev-server_restart.sh
-   ```
    DBバックアップ  
    ```
    ./dev-server_db_backup.sh
