@@ -36,8 +36,8 @@ create table wisdom_badges (
 	image_author	text		null,		-- 画像 author
 	version		text		null,		-- OBバージョン
 	issuer_id	int		null		REFERENCES issuer,	-- 発行者のID
-	alignments_targetname	text	null,		-- targetName
-	alignments_targeturl	text	null,		-- targetUrl
+	alignments_targetname	text	not null,		-- targetName
+	alignments_targeturl	text	not null,		-- targetUrl
 	primary key (id)
 ); -- '能力バッジ'
 create table knowledge_badges (
