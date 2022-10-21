@@ -6,6 +6,7 @@ sudo cp docker-compose.dev-server.yml docker-compose.yml
 docker-compose up -d
 # コンテナ作成時に requirements.txt から django-cors-headers をインストールしても /usr/local/lib/python3.9/site-packages にインストールされていないので、
 # デプロイのタイミングで django-cors-headers をインストールする
+docker-compose exec app pip install --upgrade pip
 docker-compose exec app pip install django-cors-headers
 docker-compose exec app python /workspace/manage.py makemigrations
 docker-compose exec app python /workspace/manage.py migrate
