@@ -2,7 +2,7 @@ FROM node:16.16.0-slim as build
 WORKDIR /app
 COPY . ./
 ADD https://raw.githubusercontent.com/npocccties/chiloportal/develop/backend/doc/openapi.yaml /backend/doc/openapi.yaml
-RUN echo "38cc3c5cc7c96e57df84ebdccc23ced2  ../backend/doc/openapi.yaml" > md5sum.txt && md5sum -c md5sum.txt
+RUN echo "e6edd1972de261fdbd11bbfeb4c76dee  ../backend/doc/openapi.yaml" > md5sum.txt && md5sum -c md5sum.txt
 RUN corepack yarn install --immutable
 ARG NEXT_PUBLIC_API_BASE_URL=https://dev-portal.oku.cccties.org/api/v1/
 ARG NEXT_PUBLIC_MOODLE_DASHBOARD_URL=https://opedu.lib.osaka-kyoiku.ac.jp/my/
