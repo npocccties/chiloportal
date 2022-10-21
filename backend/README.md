@@ -60,71 +60,58 @@
    ```
    git clone https://github.com/npocccties/chiloportal.git
    ```
+   既に取得済みの場合
+   ```
+   cd /opt/chiloportal
+   git pull
+   ```
 1. backendフォルダに移動  
    ```
-   cd chiloportal/backend
+   cd /opt/chiloportal/backend
    ```
-1. .env の作成  
+1. スクリプトに権限付与
    ```
-   cp .env.dev-server .env
+   sudo chmod 755 dev-server_*.sh
    ```
-   * DBの認証情報や Django の秘密鍵を含めてますので、本番環境でも使用する場合は適宜変更してください  
-1. docker-compose.yml の作成  
+1. コンテナ起動  
    ```
-   cp docker-compose.dev-server.yml docker-compose.yml
-   ```
-1. コンテナの起動  
-   ```
-   docker-compose up -d
-   ```
-1. corsパッケージのインストール（※コンテナ作成時にインストールできないため）  
-   ```
-   docker-compose exec app pip install django-cors-headers
-   ```
-1. マイグレーション  
-   ```
-   docker-compose exec app python /workspace/manage.py makemigrations
-   docker-compose exec app python /workspace/manage.py migrate
-   ```
-1. static ファイルの収集
-   ```
-   docker-compose exec -d app python /workspace/manage.py collectstatic --no-input --clear
-   ```
-1. WSGIサーバー（gunicorn） の起動
-   ```
-   docker-compose exec -d app gunicorn project.wsgi:application --bind 0.0.0.0:8000
+   ./dev-server_start.sh
    ```
 1. 備考  
-   コンテナログの確認  
+   コンテナ停止  
+   ```
+   ./dev-server_stop.sh
+   ```
+   * DBが `/var/chiloportal.dump` にバックアップされます  
+   
+   コンテナ再起動  
+   ```
+   ./dev-server_restart.sh
+   ```
+   DBバックアップ  
+   ```
+   ./dev-server_db_backup.sh
+   ```
+   * DBが `/var/chiloportal.dump` にバックアップされます  
+   
+   DBリストア  
+   ```
+   ./dev-server_db_restore.sh
+   ```
+   * `/var/chiloportal.dump` にあるバックアップデータをもとにDBをリストア（復元）します  
+
+   全てのコンテナログの確認  
    ```
    docker-compose logs -f
    ```
-   コンテナの再起動  
-   ```
-   docker-compose restart
-   ```
-   コンテナの停止  
-   ```
-   docker-compose stop
-   ```
-   コンテナの停止、削除（DBも消えます）  
-   ```
-   docker-compose down -v
-   ```
-   コンテナのリビルド（DBも消えます）
-   ```
-   docker-compose build --no-cache
-   ```
-   .env ファイルの作成 ～ WSGIサーバー（gunicorn） の起動 までのスクリプト
-   ```
-   sudo chmod 755 ./dev-server_start.sh
-   ./dev-server_start.sh
-   ```
-   管理者作成（※必要に応じて）  
+   * -f の後ろにコンテナ名（appやdb等）を入れると該当コンテナのみのログが見れます  
+
+   管理者作成  
    ```
    docker-compose exec app python /workspace/manage.py createsuperuser
    ```
-   * 本番環境の管理者の認証情報は類推されにくいユーザ名およびパスワードを設定してください  
+   * Django の管理画面からログインするための管理者アカウントを作成します  
+   * 本番環境では類推されにくいユーザ名およびパスワードを設定してください  
 
 ## 動作確認
 ### バックエンドAPI
@@ -160,7 +147,7 @@
 |DB_NAME|DB名|-|
 |DB_USER|DBのユーザ名|-|
 |DB_PASS|DBのパスワード|-|
-|DEBUG|デバッグ機能|デバッグ用で例外発生時のエラー内容が参照できるようになる<br>`True`: 有効<br>`False`: 無効<br>※本番リリース時は必ず「`False`」を設定してください|
+|DEBUG|デバッグ機能|デバッグ用で例外発生時のエラー内容が参照できるようになる<br>`True`: 有効 ※本番リリース用<br>`False`: 無効 ※動作確認用|
 |ALLOWED_HOSTS|公開ホスト名|本番リリースする際は本番サーバーのホスト名を設定してください|
 |LOGGER_LEVEL|ロガーレベル|ログファイルの出力基準で以下を指定可能<br>`DEBUG`/`INFO`/`WARNING`/`ERROR`/`CRITICAL`|
 |IMAGE_DIR|画像ファイルの公開ディレクトリ（相対パス指定）|-|
@@ -176,19 +163,17 @@
    * データベース名: develop
    * ユーザID/パスワード: postgres
    * ポート番号: 5433
+   * DB: PostgreSQL
 
 ## 開発サーバー
-あらかじめ/opt/chiloportal/backendに移動し、db コンテナを通してコマンド実行  
-1. バックアップ
+1. SELECT文の実行
    ```
-   docker-compose exec db pg_dump -h 127.0.0.1 -p 5432 -d develop -U postgres -t portal_category -t issuer -t wisdom_badges -t knowledge_badges -t criteria -t categorised_badges -t consumer -t framework -t field -t stage -t goal -Fc -v --file=/var/lib/postgresql/chiloportal.dump
-   sudo cp /opt/chiloportal/backend/postgresql/data/chiloportal.dump /tmp
-   ```
-   * 上記コンテナ内の出力ファイルは /opt/chiloportal/backend/postgresql/data に出力されます
-   * 出力ファイルは適当な場所にコピーしておいてください（理由：コンテナを down したりすると消えるため）
-1. リストア
-   ```
-   docker-compose exec -T db pg_restore --clean -h 127.0.0.1 -p 5432 -d develop -U postgres -v < /tmp/chiloportal.dump
+   cd /opt/chiloportal/backend
+   docker-compose exec db sh
+   psql -d develop -U postgres
+   select * from consumer;
+   quit
+   exit
    ```
 
 # Django の管理画面
@@ -229,9 +214,10 @@ https://dev-portal.oku.cccties.org/admin
 * APIサーバー: Django REST framework
 * DBサーバー: PostgresSQL
 ### SSL証明書
-* Let's Encrypt の無料SSL証明書を使用
+* Let's Encrypt（無料SSL証明書）
 ### SSL証明書の更新ジョブ
 Let’Encrypt のSSL証明書は発行してから`90`日間有効で、有効期限の`30`日前を過ぎている場合、  
-コンテナを再起動することで SSL証明書が自動更新されますので、  
-crontab コマンドで毎月月初の日付が変わったタイミングでコンテナ再起動のジョブを登録する運用とします。
-* ジョブ:  `0 0 01 */1 * docker-compose -f /opt/chiloportal/backend/docker-compose.yml restart`
+コンテナを再起動することで SSL証明書が自動更新されます。  
+コンテナ再起動にはあまり時間がかからないことと、SSL証明書の更新日から起算して60日経過したことをコマンドで計算すると複雑化するので、  
+crontab コマンドへは月初に変わったときにコンテナ再起動を行うよう、下記ジョブを登録します。  
+* ジョブ:  `0 0 01 */1 * docker-compose -f /opt/chiloportal/backend/dev-server_restart.sh`
