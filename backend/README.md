@@ -229,4 +229,4 @@ https://dev-portal.oku.cccties.org/admin
 ### SSL証明書の更新ジョブ
 Let’Encrypt のSSL証明書は発行してから`90`日間有効で、有効期限の`30`日前を過ぎている場合、コンテナを再起動することで SSL証明書が自動更新されます。  
 コンテナ再起動にはあまり時間がかからないことと、SSL証明書の更新日から起算して60日経過したことをコマンドで計算すると複雑化するので、crontab コマンドへは月初に変わったときにコンテナ再起動を行うよう、下記ジョブを登録します。  
-* ジョブ:  `0 0 01 */1 * docker-compose -f /opt/chiloportal/backend/dev-server_restart.sh`
+* ジョブ:  `0 0 01 */1 * /opt/chiloportal/backend/dev-server_restart.sh`
