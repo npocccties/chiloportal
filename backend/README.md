@@ -51,52 +51,63 @@
 # 開発サーバー
 ## 環境構築手順
 
-1. Docker および Docker Compose をインストール  
-1. optフォルダに移動
+1. 下記をインストール
+   * Docker
+   * Docker Compose
+   * Git  
+1. `/opt` へ移動
    ```
    cd /opt
    ```
-1. chiloportal のソースを git で取得  
-   ```
-   sudo git clone https://github.com/npocccties/chiloportal.git
-   ```
-   既に取得済みの場合
-   ```
-   cd /opt/chiloportal
-   sudo git pull
-   ```
-1. backendフォルダに移動  
-   ```
-   cd /opt/chiloportal/backend
-   ```
-1. スクリプトに権限付与
-   ```
+1. 下記を `deploy.sh` というファイルで作成して転記
+   ```shell
+   #!/bin/sh
+   readonly CHECKOUT_DIR="/opt/chiloportal/"
+   if [ -d $CHECKOUT_DIR ]; then
+      cd $CHECKOUT_DIR
+      sudo git pull
+   else
+      sudo git clone https://github.com/npocccties/chiloportal.git
+   fi
+   readonly BACKEND_DIR="${CHECKOUT_DIR}backend"
+   cd $BACKEND_DIR
    sudo chmod 755 dev-server_*.sh
-   ```
-1. コンテナ起動  
-   ```
-   ./dev-server_start.sh
-   ```
-   既に起動中の場合
-   ```
    ./dev-server_restart.sh
    ```
+1. `deploy.sh` に権限付与
+   ```
+   sudo chmod 755 deploy.sh
+   ```
+1. `deploy.sh` の実行
+   ```
+   ./deploy.sh
+   ```
 1. 備考  
+   コンテナ起動  
+   ```
+   /opt/chiloportal/backend/dev-server_start.sh
+   ```
    コンテナ停止  
    ```
-   ./dev-server_stop.sh
+   /opt/chiloportal/backend/dev-server_stop.sh
    ```
    * DBが `/var/chiloportal.dump` にバックアップされます  
+
+   コンテナ再起動  
+   ```
+   /opt/chiloportal/backend/dev-server_restart.sh
+   ```
+   * `dev-server_stop.sh` と `dev-server_start.sh` を呼びます
    
    DBバックアップ  
    ```
-   ./dev-server_db_backup.sh
+   /opt/chiloportal/backend/dev-server_db_backup.sh
    ```
    * DBが `/var/chiloportal.dump` にバックアップされます  
    
    DBリストア  
    ```
-   ./dev-server_db_restore.sh
+   /opt/chiloportal/backend/dev-server_db_restore.sh
    ```
    * `/var/chiloportal.dump` にあるバックアップデータをもとにDBをリストア（復元）します  
 
