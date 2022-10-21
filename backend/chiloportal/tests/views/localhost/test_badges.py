@@ -6,8 +6,6 @@ from ....views import *
 class BadgesTests(BaseAPIViewTests):
     def test_badges_200_type_wisdom(self):
         #test
-        self.assertEqual(1, 0)
-        #test
         factory = APIRequestFactory()
         view = BadgesDetail.as_view()
         self.create_test_relation_data()
