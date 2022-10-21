@@ -1,4 +1,6 @@
 #!/bin/sh
+DIR=`dirname "${0}"`
+cd $DIR
 sudo cp .env.dev-server .env
 sudo cp docker-compose.dev-server.yml docker-compose.yml
 docker-compose up -d
