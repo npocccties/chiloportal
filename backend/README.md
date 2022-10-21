@@ -15,18 +15,18 @@
 
 ## デバッグ方法
 ### バックエンドAPI
-1. 実行とデバッグで「Backend API」を選択し、F5キーを押下
+1. 実行とデバッグで「Backend API」を選択し、デバッグの開始を押下
 1. ブラウザから http://localhost/api/v1/swagger/ を参照する
 1. 該当のAPIを開いてから、「Try it out」を押下
 1. 必要に応じてパラメータ入力を行う
 1. 「Execute」を押下し、期待する値が得られているか確認する
 
 ### インポートコマンド
-1. 実行とデバッグで「Import command」を選択し、F5キーを押下  
+1. 実行とデバッグで「Import command」を選択し、デバッグの開始を押下  
    * 能力バッジを取得するURLは .vscode/launch.json にて定義しているので、適宜変更してください
 
 ## テスト方法
-1. 実行とデバッグで「Unit Test」を選択し、F5キーを押下し、エラーがないことを確認  
+1. 実行とデバッグで「Unit Test」を選択し、デバッグの開始を押下し、エラーがないことを確認  
    * エラーがあればエラー発生箇所を修正してください  
    * インポートコマンドの単体テスト：chiloportal/tests/commands/*.py
    * バックエンドAPIの単体テスト：chiloportal/tests/views/*.py
