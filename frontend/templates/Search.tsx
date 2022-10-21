@@ -12,7 +12,7 @@ export default function Search({ keyword, wisdomBadgesList }: Props) {
       query: { q: keyword, p: String(page) },
     });
   return (
-    <Container>
+    <Container as="article">
       <Breadcrumbs
         className="mb-6"
         nodes={[{ name: "トップ", href: pagesPath.$url() }]}
@@ -26,21 +26,19 @@ export default function Search({ keyword, wisdomBadgesList }: Props) {
         </p>
         <SearchForm />
       </header>
-      <article>
-        <ul>
-          {wisdomBadgesList.badges.map((wisdomBadges) => (
-            <li className="mb-8" key={wisdomBadges.badges_id}>
-              <WisdomBadgesItem wisdomBadges={wisdomBadges} />
-            </li>
-          ))}
-        </ul>
-        <Pagination
-          totalCount={wisdomBadgesList.total_count}
-          start={wisdomBadgesList.start}
-          end={wisdomBadgesList.end}
-          handleHref={handleHref}
-        />
-      </article>
+      <ul>
+        {wisdomBadgesList.badges.map((wisdomBadges) => (
+          <li className="mb-8" key={wisdomBadges.badges_id}>
+            <WisdomBadgesItem wisdomBadges={wisdomBadges} />
+          </li>
+        ))}
+      </ul>
+      <Pagination
+        totalCount={wisdomBadgesList.total_count}
+        start={wisdomBadgesList.start}
+        end={wisdomBadgesList.end}
+        handleHref={handleHref}
+      />
     </Container>
   );
 }

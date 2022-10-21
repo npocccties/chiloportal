@@ -63,14 +63,14 @@ def to_pager_wisdom_badges_all(queryset):
     }
 
 
-def to_wisdom_badges(queryset, output_portal_category=False):
+def to_wisdom_badges(queryset, output_portal_category=False, output_alignments=False):
     return [
-        to_wisdom_badge(wisdom_badge, output_portal_category)
+        to_wisdom_badge(wisdom_badge, output_portal_category, output_alignments)
         for wisdom_badge in queryset
     ]
 
 
-def to_wisdom_badge(wisdom_badge, output_portal_category=False):
+def to_wisdom_badge(wisdom_badge, output_portal_category=False, output_alignments=False):
     knowledge_badges = wisdom_badge.knowledge_badges_wisdom_badges
     knowledge_badges_id_list = sorted(
         [knowledge_badge.id for knowledge_badge in knowledge_badges.all()]
@@ -98,6 +98,9 @@ def to_wisdom_badge(wisdom_badge, output_portal_category=False):
         result["portal_category_name"] = portal_category.name
         result["portal_category_description"] = portal_category.description
         result["portal_category_image_url_path"] = portal_category.image_url_path
+    if output_alignments:
+        result["alignments_targetname"] = wisdom_badge.alignments_targetname
+        result["alignments_targeturl"] = wisdom_badge.alignments_targeturl
     return result
 
 

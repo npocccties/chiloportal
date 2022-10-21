@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: Portal Badges API
   description: 教員研修システム向けバッジ関連データ取得API
-  version: 0.9.4
+  version: 0.9.5
 servers:
   - url: https://chiloportal.example.com/api/v1
 tags:
@@ -734,6 +734,12 @@ components:
         digital_badge_class_id:
           type: string
           example: digitalbadge_classID
+        alignments_targetname:
+          type: string
+          example: digitalbadge101 alignments_targetname
+        alignments_targeturl:
+          type: string
+          example: digitalbadge101 alignments_targeturl
         detail:
           oneOf:
             - $ref: '#/components/schemas/wisdom'

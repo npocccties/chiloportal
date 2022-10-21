@@ -15,11 +15,11 @@ function WisdomBadgesItem({ wisdomBadges }: Props) {
         .$url()}
     >
       <a className="flex gap-4">
-        <div className="flex-shrink-0">
+        <div className="flex-shrink-0 flex flex-col items-center gap-1">
           <Image
             src={`/images/${wisdomBadges.image}`}
             width={80}
-            height={88}
+            height={80}
             alt=""
           />
           <div className="jumpu-tag">能力バッジ</div>

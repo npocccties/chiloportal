@@ -20,7 +20,7 @@ function WisdomBadgesCard({ wisdomBadges }: Props) {
             className="absolute left-1/2 bottom-0 -translate-x-1/2 translate-y-1/2"
             src={`/images/${wisdomBadges.image}`}
             width={80}
-            height={88}
+            height={80}
             alt=""
           />
         </div>

@@ -1,6 +1,6 @@
 import Error from "next/error";
 import { client } from "lib/client";
-import { BadgeDetail1, BadgeDetail2, Criteria } from "api/@types";
+import { BadgeDetail1, BadgeDetail2 } from "api/@types";
 import Template from "templates/WisdomBadges";
 
 export type Context = {
@@ -15,7 +15,6 @@ type ErrorProps = {
 export type Props = {
   wisdomBadges: BadgeDetail1;
   knowledgeBadgesList: BadgeDetail2[];
-  criteriasPerKnowledgeBadges: Criteria[][];
 };
 
 export async function getServerSideProps({
@@ -39,15 +38,8 @@ export async function getServerSideProps({
       badges_type: "knowledge",
     },
   });
-  const criteriasPerKnowledgeBadges = await Promise.all(
-    knowledgeBadgesList.map((knowledgeBadges) =>
-      client.knowledgeBadges.criteria.list.get({
-        query: { badges_id: knowledgeBadges.badges_id },
-      })
-    )
-  ).then((value) => value.map((res) => res.body));
   return {
-    props: { wisdomBadges, knowledgeBadgesList, criteriasPerKnowledgeBadges },
+    props: { wisdomBadges, knowledgeBadgesList },
   };
 }
 

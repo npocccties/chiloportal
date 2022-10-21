@@ -15,7 +15,7 @@ export default function PortalCategory({
       ._portalCategoryId(portalCategory.portal_category_id)
       .$url({ query: { p: String(page) } });
   return (
-    <Container>
+    <Container as="article">
       <Breadcrumbs
         className="mb-6"
         nodes={[{ name: "トップ", href: pagesPath.$url() }]}
@@ -37,21 +37,19 @@ export default function PortalCategory({
           <p className="text-gray-500">{portalCategory.description}</p>
         </div>
       </header>
-      <article>
-        <ul>
-          {wisdomBadgesList.badges.map((wisdomBadges) => (
-            <li className="mb-8" key={wisdomBadges.badges_id}>
-              <WisdomBadgesItem wisdomBadges={wisdomBadges} />
-            </li>
-          ))}
-        </ul>
-        <Pagination
-          totalCount={wisdomBadgesList.total_count}
-          start={wisdomBadgesList.start}
-          end={wisdomBadgesList.end}
-          handleHref={handleHref}
-        />
-      </article>
+      <ul>
+        {wisdomBadgesList.badges.map((wisdomBadges) => (
+          <li className="mb-8" key={wisdomBadges.badges_id}>
+            <WisdomBadgesItem wisdomBadges={wisdomBadges} />
+          </li>
+        ))}
+      </ul>
+      <Pagination
+        totalCount={wisdomBadgesList.total_count}
+        start={wisdomBadgesList.start}
+        end={wisdomBadgesList.end}
+        handleHref={handleHref}
+      />
     </Container>
   );
 }
