@@ -59,7 +59,7 @@
    ```
    cd /opt
    ```
-1. 下記を `deploy.sh` というファイルで作成して転記
+1. `deploy.sh` というファイルを作成して下記を転記
    ```shell
    #!/bin/sh
    readonly CHECKOUT_DIR="/opt/chiloportal/"
