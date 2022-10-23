@@ -1,26 +1,10 @@
 version: '3.9'
 
 services:
-  https-portal:
-    image: steveltn/https-portal:1
-    restart: always
-    volumes:
-      - ./ssl_certs:/var/lib/https-portal
-    ports:
-      - '80:80'
-      - '443:443'
-    networks:
-      - app_network
-    environment:
-      STAGE: ${STAGE}
-      DOMAINS: '${ALLOWED_HOSTS} -> http://app:8000/'
-    depends_on:
-      - app
-
   app:
     build: .
     tty: true
-    expose:
+    ports:
       - 8000:8000
     networks:
       - app_network
