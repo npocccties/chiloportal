@@ -1,7 +1,7 @@
 #!/bin/sh
 DIR=`dirname "${0}"`
 cd $DIR
-docker-compose exec db pg_dump -h 127.0.0.1 \
+docker-compose exec -T db pg_dump -h 127.0.0.1 \
     -p 5432 -d develop -U postgres \
     -Fc -v --file=/var/lib/postgresql/chiloportal.dump
 BACKUP_FILE="/opt/chiloportal/backend/postgresql/data/chiloportal.dump"
