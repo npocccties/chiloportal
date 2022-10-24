@@ -12,3 +12,4 @@ cd $BACKEND_DIR
 sudo chmod 755 dev-server_*.sh
 readonly ENV_FILE=$1
 ./dev-server_restart.sh $ENV_FILE
+./dev-server_add_cron_job.sh $ENV_FILE
