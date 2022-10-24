@@ -11,11 +11,9 @@ cron_file="/var/spool/cron/github-backend"
 
 # 既に登録されているかどうかを判定
 cron_job_line_for_grep="${cron_job_line//\\/\\\\}"
-if [ `grep "${cron_job_line_for_grep}" "${cron_file}" | wc -l` -eq 0 ] ; then
-    echo "not registered yet. begin registering..."
-    echo "${cron_job_line}" >> "${cron_file}"
-    /etc/init.d/crond restart
-    echo "End of registration."
+if [ `sudo grep "${cron_job_line_for_grep}" "${cron_file}" | wc -l` -eq 0 ] ; then
+    sudo sh -c echo "${cron_job_line}" >> "${cron_file}"
+    sudo sh -c echo "End of registration."
 else
-    echo "Already registered."
+    sudo sh -c echo "Already registered."
 fi
