@@ -65,6 +65,7 @@
    readonly CHECKOUT_DIR="/opt/chiloportal/"
    if [ -d $CHECKOUT_DIR ]; then
       cd $CHECKOUT_DIR
+      sudo git checkout backend/
       sudo git pull
    else
       sudo git clone https://github.com/npocccties/chiloportal.git
