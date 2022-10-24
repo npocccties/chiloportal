@@ -1,4 +1,4 @@
-name: Django CI
+name: backend
 
 on:
   pull_request:
@@ -21,4 +21,13 @@ jobs:
       run: |
         docker-compose ps
         docker-compose exec -T app python /workspace/manage.py test --exclude-tag=fuzzing
-        
+    - name: Deploy
+      uses: appleboy/ssh-action@master
+      with:
+        key: ${{ secrets.SECRET_KEY }}
+        host: ${{secrets.SSH_HOST}}
+        username: ${{secrets.SSH_USERNAME}}
+        port: ${{secrets.SSH_PORT}}
+        script: |
+          cd /opt
+          ./deploy.sh        
