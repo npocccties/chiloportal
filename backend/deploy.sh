@@ -10,5 +10,5 @@ fi
 readonly BACKEND_DIR="${CHECKOUT_DIR}backend"
 cd $BACKEND_DIR
 sudo chmod 755 dev-server_*.sh
-readonly DOCKER_COMPOSE_YML=$1
-./dev-server_restart.sh $DOCKER_COMPOSE_YML
+readonly ENV_FILE=$1
+./dev-server_restart.sh $ENV_FILE
