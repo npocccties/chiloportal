@@ -79,33 +79,33 @@
 1. 備考  
    コンテナ起動  
    ```
-   /opt/chiloportal/backend/dev-server_start.sh {環境変数を記載した .envから始まるファイル名}
+   chiloportal/backend/dev-server_start.sh {環境変数を記載した .envから始まるファイル名}
    ```
    例
    ```
-   /opt/chiloportal/backend/dev-server_start.sh .env.dev-server
+   chiloportal/backend/dev-server_start.sh .env.dev-server
    ```
    コンテナ停止  
    ```
-   /opt/chiloportal/backend/dev-server_stop.sh
+   chiloportal/backend/dev-server_stop.sh
    ```
    * DBが `/var/chiloportal.dump` にバックアップされます  
 
    コンテナ再起動  
    ```
-   /opt/chiloportal/backend/dev-server_restart.sh
+   chiloportal/backend/dev-server_restart.sh
    ```
    * `dev-server_stop.sh` と `dev-server_start.sh` を呼びます
    
    DBバックアップ  
    ```
-   /opt/chiloportal/backend/dev-server_db_backup.sh
+   chiloportal/backend/dev-server_db_backup.sh
    ```
    * DBが `/var/chiloportal.dump` にバックアップされます  
    
    DBリストア  
    ```
-   /opt/chiloportal/backend/dev-server_db_restore.sh
+   chiloportal/backend/dev-server_db_restore.sh
    ```
    * `/var/chiloportal.dump` にあるバックアップデータをもとにDBをリストア（復元）します  
 
@@ -177,7 +177,7 @@
 ## 開発サーバー
 1. SELECT文の実行
    ```
-   cd /opt/chiloportal/backend
+   cd chiloportal/backend
    docker-compose exec db sh
    psql -d develop -U postgres
    select * from consumer;

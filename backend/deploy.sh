@@ -1,5 +1,6 @@
 #!/bin/sh
-readonly CHECKOUT_DIR="/opt/chiloportal/"
+DIR=`dirname "${0}"`
+readonly CHECKOUT_DIR="${DIR}/chiloportal/"
 if [ -d $CHECKOUT_DIR ]; then
    cd $CHECKOUT_DIR
    sudo git checkout backend/
