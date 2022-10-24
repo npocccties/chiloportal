@@ -18,5 +18,9 @@ jobs:
           username: ${{secrets.SSH_USERNAME}}
           port: ${{secrets.SSH_PORT}}
           script: |
+            sudo rm -rf /tmp/chiloportal
+            git clone https://github.com/npocccties/chiloportal.git /tmp/chiloportal
+            sudo cp /tmp/chiloportal/backend/deploy.sh /opt
             cd /opt
+            sudo chmod 755 deploy.sh
             ./deploy.sh
