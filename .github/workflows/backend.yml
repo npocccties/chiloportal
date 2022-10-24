@@ -1,4 +1,4 @@
-name: Django CI
+name: backend CI
 
 on:
   pull_request:
@@ -21,4 +21,4 @@ jobs:
       run: |
         docker-compose ps
         docker-compose exec -T app python /workspace/manage.py test --exclude-tag=fuzzing
-        
+
