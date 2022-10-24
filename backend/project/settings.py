@@ -31,7 +31,8 @@ DEBUG = strtobool(debug)
 
 logger_level = os.environ.get("LOGGER_LEVEL", "INFO")
 
-ALLOWED_HOSTS = [os.environ.get("ALLOWED_HOSTS", "localhost")]
+host = os.environ.get("ALLOWED_HOSTS", "localhost")
+ALLOWED_HOSTS = [host]
 
 
 # Application definition
@@ -62,6 +63,12 @@ MIDDLEWARE = [
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
+allowed_url = ""
+if host in "localhost":
+    allowed_url = "http://" + host
+else:
+    allowed_url = "https://" + host
+CSRF_TRUSTED_ORIGINS = [allowed_url]
 
 ROOT_URLCONF = "project.urls"
 
