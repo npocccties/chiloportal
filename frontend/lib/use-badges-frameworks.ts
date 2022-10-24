@@ -5,9 +5,12 @@ import { Consumer, Framework } from "api/@types";
 const key = "badges/consumer/list/consumer/framework/list" as const;
 
 async function fetcher(
-  _: typeof key
+  _: typeof key,
+  badgesId: number
 ): Promise<{ consumers: Consumer[]; frameworksPerConsumers: Framework[][] }> {
-  const consumers = await client.consumer.list.$get();
+  const consumers = await client.wisdomBadges.consumer.list.$get({
+    query: { badges_id: badgesId },
+  });
   const frameworksPerConsumers = await Promise.all(
     consumers.map((consumer) =>
       client.consumer.framework.list.$get({

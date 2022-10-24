@@ -15,7 +15,7 @@ jobs:
     - name: Build docker containers
       run: |
         cp .env.localhost .env
-        cp docker-compose.github.yml docker-compose.yml
+        cp docker-compose.localhost.yml docker-compose.yml
         docker-compose up -d
     - name: Run tests 
       run: |

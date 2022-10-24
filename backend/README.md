@@ -15,18 +15,18 @@
 
 ## デバッグ方法
 ### バックエンドAPI
-1. 実行とデバッグで「Backend API」を選択し、F5キーを押下
+1. 実行とデバッグで「Backend API」を選択し、デバッグの開始を押下
 1. ブラウザから http://localhost/api/v1/swagger/ を参照する
 1. 該当のAPIを開いてから、「Try it out」を押下
 1. 必要に応じてパラメータ入力を行う
 1. 「Execute」を押下し、期待する値が得られているか確認する
 
 ### インポートコマンド
-1. 実行とデバッグで「Import command」を選択し、F5キーを押下  
+1. 実行とデバッグで「Import command」を選択し、デバッグの開始を押下  
    * 能力バッジを取得するURLは .vscode/launch.json にて定義しているので、適宜変更してください
 
 ## テスト方法
-1. 実行とデバッグで「Unit Test」を選択し、F5キーを押下し、エラーがないことを確認  
+1. 実行とデバッグで「Unit Test」を選択し、デバッグの開始を押下し、エラーがないことを確認  
    * エラーがあればエラー発生箇所を修正してください  
    * インポートコマンドの単体テスト：chiloportal/tests/commands/*.py
    * バックエンドAPIの単体テスト：chiloportal/tests/views/*.py
@@ -59,7 +59,7 @@
    ```
    cd /opt
    ```
-1. 下記を `deploy.sh` というファイルで作成して転記
+1. `deploy.sh` というファイルを作成して下記を転記
    ```shell
    #!/bin/sh
    readonly CHECKOUT_DIR="/opt/chiloportal/"
@@ -229,4 +229,4 @@ https://dev-portal.oku.cccties.org/admin
 ### SSL証明書の更新ジョブ
 Let’Encrypt のSSL証明書は発行してから`90`日間有効で、有効期限の`30`日前を過ぎている場合、コンテナを再起動することで SSL証明書が自動更新されます。  
 コンテナ再起動にはあまり時間がかからないことと、SSL証明書の更新日から起算して60日経過したことをコマンドで計算すると複雑化するので、crontab コマンドへは月初に変わったときにコンテナ再起動を行うよう、下記ジョブを登録します。  
-* ジョブ:  `0 0 01 */1 * docker-compose -f /opt/chiloportal/backend/dev-server_restart.sh`
+* ジョブ:  `0 0 01 */1 * /opt/chiloportal/backend/dev-server_restart.sh`
