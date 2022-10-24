@@ -1,5 +1,5 @@
 #!/bin/sh
-DIR=`dirname "${0}"`
+DIR=$(cd $(dirname $0); pwd)
 readonly CHECKOUT_DIR="${DIR}/chiloportal/"
 if [ -d $CHECKOUT_DIR ]; then
    cd $CHECKOUT_DIR
