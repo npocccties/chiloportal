@@ -69,12 +69,20 @@
    ```
 1. `deploy.sh` の実行
    ```
-   ./deploy.sh
+   ./deploy.sh {環境変数を記載した`.envから始まるファイル名`}
+   ```
+   例
+   ```
+   ./deploy.sh .env.dev-server
    ```
 1. 備考  
    コンテナ起動  
    ```
-   /opt/chiloportal/backend/dev-server_start.sh
+   /opt/chiloportal/backend/dev-server_start.sh {環境変数を記載した`.envから始まるファイル名`}
+   ```
+   例
+   ```
+   /opt/chiloportal/backend/dev-server_start.sh .env.dev-server
    ```
    コンテナ停止  
    ```
