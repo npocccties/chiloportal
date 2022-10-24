@@ -1,0 +1,22 @@
+name: backend CD
+
+on:
+  push:
+    branches:
+      - develop
+    paths-ignore:
+      - "frontend/**"
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          key: ${{ secrets.SECRET_KEY }}
+          host: ${{secrets.SSH_HOST}}
+          username: ${{secrets.SSH_USERNAME}}
+          port: ${{secrets.SSH_PORT}}
+          script: |
+            cd /opt
+            ./deploy.sh
