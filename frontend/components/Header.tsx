@@ -53,17 +53,15 @@ function Header({ className }: Props) {
         <ul role="menu" className="jumpu-card" aria-busy={!consumers}>
           {consumers ? (
             consumers.map((consumer) => (
-              <li
-                key={consumer.consumer_id}
-                role="menuitem"
-                className="cursor-pointer px-3 py-2 hover:bg-primary-50"
-              >
+              <li key={consumer.consumer_id} role="menuitem">
                 <Link
                   href={pagesPath.consumers
                     ._consumerId(consumer.consumer_id)
                     .$url()}
                 >
-                  <a>{consumer.name}の育成指標</a>
+                  <a className="block px-3 py-2 hover:bg-primary-50">
+                    {consumer.name}の育成指標
+                  </a>
                 </Link>
               </li>
             ))
@@ -85,17 +83,15 @@ function Header({ className }: Props) {
         <ul role="menu" className="jumpu-card" aria-busy={!portalCategories}>
           {portalCategories ? (
             portalCategories.map((portalCategory) => (
-              <li
-                key={portalCategory.portal_category_id}
-                role="menuitem"
-                className="cursor-pointer px-3 py-2 hover:bg-primary-50"
-              >
+              <li key={portalCategory.portal_category_id} role="menuitem">
                 <Link
                   href={pagesPath.portal_categories
                     ._portalCategoryId(portalCategory.portal_category_id)
                     .$url({ query: {} })}
                 >
-                  <a>{portalCategory.name}</a>
+                  <a className="block px-3 py-2 hover:bg-primary-50">
+                    {portalCategory.name}
+                  </a>
                 </Link>
               </li>
             ))
@@ -116,13 +112,11 @@ function Header({ className }: Props) {
       <Popover className="hidden lg:block" title="OKUTEPについて">
         <ul role="menu" className="jumpu-card">
           {contents.map((content) => (
-            <li
-              key={content.slug}
-              role="menuitem"
-              className="cursor-pointer px-3 py-2 hover:bg-primary-50"
-            >
+            <li key={content.slug} role="menuitem">
               <Link href={pagesPath._slug(content.slug).$url()}>
-                <a>{content.title}</a>
+                <a className="block px-3 py-2 hover:bg-primary-50">
+                  {content.title}
+                </a>
               </Link>
             </li>
           ))}
