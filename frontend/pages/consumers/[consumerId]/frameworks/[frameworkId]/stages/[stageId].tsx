@@ -2,6 +2,8 @@ import Error from "next/error";
 import { client } from "lib/client";
 import { Consumer, Framework, Stage, Field, BadgeDetail2 } from "api/@types";
 import Template from "templates/Stage";
+import { NEXT_PUBLIC_API_MOCKING } from "lib/env";
+import { stage as fakeStage } from "mocks/faker";
 
 export type Context = {
   params: { consumerId: string; frameworkId: string; stageId: string };
@@ -17,7 +19,7 @@ export type Props = {
   framework: Framework;
   stages: Stage[];
   stage: Stage;
-  fields: Field[];
+  fields: FieldDetail[];
   wisdomBadgesMap: Map<number, BadgeDetail2[]>;
 };
 
@@ -33,7 +35,9 @@ export async function getServerSideProps({
   const stages = await client.framework.stage.list.$get({
     query: { framework_id: Number(frameworkId) },
   });
-  const stage = stages.find((stage) => stage.stage_id === Number(stageId));
+  const stage = NEXT_PUBLIC_API_MOCKING
+    ? fakeStage()
+    : stages.find((stage) => stage.stage_id === Number(stageId));
   if (!stage) return { props: { title: "Stage Not Found", statusCode: 404 } };
   const fields = await client.stage.field.list.$get({
     query: { stage_id: Number(stageId) },
