@@ -9,6 +9,7 @@ import sys
 import urllib.parse
 import os
 from django.db import connection, reset_queries
+from ipware import get_client_ip
 
 
 class BaseAPIView(APIView):
@@ -19,8 +20,9 @@ class BaseAPIView(APIView):
         class_name = type(self).__name__
         method_name = sys._getframe().f_code.co_name
         self.logger.debug(f"------- {class_name}.{method_name} start -------")
+        client_addr, is_routable = get_client_ip(request, request_header_order=['X_FORWARDED_FOR', 'REMOTE_ADDR'])
         self.logger.info(
-            f"Request path: {urllib.parse.unquote(request._request.get_full_path())}"
+            f"Request path: {urllib.parse.unquote(request._request.get_full_path())} client_addr: {client_addr} is_routable: {is_routable}"
         )
         try:
             reset_queries()
