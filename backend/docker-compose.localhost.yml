@@ -1,10 +1,24 @@
 version: '3.9'
 
 services:
+  web:
+    image: nginx:1.23.1
+    ports:
+      - '80:80'
+      - '443:443'
+    networks:
+      - app_network
+    volumes:
+      - ./nginx.localhost.conf:/etc/nginx/conf.d/default.conf
+      - ./static:/workspace/static
+    depends_on:
+      - app
+    restart: always
+
   app:
     build: .
     tty: true
-    ports:
+    expose:
       - 8000:8000
     networks:
       - app_network
