@@ -2,7 +2,7 @@
 DIR=$(cd $(dirname $0); pwd)
 cd $DIR
 docker-compose exec -T db pg_dump -h 127.0.0.1 \
-    -p 5432 -d develop -U postgres \
+    -p 5432 -d $DB_NAME -U $DB_USER \
     -Fc -v --file=/var/lib/postgresql/chiloportal.dump
 BACKUP_FILE="${DIR}/postgresql/data/chiloportal.dump"
 if [ -e $BACKUP_FILE ]; then
