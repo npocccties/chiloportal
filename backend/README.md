@@ -69,21 +69,21 @@
    ```
 1. `deploy.sh` の実行
    ```
-   ./deploy.sh {環境変数を記載した .envから始まるファイル名}
+   ./deploy.sh {環境変数を記載した .envから始まるファイル名} {docker-composeから始まるファイル名}
    ```
    例
    ```
-   ./deploy.sh .env.dev-server
+   ./deploy.sh .env.dev-server docker-compose.dev-server.yml
    ```
    * 本番環境で指定する場合は、あらかじめ本番サーバーで作成した `.env` のパスを `deploy.sh` に渡してください
 1. 備考  
    コンテナ起動  
    ```
-   chiloportal/backend/dev-server_start.sh {環境変数を記載した .envから始まるファイル名}
+   chiloportal/backend/dev-server_start.sh {環境変数を記載した .envから始まるファイル名} {docker-composeから始まるファイル名}
    ```
    例
    ```
-   chiloportal/backend/dev-server_start.sh .env.dev-server
+   chiloportal/backend/dev-server_start.sh .env.dev-server docker-compose.dev-server.yml
    ```
    コンテナ停止  
    ```
