@@ -1,6 +1,8 @@
 #!/bin/sh
 DIR=$(cd $(dirname $0); pwd)
 cd $DIR
+readonly ENV_FILE=$1
+sudo cp $ENV_FILE .env
 source ./.env
 docker-compose exec -T db pg_dump -h 127.0.0.1 \
     -p 5432 -d $DB_NAME -U $DB_USER \
