@@ -93,7 +93,7 @@ export const framework = (): Framework => ({
 export const stage = (): Stage => ({
   stage_id: faker.datatype.number(),
   name: faker.animal.crocodilia(),
-  sub_name: faker.animal.crocodilia(),
+  sub_name: Math.round(Math.random()) ? faker.animal.crocodilia() : "",
   description: faker.lorem.paragraph(),
 });
 
