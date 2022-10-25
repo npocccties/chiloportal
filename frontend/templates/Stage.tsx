@@ -6,7 +6,7 @@ export default function Stage({
   stages,
   stage,
   fields,
-  wisdomBadgesMap,
+  wisdomBadgesListPerFields,
 }: Props) {
   return null;
 }
