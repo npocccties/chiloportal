@@ -79,33 +79,33 @@
 1. 備考  
    コンテナ起動  
    ```
-   chiloportal/backend/dev-server_start.sh {環境変数を記載した .envから始まるファイル名} {docker-composeから始まるファイル名}
+   chiloportal/backend/server_start.sh {環境変数を記載した .envから始まるファイル名} {docker-composeから始まるファイル名}
    ```
    例
    ```
-   chiloportal/backend/dev-server_start.sh .env.dev-server docker-compose.dev-server.yml
+   chiloportal/backend/server_start.sh .env.dev-server docker-compose.dev-server.yml
    ```
    コンテナ停止  
    ```
-   chiloportal/backend/dev-server_stop.sh
+   chiloportal/backend/server_stop.sh
    ```
    * DBが `/var/chiloportal.dump` にバックアップされます  
 
    コンテナ再起動  
    ```
-   chiloportal/backend/dev-server_restart.sh
+   chiloportal/backend/server_restart.sh
    ```
-   * `dev-server_stop.sh` と `dev-server_start.sh` を呼びます
+   * `server_stop.sh` と `server_start.sh` を呼びます
    
    DBバックアップ  
    ```
-   chiloportal/backend/dev-server_db_backup.sh
+   chiloportal/backend/server_db_backup.sh
    ```
    * DBが `/var/chiloportal.dump` にバックアップされます  
    
    DBリストア  
    ```
-   chiloportal/backend/dev-server_db_restore.sh
+   chiloportal/backend/server_db_restore.sh
    ```
    * `/var/chiloportal.dump` にあるバックアップデータをもとにDBをリストア（復元）します  
 
@@ -162,7 +162,6 @@
 |IMAGE_DIR|画像ファイルの公開ディレクトリ（相対パス指定）|-|
 |JUDGE_BADGE|バッジ判定方法|`version`:<br>JSONのversionフィールド値の末尾がwisdomならば能力バッジとみなす<br>※本番リリース用<br><br>`alignments`:<br>JSONにalignmentsがあれば能力バッジとみなす<br>※動作確認用|
 |PER_PAGE|1ページあたりのデータ数|APIのクエリパラメータとしてページ番号(page_number)が指定可能な場合、同APIの1ページあたりのデータ数|
-|STAGE|SSL証明書/自己署名証明書|`production`: SSL証明書を使用する ※本番リリース用<br>`local`: 自己署名証明書を使用する ※動作確認用<br>`staging`: 同上<br>証明書出力場所: `./ssl_certs`|
 
 
 # DBの確認
@@ -224,3 +223,9 @@ https://dev-portal.oku.cccties.org/admin
 * DBサーバー: PostgresSQL
 ### SSL証明書
 * Let's Encrypt（無料SSL証明書）
+
+## 本番サーバー
+### サーバー構成
+* 開発サーバーに準ずる
+### SSL証明書
+* 商用利用

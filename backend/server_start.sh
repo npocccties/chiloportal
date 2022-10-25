@@ -6,7 +6,7 @@ sudo cp $ENV_FILE .env
 readonly DOCKER_COMPOSE_YML=$2
 sudo cp $DOCKER_COMPOSE_YML docker-compose.yml
 docker-compose up -d
-/bin/sh ./dev-server_db_restore.sh
+/bin/sh ./server_db_restore.sh
 # コンテナ作成時に requirements.txt から django-cors-headers をインストールしても /usr/local/lib/python3.9/site-packages にインストールされていないので、
 # デプロイのタイミングで django-cors-headers をインストールする
 docker-compose exec -T app pip install --upgrade pip

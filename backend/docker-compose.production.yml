@@ -1,15 +1,31 @@
 version: '3.9'
 
 services:
-  web:
-    image: nginx:1.23.1
+  https-portal:
+    image: steveltn/https-portal:1
+    restart: always
+    volumes:
+      - ./ssl_certs:/var/lib/https-portal
     ports:
       - '80:80'
       - '443:443'
     networks:
       - app_network
+    environment:
+      # 商用のSSL証明書を使用する予定なのでLet’Encryptのは使用しないでおく
+      STAGE: local
+      DOMAINS: '${ALLOWED_HOSTS} -> http://web:8080/'
+    depends_on:
+      - app
+
+  web:
+    image: nginx:1.23.1
+    expose:
+      - 8080
+    networks:
+      - app_network
     volumes:
-      - ./nginx.production.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
       - ./static:/workspace/static
     depends_on:
       - app
