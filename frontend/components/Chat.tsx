@@ -114,7 +114,7 @@ function Chat({ className }: Props) {
             type: "bot",
             body: (
               <p>
-                すみません、「{keyword}
+                すみません、「{keyword}」
                 に関する能力バッジがみつかりませんでした。。
               </p>
             ),
