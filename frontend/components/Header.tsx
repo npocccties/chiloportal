@@ -53,7 +53,7 @@ function Header({ className }: Props) {
         {({ close }) => (
           <ul
             role="menu"
-            className="jumpu-card"
+            className="jumpu-card overflow-y-scroll max-h-[80vh]"
             aria-busy={!consumers}
             onClick={() => close()}
           >
@@ -90,7 +90,7 @@ function Header({ className }: Props) {
         {({ close }) => (
           <ul
             role="menu"
-            className="jumpu-card"
+            className="jumpu-card overflow-y-scroll max-h-[80vh]"
             aria-busy={!portalCategories}
             onClick={() => close()}
           >
@@ -125,7 +125,11 @@ function Header({ className }: Props) {
       </Popover>
       <Popover className="hidden lg:block" title="OKUTEPについて">
         {({ close }) => (
-          <ul role="menu" className="jumpu-card" onClick={() => close()}>
+          <ul
+            role="menu"
+            className="jumpu-card overflow-y-scroll max-h-[80vh]"
+            onClick={() => close()}
+          >
             {contents.map((content) => (
               <li key={content.slug} role="menuitem">
                 <Link href={pagesPath._slug(content.slug).$url()}>
