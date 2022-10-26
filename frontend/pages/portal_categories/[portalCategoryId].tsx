@@ -3,7 +3,6 @@ import { client } from "lib/client";
 import { PortalCategory } from "api/@types";
 import Template from "templates/PortalCategory";
 import { NEXT_PUBLIC_API_MOCKING } from "lib/env";
-import { portalCategory as fakePortalCategory } from "mocks/faker";
 
 export type Query = { p?: string };
 
@@ -30,7 +29,7 @@ export async function getServerSideProps({
 }: Context): Promise<{ props: ErrorProps | Props }> {
   const portalCategories = await client.portalCategory.list.$get();
   const portalCategory = NEXT_PUBLIC_API_MOCKING
-    ? fakePortalCategory()
+    ? (await import("mocks/faker")).portalCategory()
     : portalCategories.find(
         (portalCategory) =>
           portalCategory.portal_category_id === Number(portalCategoryId)
