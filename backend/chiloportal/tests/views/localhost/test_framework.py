@@ -57,13 +57,14 @@ class FrameworkTests(BaseAPIViewTests):
         view = FrameworkDetail.as_view()
         self.request_no_param(factory, view, self.framework_url)
 
-    def test_framework_200_empty(self):
+    def test_framework_404(self):
         factory = APIRequestFactory()
         view = FrameworkDetail.as_view()
         self.create_test_relation_data()
-        self.request_normal_empty(
+        self.request_not_found(
             factory,
             view,
             self.framework_url,
-            {"framework_id": self.not_found_id}
+            {"framework_id": self.not_found_id},
+            "Framework",
         )
