@@ -15,18 +15,18 @@
 
 ## デバッグ方法
 ### バックエンドAPI
-1. 実行とデバッグで「Backend API」を選択し、F5キーを押下
+1. 実行とデバッグで「Backend API」を選択し、デバッグの開始を押下
 1. ブラウザから http://localhost/api/v1/swagger/ を参照する
 1. 該当のAPIを開いてから、「Try it out」を押下
 1. 必要に応じてパラメータ入力を行う
 1. 「Execute」を押下し、期待する値が得られているか確認する
 
 ### インポートコマンド
-1. 実行とデバッグで「Import command」を選択し、F5キーを押下  
+1. 実行とデバッグで「Import command」を選択し、デバッグの開始を押下  
    * 能力バッジを取得するURLは .vscode/launch.json にて定義しているので、適宜変更してください
 
 ## テスト方法
-1. 実行とデバッグで「Unit Test」を選択し、F5キーを押下し、エラーがないことを確認  
+1. 実行とデバッグで「Unit Test」を選択し、デバッグの開始を押下し、エラーがないことを確認  
    * エラーがあればエラー発生箇所を修正してください  
    * インポートコマンドの単体テスト：chiloportal/tests/commands/*.py
    * バックエンドAPIの単体テスト：chiloportal/tests/views/*.py
@@ -48,55 +48,59 @@
 1. 再度、カバレッジを出力する
 
 
-# 開発サーバー
+# 開発サーバー（または本番サーバー）
 ## 環境構築手順
 
-1. Docker および Docker Compose をインストール  
-1. optフォルダに移動
+1. 下記をインストール
+   * Docker
+   * Docker Compose
+   * Git  
+1. 適当なディレクトリへ移動
    ```
    cd /opt
    ```
-1. chiloportal のソースを git で取得  
+1. `deploy.sh` というファイルを以下から取得
    ```
-   sudo git clone https://github.com/npocccties/chiloportal.git
+   https://github.com/npocccties/chiloportal/blob/develop/backend/deploy.sh
    ```
-   既に取得済みの場合
+1. `deploy.sh` に権限付与
    ```
-   cd /opt/chiloportal
-   sudo git pull
+   sudo chmod 755 deploy.sh
    ```
-1. backendフォルダに移動  
+1. `deploy.sh` の実行
    ```
-   cd /opt/chiloportal/backend
+   ./deploy.sh {環境変数を記載した .envから始まるファイル名} {docker-composeから始まるファイル名}
    ```
-1. スクリプトに権限付与
-   ```
-   sudo chmod 755 dev-server_*.sh
-   ```
-1. コンテナ起動  
-   ```
-   ./dev-server_start.sh
-   ```
-   既に起動中の場合
-   ```
-   ./dev-server_restart.sh
-   ```
+   * 開発サーバー: `./deploy.sh .env.dev-server docker-compose.dev-server.yml`
+   * 本番サーバー: `./deploy.sh .env.production docker-compose.production.yml`
+   * 上記 `.env.production` は Public リポジトリに登録せずに Private リポジトリ等で登録管理してください
 1. 備考  
+   コンテナ起動  
+   ```
+   chiloportal/backend/server_start.sh {環境変数を記載した .envから始まるファイル名} {docker-composeから始まるファイル名}
+   ```
+
    コンテナ停止  
    ```
-   ./dev-server_stop.sh
+   chiloportal/backend/server_stop.sh {環境変数を記載した .envから始まるファイル名}
    ```
    * DBが `/var/chiloportal.dump` にバックアップされます  
-   
+
+   コンテナ再起動  
+   ```
+   chiloportal/backend/server_restart.sh {環境変数を記載した .envから始まるファイル名} {docker-composeから始まるファイル名}
+   ```
+   * `server_stop.sh` と `server_start.sh` を呼びます
+
    DBバックアップ  
    ```
-   ./dev-server_db_backup.sh
+   chiloportal/backend/server_db_backup.sh {環境変数を記載した .envから始まるファイル名}
    ```
    * DBが `/var/chiloportal.dump` にバックアップされます  
    
    DBリストア  
    ```
-   ./dev-server_db_restore.sh
+   chiloportal/backend/server_db_restore.sh
    ```
    * `/var/chiloportal.dump` にあるバックアップデータをもとにDBをリストア（復元）します  
 
@@ -153,7 +157,6 @@
 |IMAGE_DIR|画像ファイルの公開ディレクトリ（相対パス指定）|-|
 |JUDGE_BADGE|バッジ判定方法|`version`:<br>JSONのversionフィールド値の末尾がwisdomならば能力バッジとみなす<br>※本番リリース用<br><br>`alignments`:<br>JSONにalignmentsがあれば能力バッジとみなす<br>※動作確認用|
 |PER_PAGE|1ページあたりのデータ数|APIのクエリパラメータとしてページ番号(page_number)が指定可能な場合、同APIの1ページあたりのデータ数|
-|STAGE|SSL証明書/自己署名証明書|`production`: SSL証明書を使用する ※本番リリース用<br>`local`: 自己署名証明書を使用する ※動作確認用<br>`staging`: 同上<br>証明書出力場所: `./ssl_certs`|
 
 
 # DBの確認
@@ -166,9 +169,9 @@
    * DB: PostgreSQL
 
 ## 開発サーバー
-1. SELECT文の実行
+1. SQL文の実行（下記はSELECT文を記載しています）
    ```
-   cd /opt/chiloportal/backend
+   cd chiloportal/backend
    docker-compose exec db sh
    psql -d develop -U postgres
    select * from consumer;
@@ -215,7 +218,12 @@ https://dev-portal.oku.cccties.org/admin
 * DBサーバー: PostgresSQL
 ### SSL証明書
 * Let's Encrypt（無料SSL証明書）
-### SSL証明書の更新ジョブ
-Let’Encrypt のSSL証明書は発行してから`90`日間有効で、有効期限の`30`日前を過ぎている場合、コンテナを再起動することで SSL証明書が自動更新されます。  
-コンテナ再起動にはあまり時間がかからないことと、SSL証明書の更新日から起算して60日経過したことをコマンドで計算すると複雑化するので、crontab コマンドへは月初に変わったときにコンテナ再起動を行うよう、下記ジョブを登録します。  
-* ジョブ:  `0 0 01 */1 * docker-compose -f /opt/chiloportal/backend/dev-server_restart.sh`
+
+## 本番サーバー
+### サーバー構成
+* 開発サーバーに準ずる
+### SSL証明書
+* 商用利用
+* `chiloportal/backend/ssl_certs` に下記のファイルを配置してください
+  * signed.crt: サーバー証明書
+  * domain.key: サーバー証明書の秘密鍵

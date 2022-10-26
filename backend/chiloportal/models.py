@@ -166,8 +166,8 @@ class WisdomBadges(models.Model):
         null=True,
         related_name="wisdom_badges_issuer",
     )
-    alignments_targetname = models.TextField(blank=True, null=True)
-    alignments_targeturl = models.TextField(blank=True, null=True)
+    alignments_targetname = models.TextField()
+    alignments_targeturl = models.TextField()
 
     class Meta:
         managed = True

@@ -12,7 +12,7 @@ services:
     networks:
       - app_network
     environment:
-      STAGE: ${STAGE}
+      STAGE: production
       DOMAINS: '${ALLOWED_HOSTS} -> http://web:8080/'
     depends_on:
       - app
@@ -24,7 +24,7 @@ services:
     networks:
       - app_network
     volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx.dev-server.conf:/etc/nginx/conf.d/default.conf
       - ./static:/workspace/static
     depends_on:
       - app

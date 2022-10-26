@@ -1,7 +1,15 @@
 import Error from "next/error";
 import { client } from "lib/client";
-import { Consumer, Framework, Stage, Field, BadgeDetail2 } from "api/@types";
+import {
+  Consumer,
+  Framework,
+  Stage,
+  FieldDetail,
+  BadgeDetail1,
+  BadgeDetail2,
+} from "api/@types";
 import Template from "templates/Stage";
+import { NEXT_PUBLIC_API_MOCKING } from "lib/env";
 
 export type Context = {
   params: { consumerId: string; frameworkId: string; stageId: string };
@@ -17,8 +25,8 @@ export type Props = {
   framework: Framework;
   stages: Stage[];
   stage: Stage;
-  fields: Field[];
-  wisdomBadgesMap: Map<number, BadgeDetail2[]>;
+  fields: FieldDetail[];
+  wisdomBadgesListPerFields3PerFields: (BadgeDetail1 | BadgeDetail2)[][][];
 };
 
 export async function getServerSideProps({
@@ -33,25 +41,40 @@ export async function getServerSideProps({
   const stages = await client.framework.stage.list.$get({
     query: { framework_id: Number(frameworkId) },
   });
-  const stage = stages.find((stage) => stage.stage_id === Number(stageId));
+  const stage = NEXT_PUBLIC_API_MOCKING
+    ? stages.find(() => true)
+    : stages.find((stage) => stage.stage_id === Number(stageId));
   if (!stage) return { props: { title: "Stage Not Found", statusCode: 404 } };
   const fields = await client.stage.field.list.$get({
     query: { stage_id: Number(stageId) },
   });
-  const wisdomBadgesMap = new Map<number, BadgeDetail2[]>();
-  const fieldIds = fields.flatMap(({ field1 }) =>
-    field1.flatMap(({ field2 }) =>
-      field2.flatMap(({ field3 }) => field3.flatMap(({ field_id }) => field_id))
+  const wisdomBadgesListPerFields3PerFields = await Promise.all(
+    fields.flatMap(({ field1 }) =>
+      field1.flatMap(({ field2 }) =>
+        field2.flatMap(({ field3 }) =>
+          Promise.all(
+            field3.map(({ wisdom_badges }) =>
+              client.badges.$get({
+                query: {
+                  badges_type: "wisdom",
+                  badges_ids: wisdom_badges.join(","),
+                },
+              })
+            )
+          )
+        )
+      )
     )
   );
-  for (const fieldId of fieldIds) {
-    const wisdomBadges = await client.wisdomBadges.list.$get({
-      query: { field_id: fieldId, stage_id: Number(stageId) },
-    });
-    wisdomBadgesMap.set(fieldId, wisdomBadges.badges);
-  }
   return {
-    props: { consumer, framework, stages, stage, fields, wisdomBadgesMap },
+    props: {
+      consumer,
+      framework,
+      stages,
+      stage,
+      fields,
+      wisdomBadgesListPerFields3PerFields,
+    },
   };
 }
 

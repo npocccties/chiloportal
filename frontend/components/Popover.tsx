@@ -7,16 +7,17 @@ type Props = {
   className?: string;
   title: string;
   disabled?: boolean;
-  children: React.ReactNode;
+  children(props: {
+    close: (
+      ref?: React.MutableRefObject<HTMLElement | null> | HTMLElement
+    ) => void;
+  }): React.ReactNode;
 };
 
-function Popover({ title, className, disabled = false, children }: Props) {
+function Popover({ title, className, children }: Props) {
   return (
     <Base className={clsx("relative", className)}>
-      <Base.Button
-        className="group jumpu-text-button text-gray-700 inline-flex items-center rounded-md text-base font-medium"
-        disabled={disabled}
-      >
+      <Base.Button className="group jumpu-text-button text-gray-700 inline-flex items-center rounded-md text-base font-medium">
         <span className="pr-2">{title}</span>
         <Icon
           icon="fa6-solid:chevron-down"
@@ -34,7 +35,7 @@ function Popover({ title, className, disabled = false, children }: Props) {
         leaveTo="opacity-0 translate-y-1"
       >
         <Base.Panel className="absolute left-0 z-10 mt-1 transform">
-          {children}
+          {({ close }) => <>{children({ close })}</>}
         </Base.Panel>
       </Transition>
     </Base>

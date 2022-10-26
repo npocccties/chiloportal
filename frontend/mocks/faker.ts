@@ -54,6 +54,8 @@ export const wisdomBadges = (): BadgeDetail1 => ({
   portal_category_description: faker.lorem.paragraph(),
   portal_category_image_url_path: "mock-portal-category.png",
   digital_badge_class_id: faker.datatype.string(),
+  alignments_targetname: faker.commerce.department(),
+  alignments_targeturl: faker.internet.url(),
   detail: {
     knowledge_badges_list: [...Array(3)].map(faker.datatype.number),
   },
@@ -75,6 +77,8 @@ export const knowledgeBadges = (): BadgeDetail1 => ({
   portal_category_description: faker.lorem.paragraph(),
   portal_category_image_url_path: "mock-portal-category.png",
   digital_badge_class_id: faker.datatype.string(),
+  alignments_targetname: faker.commerce.department(),
+  alignments_targeturl: faker.internet.url(),
   detail: [...Array(3)].map(criteria),
 });
 
@@ -89,7 +93,7 @@ export const framework = (): Framework => ({
 export const stage = (): Stage => ({
   stage_id: faker.datatype.number(),
   name: faker.animal.crocodilia(),
-  sub_name: faker.animal.crocodilia(),
+  sub_name: Math.round(Math.random()) ? faker.animal.crocodilia() : "",
   description: faker.lorem.paragraph(),
 });
 

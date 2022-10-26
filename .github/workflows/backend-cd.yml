@@ -1,0 +1,27 @@
+name: backend CD
+
+on:
+  push:
+    branches:
+      - develop
+    paths:
+      - 'backend/**'
+      - '!README.md'
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          key: ${{ secrets.SECRET_KEY }}
+          host: ${{secrets.SSH_HOST}}
+          username: ${{secrets.SSH_USERNAME}}
+          port: ${{secrets.SSH_PORT}}
+          script: |
+            sudo rm -rf /tmp/chiloportal
+            git clone https://github.com/npocccties/chiloportal.git /tmp/chiloportal
+            sudo cp /tmp/chiloportal/backend/deploy.sh /opt
+            cd /opt
+            sudo chmod 755 deploy.sh
+            ./deploy.sh .env.dev-server docker-compose.dev-server.yml
