@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - develop
-    paths-ignore:
-      - "frontend/**"
     paths:
       - 'backend/**'
       - '!README.md'
