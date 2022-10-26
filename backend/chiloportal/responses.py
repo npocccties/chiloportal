@@ -71,6 +71,7 @@ def to_pager_wisdom_badges_empty():
         "end": 0,
     }
 
+
 def to_wisdom_badges(queryset, output_portal_category=False, output_alignments=False):
     return [
         to_wisdom_badge(wisdom_badge, output_portal_category, output_alignments)
@@ -78,7 +79,9 @@ def to_wisdom_badges(queryset, output_portal_category=False, output_alignments=F
     ]
 
 
-def to_wisdom_badge(wisdom_badge, output_portal_category=False, output_alignments=False):
+def to_wisdom_badge(
+    wisdom_badge, output_portal_category=False, output_alignments=False
+):
     knowledge_badges = wisdom_badge.knowledge_badges_wisdom_badges
     knowledge_badges_id_list = sorted(
         [knowledge_badge.id for knowledge_badge in knowledge_badges.all()]
@@ -189,7 +192,7 @@ def to_fields(field_set):
     field1_array = []
     for field1key in sorted(list(field1keys)):
         field1_array.append(_to_field(field_dict, field1key, field2keys))
-    return field1_array
+    return {"field1": field1_array}
 
 
 def _to_field(field_dict, field1key, field2keys):
@@ -206,8 +209,7 @@ def _to_field(field_dict, field1key, field2keys):
         field2_array.append(
             {"field2_name": split_field2_key(field2key)[1], "field3": field3_array}
         )
-    field1 = {"field1_name": field1key, "field2": field2_array}
-    return {"field1": field1}
+    return {"field1_name": field1key, "field2": field2_array}
 
 
 def get_fields_detail_keys(categorised_badge_set):
@@ -233,7 +235,7 @@ def to_fields_detail(categorised_badge_set):
         field1_list.append(
             _to_field_detail(field_dict, field1key, field2keys, wisdom_dict)
         )
-    return field1_list
+    return {"field1": field1_list}
 
 
 def _to_field_detail(field_dict, field1key, field2keys, wisdom_dict):
@@ -255,5 +257,4 @@ def _to_field_detail(field_dict, field1key, field2keys, wisdom_dict):
         field2_array.append(
             {"field2_name": split_field2_key(field2key)[1], "field3": field3_array}
         )
-    field1 = {"field1_name": field1key, "field2": field2_array}
-    return {"field1": field1}
+    return {"field1_name": field1key, "field2": field2_array}
