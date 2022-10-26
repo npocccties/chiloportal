@@ -6,7 +6,7 @@ on:
       - develop
     paths:
       - 'backend/**'
-      - '!README.md'
+      - '!backend/README.md'
 jobs:
   deploy:
     runs-on: ubuntu-latest
