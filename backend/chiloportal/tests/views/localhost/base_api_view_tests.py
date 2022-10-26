@@ -35,6 +35,16 @@ class BaseAPIViewTests(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         return response
 
+    def request_normal_zero_array(self, factory, view, url, params={}):
+        response = self.request_normal(factory, view, url, params)
+        array = response.data
+        self.assertEqual(len(array), 0)
+
+    def request_normal_empty(self, factory, view, url, params={}):
+        response = self.request_normal(factory, view, url, params)
+        data = response.data
+        self.assertEqual(data, {})
+
     def request_invalid_value(self, factory, view, url, params, message="ID"):
         request = factory.get(url, params)
         response = view(request)

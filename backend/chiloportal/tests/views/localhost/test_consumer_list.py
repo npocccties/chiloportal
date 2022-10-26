@@ -20,7 +20,7 @@ class ConsumerListTests(BaseAPIViewTests):
         response = self.request_normal(factory, view, self.consumer_list_url)
         self.assert_consumers(response.data, consumers)
 
-    def test_consumer_list_404(self):
+    def test_consumer_list_200_zero(self):
         factory = APIRequestFactory()
         view = ConsumerList.as_view()
-        self.request_not_found(factory, view, self.consumer_list_url, {}, "Data")
+        self.request_normal_zero_array(factory, view, self.consumer_list_url, {})

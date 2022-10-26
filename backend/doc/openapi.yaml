@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: Portal Badges API
   description: 教員研修システム向けバッジ関連データ取得API
-  version: 0.9.5
+  version: 0.9.6
 servers:
   - url: https://chiloportal.example.com/api/v1
 tags:
@@ -57,8 +57,6 @@ paths:
                 $ref: '#/components/schemas/Consumer'
         '400':
           description: Invalid ID supplied
-        '404':
-          description: Consumer not found
   /consumer/list:
     get:
       tags:
@@ -74,8 +72,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Consumer'
-        '404':
-          description: Data not found
   /framework/field/list:
     get:
       tags:
@@ -100,8 +96,6 @@ paths:
                   $ref: '#/components/schemas/Field'
         '400':
           description: Invalid ID supplied
-        '404':
-          description: Field not found
   /stage/field/list:
     get:
       tags:
@@ -126,8 +120,6 @@ paths:
                   $ref: '#/components/schemas/FieldDetail'
         '400':
           description: Invalid ID supplied
-        '404':
-          description: Field not found
   /portalCategory/list:
     get:
       tags:
@@ -143,8 +135,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/PortalCategory'
-        '404':
-          description: Data not found
   /portalCategory/badges/list:
     get:
       tags:
@@ -199,7 +189,7 @@ paths:
         '400':
           description: Invalid parameters supplied
         '404':
-          description: Badges not found
+          description: Page is empty
   /framework:
     get:
       tags:
@@ -222,8 +212,6 @@ paths:
                 $ref: '#/components/schemas/Framework'
         '400':
           description: Invalid ID supplied
-        '404':
-          description: framework not found
   /framework/stage/list:
     get:
       tags:
@@ -248,8 +236,6 @@ paths:
                   $ref: '#/components/schemas/Stage'
         '400':
           description: Invalid ID supplied
-        '404':
-          description: Stage not found
   /badges:
     get:
       tags:
@@ -282,8 +268,6 @@ paths:
                     - $ref: '#/components/schemas/BadgeDetail2'
         '400':
           description: Invalid parameters supplied
-        '404':
-          description: Badges not found
   /wisdomBadges/list:
     get:
       tags:
@@ -322,8 +306,6 @@ paths:
                   - badges
         '400':
           description: Invalid parameters supplied
-        '404':
-          description: Badges not found
   /wisdomBadges/list/keyword:
     get:
       tags:
@@ -377,7 +359,7 @@ paths:
         '400':
           description: Invalid keyword supplied
         '404':
-          description: Badges not found
+          description: Page is empty
   /wisdomBadges/consumer/list:
     get:
       tags:
@@ -402,8 +384,6 @@ paths:
                   $ref: '#/components/schemas/Consumer'
         '400':
           description: Invalid ID supplied
-        '404':
-          description: Consumer not found
   /knowledgeBadges/criteria/list:
     get:
       tags:
@@ -428,8 +408,6 @@ paths:
                   $ref: '#/components/schemas/Criteria'
         '400':
           description: Invalid ID supplied
-        '404':
-          description: Criteria not found
   /consumer/framework/list:
     get:
       tags:
@@ -454,8 +432,6 @@ paths:
                   $ref: '#/components/schemas/Framework'
         '400':
           description: Invalid ID supplied
-        '404':
-          description: Framework not found
 
 components:
   schemas:

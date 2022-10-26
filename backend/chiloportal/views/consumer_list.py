@@ -11,5 +11,5 @@ class ConsumerList(BaseAPIView):
     def _get(self, request):
         queryset = Consumer.objects.all().order_by("pk")
         if queryset.exists() == False:
-            raise NotFound("Data not found")
+            return Response([])
         return Response(to_consumers(queryset))

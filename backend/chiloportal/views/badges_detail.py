@@ -38,8 +38,10 @@ class BadgesDetail(BaseAPIView):
                 .select_related("issuer", "portal_category")
             )
             if queryset.exists() == False:
-                raise NotFound("Badges not found")
-            result = to_wisdom_badges(queryset, output_portal_category=True, output_alignments=True)
+                return Response([])
+            result = to_wisdom_badges(
+                queryset, output_portal_category=True, output_alignments=True
+            )
         elif type == BadgeType.KNOWLEDGE.name.lower():
             queryset = (
                 KnowledgeBadges.objects.filter(pk__in=id_array)
@@ -49,7 +51,7 @@ class BadgesDetail(BaseAPIView):
                 .select_related("issuer")
             )
             if queryset.exists() == False:
-                raise NotFound("Badges not found")
+                return Response([])
             result = to_knowledge_badges(queryset)
         else:
             self.logger.error(f"Unknown badges_type: {type}")

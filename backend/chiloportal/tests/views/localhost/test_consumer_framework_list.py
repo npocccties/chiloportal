@@ -52,14 +52,13 @@ class ConsumerFrameworkListTests(BaseAPIViewTests):
         view = ConsumerFrameworkList.as_view()
         self.request_no_param(factory, view, self.consumer_framework_list_url)
 
-    def test_consumer_framework_list_404(self):
+    def test_consumer_framework_list_200_zero(self):
         factory = APIRequestFactory()
         view = ConsumerFrameworkList.as_view()
         self.create_test_relation_data()
-        self.request_not_found(
+        self.request_normal_zero_array(
             factory,
             view,
             self.consumer_framework_list_url,
-            {"consumer_id": self.not_found_id},
-            "Framework",
+            {"consumer_id": self.not_found_id}
         )

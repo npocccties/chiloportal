@@ -59,14 +59,13 @@ class StageFieldListTests(BaseAPIViewTests):
         view = StageFieldList.as_view()
         self.request_no_param(factory, view, self.stage_field_list_url)
 
-    def test_stage_field_list_404(self):
+    def test_stage_field_list_200_zero(self):
         factory = APIRequestFactory()
         view = StageFieldList.as_view()
         self.create_test_relation_data()
-        self.request_not_found(
+        self.request_normal_zero_array(
             factory,
             view,
             self.stage_field_list_url,
-            {"stage_id": self.not_found_id},
-            "Field",
+            {"stage_id": self.not_found_id}
         )

@@ -67,14 +67,13 @@ class WisdomBadgesConsumerListTests(BaseAPIViewTests):
         view = WisdomBadgesConsumerList.as_view()
         self.request_no_param(factory, view, self.wisdom_badges_consumer_list_url)
 
-    def test_wisdom_badges_consumer_list_404(self):
+    def test_wisdom_badges_consumer_list_200_zero(self):
         factory = APIRequestFactory()
         view = WisdomBadgesConsumerList.as_view()
         self.create_test_relation_data()
-        self.request_not_found(
+        self.request_normal_zero_array(
             factory,
             view,
             self.wisdom_badges_consumer_list_url,
-            {"badges_id": self.not_found_id},
-            "Consumer",
+            {"badges_id": self.not_found_id}
         )

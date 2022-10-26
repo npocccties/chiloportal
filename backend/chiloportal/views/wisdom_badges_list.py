@@ -35,5 +35,5 @@ class WisdomBadgesList(BaseAPIView):
             .select_related("issuer", "portal_category")
         )
         if queryset.exists() == False:
-            raise NotFound("Badges not found")
+            return Response([])
         return Response(to_wisdom_badges(queryset))

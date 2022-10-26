@@ -17,5 +17,5 @@ class KnowledgeBadgesCriteriaList(BaseAPIView):
             raise ParseError("Invalid ID supplied")
         queryset = Criteria.objects.filter(knowledge_badges=id).order_by("sort_key")
         if queryset.exists() == False:
-            raise NotFound("Criteria not found")
+            return Response([])
         return Response(to_criterias(queryset))
