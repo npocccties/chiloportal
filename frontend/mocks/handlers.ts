@@ -1,6 +1,5 @@
 import { client } from "lib/client";
 import { restGet } from "./rest";
-import { faker } from "@faker-js/faker";
 import {
   consumer,
   field,
@@ -43,11 +42,14 @@ export const handlers = [
     res(ctx.json([...Array(3)].map(stage)))
   ),
   restGet(client.badges, (req, res, ctx) => {
+    const badgesIds = (req.url.searchParams.get("badges_ids") ?? "1").split(
+      ","
+    );
     switch (req.url.searchParams.get("badges_type")) {
       case "wisdom":
-        return res(ctx.json([...Array(10)].map(wisdomBadges)));
+        return res(ctx.json(badgesIds.map(wisdomBadges)));
       case "knowledge":
-        return res(ctx.json([...Array(10)].map(knowledgeBadges)));
+        return res(ctx.json(badgesIds.map(knowledgeBadges)));
       default:
         return res(ctx.status(400));
     }
