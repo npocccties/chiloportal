@@ -187,6 +187,7 @@ function Chat({ className }: Props) {
       >
         <button
           className="w-full flex items-center bg-primary-700 rounded-t-xl p-4 text-white hover:bg-primary-600"
+          aria-label="閉じる"
           onClick={handleClickCollapse}
         >
           <span className="text-left font-bold flex-1">
