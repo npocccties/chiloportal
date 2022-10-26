@@ -1,3 +1,4 @@
+import { Icon } from "@iconify/react";
 import { Props } from "pages/consumers/[consumerId]/frameworks/[frameworkId]/stages/[stageId]";
 import Breadcrumbs from "components/Breadcrumbs";
 import Container from "components/Container";
@@ -36,6 +37,23 @@ export default function Stage({
         leaf={stage.name}
       />
       <aside className="hidden lg:block [grid-area:aside]">
+        <div className="mb-8">
+          <p className="text-sm text-gray-600 mb-4">
+            こちらの内容は{consumer.name}のサイトでも資料が公開されています
+          </p>
+          <a
+            className="jumpu-outlined-button inline-flex items-center"
+            href={framework.url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span className="mr-2">
+              {consumer.name}
+              <span className="font-bold">育成指標のPDF</span>
+            </span>
+            <Icon className="inline" icon="fa-solid:external-link-alt" />
+          </a>
+        </div>
         <nav className="rounded-xl bg-gray-50 p-4 sticky top-[4rem]">
           <h2 className="text-sm text-gray-600 mb-4">
             このページの指標項目の目次
@@ -47,7 +65,18 @@ export default function Stage({
         </nav>
       </aside>
       <article className="[grid-area:article]">
-        <h1 className="text-2xl mb-4">{framework.name}</h1>
+        <h1 className="text-2xl mb-2">{framework.name}</h1>
+        <p className="mb-4 lg:hidden">
+          <a
+            className="jumpu-outlined-button inline-flex items-center text-sm"
+            href={framework.url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span className="mr-2">育成指標のPDF</span>
+            <Icon className="inline" icon="fa-solid:external-link-alt" />
+          </a>
+        </p>
         <p className="flex gap-4 items-center mb-8">
           <span className="text-lg">{stage.name}</span>
           <button className="jumpu-text-button" onClick={onOpen}>
