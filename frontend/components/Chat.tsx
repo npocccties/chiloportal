@@ -102,7 +102,7 @@ function Chat({ className }: Props) {
       type: "bot",
       body: <Wait />,
     });
-    await sleep(1000);
+    await sleep(500);
     try {
       const { badges: badgesList, total_count } =
         await client.wisdomBadges.list.keyword.$get({
