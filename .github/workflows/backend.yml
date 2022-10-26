@@ -2,8 +2,10 @@ name: backend CI
 
 on:
   pull_request:
-    paths-ignore:
-      - "frontend/**"
+    paths:
+      - 'backend/**'
+      - '!backend/README.md'
+      - '!backend/LICENSE'
 defaults:
   run:
     working-directory: backend
