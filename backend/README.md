@@ -169,7 +169,7 @@
    * DB: PostgreSQL
 
 ## 開発サーバー
-1. SELECT文の実行
+1. SQL文の実行（下記はSELECT文を記載しています）
    ```
    cd chiloportal/backend
    docker-compose exec db sh
