@@ -227,3 +227,5 @@ https://dev-portal.oku.cccties.org/admin
 * `chiloportal/backend/ssl_certs` に下記のファイルを配置してください
   * signed.crt: サーバー証明書
   * domain.key: サーバー証明書の秘密鍵
+
+test
