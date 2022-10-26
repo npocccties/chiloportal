@@ -50,77 +50,93 @@ function Header({ className }: Props) {
         </a>
       </Link>
       <Popover className="hidden lg:block" title="育成指標から探す">
-        <ul role="menu" className="jumpu-card" aria-busy={!consumers}>
-          {consumers ? (
-            consumers.map((consumer) => (
-              <li key={consumer.consumer_id} role="menuitem">
-                <Link
-                  href={pagesPath.consumers
-                    ._consumerId(consumer.consumer_id)
-                    .$url()}
-                >
-                  <a className="block px-3 py-2 hover:bg-primary-50">
-                    {consumer.name}の育成指標
-                  </a>
-                </Link>
+        {({ close }) => (
+          <ul
+            role="menu"
+            className="jumpu-card"
+            aria-busy={!consumers}
+            onClick={() => close()}
+          >
+            {consumers ? (
+              consumers.map((consumer) => (
+                <li key={consumer.consumer_id} role="menuitem">
+                  <Link
+                    href={pagesPath.consumers
+                      ._consumerId(consumer.consumer_id)
+                      .$url()}
+                  >
+                    <a className="block px-3 py-2 hover:bg-primary-50">
+                      {consumer.name}の育成指標
+                    </a>
+                  </Link>
+                </li>
+              ))
+            ) : (
+              <li
+                className="flex justify-center items-center w-48 h-72"
+                aria-hidden
+              >
+                <div className="jumpu-spinner">
+                  <svg viewBox="24 24 48 48">
+                    <circle cx="48" cy="48" r="16" />
+                  </svg>
+                </div>
               </li>
-            ))
-          ) : (
-            <li
-              className="flex justify-center items-center w-48 h-72"
-              aria-hidden
-            >
-              <div className="jumpu-spinner">
-                <svg viewBox="24 24 48 48">
-                  <circle cx="48" cy="48" r="16" />
-                </svg>
-              </div>
-            </li>
-          )}
-        </ul>
+            )}
+          </ul>
+        )}
       </Popover>
       <Popover className="hidden lg:block" title="カテゴリから探す">
-        <ul role="menu" className="jumpu-card" aria-busy={!portalCategories}>
-          {portalCategories ? (
-            portalCategories.map((portalCategory) => (
-              <li key={portalCategory.portal_category_id} role="menuitem">
-                <Link
-                  href={pagesPath.portal_categories
-                    ._portalCategoryId(portalCategory.portal_category_id)
-                    .$url({ query: {} })}
-                >
+        {({ close }) => (
+          <ul
+            role="menu"
+            className="jumpu-card"
+            aria-busy={!portalCategories}
+            onClick={() => close()}
+          >
+            {portalCategories ? (
+              portalCategories.map((portalCategory) => (
+                <li key={portalCategory.portal_category_id} role="menuitem">
+                  <Link
+                    href={pagesPath.portal_categories
+                      ._portalCategoryId(portalCategory.portal_category_id)
+                      .$url({ query: {} })}
+                  >
+                    <a className="block px-3 py-2 hover:bg-primary-50">
+                      {portalCategory.name}
+                    </a>
+                  </Link>
+                </li>
+              ))
+            ) : (
+              <li
+                className="flex justify-center items-center w-48 h-72"
+                aria-hidden
+              >
+                <div className="jumpu-spinner">
+                  <svg viewBox="24 24 48 48">
+                    <circle cx="48" cy="48" r="16" />
+                  </svg>
+                </div>
+              </li>
+            )}
+          </ul>
+        )}
+      </Popover>
+      <Popover className="hidden lg:block" title="OKUTEPについて">
+        {({ close }) => (
+          <ul role="menu" className="jumpu-card" onClick={() => close()}>
+            {contents.map((content) => (
+              <li key={content.slug} role="menuitem">
+                <Link href={pagesPath._slug(content.slug).$url()}>
                   <a className="block px-3 py-2 hover:bg-primary-50">
-                    {portalCategory.name}
+                    {content.title}
                   </a>
                 </Link>
               </li>
-            ))
-          ) : (
-            <li
-              className="flex justify-center items-center w-48 h-72"
-              aria-hidden
-            >
-              <div className="jumpu-spinner">
-                <svg viewBox="24 24 48 48">
-                  <circle cx="48" cy="48" r="16" />
-                </svg>
-              </div>
-            </li>
-          )}
-        </ul>
-      </Popover>
-      <Popover className="hidden lg:block" title="OKUTEPについて">
-        <ul role="menu" className="jumpu-card">
-          {contents.map((content) => (
-            <li key={content.slug} role="menuitem">
-              <Link href={pagesPath._slug(content.slug).$url()}>
-                <a className="block px-3 py-2 hover:bg-primary-50">
-                  {content.title}
-                </a>
-              </Link>
-            </li>
-          ))}
-        </ul>
+            ))}
+          </ul>
+        )}
       </Popover>
       <div className="flex-1" />
       <Link href={pagesPath.search.$url({ query: {} })}>
