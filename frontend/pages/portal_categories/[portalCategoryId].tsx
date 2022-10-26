@@ -27,6 +27,7 @@ export async function getServerSideProps({
   params: { portalCategoryId },
   query: { p },
 }: Context): Promise<{ props: ErrorProps | Props }> {
+  const pageNumber = Number(p);
   const portalCategories = await client.portalCategory.list.$get();
   const portalCategory = NEXT_PUBLIC_API_MOCKING
     ? (await import("mocks/faker")).portalCategory()
@@ -39,7 +40,7 @@ export async function getServerSideProps({
   const wisdomBadgesList = await client.portalCategory.badges.list.$get({
     query: {
       portal_category_id: portalCategory.portal_category_id,
-      page_number: Number(p),
+      page_number: Number.isInteger(pageNumber) ? pageNumber : undefined,
     },
   });
   return {
