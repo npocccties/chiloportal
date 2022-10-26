@@ -48,14 +48,14 @@
 1. 再度、カバレッジを出力する
 
 
-# 開発サーバー
+# 開発サーバー（または本番サーバー）
 ## 環境構築手順
 
 1. 下記をインストール
    * Docker
    * Docker Compose
    * Git  
-1. `/opt` へ移動
+1. 適当なディレクトリへ移動
    ```
    cd /opt
    ```
@@ -71,35 +71,30 @@
    ```
    ./deploy.sh {環境変数を記載した .envから始まるファイル名} {docker-composeから始まるファイル名}
    ```
-   例
-   ```
-   ./deploy.sh .env.dev-server docker-compose.dev-server.yml
-   ```
-   * 本番環境で指定する場合は、あらかじめ本番サーバーで作成した `.env` のパスを `deploy.sh` に渡してください
+   * 開発サーバー: `./deploy.sh .env.dev-server docker-compose.dev-server.yml`
+   * 本番サーバー: `./deploy.sh .env.production docker-compose.production.yml`
+   * 上記 `.env.production` は Public リポジトリに登録せずに Private リポジトリ等で登録管理してください
 1. 備考  
    コンテナ起動  
    ```
    chiloportal/backend/server_start.sh {環境変数を記載した .envから始まるファイル名} {docker-composeから始まるファイル名}
    ```
-   例
-   ```
-   chiloportal/backend/server_start.sh .env.dev-server docker-compose.dev-server.yml
-   ```
+
    コンテナ停止  
    ```
-   chiloportal/backend/server_stop.sh
+   chiloportal/backend/server_stop.sh {環境変数を記載した .envから始まるファイル名}
    ```
    * DBが `/var/chiloportal.dump` にバックアップされます  
 
    コンテナ再起動  
    ```
-   chiloportal/backend/server_restart.sh
+   chiloportal/backend/server_restart.sh {環境変数を記載した .envから始まるファイル名} {docker-composeから始まるファイル名}
    ```
    * `server_stop.sh` と `server_start.sh` を呼びます
-   
+
    DBバックアップ  
    ```
-   chiloportal/backend/server_db_backup.sh
+   chiloportal/backend/server_db_backup.sh {環境変数を記載した .envから始まるファイル名}
    ```
    * DBが `/var/chiloportal.dump` にバックアップされます  
    
