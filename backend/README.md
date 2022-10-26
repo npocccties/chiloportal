@@ -228,4 +228,4 @@ https://dev-portal.oku.cccties.org/admin
   * signed.crt: サーバー証明書
   * domain.key: サーバー証明書の秘密鍵
 
-test
+test2
