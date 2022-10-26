@@ -6,6 +6,7 @@ on:
       - develop
     paths-ignore:
       - "frontend/**"
+      - 'README.md'
 jobs:
   deploy:
     runs-on: ubuntu-latest
