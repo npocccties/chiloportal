@@ -6,7 +6,7 @@ plugins:
 rules:
   canonical/filename-match-exported: [error, kebab]
 overrides:
-  - files: "**/*.tsx"
+  - files: "{components,templates}/**/*.tsx"
     rules:
       canonical/filename-match-exported: [error, pascal]
   - files: "pages/**/*.tsx"
