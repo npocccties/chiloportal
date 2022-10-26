@@ -18,7 +18,7 @@ class PortalCategoryListTests(BaseAPIViewTests):
         response = self.request_normal(factory, view, self.portal_category_list_url)
         self.assert_portal_categories(response.data)
 
-    def test_portal_category_list_404(self):
+    def test_portal_category_list_200_zero(self):
         factory = APIRequestFactory()
         view = PortalCategoryList.as_view()
-        self.request_not_found(factory, view, self.portal_category_list_url, {}, "Data")
+        self.request_normal_zero_array(factory, view, self.portal_category_list_url, {})

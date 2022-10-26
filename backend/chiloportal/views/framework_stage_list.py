@@ -21,5 +21,5 @@ class FrameworkStageList(BaseAPIView):
             .distinct()
         )
         if queryset.exists() == False:
-            raise NotFound("Stage not found")
+            return Response([])
         return Response(to_stages(queryset))

@@ -17,5 +17,5 @@ class FrameworkFieldList(BaseAPIView):
             raise ParseError("Invalid ID supplied")
         queryset = Field.objects.filter(goal_field__framework_id=id)
         if queryset.exists() == False:
-            raise NotFound("Field not found")
+            return Response([])
         return Response(to_fields(queryset))

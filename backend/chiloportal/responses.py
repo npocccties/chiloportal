@@ -63,6 +63,14 @@ def to_pager_wisdom_badges_all(queryset):
     }
 
 
+def to_pager_wisdom_badges_empty():
+    return {
+        "badges": [],
+        "total_count": 0,
+        "start": 0,
+        "end": 0,
+    }
+
 def to_wisdom_badges(queryset, output_portal_category=False, output_alignments=False):
     return [
         to_wisdom_badge(wisdom_badge, output_portal_category, output_alignments)

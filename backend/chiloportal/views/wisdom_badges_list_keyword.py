@@ -52,7 +52,7 @@ class WisdomBadgesListKeyword(BaseAPIView):
             .select_related("issuer", "portal_category")
         )
         if queryset.exists() == False:
-            raise NotFound("Badges not found")
+            return Response(to_pager_wisdom_badges_empty())
         if page_number != None:
             page = self.get_page(queryset, page_number)
             return Response(to_pager_wisdom_badges(page))

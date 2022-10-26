@@ -17,5 +17,5 @@ class ConsumerFrameworkList(BaseAPIView):
             raise ParseError("Invalid ID supplied")
         queryset = Framework.objects.filter(consumer_id=id).order_by("sort_key")
         if queryset.exists() == False:
-            raise NotFound("Framework not found")
+            return Response([])
         return Response(to_frameworks(queryset))

@@ -17,5 +17,5 @@ class FrameworkDetail(BaseAPIView):
             raise ParseError("Invalid ID supplied")
         queryset = Framework.objects.filter(pk=id)
         if queryset.exists() == False:
-            raise NotFound("Framework not found")
+            return Response({})
         return Response(to_framework(queryset.first()))

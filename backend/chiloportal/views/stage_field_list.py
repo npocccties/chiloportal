@@ -22,5 +22,5 @@ class StageFieldList(BaseAPIView):
             .distinct()
         )
         if queryset.exists() == False:
-            raise NotFound("Field not found")
+            return Response({})
         return Response(to_fields_detail(queryset))

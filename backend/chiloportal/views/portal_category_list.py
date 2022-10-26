@@ -15,5 +15,5 @@ class PortalCategoryList(BaseAPIView):
             .annotate(Count("wisdom_badges_portal_category"))
         )
         if queryset.exists() == False:
-            raise NotFound("Data not found")
+            return Response([])
         return Response(to_portal_categories(queryset))

@@ -23,5 +23,5 @@ class WisdomBadgesConsumerList(BaseAPIView):
             .distinct()
         )
         if queryset.exists() == False:
-            raise NotFound("Consumer not found")
+            return Response([])
         return Response(to_consumers(queryset))
