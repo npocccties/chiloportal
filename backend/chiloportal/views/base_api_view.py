@@ -42,5 +42,6 @@ class BaseAPIView(APIView):
         paginator = Paginator(queryset, self.per_page)
         try:
             return paginator.page(page_num)
-        except EmptyPage:
-            raise NotFound("Page is empty")
+        except EmptyPage as e:
+            self.logger.error(f"Detected EmptyPage ... {str(e)}")
+            raise ParseError("Invalid parameters supplied")

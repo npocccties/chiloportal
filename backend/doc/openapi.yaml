@@ -188,8 +188,6 @@ paths:
                   - end
         '400':
           description: Invalid parameters supplied
-        '404':
-          description: Page is empty
   /framework:
     get:
       tags:
@@ -357,9 +355,7 @@ paths:
                   - start
                   - end
         '400':
-          description: Invalid keyword supplied
-        '404':
-          description: Page is empty
+          description: Invalid parameters supplied
   /wisdomBadges/consumer/list:
     get:
       tags:

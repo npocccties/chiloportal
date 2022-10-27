@@ -340,19 +340,20 @@ class WisdomBadgesListKeywordTests(BaseAPIViewTests):
             factory,
             view,
             self.wisdom_badges_list_keyword_url,
-            {"keyword": "穂毛帆毛", "page_number": 1}
+            {"keyword": "穂毛帆毛", "page_number": 1},
         )
         self.assert_page(response.data, total_count=0, start=0, end=0)
         array = response.data.get("badges")
         self.assertEqual(len(array), 0)
 
-    def test_wisdom_badges_list_keyword_404_page_is_empty(self):
+    def test_wisdom_badges_list_keyword_400_invalid_page_number(self):
         factory = APIRequestFactory()
         view = WisdomBadgesListKeyword.as_view()
         self.create_test_relation_data()
-        self.request_page_is_empty(
+        self.request_invalid_value(
             factory,
             view,
             self.wisdom_badges_list_keyword_url,
             {"keyword": "ほげ", "page_number": 0},
+            "parameters",
         )

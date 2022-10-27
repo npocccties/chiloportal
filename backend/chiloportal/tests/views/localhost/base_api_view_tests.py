@@ -63,12 +63,6 @@ class BaseAPIViewTests(TestCase):
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
         self.assertEqual(response.data.get("detail"), f"{messeage} not found")
 
-    def request_page_is_empty(self, factory, view, url, params={}):
-        request = factory.get(url, params)
-        response = view(request)
-        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
-        self.assertEqual(response.data.get("detail"), "Page is empty")
-
     def create_test_relation_data(self):
         self.field1 = Field.objects.create(
             field1_name="ほげふぃーるど1",
