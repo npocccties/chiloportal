@@ -1,37 +1,16 @@
 import { useState } from "react";
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { BadgeDetail2 } from "api/@types";
-import useBadgesFrameworks from "lib/use-badges-frameworks";
+import { Consumer, BadgeDetail2 } from "api/@types";
+import useWisdomBadgesConsumers from "lib/use-wisdom-badges-consumers";
 
-function BadgesFrameworks({
-  consumers,
-  frameworksPerConsumers,
-}: Exclude<ReturnType<typeof useBadgesFrameworks>["data"], undefined>) {
+function Consumers({ consumers }: { consumers: Consumer[] }) {
   return (
-    <>
-      {consumers.map((consumer, consumerIndex) => {
-        const frameworks = frameworksPerConsumers[consumerIndex];
-        return (
-          <section key={consumer.consumer_id} className="mb-4">
-            <h3 className="font-bold mb-1">{consumer.name}</h3>
-            <ul className="pl-4">
-              {frameworks.map((framework, frameworkIndex) => (
-                <li key={framework.framework_id} className="inline">
-                  {/* TODO: 育成指標への動線を用意して */}
-                  <span className="mr-1">{framework.name}</span>
-                  {frameworks.length > frameworkIndex + 1 && (
-                    <span className="mr-1" aria-hidden>
-                      ／
-                    </span>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </section>
-        );
+    <ul className="pl-8 list-disc text-gray-700">
+      {consumers.map((consumer) => {
+        return <li key={consumer.consumer_id}>{consumer.name}</li>;
       })}
-    </>
+    </ul>
   );
 }
 
@@ -43,7 +22,7 @@ type Props = {
 
 function WisdomBadgesDialog({ wisdomBadges, open, onClose }: Props) {
   const [shouldFetch, setShouldFetch] = useState(false);
-  const { data: badgesFrameworks } = useBadgesFrameworks(
+  const { data: consumers } = useWisdomBadgesConsumers(
     wisdomBadges.badges_id,
     shouldFetch
   );
@@ -85,8 +64,8 @@ function WisdomBadgesDialog({ wisdomBadges, open, onClose }: Props) {
                 <Dialog.Title className="text-lg font-bold text-gray-500 mb-6">
                   このバッジは以下の教育委員会に認定されています
                 </Dialog.Title>
-                {badgesFrameworks ? (
-                  <BadgesFrameworks {...badgesFrameworks} />
+                {consumers ? (
+                  <Consumers consumers={consumers} />
                 ) : (
                   <div
                     className="flex justify-center items-center w-full h-48"
