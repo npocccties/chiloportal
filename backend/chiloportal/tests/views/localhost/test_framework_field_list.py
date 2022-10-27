@@ -60,11 +60,11 @@ class FrameworkFieldListTests(BaseAPIViewTests):
         view = FrameworkFieldList.as_view()
         self.request_no_param(factory, view, self.framework_field_list_url)
 
-    def test_framework_field_list_200_zero(self):
+    def test_framework_field_list_400_not_found(self):
         factory = APIRequestFactory()
         view = FrameworkFieldList.as_view()
         self.create_test_relation_data()
-        self.request_normal_zero_array(
+        self.request_invalid_value(
             factory,
             view,
             self.framework_field_list_url,

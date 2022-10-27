@@ -17,5 +17,6 @@ class ConsumerDetail(BaseAPIView):
             raise ParseError("Invalid ID supplied")
         queryset = Consumer.objects.filter(pk=id)
         if queryset.exists() == False:
-            return Response({})
+            self.logger.error(f"Not found consumer. consumer_id: {id}")
+            raise ParseError("Invalid ID supplied")
         return Response(to_consumer(queryset.first()))

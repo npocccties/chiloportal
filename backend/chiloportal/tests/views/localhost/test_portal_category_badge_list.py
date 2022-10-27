@@ -100,21 +100,19 @@ class PortalCategoryBadgeListTests(BaseAPIViewTests):
             factory, view, self.portal_category_badge_list_url, {}, "parameters"
         )
 
-    def test_portal_category_badge_list_200_zero(self):
+    def test_portal_category_badge_list_400_not_found(self):
         factory = APIRequestFactory()
         view = PortalCategoryBadgesList.as_view()
         self.create_test_relation_data()
-        response = self.request_normal(
+        self.request_invalid_value(
             factory,
             view,
             self.portal_category_badge_list_url,
             {"portal_category_id": self.not_found_id, "page_number": 1},
+            "parameters"
         )
-        self.assert_page(response.data, total_count=0, start=0, end=0)
-        array = response.data.get("badges")
-        self.assertEqual(len(array), 0)
 
-    def test_portal_category_badge_list_400_invalid_page_number(self):
+    def test_portal_category_badge_list_400_not_found_page_number(self):
         factory = APIRequestFactory()
         view = PortalCategoryBadgesList.as_view()
         self.create_test_relation_data()
