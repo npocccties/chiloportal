@@ -23,16 +23,16 @@
 
 ### インポートコマンド
 1. 実行とデバッグで「Import command」を選択し、デバッグの開始を押下  
-   * 能力バッジを取得するURLは .vscode/launch.json にて定義しているので、適宜変更してください
+   * 能力バッジを取得するURLは `.vscode/launch.json` にて定義しているので、適宜変更してください
 
 ## テスト方法
 1. 実行とデバッグで「Unit Test」を選択し、デバッグの開始を押下し、エラーがないことを確認  
    * エラーがあればエラー発生箇所を修正してください  
-   * インポートコマンドの単体テスト：chiloportal/tests/commands/*.py
-   * バックエンドAPIの単体テスト：chiloportal/tests/views/*.py
+   * インポートコマンドの単体テスト：`chiloportal/tests/commands/*.py`
+   * バックエンドAPIの単体テスト：`chiloportal/tests/views/*.py`
 
 ## Pythonのパッケージのインストール時
-1. pipコマンドにより Python のパッケージをインストールした場合、下記コマンドを実行し requirements.txt を更新してください。  
+1. pipコマンドにより Python のパッケージをインストールした場合、下記コマンドを実行し `requirements.txt` を更新してください。  
    ```
    pip freeze > requirements.txt
    ```
@@ -42,7 +42,7 @@
    ```
    pytest --cov --cov-branch --cov-report=term-missing --cov-report=html --ignore=chiloportal/tests/views/dev_server
    ```
-   * htmlcov/index.html にカバレッジを出力します  
+   * `htmlcov/index.html` にカバレッジを出力します  
    * 上記 html の coverage 列（カバレッジ：網羅率）は C0（命令網羅）とC1（分岐網羅）を含みます  
 1. カバレッジを確認して必要に応じてテストコードを追加
 1. 再度、カバレッジを出力する
