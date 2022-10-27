@@ -40,11 +40,6 @@ class BaseAPIViewTests(TestCase):
         array = response.data
         self.assertEqual(len(array), 0)
 
-    def request_normal_empty(self, factory, view, url, params={}):
-        response = self.request_normal(factory, view, url, params)
-        data = response.data
-        self.assertEqual(data, {})
-
     def request_invalid_value(self, factory, view, url, params, message="ID"):
         request = factory.get(url, params)
         response = view(request)
@@ -56,12 +51,6 @@ class BaseAPIViewTests(TestCase):
         response = view(request)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response.data.get("detail"), f"Invalid {message} supplied")
-
-    def request_not_found(self, factory, view, url, params={}, messeage=""):
-        request = factory.get(url, params)
-        response = view(request)
-        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
-        self.assertEqual(response.data.get("detail"), f"{messeage} not found")
 
     def create_test_relation_data(self):
         self.field1 = Field.objects.create(
