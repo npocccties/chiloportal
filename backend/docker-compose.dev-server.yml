@@ -15,6 +15,7 @@ services:
       STAGE: production
       DOMAINS: '${ALLOWED_HOSTS} -> http://web:8080/'
     depends_on:
+      - app
       - web
 
   web:
