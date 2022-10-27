@@ -102,5 +102,5 @@ export const criteria = (): Criteria => ({
   type: ["ビデオ", "小テスト", "アンケート", "レッスン"][
     Math.floor(Math.random() * 4)
   ],
-  name: faker.animal.cetacean(),
+  name: "1." + faker.animal.cetacean(),
 });
