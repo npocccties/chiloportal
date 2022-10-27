@@ -15,7 +15,7 @@ services:
       STAGE: production
       DOMAINS: '${ALLOWED_HOSTS} -> http://web:8080/'
     depends_on:
-      - app
+      - web
 
   web:
     image: nginx:1.23.1
@@ -27,7 +27,24 @@ services:
       - ./nginx.dev-server.conf:/etc/nginx/conf.d/default.conf
       - ./static:/workspace/static
     depends_on:
+      - frontend
       - app
+    restart: always
+
+  frontend:
+    build: ../frontend
+    tty: true
+    expose:
+      - 3000
+    networks:
+      - app_network
+    volumes:
+      - ${PWD}/../frontend:/app
+    environment:
+      - NEXT_PUBLIC_API_BASE_URL=https://dev-portal.oku.cccties.org/api/v1/
+      - NEXT_PUBLIC_MOODLE_DASHBOARD_URL=https://opedu.lib.osaka-kyoiku.ac.jp/my/
+      - NEXT_PUBLIC_API_MOCKING=false
+      - NODE_ENV=production
     restart: always
 
   app:
