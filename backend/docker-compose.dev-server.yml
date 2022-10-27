@@ -5,7 +5,7 @@ services:
     image: steveltn/https-portal:1
     restart: always
     volumes:
-      - ./ssl_certs:/var/lib/https-portal
+      - ${SSL_CERTS_DIR}:/var/lib/https-portal
     ports:
       - '80:80'
       - '443:443'
