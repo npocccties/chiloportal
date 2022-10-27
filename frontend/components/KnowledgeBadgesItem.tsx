@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import Image from "next/future/image";
 import { BadgeDetail2 } from "api/@types";
+import { getImagePath } from "lib/criteria";
 
 type Props = {
   className?: string;
@@ -24,11 +25,19 @@ function KnowledgeBadgesItem({ className, knowledgeBadges }: Props) {
         <p className="text-sm text-gray-600 mb-2 line-clamp-2">
           {knowledgeBadges.description}
         </p>
-        {/* TODO: クライテリアの種類を表す画像を表示して */}
-        <ol className="pl-4 list-decimal text-xs text-gray-700">
+        <ol className="pl-[2.25rem] list-decimal text-xs text-gray-700">
           {"length" in knowledgeBadges.detail &&
             knowledgeBadges.detail.map((criteria) => (
-              <li key={criteria.criteria_id}>{criteria.name}</li>
+              <li key={criteria.criteria_id} className="relative mb-2">
+                <Image
+                  className="absolute top-0 left-0 -translate-x-[2.25rem]"
+                  src={getImagePath(criteria.type)}
+                  width={16}
+                  height={16}
+                  alt={criteria.type}
+                />
+                <span>{criteria.name}</span>
+              </li>
             ))}
         </ol>
       </div>
