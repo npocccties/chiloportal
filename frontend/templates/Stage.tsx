@@ -14,8 +14,8 @@ export default function Stage({
   framework,
   stages,
   stage,
-  fields,
-  wisdomBadgesListPerFields3PerFields,
+  field,
+  wisdomBadgesListPerFields3PerField1,
 }: Props) {
   const { open, onOpen, onClose } = useDialog();
   return (
@@ -60,7 +60,7 @@ export default function Stage({
           </h2>
           <FieldsIndex
             className="max-h-[calc(100vh-10rem)] overflow-y-scroll"
-            fields={fields}
+            field={field}
           />
         </nav>
       </aside>
@@ -91,54 +91,44 @@ export default function Stage({
             onClose={onClose}
           />
         </p>
-        {fields.map(({ field1 }, fieldIndex) => (
-          <section key={fieldIndex}>
-            {field1.map(({ field1_name, field2 }, field1Index) => (
-              <section key={field1Index}>
-                <h2
-                  id={makeFieldId(field1_name, fieldIndex, field1Index)}
-                  className="text-2xl mb-4 scroll-mt-16"
+        {field.field1.map(({ field1_name, field2 }, field1Index) => (
+          <section key={field1Index}>
+            <h2
+              id={makeFieldId(field1_name, field1Index)}
+              className="text-2xl mb-4 scroll-mt-16"
+            >
+              {field1_name}
+            </h2>
+            {field2.map(({ field2_name, field3 }, field2Index) => (
+              <section key={field2Index}>
+                <h3
+                  id={makeFieldId(field2_name, field1Index, field2Index)}
+                  className="text-lg pb-2 mb-4 border-b border-solid border-gray-300 scroll-mt-16"
                 >
-                  {field1_name}
-                </h2>
-                {field2.map(({ field2_name, field3 }, field2Index) => (
-                  <section key={field2Index}>
-                    <h3
+                  {field2_name}
+                </h3>
+                {field3.map(({ field_id, field3_name }, field3Index) => (
+                  <section key={field_id}>
+                    <h4
                       id={makeFieldId(
-                        field2_name,
-                        fieldIndex,
+                        field3_name,
                         field1Index,
-                        field2Index
+                        field2Index,
+                        field3Index
                       )}
-                      className="text-lg pb-2 mb-4 border-b border-solid border-gray-300 scroll-mt-16"
+                      className="font-bold text-gray-700 mb-4 scroll-mt-16"
                     >
-                      {field2_name}
-                    </h3>
-                    {field3.map(({ field_id, field3_name }, field3Index) => (
-                      <section key={field_id}>
-                        <h4
-                          id={makeFieldId(
-                            field3_name,
-                            fieldIndex,
-                            field1Index,
-                            field2Index,
-                            field3Index
-                          )}
-                          className="font-bold text-gray-700 mb-4 scroll-mt-16"
-                        >
-                          {field3_name}
-                        </h4>
-                        <ul>
-                          {wisdomBadgesListPerFields3PerFields[fieldIndex][
-                            field3Index
-                          ].map((wisdomBadges) => (
-                            <li className="mb-8" key={wisdomBadges.badges_id}>
-                              <WisdomBadgesItem wisdomBadges={wisdomBadges} />
-                            </li>
-                          ))}
-                        </ul>
-                      </section>
-                    ))}
+                      {field3_name}
+                    </h4>
+                    <ul>
+                      {wisdomBadgesListPerFields3PerField1[field1Index][
+                        field3Index
+                      ].map((wisdomBadges) => (
+                        <li className="mb-8" key={wisdomBadges.badges_id}>
+                          <WisdomBadgesItem wisdomBadges={wisdomBadges} />
+                        </li>
+                      ))}
+                    </ul>
                   </section>
                 ))}
               </section>
