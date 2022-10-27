@@ -87,8 +87,12 @@ export default function WisdomBadges({
             以下の{knowledgeBadgesList.length}
             つの「知識バッジ」をすべて習得してください
           </p>
-          {/* TODO: コースの URL を設定して */}
-          <a className="jumpu-button" target="_blank" rel="noreferrer noopener">
+          <a
+            className="jumpu-button"
+            href={wisdomBadges.alignments_targeturl}
+            target="_blank"
+            rel="noreferrer noopener"
+          >
             コースに進んでバッジを取得する
           </a>
         </section>
