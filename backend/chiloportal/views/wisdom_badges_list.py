@@ -35,5 +35,6 @@ class WisdomBadgesList(BaseAPIView):
             .select_related("issuer", "portal_category")
         )
         if queryset.exists() == False:
-            return Response([])
+            self.logger.error(f"Not found wisdome_badges. field_id: {field_id} stage_id: {stage_id}")
+            raise ParseError("Invalid parameters supplied")
         return Response(to_wisdom_badges(queryset))

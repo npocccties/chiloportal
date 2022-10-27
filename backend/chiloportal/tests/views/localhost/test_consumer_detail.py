@@ -57,11 +57,11 @@ class ConsumerDetailTests(BaseAPIViewTests):
         view = ConsumerDetail.as_view()
         self.request_no_param(factory, view, self.consumer_detail_url)
 
-    def test_consumer_detail_200_empty(self):
+    def test_consumer_detail_400_not_found(self):
         factory = APIRequestFactory()
         view = ConsumerDetail.as_view()
         self.create_test_relation_data()
-        self.request_normal_empty(
+        self.request_invalid_value(
             factory,
             view,
             self.consumer_detail_url,

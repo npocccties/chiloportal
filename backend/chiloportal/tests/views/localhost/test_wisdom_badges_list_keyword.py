@@ -346,7 +346,7 @@ class WisdomBadgesListKeywordTests(BaseAPIViewTests):
         array = response.data.get("badges")
         self.assertEqual(len(array), 0)
 
-    def test_wisdom_badges_list_keyword_400_invalid_page_number(self):
+    def test_wisdom_badges_list_keyword_400_not_found_page_number(self):
         factory = APIRequestFactory()
         view = WisdomBadgesListKeyword.as_view()
         self.create_test_relation_data()

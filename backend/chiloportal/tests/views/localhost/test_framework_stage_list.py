@@ -55,11 +55,11 @@ class FrameworkStageTests(BaseAPIViewTests):
         view = FrameworkStageList.as_view()
         self.request_no_param(factory, view, self.framework_stage_list_url)
 
-    def test_framework_stage_list_200_zero(self):
+    def test_framework_stage_list_400_not_found(self):
         factory = APIRequestFactory()
         view = FrameworkStageList.as_view()
         self.create_test_relation_data()
-        self.request_normal_zero_array(
+        self.request_invalid_value(
             factory,
             view,
             self.framework_stage_list_url,
