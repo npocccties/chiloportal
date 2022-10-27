@@ -99,6 +99,8 @@ export const stage = (): Stage => ({
 
 export const criteria = (): Criteria => ({
   criteria_id: faker.datatype.number(),
-  type: faker.datatype.string(),
+  type: ["ビデオ", "小テスト", "アンケート", "レッスン"][
+    Math.floor(Math.random() * 4)
+  ],
   name: faker.animal.cetacean(),
 });
