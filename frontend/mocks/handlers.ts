@@ -17,11 +17,9 @@ export const handlers = [
     res(ctx.json([...Array(10)].map(consumer)))
   ),
   restGet(client.framework.field.list, (_req, res, ctx) =>
-    res(ctx.json([...Array(3)].map(field)))
+    res(ctx.json(field()))
   ),
-  restGet(client.stage.field.list, (_req, res, ctx) =>
-    res(ctx.json([...Array(3)].map(field)))
-  ),
+  restGet(client.stage.field.list, (_req, res, ctx) => res(ctx.json(field()))),
   restGet(client.portalCategory.list, (_req, res, ctx) =>
     res(ctx.json([...Array(10)].map(portalCategory)))
   ),

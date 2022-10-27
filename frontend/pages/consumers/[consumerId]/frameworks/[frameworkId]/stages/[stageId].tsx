@@ -25,8 +25,8 @@ export type Props = {
   framework: Framework;
   stages: Stage[];
   stage: Stage;
-  fields: FieldDetail[];
-  wisdomBadgesListPerFields3PerFields: (BadgeDetail1 | BadgeDetail2)[][][];
+  field: FieldDetail;
+  wisdomBadgesListPerFields3PerField1: (BadgeDetail1 | BadgeDetail2)[][][];
 };
 
 export async function getServerSideProps({
@@ -45,22 +45,20 @@ export async function getServerSideProps({
     ? stages.find(() => true)
     : stages.find((stage) => stage.stage_id === Number(stageId));
   if (!stage) return { props: { title: "Stage Not Found", statusCode: 404 } };
-  const fields = await client.stage.field.list.$get({
+  const field = await client.stage.field.list.$get({
     query: { stage_id: Number(stageId) },
   });
-  const wisdomBadgesListPerFields3PerFields = await Promise.all(
-    fields.flatMap(({ field1 }) =>
-      field1.flatMap(({ field2 }) =>
-        field2.flatMap(({ field3 }) =>
-          Promise.all(
-            field3.map(({ wisdom_badges }) =>
-              client.badges.$get({
-                query: {
-                  badges_type: "wisdom",
-                  badges_ids: wisdom_badges.join(","),
-                },
-              })
-            )
+  const wisdomBadgesListPerFields3PerField1 = await Promise.all(
+    field.field1.flatMap(({ field2 }) =>
+      field2.flatMap(({ field3 }) =>
+        Promise.all(
+          field3.map(({ wisdom_badges }) =>
+            client.badges.$get({
+              query: {
+                badges_type: "wisdom",
+                badges_ids: wisdom_badges.join(","),
+              },
+            })
           )
         )
       )
@@ -72,8 +70,8 @@ export async function getServerSideProps({
       framework,
       stages,
       stage,
-      fields,
-      wisdomBadgesListPerFields3PerFields,
+      field,
+      wisdomBadgesListPerFields3PerField1,
     },
   };
 }
