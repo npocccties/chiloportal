@@ -1,11 +1,10 @@
-import matter from "gray-matter";
 import { micromark } from "micromark";
 import { frontmatter, frontmatterHtml } from "micromark-extension-frontmatter";
 import { gfm, gfmHtml } from "micromark-extension-gfm";
 import { GetStaticPropsResult, GetStaticPathsResult } from "next";
 import Error from "next/error";
 import Template from "templates/Content";
-import { readContents } from "lib/content";
+import { readMarkdowns } from "lib/markdown";
 
 type Context = {
   params: { slug: string };
@@ -18,28 +17,25 @@ type ErrorProps = {
 
 export type Props = {
   title: string;
-  slug: string;
   content: string;
 };
 
 export async function getStaticProps({
   params: { slug },
 }: Context): Promise<GetStaticPropsResult<ErrorProps | Props>> {
-  const contents = await readContents();
-  const frontmatters = contents.map((content) => matter(content));
-  const index = frontmatters.findIndex(
-    (frontmatter) => frontmatter.data.slug === slug
-  );
-  if (index === -1)
+  const markdowns = await readMarkdowns("contents");
+  if (markdowns instanceof globalThis.Error)
+    return { props: { title: markdowns.message, statusCode: 500 } };
+  const markdown = markdowns.find((markdown) => markdown.slug === slug);
+  if (!markdown)
     return { props: { title: "Content Not Found", statusCode: 404 } };
-  const content = micromark(contents[index], {
+  const content = micromark(markdown.body, {
     extensions: [frontmatter(), gfm()],
     htmlExtensions: [frontmatterHtml(), gfmHtml()],
   });
   return {
     props: {
-      title: frontmatters[index].data.title,
-      slug: frontmatters[index].data.slug,
+      title: markdown.title,
       content,
     },
   };
@@ -48,11 +44,13 @@ export async function getStaticProps({
 export async function getStaticPaths(): Promise<
   GetStaticPathsResult<Context["params"]>
 > {
-  const contents = await readContents();
-  const frontmatters = contents.map((post) => matter(post));
-  const paths = frontmatters.map((frontmatter) => ({
-    params: { slug: frontmatter.data.slug },
-  }));
+  const markdowns = await readMarkdowns("contents");
+  const paths =
+    "map" in markdowns
+      ? markdowns.map(({ slug }) => ({
+          params: { slug },
+        }))
+      : [];
   return { paths, fallback: false };
 }
 

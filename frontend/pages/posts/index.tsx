@@ -1,20 +1,30 @@
-import matter from "gray-matter";
 import { GetStaticPropsResult } from "next";
+import Error from "next/error";
 import Template from "templates/Posts";
-import { readPosts } from "lib/post";
+import { readMarkdowns } from "lib/markdown";
+
+type ErrorProps = {
+  title: string;
+  statusCode: number;
+};
 
 export type Props = {
   posts: { title: string; slug: string }[];
 };
 
-export async function getStaticProps(): Promise<GetStaticPropsResult<Props>> {
-  const posts = await readPosts();
-  const frontmatters = posts.map(
-    (post) => matter(post).data as Props["posts"][number]
-  );
+export async function getStaticProps(): Promise<
+  GetStaticPropsResult<ErrorProps | Props>
+> {
+  const markdowns = await readMarkdowns("posts", true);
+  if (markdowns instanceof globalThis.Error)
+    return { props: { title: markdowns.message, statusCode: 500 } };
+  const posts = markdowns.map(({ title, slug }) => ({ title, slug }));
   return {
-    props: { posts: frontmatters },
+    props: { posts },
   };
 }
 
-export default Template;
+export default function Page(props: ErrorProps | Props) {
+  if ("statusCode" in props) return <Error {...props} />;
+  return <Template {...props} />;
+}
