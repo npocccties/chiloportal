@@ -157,6 +157,7 @@
 |IMAGE_DIR|画像ファイルの公開ディレクトリ（相対パス指定）|-|
 |JUDGE_BADGE|バッジ判定方法|`version`:<br>JSONのversionフィールド値の末尾がwisdomならば能力バッジとみなす<br>※本番リリース用<br><br>`alignments`:<br>JSONにalignmentsがあれば能力バッジとみなす<br>※動作確認用|
 |PER_PAGE|1ページあたりのデータ数|APIのクエリパラメータとしてページ番号(page_number)が指定可能な場合、同APIの1ページあたりのデータ数|
+|SSL_CERTS_DIR|サーバー証明書の配置ディレクトリ|・ディレクトリの末尾には `/` は付与しないこと<br>・本番環境では下記の命名でファイルを配置しておくこと<br>　`signed.crt`: サーバー証明書<br>　`domain.key`: サーバー証明書の秘密鍵|
 
 
 # DBの確認
@@ -224,7 +225,7 @@ https://dev-portal.oku.cccties.org/admin
 * 開発サーバーに準ずる
 ### SSL証明書
 * 商用利用
-* `chiloportal/backend/ssl_certs` に下記のファイルを配置してください
-  * signed.crt: サーバー証明書
-  * domain.key: サーバー証明書の秘密鍵
+* 環境変数 `SSL_CERTS_DIR` のディレクトリにあらかじめ下記のファイルを配置してください
+  * `signed.crt`: サーバー証明書
+  * `domain.key`: サーバー証明書の秘密鍵
 
