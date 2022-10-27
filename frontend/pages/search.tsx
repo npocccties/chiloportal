@@ -18,12 +18,20 @@ export async function getServerSideProps({
   query: { q = "", p },
 }: Context): Promise<{ props: Props }> {
   const pageNumber = Number(p);
-  const wisdomBadgesList = await client.wisdomBadges.list.keyword.$get({
-    query: {
-      keyword: q,
-      page_number: Number.isInteger(pageNumber) ? pageNumber : undefined,
-    },
-  });
+  const wisdomBadgesList =
+    q.length > 0
+      ? await client.wisdomBadges.list.keyword.$get({
+          query: {
+            keyword: q,
+            page_number: Number.isInteger(pageNumber) ? pageNumber : undefined,
+          },
+        })
+      : {
+          badges: [],
+          total_count: 0,
+          start: 0,
+          end: 0,
+        };
   return {
     props: { keyword: q, wisdomBadgesList },
   };
