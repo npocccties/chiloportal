@@ -10,7 +10,7 @@ export type Context = {
 export type Props = {
   keyword: string;
   wisdomBadgesList: Awaited<
-    ReturnType<typeof client.portalCategory.badges.list.$get>
+    ReturnType<typeof client.wisdomBadges.list.keyword.$get>
   >;
 };
 
