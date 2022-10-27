@@ -44,7 +44,6 @@ export async function getServerSideProps({
 }
 
 export default function Page(props: ErrorProps | Props) {
-  if ("statusCode" in props)
-    return <Error title={props.title} statusCode={props.statusCode} />;
+  if ("statusCode" in props) return <Error {...props} />;
   return <Template {...props} />;
 }
