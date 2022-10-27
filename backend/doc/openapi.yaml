@@ -313,6 +313,7 @@ paths:
           required: true
           schema:
             type: string
+          allowEmptyValue: false
         - name: page_number
           in: query
           description: page number
