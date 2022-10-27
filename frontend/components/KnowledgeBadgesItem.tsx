@@ -25,12 +25,14 @@ function KnowledgeBadgesItem({ className, knowledgeBadges }: Props) {
         <p className="text-sm text-gray-600 mb-2 line-clamp-2">
           {knowledgeBadges.description}
         </p>
-        <ol className="pl-[2.25rem] list-decimal text-xs text-gray-700">
+        <ol className="text-xs text-gray-700">
           {"length" in knowledgeBadges.detail &&
             knowledgeBadges.detail.map((criteria) => (
-              <li key={criteria.criteria_id} className="relative mb-2">
+              <li
+                key={criteria.criteria_id}
+                className="flex items-center gap-2 mb-2"
+              >
                 <Image
-                  className="absolute top-0 left-0 -translate-x-[2.25rem]"
                   src={getImagePath(criteria.type)}
                   width={16}
                   height={16}
