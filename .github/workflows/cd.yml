@@ -5,6 +5,8 @@ on:
     branches:
       - develop
     paths:
+      - 'frontend/**'
+      - 'backend/**'
       - '!backend/README.md'
       - '!backend/LICENSE'
 jobs:
