@@ -91,9 +91,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Field'
+                $ref: '#/components/schemas/Field'
         '400':
           description: Invalid ID supplied
   /stage/field/list:
@@ -115,9 +113,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/FieldDetail'
+                $ref: '#/components/schemas/FieldDetail'
         '400':
           description: Invalid ID supplied
   /portalCategory/list:
@@ -317,6 +313,7 @@ paths:
           required: true
           schema:
             type: string
+          allowEmptyValue: false
         - name: page_number
           in: query
           description: page number
