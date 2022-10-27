@@ -50,11 +50,12 @@ docker build -t frontend --build-arg NEXT_PUBLIC_API_BASE_URL=<API のベース�
 
 ## 環境変数
 
-| 変数名                           | 説明                                        | デフォルト値 |
-| :------------------------------- | :------------------------------------------ | :----------- |
-| NEXT_PUBLIC_API_MOCKING          | API モックの使用をするか否か（真偽値[^yn]） | 偽           |
-| NEXT_PUBLIC_API_BASE_URL         | API のベースとなる URL                      | なし         |
-| NEXT_PUBLIC_MOODLE_DASHBOARD_URL | Moodle ダッシュボードの URL                 | なし         |
+| 変数名                               | 説明                                        | デフォルト値         |
+| :----------------------------------- | :------------------------------------------ | :------------------- |
+| NEXT_PUBLIC_API_MOCKING              | API モックの使用をするか否か（真偽値[^yn]） | 偽                   |
+| NEXT_PUBLIC_API_BASE_URL             | API のベースとなる URL                      | なし                 |
+| NEXT_PUBLIC_MOODLE_DASHBOARD_URL     | Moodle ダッシュボードの URL                 | なし                 |
+| NEXT_PUBLIC_BADGES_ISSUER_IMAGE_PATH | バッジ発行者の画像のパス                    | `"issuer/image.png"` |
 
 [^yn]: [yn](https://github.com/sindresorhus/yn#readme)によって truly/falsy な値として解釈されます
 
