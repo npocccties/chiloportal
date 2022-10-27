@@ -16,6 +16,7 @@ services:
       DOMAINS: '${ALLOWED_HOSTS} -> http://web:8080/'
     depends_on:
       - app
+      - web
 
   web:
     image: nginx:1.23.1
@@ -97,3 +98,4 @@ services:
 networks:
   app_network:
     driver: bridge
+    external: true
