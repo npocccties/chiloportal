@@ -18,9 +18,7 @@ function Footer({ className }: Props) {
       <div className="max-w-6xl xl:max-w-7xl mx-auto px-4 flex flex-col sm:flex-row flex-wrap gap-6 mb-6">
         <div className="w-full xl:w-auto">
           <Link href={pagesPath.$url()} className="inline-block px-2">
-
             <Image src="/logo.png" width={142} height={44} alt="" />
-
           </Link>
         </div>
         <section>
@@ -73,9 +71,7 @@ function Footer({ className }: Props) {
         </section>
         <ul className="text-gray-700 leading-7 sm:columns-2 [&>li]:break-inside-avoid">
           <li>
-            <Link href={pagesPath._slug("concept").$url()}>
-              コンセプト
-            </Link>
+            <Link href={pagesPath._slug("concept").$url()}>コンセプト</Link>
           </li>
           <li>
             <Link href={pagesPath._slug("disclaimer").$url()}>
@@ -101,9 +97,7 @@ function Footer({ className }: Props) {
             </Link>
           </li>
           <li>
-            <Link href={pagesPath._slug("contact").$url()}>
-              お問い合わせ
-            </Link>
+            <Link href={pagesPath._slug("contact").$url()}>お問い合わせ</Link>
           </li>
         </ul>
       </div>

@@ -9,12 +9,12 @@ type Props = {
 
 function PortalCategoryCard({ portalCategory }: Props) {
   return (
-    (<Link
+    <Link
       href={pagesPath.portal_categories
         ._portalCategoryId(portalCategory.portal_category_id)
         .$url({ query: {} })}
-      className="jumpu-card block">
-
+      className="jumpu-card block"
+    >
       <div className="relative h-48 overflow-hidden">
         <Image
           src={`/images/${portalCategory.image_url_path}`}
@@ -44,8 +44,7 @@ function PortalCategoryCard({ portalCategory }: Props) {
           能力バッジ（{portalCategory.badges_count}）
         </p>
       </section>
-
-    </Link>)
+    </Link>
   );
 }
 

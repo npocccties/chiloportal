@@ -11,12 +11,12 @@ type Props = {
 function WisdomBadgesItem({ wisdomBadges }: Props) {
   const url = getImageUrl(wisdomBadges.issuer_url);
   return (
-    (<Link
+    <Link
       href={pagesPath.wisdom_badges
         ._wisdomBadgesId(wisdomBadges.badges_id)
         .$url()}
-      className="flex gap-4">
-
+      className="flex gap-4"
+    >
       <div className="flex-shrink-0 flex flex-col items-center gap-1">
         <Image
           src={`/images/${wisdomBadges.image}`}
@@ -50,8 +50,7 @@ function WisdomBadgesItem({ wisdomBadges }: Props) {
           </div>
         )}
       </div>
-
-    </Link>)
+    </Link>
   );
 }
 

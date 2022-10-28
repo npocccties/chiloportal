@@ -11,12 +11,12 @@ type Props = {
 function WisdomBadgesCard({ wisdomBadges }: Props) {
   const url = getImageUrl(wisdomBadges.issuer_url);
   return (
-    (<Link
+    <Link
       href={pagesPath.wisdom_badges
         ._wisdomBadgesId(wisdomBadges.badges_id)
         .$url()}
-      className="jumpu-card block">
-
+      className="jumpu-card block"
+    >
       <div className="relative h-16 bg-gradient-to-r from-orange-300 to-orange-400 mb-6">
         <Image
           className="absolute left-1/2 bottom-0 -translate-x-1/2 translate-y-1/2"
@@ -51,8 +51,7 @@ function WisdomBadgesCard({ wisdomBadges }: Props) {
           <span className="text-gray-500">発行</span>
         </p>
       </section>
-
-    </Link>)
+    </Link>
   );
 }
 

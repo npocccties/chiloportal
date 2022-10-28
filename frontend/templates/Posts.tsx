@@ -16,7 +16,10 @@ function Posts({ posts }: Props) {
       <ul className="list-disc pl-8 text-gray-700">
         {posts.map((post) => (
           <li key={post.slug}>
-            <Link href={pagesPath.posts._slug(post.slug).$url()} className="underline">
+            <Link
+              href={pagesPath.posts._slug(post.slug).$url()}
+              className="underline"
+            >
               {post.title}
             </Link>
           </li>
