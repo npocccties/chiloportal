@@ -1,5 +1,6 @@
+import { GetServerSidePropsResult } from "next";
 import Error from "next/error";
-import { client } from "lib/client";
+import { client, getErrorProps } from "lib/client";
 import { PortalCategory } from "api/@types";
 import Template from "templates/PortalCategory";
 import { NEXT_PUBLIC_API_MOCKING } from "lib/env";
@@ -26,26 +27,30 @@ export type Props = {
 export async function getServerSideProps({
   params: { portalCategoryId },
   query: { p },
-}: Context): Promise<{ props: ErrorProps | Props }> {
-  const pageNumber = Number(p);
-  const portalCategories = await client.portalCategory.list.$get();
-  const portalCategory = NEXT_PUBLIC_API_MOCKING
-    ? (await import("mocks/faker")).portalCategory()
-    : portalCategories.find(
-        (portalCategory) =>
-          portalCategory.portal_category_id === Number(portalCategoryId)
-      );
-  if (!portalCategory)
-    return { props: { title: "PortalCategory Not Found", statusCode: 404 } };
-  const wisdomBadgesList = await client.portalCategory.badges.list.$get({
-    query: {
-      portal_category_id: portalCategory.portal_category_id,
-      page_number: Number.isInteger(pageNumber) ? pageNumber : undefined,
-    },
-  });
-  return {
-    props: { portalCategory, wisdomBadgesList },
-  };
+}: Context): Promise<GetServerSidePropsResult<ErrorProps | Props>> {
+  try {
+    const pageNumber = Number(p);
+    const portalCategories = await client.portalCategory.list.$get();
+    const portalCategory = NEXT_PUBLIC_API_MOCKING
+      ? (await import("mocks/faker")).portalCategory()
+      : portalCategories.find(
+          (portalCategory) =>
+            portalCategory.portal_category_id === Number(portalCategoryId)
+        );
+    if (!portalCategory)
+      return { props: { title: "PortalCategory Not Found", statusCode: 404 } };
+    const wisdomBadgesList = await client.portalCategory.badges.list.$get({
+      query: {
+        portal_category_id: portalCategory.portal_category_id,
+        page_number: Number.isInteger(pageNumber) ? pageNumber : undefined,
+      },
+    });
+    return {
+      props: { portalCategory, wisdomBadgesList },
+    };
+  } catch (e) {
+    return { props: await getErrorProps(e) };
+  }
 }
 
 export default function Page(props: ErrorProps | Props) {
