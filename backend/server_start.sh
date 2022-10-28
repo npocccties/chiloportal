@@ -1,4 +1,7 @@
 #!/bin/sh
+# フロントエンドと連携するためのネットワーク作成
+docker network create -d bridge app_network
+# バックエンドのコンテナ起動
 DIR=$(cd $(dirname $0); pwd)
 cd $DIR
 readonly ENV_FILE=$1
