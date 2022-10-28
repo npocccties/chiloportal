@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Image from "next/future/image";
+import Image from "next/image";
 import { Icon } from "@iconify/react";
 import Breadcrumbs from "components/Breadcrumbs";
 import Container from "components/Container";

@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import Image from "next/future/image";
+import Image from "next/image";
 import { BadgeDetail2 } from "api/@types";
 import { getImagePath } from "lib/criteria";
 

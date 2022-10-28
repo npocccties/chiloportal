@@ -134,10 +134,9 @@ function Chat({ className }: Props) {
                         href={pagesPath.wisdom_badges
                           ._wisdomBadgesId(badges.badges_id)
                           .$url()}
+                        className="underline text-primary-700"
                       >
-                        <a className="underline text-primary-700">
-                          {badges.name}
-                        </a>
+                        {badges.name}
                       </Link>
                     </li>
                   ))}
@@ -145,10 +144,9 @@ function Chat({ className }: Props) {
                 <p>
                   <Link
                     href={pagesPath.search.$url({ query: { q: textarea } })}
+                    className="text-primary-700"
                   >
-                    <a className="text-primary-700">
-                      …他{total_count}件の検索結果を確認する
-                    </a>
+                    …他{total_count}件の検索結果を確認する
                   </Link>
                 </p>
               </>

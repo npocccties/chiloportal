@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import Link from "next/link";
-import Image from "next/future/image";
+import Image from "next/image";
 import { Props } from "pages";
 import { pagesPath } from "lib/$path";
 import useConsumers from "lib/use-consumers";
@@ -42,16 +42,19 @@ export default function Top({
             <h2 className="flex-1 text-2xl text-gray-700">
               OKUTEPからのおしらせ
             </h2>
-            <Link href={pagesPath.posts.$url()}>
-              <a className="underline">一覧を見る</a>
+            <Link href={pagesPath.posts.$url()} className="underline">
+              一覧を見る
             </Link>
           </div>
           <div className="jumpu-card px-4 py-6">
             <ul className="list-disc pl-8 text-gray-700">
               {posts.map((post) => (
                 <li key={post.slug}>
-                  <Link href={pagesPath.posts._slug(post.slug).$url()}>
-                    <a className="underline">{post.title}</a>
+                  <Link
+                    href={pagesPath.posts._slug(post.slug).$url()}
+                    className="underline"
+                  >
+                    {post.title}
                   </Link>
                 </li>
               ))}
@@ -116,8 +119,9 @@ export default function Top({
                     href={pagesPath.consumers
                       ._consumerId(consumer.consumer_id)
                       .$url()}
+                    className="underline"
                   >
-                    <a className="underline">{consumer.name}の育成指標</a>
+                    {consumer.name}の育成指標
                   </Link>
                 </li>
               ))

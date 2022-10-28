@@ -24,20 +24,19 @@ function StageLink({
   active: boolean;
 }) {
   return (
-    <Link href={href}>
-      <a
-        className={clsx(
-          "px-4 py-2 flex gap-4 items-center",
-          active ? "bg-primary-200" : "hover:bg-primary-50",
-          className
-        )}
-      >
-        <span className="flex-1 text-ellipsis">{name}</span>
-        <Icon
-          className="inline text-gray-400 text-base flex-shrink-0"
-          icon="fa6-solid:chevron-right"
-        />
-      </a>
+    <Link
+      href={href}
+      className={clsx(
+        "px-4 py-2 flex gap-4 items-center",
+        active ? "bg-primary-200" : "hover:bg-primary-50",
+        className
+      )}
+    >
+      <span className="flex-1 text-ellipsis">{name}</span>
+      <Icon
+        className="inline text-gray-400 text-base flex-shrink-0"
+        icon="fa6-solid:chevron-right"
+      />
     </Link>
   );
 }

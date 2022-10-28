@@ -1,4 +1,4 @@
-import Image from "next/future/image";
+import Image from "next/image";
 import Breadcrumbs from "components/Breadcrumbs";
 import Container from "components/Container";
 import Pagination from "components/Pagination";
