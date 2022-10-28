@@ -1,7 +1,7 @@
 import { useId } from "react";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
-import Image from "next/future/image";
+import Image from "next/image";
 import Popover from "components/Popover";
 import useConsumers from "lib/use-consumers";
 import usePortalCategories from "lib/use-portal-categories";

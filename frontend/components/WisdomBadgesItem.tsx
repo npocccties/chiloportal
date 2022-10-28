@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/future/image";
+import Image from "next/image";
 import { BadgeDetail2 } from "api/@types";
 import { pagesPath } from "lib/$path";
 import { getImageUrl } from "lib/issuer";
