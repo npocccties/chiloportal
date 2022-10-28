@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import Link from "next/link";
-import Image from "next/future/image";
+import Image from "next/image";
 import { Props } from "pages";
 import { pagesPath } from "lib/$path";
 import useConsumers from "lib/use-consumers";
