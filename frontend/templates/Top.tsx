@@ -16,9 +16,10 @@ export default function Top({
   recommendedWisdomBadgesIds,
   learningContents,
 }: Props) {
-  const { data: consumers } = useConsumers();
-  const { data: portalCategories } = usePortalCategories();
-  const { data: wisdomBadgesList } = useBadges(
+  const { data: consumers, error: consumersError } = useConsumers();
+  const { data: portalCategories, error: portalCategoriesError } =
+    usePortalCategories();
+  const { data: wisdomBadgesList, error: wisdomBadgesListError } = useBadges(
     "wisdom",
     recommendedWisdomBadgesIds
   );
@@ -66,7 +67,7 @@ export default function Top({
             あなたが認められる能力バッジを獲得するために、いくつかの知識バッジを得なければなりません。少ない知識バッジで獲得できる能力バッジがあります。
           </p>
           <ul className="grid grid-cols-[repeat(auto-fill,275px)] gap-4">
-            {wisdomBadgesList
+            {!wisdomBadgesListError && wisdomBadgesList
               ? wisdomBadgesList.map((wisdomBadges) => (
                   <li key={wisdomBadges.badges_id}>
                     <WisdomBadgesCard wisdomBadges={wisdomBadges} />
@@ -85,7 +86,7 @@ export default function Top({
             カテゴリから能力バッジを探しましょう
           </h2>
           <ul className="grid grid-cols-[repeat(auto-fill,275px)] gap-4">
-            {portalCategories
+            {!portalCategoriesError && portalCategories
               ? portalCategories.map((portalCategory) => (
                   <li key={portalCategory.portal_category_id}>
                     <PortalCategoryCard portalCategory={portalCategory} />
@@ -108,7 +109,7 @@ export default function Top({
             })}
             aria-busy={!consumers}
           >
-            {consumers ? (
+            {!consumersError && consumers ? (
               consumers.map((consumer) => (
                 <li key={consumer.consumer_id} className="break-inside-avoid">
                   <Link

@@ -37,8 +37,9 @@ const contents = [
 ] as const;
 
 function Header({ className }: Props) {
-  const { data: consumers } = useConsumers();
-  const { data: portalCategories } = usePortalCategories();
+  const { data: consumers, error: consumersError } = useConsumers();
+  const { data: portalCategories, error: portalCategoriesError } =
+    usePortalCategories();
   const id = useId();
   return (
     <header
@@ -57,7 +58,7 @@ function Header({ className }: Props) {
             aria-busy={!consumers}
             onClick={() => close()}
           >
-            {consumers ? (
+            {!consumersError && consumers ? (
               consumers.map((consumer) => (
                 <li key={consumer.consumer_id} role="menuitem">
                   <Link
@@ -94,7 +95,7 @@ function Header({ className }: Props) {
             aria-busy={!portalCategories}
             onClick={() => close()}
           >
-            {portalCategories ? (
+            {!portalCategoriesError && portalCategories ? (
               portalCategories.map((portalCategory) => (
                 <li key={portalCategory.portal_category_id} role="menuitem">
                   <Link

@@ -10,8 +10,9 @@ type Props = {
 };
 
 function Footer({ className }: Props) {
-  const { data: consumers } = useConsumers();
-  const { data: portalCategories } = usePortalCategories();
+  const { data: consumers, error: consumersError } = useConsumers();
+  const { data: portalCategories, error: portalCategoriesError } =
+    usePortalCategories();
   return (
     <footer className={clsx("bg-gray-50 py-6", className)}>
       <div className="max-w-6xl xl:max-w-7xl mx-auto px-4 flex flex-col sm:flex-row flex-wrap gap-6 mb-6">
@@ -25,7 +26,7 @@ function Footer({ className }: Props) {
         <section>
           <h2 className="text-gray-400 text-xs mb-2">育成指標から探す</h2>
           <ul className="text-gray-700 leading-7" aria-busy={!consumers}>
-            {consumers
+            {!consumersError && consumers
               ? consumers.map((consumer) => (
                   <li key={consumer.consumer_id}>
                     <Link
@@ -49,7 +50,7 @@ function Footer({ className }: Props) {
         <section>
           <h2 className="text-gray-400 text-xs mb-2">カテゴリから探す</h2>
           <ul className="text-gray-700 leading-7" aria-busy={!portalCategories}>
-            {portalCategories
+            {!portalCategoriesError && portalCategories
               ? portalCategories.map((portalCategory) => (
                   <li key={portalCategory.portal_category_id}>
                     <Link

@@ -22,7 +22,7 @@ type Props = {
 
 function WisdomBadgesDialog({ wisdomBadges, open, onClose }: Props) {
   const [shouldFetch, setShouldFetch] = useState(false);
-  const { data: consumers } = useWisdomBadgesConsumers(
+  const { data: consumers, error: consumersError } = useWisdomBadgesConsumers(
     wisdomBadges.badges_id,
     shouldFetch
   );
@@ -64,7 +64,7 @@ function WisdomBadgesDialog({ wisdomBadges, open, onClose }: Props) {
                 <Dialog.Title className="text-lg font-bold text-gray-500 mb-6">
                   このバッジは以下の教育委員会に認定されています
                 </Dialog.Title>
-                {consumers ? (
+                {!consumersError && consumers ? (
                   <Consumers consumers={consumers} />
                 ) : (
                   <div
