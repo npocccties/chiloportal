@@ -1,39 +1,44 @@
-import { readdir, readFile } from "node:fs/promises";
+import { readdir } from "node:fs/promises";
 import { join } from "node:path";
-import matter from "gray-matter";
+import { read } from "to-vfile";
+import { matter } from "vfile-matter";
+import { VFile } from "vfile";
 import Ajv from "ajv";
 import addFormats from "ajv-formats";
-import { Markdowns } from "schemas/markdown";
+import { Frontmatters } from "schemas/frontmatter";
+
+export type Markdown = VFile & { data: Required<VFile["data"]> };
 
 /**
- * ディレクトリ内のマークダウンファイルの付帯情報を取得する関数
+ * ディレクトリ内のマークダウンファイルの内容を取得する関数
  * @params dirpath マークダウンファイルが存在するディレクトリのパス
  * @sort 公開日順にソートするか否か
- * @returns ディレクトリ内のマークダウンファイルの付帯情報
+ * @returns VFile の配列
  */
 export async function readMarkdowns(
   dirpath: string,
   sort: boolean = false
-): Promise<Error | Markdowns> {
+): Promise<Error | Markdown[]> {
   const filenames = await readdir(dirpath);
   const files = await Promise.all(
-    filenames.map((filename) => readFile(join(dirpath, filename), "utf8"))
+    filenames.map((filename) =>
+      read(join(dirpath, filename), "utf8").then(
+        (file) => matter(file, { strip: true }) as Markdown
+      )
+    )
   );
-  const frontmatters = files.map((file) => matter(file).data);
-  const markdowns = filenames.map((filename, index) => ({
-    filename,
-    body: files[index],
-    ...frontmatters[index],
-  })) as Markdowns;
   const ajv = new Ajv();
   addFormats(ajv);
-  const valid = ajv.validate(Markdowns, markdowns);
+  const valid = ajv.validate(
+    Frontmatters,
+    files.map((file) => file.data.matter)
+  );
   if (!valid) return new Error(ajv.errorsText(ajv.errors));
   if (sort)
-    return markdowns.sort(
+    return files.sort(
       (a, b) =>
-        new Date(b.datePublished ?? "1970-01-01").getTime() -
-        new Date(a.datePublished ?? "1970-01-01").getTime()
+        new Date(b.data.matter.datePublished ?? "1970-01-01").getTime() -
+        new Date(a.data.matter.datePublished ?? "1970-01-01").getTime()
     );
-  return markdowns;
+  return files;
 }

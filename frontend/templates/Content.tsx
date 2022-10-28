@@ -1,23 +1,28 @@
+import Image from "next/image";
+import { MDXRemote } from "next-mdx-remote";
 import { Props } from "pages/[slug]";
 import Breadcrumbs from "components/Breadcrumbs";
 import Container from "components/Container";
 import { pagesPath } from "lib/$path";
 
-function Content({ title, content }: Props) {
+const components = {
+  img: (props: any) => <Image alt="" {...props} />,
+};
+
+function Content({ source, matter }: Props) {
   return (
     <Container>
       <Breadcrumbs
         className="mb-6"
         nodes={[{ name: "トップ", href: pagesPath.$url() }]}
-        leaf={title}
+        leaf={matter.title}
       />
       <aside className="mb-6">
-        <h1 className="text-2xl text-gray-700 mb-4">{title}</h1>
+        <h1 className="text-2xl text-gray-700 mb-4">{matter.title}</h1>
       </aside>
-      <article
-        className="prose"
-        dangerouslySetInnerHTML={{ __html: content }}
-      />
+      <article className="prose">
+        <MDXRemote {...source} components={components} />
+      </article>
     </Container>
   );
 }
