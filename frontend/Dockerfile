@@ -16,7 +16,7 @@ WORKDIR /app
 COPY . ./
 RUN corepack yarn workspaces focus --all --production
 
-FROM gcr.io/distroless/nodejs:18
+FROM gcr.io/distroless/nodejs:16
 WORKDIR /app
 ENV NODE_ENV=production
 COPY ./public ./public
