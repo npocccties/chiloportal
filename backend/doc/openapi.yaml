@@ -10,8 +10,6 @@ tags:
     description: コンシューマ情報取得
   - name: consumer list
     description: コンシューマ情報一覧
-  - name: framework field list
-    description: 育成指標に関連する指標項目一覧
   - name: stage field list
     description: 成長段階に関連する指標項目一覧
   - name: portal category list
@@ -24,14 +22,10 @@ tags:
     description: 育成指標に関連する成長段階一覧
   - name: badges
     description: バッジ情報取得
-  - name: wisdom badges list
-    description: 能力バッジ一覧取得
   - name: keyword search
     description: キーワードバッジ検索
   - name: badges consumer list
     description: バッジを承認しているコンシューマの一覧
-  - name: badges criteria list
-    description: バッジの研修内容一覧取得
   - name: consumer framework list
     description: 指定したコンシューマIDの育成指標一覧
 paths:
@@ -72,28 +66,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Consumer'
-  /framework/field/list:
-    get:
-      tags:
-        - framework field list
-      description: 指定された育成指標IDに関連する指標項目を一覧で返却します
-      operationId: findFrameworkFieldList
-      parameters:
-        - name: framework_id
-          in: query
-          description: framework id
-          required: true
-          schema:
-            type: number
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Field'
-        '400':
-          description: Invalid ID supplied
   /stage/field/list:
     get:
       tags:
@@ -262,44 +234,6 @@ paths:
                     - $ref: '#/components/schemas/BadgeDetail2'
         '400':
           description: Invalid parameters supplied
-  /wisdomBadges/list:
-    get:
-      tags:
-        - wisdom badges list
-      description: 能力バッジ一覧を返却します
-      operationId: findBadgesList
-      parameters:
-        - name: field_id
-          in: query
-          description: field id
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: stage_id
-          in: query
-          description: stage id
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  badges:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/BadgeDetail2'
-                additionalProperties: false
-                required:
-                  - badges
-        '400':
-          description: Invalid parameters supplied
   /wisdomBadges/list/keyword:
     get:
       tags:
@@ -377,30 +311,6 @@ paths:
                   $ref: '#/components/schemas/Consumer'
         '400':
           description: Invalid ID supplied
-  /knowledgeBadges/criteria/list:
-    get:
-      tags:
-        - badges criteria list
-      description: 指定された知識バッジIDに関連する研修内容のリストを返却します
-      operationId: findBadgesCriteriaList
-      parameters:
-        - name: badges_id
-          in: query
-          description: Badges id
-          required: true
-          schema:
-            type: number
-      responses:
-        '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Criteria'
-        '400':
-          description: Invalid ID supplied
   /consumer/framework/list:
     get:
       tags:
@@ -450,56 +360,6 @@ components:
         - name
         - url
         - email
-    Field:
-      type: object
-      properties:
-        field1:
-          type: array
-          items:
-            $ref: '#/components/schemas/Field1'
-      additionalProperties: false
-      required:
-        - field1
-    Field1:
-      type: object
-      properties:
-        field1_name:
-          type: string
-          example: field1011
-        field2:
-          type: array
-          items:
-            $ref: '#/components/schemas/Field2'
-      additionalProperties: false
-      required:
-        - field1_name
-        - field2
-    Field2:
-      properties:
-        field2_name:
-          type: string
-          example: field1012
-        field3:
-          type: array
-          items:
-            $ref: '#/components/schemas/Field3'
-      additionalProperties: false
-      required:
-        - field2_name
-        - field3
-    Field3:
-      properties:
-        field_id:
-          type: integer
-          format: int64
-          example: 101123
-        field3_name:
-          type: string
-          example: field1013
-      additionalProperties: false
-      required:
-        - field_id
-        - field3_name
     FieldDetail:
       type: object
       properties:
