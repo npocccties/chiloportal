@@ -176,42 +176,6 @@ def split_field2_key(key):
     return key.split(delimiter)
 
 
-def get_fields_keys(field_set):
-    field1keys = set()
-    field2keys = set()
-    field_dict = defaultdict(list)
-    for field in field_set:
-        field1keys.add(field.field1_name)
-        field2keys.add(make_field2_key(field))
-        field_dict[make_field2_key(field)].append(field)
-    return field1keys, field2keys, field_dict
-
-
-def to_fields(field_set):
-    field1keys, field2keys, field_dict = get_fields_keys(field_set)
-    field1_array = []
-    for field1key in sorted(list(field1keys)):
-        field1_array.append(_to_field(field_dict, field1key, field2keys))
-    return {"field1": field1_array}
-
-
-def _to_field(field_dict, field1key, field2keys):
-    field2_array = []
-    for field2key in sorted(list(field2keys)):
-        if not field2key.startswith(field1key):
-            continue
-        fields = sorted(field_dict[field2key], key=lambda f: f.sort_key)
-        field3_array = []
-        for field in fields:
-            field3_array.append(
-                {"field_id": field.id, "field3_name": field.field3_name}
-            )
-        field2_array.append(
-            {"field2_name": split_field2_key(field2key)[1], "field3": field3_array}
-        )
-    return {"field1_name": field1key, "field2": field2_array}
-
-
 def get_fields_detail_keys(categorised_badge_set):
     field1keys = set()
     field2keys = set()
