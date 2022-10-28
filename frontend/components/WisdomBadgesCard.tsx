@@ -2,13 +2,14 @@ import Link from "next/link";
 import Image from "next/future/image";
 import { BadgeDetail2 } from "api/@types";
 import { pagesPath } from "lib/$path";
-import { NEXT_PUBLIC_BADGES_ISSUER_IMAGE_PATH } from "lib/env";
+import { getImageUrl } from "lib/issuer";
 
 type Props = {
   wisdomBadges: BadgeDetail2;
 };
 
 function WisdomBadgesCard({ wisdomBadges }: Props) {
+  const url = getImageUrl(wisdomBadges.issuer_url);
   return (
     <Link
       href={pagesPath.wisdom_badges
@@ -43,17 +44,9 @@ function WisdomBadgesCard({ wisdomBadges }: Props) {
               NOTE: 事前に許可したホスト以外画像最適化の対象にできない
               See Also: https://nextjs.org/docs/messages/next-image-unconfigured-host
             */}
-            <img
-              src={
-                new URL(
-                  NEXT_PUBLIC_BADGES_ISSUER_IMAGE_PATH,
-                  wisdomBadges.issuer_url
-                ).href
-              }
-              width={20}
-              height={20}
-              alt=""
-            />
+            {typeof url === "string" && (
+              <img src={url} width={20} height={20} alt="" />
+            )}
             <span className="font-bold mr-1">{wisdomBadges.issuer_name}</span>
             <span className="text-gray-500">発行</span>
           </p>
