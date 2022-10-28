@@ -16,9 +16,6 @@ export const handlers = [
   restGet(client.consumer.list, (_req, res, ctx) =>
     res(ctx.json([...Array(10)].map(consumer)))
   ),
-  restGet(client.framework.field.list, (_req, res, ctx) =>
-    res(ctx.json(field()))
-  ),
   restGet(client.stage.field.list, (_req, res, ctx) => res(ctx.json(field()))),
   restGet(client.portalCategory.list, (_req, res, ctx) =>
     res(ctx.json([...Array(10)].map(portalCategory)))
@@ -52,13 +49,6 @@ export const handlers = [
         return res(ctx.status(400));
     }
   }),
-  restGet(client.wisdomBadges.list, (_req, res, ctx) =>
-    res(
-      ctx.json({
-        badges: [...Array(3)].map(wisdomBadges),
-      })
-    )
-  ),
   restGet(client.wisdomBadges.list.keyword, (req, res, ctx) => {
     const perPage = 30;
     const pageNumber = Number(req.url.searchParams.get("page_number") ?? 1);
@@ -73,9 +63,6 @@ export const handlers = [
   }),
   restGet(client.wisdomBadges.consumer.list, (_req, res, ctx) =>
     res(ctx.json([...Array(10)].map(consumer)))
-  ),
-  restGet(client.knowledgeBadges.criteria.list, (_req, res, ctx) =>
-    res(ctx.json([...Array(10)].map(criteria)))
   ),
   restGet(client.consumer.framework.list, (_req, res, ctx) =>
     res(ctx.json([...Array(3)].map(framework)))
