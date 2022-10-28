@@ -1,0 +1,11 @@
+on:
+  push:
+defaults:
+  run:
+    working-directory: frontend
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: docker build -t frontend .
