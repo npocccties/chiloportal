@@ -10,9 +10,15 @@ export async function getErrorProps(
   e: unknown
 ): Promise<{ title: string; statusCode: number }> {
   if (e instanceof HTTPError) {
-    const { detail } = (await e.response.json()) as { detail: string };
+    if (e.response.headers.get("content-type")?.includes("application/json")) {
+      const { detail } = (await e.response.json()) as { detail: string };
+      return {
+        title: detail,
+        statusCode: e.response.status,
+      };
+    }
     return {
-      title: detail,
+      title: e.message,
       statusCode: e.response.status,
     };
   }
