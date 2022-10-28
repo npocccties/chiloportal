@@ -14,8 +14,8 @@ function Breadcrumbs({ className, nodes, leaf }: Props) {
     <div className={clsx("text-gray-700", className)}>
       {nodes.map((node, index) => (
         <Fragment key={index}>
-          <Link href={node.href}>
-            <a className="underline mr-2">{node.name}</a>
+          <Link href={node.href} className="underline mr-2">
+            {node.name}
           </Link>
           <Icon className="inline mr-2" icon="fa6-solid:chevron-right" />
         </Fragment>

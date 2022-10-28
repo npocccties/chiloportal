@@ -17,10 +17,10 @@ function Footer({ className }: Props) {
     <footer className={clsx("bg-gray-50 py-6", className)}>
       <div className="max-w-6xl xl:max-w-7xl mx-auto px-4 flex flex-col sm:flex-row flex-wrap gap-6 mb-6">
         <div className="w-full xl:w-auto">
-          <Link href={pagesPath.$url()}>
-            <a className="inline-block px-2">
-              <Image src="/logo.png" width={142} height={44} alt="" />
-            </a>
+          <Link href={pagesPath.$url()} className="inline-block px-2">
+
+            <Image src="/logo.png" width={142} height={44} alt="" />
+
           </Link>
         </div>
         <section>
@@ -34,7 +34,7 @@ function Footer({ className }: Props) {
                         ._consumerId(consumer.consumer_id)
                         .$url()}
                     >
-                      <a>{consumer.name}の育成指標</a>
+                      {consumer.name}の育成指標
                     </Link>
                   </li>
                 ))
@@ -58,7 +58,7 @@ function Footer({ className }: Props) {
                         ._portalCategoryId(portalCategory.portal_category_id)
                         .$url({ query: {} })}
                     >
-                      <a>{portalCategory.name}</a>
+                      {portalCategory.name}
                     </Link>
                   </li>
                 ))
@@ -74,22 +74,22 @@ function Footer({ className }: Props) {
         <ul className="text-gray-700 leading-7 sm:columns-2 [&>li]:break-inside-avoid">
           <li>
             <Link href={pagesPath._slug("concept").$url()}>
-              <a>コンセプト</a>
+              コンセプト
             </Link>
           </li>
           <li>
             <Link href={pagesPath._slug("disclaimer").$url()}>
-              <a>ご利用にあたって（免責事項）</a>
+              ご利用にあたって（免責事項）
             </Link>
           </li>
           <li>
             <Link href={pagesPath._slug("privacy_policy").$url()}>
-              <a>プライバシーポリシー</a>
+              プライバシーポリシー
             </Link>
           </li>
           <li>
             <Link href={pagesPath._slug("about_site").$url()}>
-              <a>このサイトについて</a>
+              このサイトについて
             </Link>
           </li>
           <li>
@@ -97,12 +97,12 @@ function Footer({ className }: Props) {
           </li>
           <li>
             <Link href={pagesPath._slug("about_site").$url()}>
-              <a>私たちについて</a>
+              私たちについて
             </Link>
           </li>
           <li>
             <Link href={pagesPath._slug("contact").$url()}>
-              <a>お問い合わせ</a>
+              お問い合わせ
             </Link>
           </li>
         </ul>

@@ -21,11 +21,11 @@ function Pagination({ className, totalCount, start, end, handleHref }: Props) {
     <ul className={clsx("flex items-center gap-2", className)}>
       <li>
         {prevPage ? (
-          <Link href={handleHref(prevPage)}>
-            <a className="jumpu-icon-button">
-              <Icon icon="fa6-solid:chevron-left" />
-            </a>
-          </Link>
+          (<Link href={handleHref(prevPage)} className="jumpu-icon-button">
+
+            <Icon icon="fa6-solid:chevron-left" />
+
+          </Link>)
         ) : (
           <span
             className="jumpu-icon-button hover:bg-transparent text-gray-300 hover:text-gray-300"
@@ -38,16 +38,16 @@ function Pagination({ className, totalCount, start, end, handleHref }: Props) {
       {pages.map((page, index) =>
         "number" === typeof page ? (
           <li key={index}>
-            <Link href={handleHref(page)}>
-              <a
-                className={clsx("jumpu-icon-button", {
-                  ["bg-primary-100 hover:bg-primary-100 font-bold"]:
-                    page === currentPage,
-                })}
-                aria-current={page === currentPage}
-              >
-                {page}
-              </a>
+            <Link
+              href={handleHref(page)}
+              className={clsx("jumpu-icon-button", {
+                ["bg-primary-100 hover:bg-primary-100 font-bold"]:
+                  page === currentPage,
+              })}
+              aria-current={page === currentPage}>
+
+              {page}
+
             </Link>
           </li>
         ) : (
@@ -58,11 +58,11 @@ function Pagination({ className, totalCount, start, end, handleHref }: Props) {
       )}
       <li>
         {nextPage ? (
-          <Link href={handleHref(nextPage)}>
-            <a className="jumpu-icon-button">
-              <Icon icon="fa6-solid:chevron-right" />
-            </a>
-          </Link>
+          (<Link href={handleHref(nextPage)} className="jumpu-icon-button">
+
+            <Icon icon="fa6-solid:chevron-right" />
+
+          </Link>)
         ) : (
           <span
             className="jumpu-icon-button hover:bg-transparent text-gray-300 hover:text-gray-300"
