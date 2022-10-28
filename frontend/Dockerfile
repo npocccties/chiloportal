@@ -1,4 +1,4 @@
-FROM node:18.12.0-slim as build
+FROM node:16.18.0-slim as build
 WORKDIR /app
 COPY . ./
 ADD https://raw.githubusercontent.com/npocccties/chiloportal/develop/backend/doc/openapi.yaml /backend/doc/openapi.yaml
@@ -11,7 +11,7 @@ ENV NEXT_PUBLIC_API_BASE_URL=${NEXT_PUBLIC_API_BASE_URL}
 ENV NEXT_PUBLIC_MOODLE_DASHBOARD_URL=${NEXT_PUBLIC_MOODLE_DASHBOARD_URL}
 RUN yarn build
 
-FROM node:18.12.0-slim as install
+FROM node:16.18.0-slim as install
 WORKDIR /app
 COPY . ./
 RUN corepack yarn workspaces focus --all --production
