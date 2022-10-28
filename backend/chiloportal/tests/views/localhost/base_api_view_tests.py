@@ -10,19 +10,14 @@ class BaseAPIViewTests(TestCase):
     base_url = "http://localhost:8000"
     consumer_detail_url = urljoin(base_url, "consumer/")
     consumer_list_url = urljoin(base_url, "consumer/list/")
-    framework_field_list_url = urljoin(base_url, "framework/field/list/")
     stage_field_list_url = urljoin(base_url, "stage/field/list/")
     portal_category_list_url = urljoin(base_url, "portalCategory/list/")
     portal_category_badge_list_url = urljoin(base_url, "portalCategory/badges/list/")
     framework_url = urljoin(base_url, "framework/")
     framework_stage_list_url = urljoin(base_url, "framework/stage/list/")
     badges_url = urljoin(base_url, "badges/")
-    wisdom_badges_list_url = urljoin(base_url, "wisdomBadges/list/")
     wisdom_badges_list_keyword_url = urljoin(base_url, "wisdomBadges/list/keyword/")
     wisdom_badges_consumer_list_url = urljoin(base_url, "wisdomBadges/consumer/list/")
-    knowledge_badges_criteria_list_url = urljoin(
-        base_url, "knowledgeBadges/criteria/list/"
-    )
     consumer_framework_list_url = urljoin(base_url, "consumer/framework/list/")
     not_found_id = 99999
     invalid_param_alpha = "hogehoge"
