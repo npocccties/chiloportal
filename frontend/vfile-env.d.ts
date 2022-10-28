@@ -1,4 +1,4 @@
-import "vfile"
+import "vfile";
 
 declare module "vfile" {
   interface DataMap {
