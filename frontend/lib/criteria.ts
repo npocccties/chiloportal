@@ -1,3 +1,8 @@
+/**
+ * クライテリアの種類に対応した画像のパスを返す関数
+ * @params クライテリアの種類
+ * @returns 画像のパス
+ */
 export function getImagePath(type: string): string {
   switch (type) {
     case "ビデオ":
