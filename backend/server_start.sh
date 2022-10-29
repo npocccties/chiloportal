@@ -1,7 +1,5 @@
 #!/bin/sh
 # バックエンドのコンテナ起動
-DIR=$(cd $(dirname $0); pwd)
-cd $DIR
 readonly ENV_FILE=$1
 sudo cp $ENV_FILE .env
 readonly DOCKER_COMPOSE_YML=$2
