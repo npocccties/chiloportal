@@ -1,6 +1,7 @@
 #!/bin/sh
 sudo git checkout .
 sudo git pull
+sudo chmod 755 deploy.sh
 # frontend
 cd frontend
 docker build -t frontend .
