@@ -23,7 +23,7 @@ jobs:
           script: |
             cd /opt
             sudo rm -rf chiloportal
-            git clone https://github.com/npocccties/chiloportal.git
+            sudo git clone https://github.com/npocccties/chiloportal.git
             cd chiloportal
             sudo chmod 755 deploy.sh
             ./deploy.sh .env.dev-server docker-compose.dev-server.yml
