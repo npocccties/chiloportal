@@ -59,9 +59,14 @@
    ```
    cd /opt
    ```
-1. `deploy.sh` というファイルを以下から取得
+1. chiloportal のソースを取得
    ```
-   https://github.com/npocccties/chiloportal/blob/develop/backend/deploy.sh
+   git clone https://github.com/npocccties/chiloportal.git
+   ```
+   * 既にディレクトリが存在するならば `sudo rm -rf chiloportal` にて削除してください
+1. chiloportal へ移動
+   ```
+   cd chiloportal
    ```
 1. `deploy.sh` に権限付与
    ```
@@ -71,9 +76,11 @@
    ```
    ./deploy.sh {環境変数を記載した .envから始まるファイル名} {docker-composeから始まるファイル名}
    ```
+   * 権限付与後の `deploy.sh` は何度でも実行可能です
+   * `deploy.sh` を実行すると chiloportal 内の変更は全て取り消されます
    * 開発サーバー: `./deploy.sh .env.dev-server docker-compose.dev-server.yml`
-   * 本番サーバー: `./deploy.sh .env.production docker-compose.production.yml`
-   * 上記 `.env.production` は Public リポジトリに登録せずに Private リポジトリ等で登録管理してください
+   * 本番サーバー: `./deploy.sh /home/admin/.env.production docker-compose.production.yml`
+   * 上記 `.env.production` は Public リポジトリに登録せずに Private リポジトリ等で管理してください
 1. 備考  
    コンテナ起動  
    ```
