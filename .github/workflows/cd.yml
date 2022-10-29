@@ -21,9 +21,9 @@ jobs:
           username: ${{secrets.SSH_USERNAME}}
           port: ${{secrets.SSH_PORT}}
           script: |
-            sudo rm -rf /tmp/chiloportal
-            git clone https://github.com/npocccties/chiloportal.git /tmp/chiloportal
-            sudo cp /tmp/chiloportal/backend/deploy.sh /opt
             cd /opt
+            sudo rm -rf chiloportal
+            sudo git clone https://github.com/npocccties/chiloportal.git
+            cd chiloportal
             sudo chmod 755 deploy.sh
-            ./deploy.sh .env.dev-server docker-compose.dev-server.yml
+            ./deploy.sh .env.dev-server docker-compose.production.yml
