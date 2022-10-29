@@ -26,4 +26,4 @@ jobs:
             sudo git clone https://github.com/npocccties/chiloportal.git
             cd chiloportal
             sudo chmod 755 deploy.sh
-            ./deploy.sh .env.dev-server docker-compose.production.yml
+            ./deploy.sh /opt/.env.manual-ssl-certs docker-compose.production.yml
