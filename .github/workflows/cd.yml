@@ -22,8 +22,7 @@ jobs:
           port: ${{secrets.SSH_PORT}}
           script: |
             cd /opt
-            sudo rm -rf chiloportal
-            sudo git clone https://github.com/npocccties/chiloportal.git
+            sudo git clone https://github.com/npocccties/chiloportal.git >& /dev/null
             cd chiloportal
             sudo chmod 755 deploy.sh
             ./deploy.sh /opt/.env.manual-ssl-certs docker-compose.production.yml
