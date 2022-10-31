@@ -7,7 +7,7 @@ readonly ENV_FILE=$1
 source $ENV_FILE
 DOCKER_COMPOSE_YML=""
 echo $LETS_ENCRYPT
-if [ $LETS_ENCRYPT="True" ]; then
+if "${LETS_ENCRYPT}"; then
     DOCKER_COMPOSE_YML="docker-compose.dev-server.yml"
 else
     DOCKER_COMPOSE_YML="docker-compose.production.yml"
