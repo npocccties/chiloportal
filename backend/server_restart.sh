@@ -12,5 +12,6 @@ if [ $LETS_ENCRYPT="True" ]; then
 else
     DOCKER_COMPOSE_YML="docker-compose.production.yml"
 fi
+echo $DOCKER_COMPOSE_YML
 /bin/sh server_stop.sh $ENV_FILE $DOCKER_COMPOSE_YML
 /bin/sh server_start.sh $ENV_FILE $DOCKER_COMPOSE_YML

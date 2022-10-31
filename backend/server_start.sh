@@ -7,6 +7,7 @@ cd $DIR
 readonly ENV_FILE=$1
 sudo cp $ENV_FILE .env
 readonly DOCKER_COMPOSE_YML=$2
+echo $DOCKER_COMPOSE_YML
 sudo cp $DOCKER_COMPOSE_YML docker-compose.yml
 docker-compose up -d
 /bin/sh ./server_db_restore.sh
