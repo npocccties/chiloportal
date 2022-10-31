@@ -74,17 +74,17 @@
    ```
 1. `deploy.sh` の実行
    ```
-   ./deploy.sh {環境変数を記載した .envから始まるファイル名} {docker-composeから始まるファイル名}
+   ./deploy.sh {環境変数を記載した .envから始まるファイル名}
    ```
    * 権限付与後の `deploy.sh` は何度でも実行可能です
    * `deploy.sh` を実行すると chiloportal 内の変更は全て取り消されます
-   * 開発サーバー: `./deploy.sh .env.dev-server docker-compose.dev-server.yml`
-   * 本番サーバー: `./deploy.sh /home/admin/.env.production docker-compose.production.yml`
+   * 開発サーバー: `./deploy.sh .env.dev-server`
+   * 本番サーバー: `./deploy.sh /home/admin/.env.production`
    * 上記 `.env.production` は Public リポジトリに登録せずに Private リポジトリ等で管理してください
 1. 備考  
    コンテナ起動  
    ```
-   chiloportal/backend/server_start.sh {環境変数を記載した .envから始まるファイル名} {docker-composeから始まるファイル名}
+   chiloportal/backend/server_start.sh {環境変数を記載した .envから始まるファイル名}
    ```
 
    コンテナ停止  
@@ -95,7 +95,7 @@
 
    コンテナ再起動  
    ```
-   chiloportal/backend/server_restart.sh {環境変数を記載した .envから始まるファイル名} {docker-composeから始まるファイル名}
+   chiloportal/backend/server_restart.sh {環境変数を記載した .envから始まるファイル名}
    ```
    * `server_stop.sh` と `server_start.sh` を呼びます
 
@@ -165,6 +165,7 @@
 |JUDGE_BADGE|バッジ判定方法|`version`:<br>JSONのversionフィールド値の末尾がwisdomならば能力バッジとみなす<br>※本番リリース用<br><br>`alignments`:<br>JSONにalignmentsがあれば能力バッジとみなす<br>※動作確認用|
 |PER_PAGE|1ページあたりのデータ数|APIのクエリパラメータとしてページ番号(page_number)が指定可能な場合、同APIの1ページあたりのデータ数|
 |SSL_CERTS_DIR|サーバー証明書の配置ディレクトリ|・ディレクトリの末尾には `/` は付与しないこと<br>・本番環境では下記の命名でファイルを配置しておくこと<br>　`signed.crt`: サーバー証明書<br>　`domain.key`: サーバー証明書の秘密鍵|
+|LETS_ENCRYPT|無料のSSL証明書の要否|無料のSSL証明書を使用するか否か<br>`True`: 使用する ※動作確認用<br>`False`: 使用しない ※本番リリース用|
 
 
 # DBの確認
