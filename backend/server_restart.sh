@@ -4,7 +4,7 @@ DIR=$(cd $(dirname $0); pwd)
 echo $DIR
 cd $DIR
 readonly ENV_FILE=$1
-source "./${ENV_FILE}"
+source $ENV_FILE
 DOCKER_COMPOSE_YML=""
 if [ "${LETS_ENCRYPT}" ]; then
     DOCKER_COMPOSE_YML="docker-compose.dev-server.yml"
