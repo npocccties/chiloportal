@@ -3,7 +3,7 @@ echo $0
 DIR=$(cd $(dirname $0); pwd)
 echo $DIR
 cd $DIR
-source .env
+source ./.env
 echo $LETS_ENCRYPT
 DOCKER_COMPOSE_YML=""
 if "${LETS_ENCRYPT}"; then
