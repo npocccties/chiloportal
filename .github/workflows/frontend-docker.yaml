@@ -16,5 +16,6 @@ jobs:
           node-version: "16"
           cache: "yarn"
           cache-dependency-path: "frontend/yarn.lock"
+      - run: cp .env.development .env
       - run: corepack yarn install --immutable
       - run: docker build -t frontend .

@@ -4,14 +4,15 @@
 
 - OS: Unix 系（Windows では [WSL](https://docs.microsoft.com/ja-jp/windows/wsl/install) 等をお使いください）
 - Node.js: ~~[Active LTS](https://nodejs.org/en/about/releases/)~~ v16.18.0
+- Docker (任意)
 
 ## 開発
 
-動作環境を用意したのち、ローカル環境にて以下のコマンドを実行すると開発サーバーが起動します。
+動作環境を用意したのち、ベアメタル環境あるいは Docker 環境にて以下のコマンドを実行すると開発サーバーが起動します。
 
-次のいずれかの手順を実行したのち、ブラウザーで[http://localhost:3000](http://localhost:3000) にアクセスすることで、開発中のアプリケーションを確認することができます。
+開発サーバーが起動したのち、ブラウザーで[http://localhost:3000](http://localhost:3000) にアクセスすることで、開発中のアプリケーションを確認することができます。
 
-### ローカル環境
+### ベアメタル環境
 
 モックサーバーを有効化しフロントエンドの開発サーバーを起動する場合は以下の手順を実施してください。
 
@@ -31,21 +32,9 @@ corepack yarn start # テストサーバーの起動
 ### Docker 環境
 
 ```shell
+cp .env.development .env # 環境変数の用意 (コピー元ファイルは .env.test でも可)
 docker build -t frontend . # Docker イメージのビルド
 docker run --rm -p 3000:3000 frontend # Docker コンテナの起動
-```
-
-イメージのビルド時に以下のビルド変数を参照します。
-
-| ビルド変数名                     | 説明                        | デフォルト値                               |
-| :------------------------------- | :-------------------------- | :----------------------------------------- |
-| NEXT_PUBLIC_API_BASE_URL         | API のベースとなる URL      | https://dev-portal.oku.cccties.org/api/v1/ |
-| NEXT_PUBLIC_MOODLE_DASHBOARD_URL | Moodle ダッシュボードの URL | https://opedu.lib.osaka-kyoiku.ac.jp/my/   |
-
-ビルド変数を変更してイメージをビルドする場合は以下のように実行してください。
-
-```shell
-docker build -t frontend --build-arg NEXT_PUBLIC_API_BASE_URL=<API のベースとなる URL> --build-arg NEXT_PUBLIC_MOODLE_DASHBOARD_URL=<Moodle ダッシュボードの URL> .
 ```
 
 ## 環境変数
@@ -104,19 +93,11 @@ learningContents:
 | slug          | 記事の URL に含まれる文字列、必須   |
 | datePublished | 公開日（RFC 3339 の日付形式）、任意 |
 
-## デプロイ
+## デプロイ（セルフホスティング）
 
-### Vercel
+動作環境を用意したのち、ベアメタル環境あるいは Docker 環境にて以下のコマンドを実行すると本番サーバーが起動します。
 
-以下のデプロイボタンから、 Vercel に Next.js プロジェクトを作成してデプロイすることができます。
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fnpocccties%2Fchiloportal%2Ftree%2Fmain%2Ffrontend)
-
-詳細は [Next.js の公式ドキュメント](https://nextjs.org/docs/deployment#managed-nextjs-with-vercel)を参照してください。
-
-### セルフホスティング
-
-動作環境を用意したのち、本番環境にて以下のコマンドを実行すると本番サーバーが起動します。
+### ベアメタル環境
 
 ```shell
 cat << EOL > .env # 環境変数の用意
@@ -126,6 +107,17 @@ cat << EOL > .env # 環境変数の用意
 corepack yarn install --immutable # NPM パッケージのインストール
 corepack yarn build # アプリケーションのビルド
 corepack yarn start # 本番サーバーの起動
+```
+
+### Docker 環境
+
+```shell
+cat << EOL > .env # 環境変数の用意
+> NEXT_PUBLIC_API_BASE_URL=<API のベースとなる URL>
+> NEXT_PUBLIC_MOODLE_DASHBOARD_URL=<Moodle ダッシュボードの URL>
+> EOL
+docker build -t frontend . # Docker イメージのビルド
+docker run --rm -p 3000:3000 frontend # Docker コンテナの起動
 ```
 
 詳細は [Next.js の公式ドキュメント](https://nextjs.org/docs/deployment#self-hosting)を参照してください。
