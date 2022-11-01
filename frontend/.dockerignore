@@ -1,4 +1,5 @@
 .dockerignore
-.env*
+.env.*
+!.env.production
 Dockerfile
 node_modules
