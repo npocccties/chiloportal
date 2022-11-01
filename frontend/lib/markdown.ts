@@ -20,6 +20,7 @@ export async function readMarkdowns(
   sort: boolean = false
 ): Promise<Error | Markdown[]> {
   const filenames = await readdir(dirpath);
+  if (filenames.length === 1 && filenames[0] === ".keep") return [];
   const files = await Promise.all(
     filenames.map((filename) =>
       read(join(dirpath, filename), "utf8").then(

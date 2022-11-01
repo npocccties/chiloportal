@@ -5,7 +5,9 @@ import addFormats from "ajv-formats";
 import { Config } from "schemas/config";
 
 export async function readConfig(): Promise<Error | Config> {
-  const file = await readFile("config.yaml", "utf8");
+  const file = await readFile("config.yaml", "utf8").catch(
+    () => "recommendedWisdomBadgesIds: []\nlearningContents: []\n"
+  );
   const config = YAML.parse(file);
   const ajv = new Ajv();
   addFormats(ajv);
