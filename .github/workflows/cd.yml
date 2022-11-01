@@ -23,6 +23,7 @@ jobs:
           script: |
             cd /opt
             sudo git clone https://github.com/npocccties/chiloportal.git >& /dev/null
+            sudo cp .env.manual-ssl-certs chiloportal/backend/.env
             cd chiloportal
             sudo chmod 755 deploy.sh
-            ./deploy.sh /opt/.env.manual-ssl-certs
+            ./deploy.sh
