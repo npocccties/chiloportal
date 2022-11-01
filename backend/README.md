@@ -64,6 +64,10 @@
    git clone https://github.com/npocccties/chiloportal.git
    ```
    * 既にディレクトリが存在するならば `sudo rm -rf chiloportal` にて削除してください
+1. 環境変数を定義した `.env` を backend ディレクトリに配置
+   * 開発サーバー: `sudo cp chiloportal/backend/.env.dev-server chiloportal/backend/.env`
+   * 本番サーバー: `sudo cp .env.production chiloportal/backend/.env`
+   * 上記 `.env.production` は Public リポジトリに登録せずに Private リポジトリ等で管理してください
 1. chiloportal へ移動
    ```
    cd chiloportal
@@ -74,34 +78,31 @@
    ```
 1. `deploy.sh` の実行
    ```
-   ./deploy.sh {環境変数を記載した .envから始まるファイル名}
+   ./deploy.sh
    ```
    * 権限付与後の `deploy.sh` は何度でも実行可能です
    * `deploy.sh` を実行すると chiloportal 内の変更は全て取り消されます
-   * 開発サーバー: `./deploy.sh .env.dev-server`
-   * 本番サーバー: `./deploy.sh /home/admin/.env.production`
-   * 上記 `.env.production` は Public リポジトリに登録せずに Private リポジトリ等で管理してください
 1. 備考  
    コンテナ起動  
    ```
-   chiloportal/backend/server_start.sh {環境変数を記載した .envから始まるファイル名}
+   chiloportal/backend/server_start.sh
    ```
 
    コンテナ停止  
    ```
-   chiloportal/backend/server_stop.sh {環境変数を記載した .envから始まるファイル名}
+   chiloportal/backend/server_stop.sh
    ```
    * DBが `/var/chiloportal.dump` にバックアップされます  
 
    コンテナ再起動  
    ```
-   chiloportal/backend/server_restart.sh {環境変数を記載した .envから始まるファイル名}
+   chiloportal/backend/server_restart.sh
    ```
    * `server_stop.sh` と `server_start.sh` を呼びます
 
    DBバックアップ  
    ```
-   chiloportal/backend/server_db_backup.sh {環境変数を記載した .envから始まるファイル名}
+   chiloportal/backend/server_db_backup.sh
    ```
    * DBが `/var/chiloportal.dump` にバックアップされます  
    

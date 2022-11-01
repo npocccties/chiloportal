@@ -15,5 +15,4 @@ docker run --rm -p 3000:3000 --name frontend --net app_network --detach frontend
 readonly BACKEND_DIR="${DIR}/backend"
 cd $BACKEND_DIR
 sudo chmod 755 server_*.sh
-readonly ENV_FILE=$1
-./server_restart.sh $ENV_FILE
+./server_restart.sh

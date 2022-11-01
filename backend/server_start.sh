@@ -4,11 +4,6 @@ echo $0
 DIR=$(cd $(dirname $0); pwd)
 echo $DIR
 cd $DIR
-readonly ENV_FILE=$1
-sudo cp $ENV_FILE .env
-readonly DOCKER_COMPOSE_YML=$2
-echo $DOCKER_COMPOSE_YML
-sudo cp $DOCKER_COMPOSE_YML docker-compose.yml
 docker-compose up -d
 /bin/sh ./server_db_restore.sh
 # コンテナ作成時に requirements.txt から django-cors-headers をインストールしても /usr/local/lib/python3.9/site-packages にインストールされていないので、
