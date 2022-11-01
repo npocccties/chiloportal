@@ -92,7 +92,10 @@ export default function Top({
             {!portalCategoriesError && portalCategories
               ? portalCategories.map((portalCategory) => (
                   <li key={portalCategory.portal_category_id}>
-                    <PortalCategoryCard portalCategory={portalCategory} />
+                    <PortalCategoryCard
+                      className="h-full"
+                      portalCategory={portalCategory}
+                    />
                   </li>
                 ))
               : [...Array(3)].map((_, index) => (
