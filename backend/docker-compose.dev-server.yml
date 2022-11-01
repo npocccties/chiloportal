@@ -12,7 +12,7 @@ services:
     networks:
       - app_network
     environment:
-      FORCE_RENEW: 'true'
+      # FORCE_RENEW: 'true'
       STAGE: production
       DOMAINS: '${ALLOWED_HOSTS} -> http://web:8080/'
     depends_on:
