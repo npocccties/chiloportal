@@ -13,3 +13,5 @@ fi
 sudo cp $DOCKER_COMPOSE_YML docker-compose.yml
 /bin/sh server_stop.sh
 /bin/sh server_start.sh
+
+#test
