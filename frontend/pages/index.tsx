@@ -1,10 +1,9 @@
-import { readFile } from "node:fs/promises";
-import YAML from "yaml";
 import { GetStaticPropsResult } from "next";
 import Error from "next/error";
 import { BadgeDetail2 } from "api/@types";
 import Template from "templates/Top";
 import { readMarkdowns, Markdown } from "lib/markdown";
+import { readConfig } from "lib/config";
 
 type ErrorProps = {
   title: string;
@@ -24,9 +23,10 @@ export async function getStaticProps(): Promise<
   if (markdowns instanceof globalThis.Error)
     return { props: { title: markdowns.message, statusCode: 500 } };
   const posts = markdowns.map((markdown) => markdown.data.matter);
-  const config = await readFile("config.yaml", "utf8");
-  const { recommendedWisdomBadgesIds = [], learningContents = [] } =
-    YAML.parse(config);
+  const config = await readConfig();
+  if (config instanceof globalThis.Error)
+    return { props: { title: config.message, statusCode: 500 } };
+  const { recommendedWisdomBadgesIds = [], learningContents = [] } = config;
   return {
     props: {
       posts,
