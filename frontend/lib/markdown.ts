@@ -22,11 +22,13 @@ export async function readMarkdowns(
   const filenames = await readdir(dirpath);
   if (filenames.length === 1 && filenames[0] === ".keep") return [];
   const files = await Promise.all(
-    filenames.map((filename) =>
-      read(join(dirpath, filename), "utf8").then(
-        (file) => matter(file, { strip: true }) as Markdown
+    filenames
+      .filter((filename) => filename !== ".keep")
+      .map((filename) =>
+        read(join(dirpath, filename), "utf8").then(
+          (file) => matter(file, { strip: true }) as Markdown
+        )
       )
-    )
   );
   const ajv = new Ajv();
   addFormats(ajv);
