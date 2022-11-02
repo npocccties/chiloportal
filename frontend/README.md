@@ -57,10 +57,10 @@ overrides ディレクトリに静的コンテンツを配置した場合、そ�
 各静的コンテンツについて以下の条件で参照先を切り替えます。
 
 - config.yaml: overrides/config.yaml が存在するか否か
-- {,overrides/}contents/\*.md: overrides/contents ディレクトリが存在するか否か
-- {,overrides/}posts/\*.md: overrides/posts ディレクトリが存在するか否か
+- contents/\*.md: overrides/contents ディレクトリが存在するか否か
+- posts/\*.md: overrides/posts ディレクトリが存在するか否か
 
-### {,overrides/}config.yaml
+### config.yaml あるいは overrides/config.yaml
 
 #### recommendedWisdomBadgesIds
 
@@ -87,11 +87,11 @@ learningContents:
 
 ### マークダウンファイル
 
-#### {,overrides/}contents/\*.md
+#### contents/\*.md あるいは overrides/contents/\*.md
 
 静的なページとして表示するマークダウンファイルを記述します
 
-#### {,overrides/}posts/\*.md
+#### posts/\*.md あるいは overrides/contents/\*.md
 
 おしらせとして表示するマークダウンファイルを記述します
 
