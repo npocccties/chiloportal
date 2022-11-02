@@ -54,6 +54,6 @@ lib/$path.ts
 public/images/*
 !public/images/mock*
 
-# posts
-posts/*
-!posts/.keep
+# overrides
+overrides/*
+!overrides/.keep
