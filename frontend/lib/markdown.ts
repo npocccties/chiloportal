@@ -12,7 +12,7 @@ export type Markdown = VFile & { data: Required<VFile["data"]> };
 /**
  * ディレクトリ内のマークダウンファイルの内容を取得する関数
  * @params dirname マークダウンファイルが存在するディレクトリ名
- * @sort 公開日順にソートするか否か
+ * @params sort 公開日順にソートするか否か
  * @returns VFile の配列
  */
 export async function readMarkdowns(
