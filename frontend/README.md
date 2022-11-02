@@ -91,7 +91,7 @@ learningContents:
 
 静的なページとして表示するマークダウンファイルを記述します
 
-#### posts/\*.md あるいは overrides/contents/\*.md
+#### posts/\*.md あるいは overrides/posts/\*.md
 
 おしらせとして表示するマークダウンファイルを記述します
 
