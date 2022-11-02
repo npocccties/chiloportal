@@ -28,7 +28,7 @@ sudo mkdir -p ${DUMP_BACKUP_DIR}
 DUMP_BACKUP_PATH="${DUMP_BACKUP_DIR}/${DUMP_FNAME}_${DATE}.tar.gz"
 echo $DUMP_BACKUP_PATH
 sudo rm -rf $DUMP_BACKUP_PATH >& /dev/null
-sudo tar zcf $DUMP_BACKUP_PATH ${DUMP_PATH}
+sudo tar zcf $DUMP_BACKUP_PATH ${DUMP_FNAME}
 
 # 削除する日付を取得する
 DELETE_DAY=$(($DUMP_BACKUP_COUNT + 1))
