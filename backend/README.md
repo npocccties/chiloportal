@@ -104,7 +104,9 @@
    ```
    chiloportal/backend/server_db_backup.sh
    ```
-   * DBが `/var/chiloportal.dump` にバックアップされます  
+   * DBが `/var/chiloportal.dump` にダンプ出力されます  
+   * 上記ファイルは、環境変数 `DUMP_BACKUP_DIR` のディレクトリへ .tar.gz 形式で圧縮および格納されます
+   * 古い圧縮ファイルは削除されます（環境変数 `DUMP_BACKUP_COUNT` で保持する期間を日数で指定）
    
    DBリストア  
    ```
@@ -167,6 +169,8 @@
 |PER_PAGE|1ページあたりのデータ数|APIのクエリパラメータとしてページ番号(page_number)が指定可能な場合、同APIの1ページあたりのデータ数|
 |SSL_CERTS_DIR|サーバー証明書の配置ディレクトリ|・ディレクトリの末尾には `/` は付与しないこと<br>・本番環境では下記の命名でファイルを配置しておくこと<br>　`signed.crt`: サーバー証明書<br>　`domain.key`: サーバー証明書の秘密鍵|
 |LETS_ENCRYPT|無料のSSL証明書の要否|無料のSSL証明書を使用するか否か<br>`true`: 使用する ※動作確認用<br>`false`: 使用しない ※本番リリース用|
+|DUMP_BACKUP_DIR|DBの圧縮ファイルのバックアップディレクトリ（絶対パス指定）|DBバックアップを実行すると `/var/chiloportal.dump` をダンプ出力するが、そのダンプファイルを下記命名で圧縮したうえで左記ディレクトリに格納する<br>`chiloportal.dump_{yyyyMMdd}.tar.gz`|
+|DUMP_BACKUP_COUNT|DBの圧縮ファイルの保持日数|・保持日数を経過したDBの圧縮ファイルは削除される (例)1週間、保持したい場合は `7` を指定する<br>・削除の契機は、DBバックアップの実行時|
 
 
 # DBの確認
@@ -228,6 +232,12 @@ https://dev-portal.oku.cccties.org/admin
 * DBサーバー: PostgresSQL
 ### SSL証明書
 * Let's Encrypt（無料SSL証明書）
+### DBの日次バックアップ
+* `crontab -e` コマンドで夜間にバックアップを行う
+* cron 式は以下の通り
+   ```
+   0 4 * * * /opt/chiloportal/backend/server_db_backup.sh
+   ```
 
 ## 本番サーバー
 ### サーバー構成
@@ -237,4 +247,3 @@ https://dev-portal.oku.cccties.org/admin
 * 環境変数 `SSL_CERTS_DIR` のディレクトリにあらかじめ下記のファイルを配置してください
   * `signed.crt`: サーバー証明書
   * `domain.key`: サーバー証明書の秘密鍵
-

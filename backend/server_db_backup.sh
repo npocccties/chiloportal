@@ -10,4 +10,5 @@ docker-compose exec -T db pg_dump -h 127.0.0.1 \
 BACKUP_FILE="${DIR}/postgresql/data/chiloportal.dump"
 if [ -e $BACKUP_FILE ]; then
     sudo cp $BACKUP_FILE /var
+    /bin/sh ./server_db_backup_dump.sh
 fi
