@@ -11,24 +11,26 @@ export type Markdown = VFile & { data: Required<VFile["data"]> };
 
 /**
  * ディレクトリ内のマークダウンファイルの内容を取得する関数
- * @params dirpath マークダウンファイルが存在するディレクトリのパス
- * @sort 公開日順にソートするか否か
+ * @params dirname マークダウンファイルが存在するディレクトリ名
+ * @params sort 公開日順にソートするか否か
  * @returns VFile の配列
  */
 export async function readMarkdowns(
-  dirpath: string,
+  dirname: string,
   sort: boolean = false
 ): Promise<Error | Markdown[]> {
-  const filenames = await readdir(dirpath);
-  if (filenames.length === 1 && filenames[0] === ".keep") return [];
+  const overrides = await readdir("overrides");
+  const path = overrides.some((override) => override === dirname)
+    ? join("overrides", dirname)
+    : dirname;
+  const filenames = await readdir(path);
+  if (filenames.length === 0) return [];
   const files = await Promise.all(
-    filenames
-      .filter((filename) => filename !== ".keep")
-      .map((filename) =>
-        read(join(dirpath, filename), "utf8").then(
-          (file) => matter(file, { strip: true }) as Markdown
-        )
+    filenames.map((filename) =>
+      read(join(path, filename), "utf8").then(
+        (file) => matter(file, { strip: true }) as Markdown
       )
+    )
   );
   const ajv = new Ajv();
   addFormats(ajv);

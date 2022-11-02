@@ -50,7 +50,17 @@ docker run --rm -p 3000:3000 frontend # Docker コンテナの起動
 
 ## 静的コンテンツ
 
-### config.yaml
+### 上書き
+
+overrides ディレクトリに静的コンテンツを配置した場合、そちらを参照して表示します。overrides ディレクトリ外の静的コンテンツについては参照しなくなります。
+
+各静的コンテンツについて以下の条件で参照先を切り替えます。
+
+- config.yaml: overrides/config.yaml が存在するか否か
+- {,overrides/}contents/\*.md: overrides/contents ディレクトリが存在するか否か
+- {,overrides/}posts/\*.md: overrides/posts ディレクトリが存在するか否か
+
+### {,overrides/}config.yaml
 
 #### recommendedWisdomBadgesIds
 
@@ -77,11 +87,11 @@ learningContents:
 
 ### マークダウンファイル
 
-#### contents/\*.md
+#### {,overrides/}contents/\*.md
 
 静的なページとして表示するマークダウンファイルを記述します
 
-#### posts/\*.md
+#### {,overrides/}posts/\*.md
 
 おしらせとして表示するマークダウンファイルを記述します
 

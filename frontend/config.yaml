@@ -1,0 +1,9 @@
+recommendedWisdomBadgesIds:
+  - 1
+  - 2
+  - 3
+learningContents:
+  - name: Example 1
+    url: https://example.com/
+  - name: Example 2
+    url: https://example.com/
