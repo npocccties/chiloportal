@@ -19,10 +19,10 @@ function SearchForm({ className, size = "medium" }: Props) {
     router.push(pagesPath.search.$url({ query: { q: keyword } }));
   };
   return (
-    <form className={className}>
+    <form className={clsx("inline-flex gap-1 itemc-center", className)}>
       <input
         className={clsx(
-          "jumpu-input mr-2",
+          "jumpu-input flex-1 mr-2",
           { ["text-sm"]: size === "small" },
           { ["text-lg"]: size === "large" }
         )}
