@@ -1,7 +1,7 @@
 on:
   pull_request:
-    paths-ignore:
-      - "backend/**"
+    paths:
+      - "frontend/**"
 defaults:
   run:
     working-directory: frontend
