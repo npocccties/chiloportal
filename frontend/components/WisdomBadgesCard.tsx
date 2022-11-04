@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import Link from "next/link";
 import Image from "next/image";
 import { BadgeDetail2 } from "api/@types";
@@ -5,39 +6,39 @@ import { pagesPath } from "lib/$path";
 import { getImageUrl } from "lib/issuer";
 
 type Props = {
+  className?: string;
   wisdomBadges: BadgeDetail2;
 };
 
-function WisdomBadgesCard({ wisdomBadges }: Props) {
+function WisdomBadgesCard({ wisdomBadges, className }: Props) {
   const url = getImageUrl(wisdomBadges.issuer_url);
   return (
     <Link
       href={pagesPath.wisdom_badges
         ._wisdomBadgesId(wisdomBadges.badges_id)
         .$url()}
-      className="jumpu-card block"
+      className={clsx("jumpu-card block hover:border-primary-700", className)}
     >
-      <div className="relative h-16 bg-gradient-to-r from-orange-300 to-orange-400 mb-6">
+      <div className="flex flex-col items-center justify-center gap-2 pt-4">
         <Image
-          className="absolute left-1/2 bottom-0 -translate-x-1/2 translate-y-1/2"
           src={`/images/${wisdomBadges.image}`}
           width={80}
           height={80}
           alt=""
         />
+        <div className="jumpu-tag bg-white text-gray-700 border border-gray-300 mb-2">
+          能力バッジ
+        </div>
       </div>
       <section className="px-4 pb-4">
-        <div className="jumpu-tag mb-2">能力バッジ</div>
-        <h3 className="text-xl mb-2 line-clamp-2">{wisdomBadges.name}</h3>
+        <h3 className="text-xl text-gray-700 mb-2">{wisdomBadges.name}</h3>
         {"knowledge_badges_list" in wisdomBadges.detail && (
-          <div className="jumpu-tag mb-2">
+          <div className="jumpu-tag bg-gray-50 text-gray-700 border-none hover:border-none mb-2">
             知識バッジ{wisdomBadges.detail.knowledge_badges_list.length}
             つで獲得
           </div>
         )}
-        <p className="text-sm text-gray-600 mb-2 line-clamp-5">
-          {wisdomBadges.description}
-        </p>
+        <p className="text-sm text-gray-600 mb-2">{wisdomBadges.description}</p>
         <p className="text-sm flex gap-2">
           {/* eslint-disable @next/next/no-img-element */}
           {/*
