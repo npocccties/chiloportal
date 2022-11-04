@@ -1,8 +1,8 @@
 #!/bin/sh
-if [ $# != 2 ]; then
+if [ $# -eq 0 ]; then
     echo "使用方法"
     echo "第1引数：CSVファイルのパス（絶対/相対）"
-    echo "第2引数：フロントエンドのビルドを行うか否か（1: ビルドする, 1以外: ビルドしない）"
+    echo "第2引数：フロントエンドのビルドを行うか否かで省略可（--build: ビルドする ※デフォルト, --no-build 未指定時: ビルドしない）"
     echo ""
     echo "CSVファイル書式："
     echo "能力バッジの取得URL,能力バッジの取得URLに引き渡すID,ポータル独自カテゴリID"
@@ -12,8 +12,12 @@ if [ $# != 2 ]; then
     echo "https://dev-lms.oku.cccties.org/badges/badge_json.php,20,101"
     echo "https://dev-lms.oku.cccties.org/badges/badge_json.php,21,101"
     echo ""
-    echo "本スクリプトの使用例："
-    echo "./import.sh test.csv 1"
+    echo "ビルド時の使用例："
+    echo "./import.sh test.csv"
+    echo "./import.sh test.csv --build"
+    echo ""
+    echo "ビルドなし時の使用例："
+    echo "./import.sh test.csv --no-build"
     exit 1
 fi
 echo $0
@@ -23,7 +27,6 @@ cd $DIR
 
 echo $1
 echo $2
-echo $3
 
 readonly BACKEND_DIR="${DIR}/backend"
 cd $BACKEND_DIR
@@ -35,7 +38,10 @@ if [ $RESULT -eq 1 ]; then
 fi
 
 FRONT_BUILD=$3
-if [ $FRONT_BUILD -eq 1 ]; then
+if [ -z "$FRONT_BUILD" ]; then
+    FRONT_BUILD="--build"
+fi
+if [ "$FRONT_BUILD" == "--build" ]; then
     echo "フロントエンドのビルドを開始します。"
     readonly FRONTEND_DIR="${DIR}/frontend"
     cd $FRONTEND_DIR
