@@ -86,11 +86,14 @@ export default function Top({
           <p className="text-sm text-gray-700 mb-4">
             あなたが認められる能力バッジを獲得するために、いくつかの知識バッジを得なければなりません。少ない知識バッジで獲得できる能力バッジがあります。
           </p>
-          <ul className="grid grid-cols-[repeat(auto-fill,275px)] gap-4">
+          <ul className="flex snap-x overflow-x-scroll pb-2 md:pb-0 px-4 md:px-0 -mx-4 md:mx-0 md:grid md:grid-cols-2 xl:grid-cols-3 gap-4">
             {!wisdomBadgesListError && wisdomBadgesList
               ? wisdomBadgesList.map((wisdomBadges) => (
                   <li key={wisdomBadges.badges_id}>
-                    <WisdomBadgesCard wisdomBadges={wisdomBadges} />
+                    <WisdomBadgesCard
+                      className="h-full w-[300px] md:w-auto snap-center"
+                      wisdomBadges={wisdomBadges}
+                    />
                   </li>
                 ))
               : [...Array(3)].map((_, index) => (
