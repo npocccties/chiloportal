@@ -131,11 +131,11 @@ export default function Top({
         </section>
         <section className="jumpu-card p-6 mb-8">
           <h2 className="text-xl text-gray-700 font-bold mb-4">
-            教員育成指標から探す
+            教員育成指標から探せる能力バッジ
           </h2>
           <ul
             className={clsx({
-              ["list-disc pl-6 text-gray-700 md:columns-2 lg:columns-3"]:
+              ["list-disc pl-6 text-primary-700 md:columns-2 lg:columns-3"]:
                 consumers,
             })}
             aria-busy={!consumers}
@@ -171,7 +171,7 @@ export default function Top({
           <p className="text-gray-700 mb-4">
             バッジは取得できませんが、以下のコンテンツも提供しています。
           </p>
-          <ul className="list-disc pl-8 text-gray-700 md:columns-2 lg:columns-3">
+          <ul className="list-disc pl-8 text-primary-700 md:columns-2 lg:columns-3">
             {learningContents.map((learningContent, index) => (
               <li key={index} className="break-inside-avoid">
                 <a
