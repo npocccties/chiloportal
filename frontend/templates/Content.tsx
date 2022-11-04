@@ -6,7 +6,19 @@ import Container from "components/Container";
 import { pagesPath } from "lib/$path";
 
 const components = {
-  img: (props: any) => <Image alt="" {...props} />,
+  img: (props: any) => {
+    try {
+      new URL(props.src);
+      /* eslint-disable @next/next/no-img-element */
+      /*
+        NOTE: 事前に許可したホスト以外画像最適化の対象にできない
+        See Also: https://nextjs.org/docs/messages/next-image-unconfigured-host
+      */
+      return <img alt="" {...props} />;
+    } catch (_) {
+      return <Image alt="" {...props} />;
+    }
+  },
 };
 
 function Content({ source, matter }: Props) {

@@ -9,7 +9,7 @@ import { Pluggable } from "unified";
 const rehypeImageSize: Pluggable = () => {
   return (tree) => {
     visit(tree, "element", (node) => {
-      if (node.tagName === "img") {
+      if (node.tagName === "img" && node.properties.src.startsWith("/")) {
         const { width, height } = sizeOf("public" + node.properties.src);
         node.properties.width = width;
         node.properties.height = height;
