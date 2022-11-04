@@ -86,7 +86,7 @@
    ```
    ./import.sh {能力バッジを取得するURL} {左記URLに与えるIDとポータル独自カテゴリの主キーを記載したCSVファイルパス} {フロントエンドのビルド指定}
    ```
-   * 例： `./import.sh https://dev-lms.oku.cccties.org/badges/badge_json.php /opt/chiloportal/backend/test.csv 1`
+   * 例： `./import.sh https://dev-lms.oku.cccties.org/badges/badge_json.php /opt/test.csv 1`
    * CSV書式：能力バッジを取得するURLに与えるパラメータ,ポータル独自カテゴリの主キー
    * CSVヘッダー：無し
    * CSVファイル凡例：  
