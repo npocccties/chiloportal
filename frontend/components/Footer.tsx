@@ -22,7 +22,7 @@ function Footer({ className }: Props) {
           </Link>
         </div>
         <section>
-          <h2 className="text-gray-400 text-xs mb-2">育成指標から探す</h2>
+          <h2 className="text-gray-400 text-xs mb-2">教員育成指標から探す</h2>
           <ul className="text-gray-700 leading-7" aria-busy={!consumers}>
             {!consumersError && consumers
               ? consumers.map((consumer) => (
@@ -32,7 +32,7 @@ function Footer({ className }: Props) {
                         ._consumerId(consumer.consumer_id)
                         .$url()}
                     >
-                      {consumer.name}の育成指標
+                      {consumer.name}の教員育成指標
                     </Link>
                   </li>
                 ))

@@ -9,7 +9,7 @@ export default function Frameworks({
   frameworks,
   stagesPerFrameworks,
 }: Props) {
-  const title = `${consumer.name}の育成指標`;
+  const title = `${consumer.name}の教員育成指標`;
   return (
     <Container as="article">
       <Breadcrumbs

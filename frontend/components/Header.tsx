@@ -48,7 +48,7 @@ function Header({ className }: Props) {
       <Link href={pagesPath.$url()} className="px-2 mr-4">
         <Image src="/logo.png" width={142} height={44} alt="" />
       </Link>
-      <Popover className="hidden lg:block" title="育成指標から探す">
+      <Popover className="hidden lg:block" title="教員育成指標から探す">
         {({ close }) => (
           <ul
             role="menu"
@@ -65,7 +65,7 @@ function Header({ className }: Props) {
                       .$url()}
                     className="block px-3 py-2 hover:bg-primary-50"
                   >
-                    {consumer.name}の育成指標
+                    {consumer.name}の教員育成指標
                   </Link>
                 </li>
               ))

@@ -70,7 +70,7 @@ export default function WisdomBadges({
             </span>
           </p>
           <button className="jumpu-text-button text-sm -ml-4" onClick={onOpen}>
-            認定している教育委員会の育成指標を見る
+            認定している教育委員会の教員育成指標を見る
           </button>
           <WisdomBadgesDialog
             wisdomBadges={wisdomBadges}
