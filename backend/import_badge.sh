@@ -8,7 +8,7 @@ echo "URL: ${URL}"
 if [ $# != 2 ]; then
     echo "使用方法"
     echo "第1引数：能力バッジの取得URL"
-    echo "第2引数：能力バッジの取得URLに引き渡すIDとポータル独自カテゴリIDを記載したCSVファイルのパス"
+    echo "第2引数：能力バッジの取得URLに引き渡すIDとポータル独自カテゴリIDを記載したCSVファイルのパス（絶対/相対）"
     echo ""
     echo "CSVファイル書式："
     echo "能力バッジの取得URLに引き渡すID,ポータル独自カテゴリID"
@@ -35,6 +35,7 @@ while read line; do
     lines+=("$line")
 done < $CSV_PATH
 
+exit_code=0
 messages=("OK/NG,badge_json.php?id,portal_category.id,wisdom_badges.id")
 for line in ${lines[@]}; do
     echo "${line}"
@@ -46,6 +47,7 @@ for line in ${lines[@]}; do
         message="OK,${json_badge_id},${portal_category_id},${wisdom_badge_id}"
     else
         message="NG,${json_badge_id},${portal_category_id},-"
+        exit_code=1
     fi
     messages+=("$message")
 done < $CSV_PATH
@@ -57,4 +59,4 @@ for message in ${messages[@]}; do
     echo "${message}" | sudo tee -a $RESULT_CSV_FNAME
 done
 
-exit 0
+exit $exit_code

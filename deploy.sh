@@ -8,11 +8,10 @@ docker network create -d bridge app_network
 # frontend
 readonly FRONTEND_DIR="${DIR}/frontend"
 cd $FRONTEND_DIR
-docker build -t frontend .
-docker container stop frontend 2>&1 || true
-docker run --rm -p 3000:3000 --name frontend --net app_network --detach frontend
+sudo chmod 755 build.sh
+./build.sh
 # backend
 readonly BACKEND_DIR="${DIR}/backend"
 cd $BACKEND_DIR
-sudo chmod 755 server_*.sh
+sudo chmod 755 *.sh
 ./server_restart.sh
