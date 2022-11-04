@@ -84,7 +84,7 @@
    * `deploy.sh` を実行すると chiloportal 内の変更は全て取り消されます
 1. 能力バッジのインポート
    ```
-   ./import.sh {CSVファイルパス ※以降、インポートCSV} {フロントエンドのビルドを行うか否かで省略可（--build: ビルドする ※デフォルト, --no-build 未指定時: ビルドしない）}
+   ./import.sh {CSVファイルパス ※以降、インポートCSV} {フロントエンドのビルドを行うか否かで省略可（--build: ビルドする ※デフォルト, --no-build: ビルドしない）}
    ```
    * ビルド時使用例： `./import.sh /opt/test.csv`
    * ビルド時使用例： `./import.sh /opt/test.csv --build`
