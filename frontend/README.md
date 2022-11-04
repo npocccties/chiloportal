@@ -64,7 +64,7 @@ overrides ディレクトリに静的コンテンツを配置した場合、そ�
 
 #### recommendedWisdomBadgesIds
 
-おすすめのバッジとして表示する能力バッジを指定します。
+おすすめのバッジとして表示する能力バッジの id を指定します。指定可能な id の件数に上限はありません。
 
 ```yaml
 recommendedWisdomBadgesIds:
@@ -75,7 +75,7 @@ recommendedWisdomBadgesIds:
 
 #### learningContents
 
-その他のコンテンツとして表示する学習コンテンツを指定します。
+その他のコンテンツとして表示する学習コンテンツを指定します。指定可能な学習コンテンツの件数に上限はありません。
 
 ```yaml
 learningContents:
@@ -89,11 +89,11 @@ learningContents:
 
 #### contents/\*.md あるいは overrides/contents/\*.md
 
-静的なページとして表示するマークダウンファイルを記述します。
+静的なページとして表示するマークダウンファイルを記述します。 `<url origin>/<slug>` の静的なページが生成されます。配置されたマークダウンファイルへの動線（ハイパーリンク）は用意されないため、別途動線の実装が必要です。
 
 #### posts/\*.md あるいは overrides/posts/\*.md
 
-おしらせとして表示するマークダウンファイルを記述します。
+おしらせとして表示するマークダウンファイルを記述します。 `<url origin>/posts/<slug>` の静的なページが生成されます。トップページ、おしらせ一覧ページに配置されたマークダウンファイルへの動線（ハイパーリンク）が一覧されます。一覧は公開日降順でソートされます。公開日が未設定の場合は `"1970-01-01"` とみなします。公開日が同じ場合 [fsPromises.readdir()](https://nodejs.org/api/fs.html#fspromisesreaddirpath-options) で得られる結果に依存した並びになります。公開日時は一覧の並び以外に影響しません。
 
 #### フロントマッター
 
