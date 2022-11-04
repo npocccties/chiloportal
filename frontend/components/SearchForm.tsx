@@ -1,12 +1,14 @@
+import clsx from "clsx";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { pagesPath } from "lib/$path";
 
 type Props = {
   className?: string;
+  size?: "small" | "medium" | "large";
 };
 
-function SearchForm({ className }: Props) {
+function SearchForm({ className, size = "medium" }: Props) {
   const [keyword, setKeyword] = useState("");
   const router = useRouter();
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,13 +21,25 @@ function SearchForm({ className }: Props) {
   return (
     <form className={className}>
       <input
-        className="jumpu-input mr-2"
+        className={clsx(
+          "jumpu-input mr-2",
+          { ["text-sm"]: size === "small" },
+          { ["text-lg"]: size === "large" }
+        )}
         type="search"
         name="q"
         placeholder="学びたいキーワード"
         onInput={handleInput}
       />
-      <button className="jumpu-button" type="submit" onClick={handleClick}>
+      <button
+        className={clsx(
+          "jumpu-button",
+          { ["text-sm"]: size === "small" },
+          { ["text-lg"]: size === "large" }
+        )}
+        type="submit"
+        onClick={handleClick}
+      >
         検索
       </button>
     </form>
