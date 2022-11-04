@@ -141,14 +141,17 @@ function Chat({ className }: Props) {
                     </li>
                   ))}
                 </ul>
-                <p>
-                  <Link
-                    href={pagesPath.search.$url({ query: { q: textarea } })}
-                    className="text-primary-700"
-                  >
-                    …他{total_count}件の検索結果を確認する
-                  </Link>
-                </p>
+                {total_count > 3 && (
+                  <p>
+                    <Link
+                      href={pagesPath.search.$url({ query: { q: textarea } })}
+                      className="text-primary-700"
+                    >
+                      …他{total_count - badgesList.slice(0, 3).length}
+                      件の検索結果を確認する
+                    </Link>
+                  </p>
+                )}
               </>
             ),
           });
