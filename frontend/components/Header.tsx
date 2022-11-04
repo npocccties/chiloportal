@@ -43,7 +43,12 @@ function Header({ className }: Props) {
     <header className={clsx("bg-white", className)}>
       <div className="flex items-center gap-2 px-8 py-2 mx-auto max-w-6xl">
         <Link href={pagesPath.$url()} className="px-2 mr-4">
-          <Image src="/logo.svg" width={69} height={27} alt="" />
+          <Image
+            src="/logo.svg"
+            width={69}
+            height={27}
+            alt="トップページに戻る"
+          />
         </Link>
         <Popover className="hidden lg:block" title="カテゴリから探す">
           {({ close }) => (
