@@ -26,6 +26,16 @@ export default function Top({
     <>
       <Container className="max-w-5xl" as="article">
         <header className="mb-8">
+          <Link
+            href={pagesPath._slug("concept").$url()}
+            className="flex gap-4 items-center px-6 py-3 rounded-xl border-2 border-primary-500 mb-4 hover:bg-primary-50"
+          >
+            <Icon className="text-primary-500 text-xl" icon="fa6-solid:bell" />
+            <span className="text-sm text-primary-700">
+              <span className="text-gray-700 mr-1">初めての方へ</span>
+              学べるしくみ - OKUTEPのコンセプト
+            </span>
+          </Link>
           <p className="text-sm text-gray-700 leading-7 mb-2">
             OKUTEPは誰もが自由に学べるオープンな学びの場です。
             <br />
