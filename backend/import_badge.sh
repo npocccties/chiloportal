@@ -7,10 +7,18 @@ readonly URL=$1
 echo "URL: ${URL}"
 if [ $# != 2 ]; then
     echo "使用方法"
-    echo "　第1引数：能力バッジの取得URL"
-    echo "　第2引数：能力バッジの取得URLに引き渡すIDとポータル独自カテゴリIDを記載したCSVファイルのパス"
+    echo "第1引数：能力バッジの取得URL"
+    echo "第2引数：能力バッジの取得URLに引き渡すIDとポータル独自カテゴリIDを記載したCSVファイルのパス"
     echo ""
-    echo "使用例："
+    echo "CSVファイル書式："
+    echo "能力バッジの取得URLに引き渡すID,ポータル独自カテゴリID"
+    echo ""
+    echo "CSVファイル凡例"
+    echo "19,101"
+    echo "20,101"
+    echo "21,101"
+    echo ""
+    echo "本スクリプトの使用例："
     echo "./import_badge.sh https://dev-lms.oku.cccties.org/badges/badge_json.php test.csv"
     exit 1
 fi
@@ -21,25 +29,32 @@ if [ ! -e $CSV_PATH ]; then
 fi
 echo "CSV_PATH: ${CSV_PATH}"
 
-wisdom_badge_id_array=()
-while read LINE; do
-    json_badge_id=`echo ${LINE} | cut -d , -f 1`
-    portal_category_id=`echo ${LINE} | cut -d , -f 2`
-    echo "${json_badge_id},${portal_category_id}"
-    import_result=`docker-compose exec -T app python /workspace/manage.py import_badge --url=${URL}?id=${json_badge_id} --pcid=${portal_category_id}`
-    echo ""
-    echo ""
-    echo ""
-    echo ""
-    echo ""
-    echo "$import_result"
-    wisdom_badge_id=`echo "$import_result" | sed -r "s/wisdom_badge.id: ([0-9]+)/\1/"`
-    echo $wisdom_badge_id
-    wisdom_badge_id_array+=($wisdom_badge_id)
+lines=()
+while read line; do
+    echo "${line}"
+    lines+=("$line")
 done < $CSV_PATH
-echo "wisdom_badge_id_array: ${wisdom_badge_id_array}"
-# LINE="wisdom_badge.id: 123"
-# RETVAL=`echo "$LINE" | sed -r "s/^wisdom_badge.id: ([0-9]+)/\1/"`
-# echo $RETVAL
+
+messages=("OK/NG,badge_json.php?id,portal_category.id,wisdom_badges.id")
+for line in ${lines[@]}; do
+    echo "${line}"
+    json_badge_id=`echo ${line} | cut -d , -f 1`
+    portal_category_id=`echo ${line} | cut -d , -f 2`
+    import_result=`docker-compose exec -T app python /workspace/manage.py import_badge --url=${URL}?id=${json_badge_id} --pcid=${portal_category_id}`
+    wisdom_badge_id=`echo "$import_result" | sed -e 's/[^0-9]//g'`
+    if [[ $import_result == *"OK"* ]]; then
+        message="OK,${json_badge_id},${portal_category_id},${wisdom_badge_id}"
+    else
+        message="NG,${json_badge_id},${portal_category_id},-"
+    fi
+    messages+=("$message")
+done < $CSV_PATH
+
+echo "インポート結果："
+readonly RESULT_CSV_FNAME="import_result.csv"
+sudo rm -rf $RESULT_CSV_FNAME
+for message in ${messages[@]}; do
+    echo "${message}" | sudo tee -a $RESULT_CSV_FNAME
+done
 
 exit 0
