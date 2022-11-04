@@ -24,7 +24,7 @@ export default function Top({
   );
   return (
     <>
-      <Container as="article">
+      <Container className="max-w-5xl" as="article">
         <header className="mb-8">
           <p className="text-sm text-gray-700 leading-7 mb-2">
             OKUTEPは誰もが自由に学べるオープンな学びの場です。
@@ -108,10 +108,13 @@ export default function Top({
           <h2 className="text-xl text-gray-700 font-bold mb-6">
             カテゴリから探せる能力バッジ
           </h2>
-          <ul className="grid grid-cols-[repeat(auto-fill,275px)] gap-4">
+          <ul className="md:grid md:grid-cols-2 xl:grid-cols-3">
             {!portalCategoriesError && portalCategories
               ? portalCategories.map((portalCategory) => (
-                  <li key={portalCategory.portal_category_id}>
+                  <li
+                    key={portalCategory.portal_category_id}
+                    className="border-b last:border-b-0 md:border-b-0 md:border-t md:border-r border-gray-300 md:[&:nth-child(2n)]:border-r-0 xl:[&:nth-child(2n)]:border-r xl:[&:nth-child(3n)]:border-r-0 md:[&:nth-child(-n+2)]:border-t-0 xl:[&:nth-child(-n+3)]:border-t-0"
+                  >
                     <PortalCategoryCard
                       className="h-full"
                       portalCategory={portalCategory}
