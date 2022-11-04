@@ -24,7 +24,10 @@ export default function Search({ keyword, wisdomBadgesList }: Props) {
           「{keyword}」に関連する能力バッジが{wisdomBadgesList.total_count}
           件あります
         </p>
-        <SearchForm />
+        <SearchForm
+          className="bg-primary-50 p-4 inline-block min-w-[75%]"
+          size="large"
+        />
       </header>
       <ul>
         {wisdomBadgesList.badges.map((wisdomBadges) => (
