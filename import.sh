@@ -37,7 +37,7 @@ if [ $RESULT -eq 1 ]; then
     exit 1
 fi
 
-FRONT_BUILD=$3
+FRONT_BUILD=$2
 if [ -z "$FRONT_BUILD" ]; then
     FRONT_BUILD="--build"
 fi
