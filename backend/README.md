@@ -72,9 +72,9 @@
    ```
    cd chiloportal
    ```
-1. `deploy.sh` に権限付与
+1. `*.sh` に権限付与
    ```
-   sudo chmod 755 deploy.sh
+   sudo chmod 755 *.sh
    ```
 1. `deploy.sh` の実行
    ```
@@ -82,6 +82,11 @@
    ```
    * 権限付与後の `deploy.sh` は何度でも実行可能です
    * `deploy.sh` を実行すると chiloportal 内の変更は全て取り消されます
+1. `import.sh` の実行
+   ```
+   ./import.sh {能力バッジを取得するURL} {左記URLのパラメータのIDとポータル独自カテゴリの主キーを記載したCSVファイルパス} {フロントエンドのビルド指定}
+   ```
+   * 例： `./import.sh https://dev-lms.oku.cccties.org/badges/badge_json.php /opt/chiloportal/backend/test.csv 1`
 1. 備考  
    コンテナ起動  
    ```
