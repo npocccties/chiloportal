@@ -43,9 +43,9 @@ for line in ${lines[@]}; do
     import_result=`docker-compose exec -T app python /workspace/manage.py import_badge --url=${url}?id=${json_badge_id} --pcid=${portal_category_id}`
     wisdom_badge_id=`echo "$import_result" | sed -e 's/[^0-9]//g'`
     if [[ $import_result == *"OK"* ]]; then
-        message="OK,${json_badge_id},${portal_category_id},${wisdom_badge_id}"
+        message="OK,${url},${json_badge_id},${portal_category_id},${wisdom_badge_id}"
     else
-        message="NG,${json_badge_id},${portal_category_id},-"
+        message="NG,${url},${json_badge_id},${portal_category_id},-"
         exit_code=1
     fi
     messages+=("$message")
