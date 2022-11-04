@@ -106,7 +106,7 @@ learningContents:
 
 #### posts/\*.md あるいは overrides/posts/\*.md
 
-おしらせとして表示するマークダウンファイルを記述します。 `<url origin>/posts/<slug>` の静的なページが生成されます。トップページ、おしらせ一覧ページに配置されたマークダウンファイルへの動線（ハイパーリンク）が一覧されます。一覧は公開日降順でソートされます。公開日が未設定の場合は `"1970-01-01"` とみなします。公開日が同じ場合 [fsPromises.readdir()](https://nodejs.org/api/fs.html#fspromisesreaddirpath-options) で得られる結果に依存した並びになります。公開日時は一覧の並び以外に影響しません。
+おしらせとして表示するマークダウンファイルを記述します。 `<url origin>/posts/<slug>` の静的なページが生成されます。トップページ、おしらせ一覧ページに配置されたマークダウンファイルへの動線（ハイパーリンク）が一覧されます。一覧は公開日降順でソートされます。公開日が未設定の場合は `"1970-01-01"` とみなします。公開日が同じ場合 [fsPromises.readdir()](https://nodejs.org/api/fs.html#fspromisesreaddirpath-options) で得られる結果に依存した並びになります。公開日は一覧の並び以外に影響しません。
 
 #### フロントマッター
 
