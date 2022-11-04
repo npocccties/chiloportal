@@ -211,7 +211,9 @@ class Command(BaseCommand):
             self.wisdom_badge_id = wisdom_badge.id
         self.create_knowledge_badges(alignments, wisdom_badge)
         logger.info("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-        logger.info(f"wisdom_badge.id: {self.wisdom_badge_id}")
+        msg = f"wisdom_badge.id: {self.wisdom_badge_id}"
+        logger.info(msg)
+        self.stdout.write(msg)
         logger.info("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
 
     def update_issuer(self, issuer_name, issuer_url, issuer_email):
