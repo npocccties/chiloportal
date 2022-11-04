@@ -1,10 +1,4 @@
 #!/bin/sh
-echo $0
-DIR=$(cd $(dirname $0); pwd)
-echo $DIR
-cd $DIR
-readonly URL=$1
-echo "URL: ${URL}"
 if [ $# != 2 ]; then
     echo "使用方法"
     echo "第1引数：能力バッジの取得URL"
@@ -22,6 +16,13 @@ if [ $# != 2 ]; then
     echo "./import_badge.sh https://dev-lms.oku.cccties.org/badges/badge_json.php test.csv"
     exit 1
 fi
+echo $0
+DIR=$(cd $(dirname $0); pwd)
+echo $DIR
+cd $DIR
+readonly URL=$1
+echo "URL: ${URL}"
+
 readonly CSV_PATH=$2
 if [ ! -e $CSV_PATH ]; then
     echo "${CSV_PATH} が存在しないため、処理継続できません。"

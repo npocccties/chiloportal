@@ -1,12 +1,4 @@
 #!/bin/sh
-echo $0
-DIR=$(cd $(dirname $0); pwd)
-echo $DIR
-cd $DIR
-
-echo $1
-echo $2
-echo $3
 if [ $# != 3 ]; then
     echo "使用方法"
     echo "第1引数：能力バッジの取得URL"
@@ -25,6 +17,14 @@ if [ $# != 3 ]; then
     echo "./import.sh https://dev-lms.oku.cccties.org/badges/badge_json.php test.csv 1"
     exit 1
 fi
+echo $0
+DIR=$(cd $(dirname $0); pwd)
+echo $DIR
+cd $DIR
+
+echo $1
+echo $2
+echo $3
 
 readonly BACKEND_DIR="${DIR}/backend"
 cd $BACKEND_DIR
