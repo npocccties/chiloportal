@@ -107,7 +107,7 @@ export default function Top({
           </ul>
         </section>
         <section className="jumpu-card px-4 py-6 mb-8">
-          <h2 className="text-2xl text-gray-700 mb-4">育成指標から探す</h2>
+          <h2 className="text-2xl text-gray-700 mb-4">教員育成指標から探す</h2>
           <ul
             className={clsx({
               ["list-disc pl-8 text-gray-700 md:columns-2 lg:columns-3"]:
@@ -124,7 +124,7 @@ export default function Top({
                       .$url()}
                     className="underline"
                   >
-                    {consumer.name}の育成指標
+                    {consumer.name}の教員育成指標
                   </Link>
                 </li>
               ))

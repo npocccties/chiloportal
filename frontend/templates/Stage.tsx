@@ -30,7 +30,7 @@ export default function Stage({
         nodes={[
           { name: "トップ", href: pagesPath.$url() },
           {
-            name: `${consumer.name}の育成指標`,
+            name: `${consumer.name}の教員育成指標`,
             href: pagesPath.consumers._consumerId(consumer.consumer_id).$url(),
           },
         ]}
@@ -49,7 +49,7 @@ export default function Stage({
           >
             <span className="mr-2">
               {consumer.name}
-              <span className="font-bold">育成指標のPDF</span>
+              <span className="font-bold">教員育成指標のPDF</span>
             </span>
             <Icon className="inline" icon="fa-solid:external-link-alt" />
           </a>
@@ -73,7 +73,7 @@ export default function Stage({
             target="_blank"
             rel="noopener noreferrer"
           >
-            <span className="mr-2">育成指標のPDF</span>
+            <span className="mr-2">教員育成指標のPDF</span>
             <Icon className="inline" icon="fa-solid:external-link-alt" />
           </a>
         </p>
