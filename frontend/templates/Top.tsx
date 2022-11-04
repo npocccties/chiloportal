@@ -63,7 +63,7 @@ export default function Top({
               一覧を見る
             </Link>
           </div>
-          <div className="rounded-xl bg-primary-50 px-4 py-3">
+          <div className="rounded-xl bg-gray-50 px-4 py-3">
             <ul className="list-disc pl-8 text-primary-700 max-h-36 overflow-y-scroll leading-7">
               {posts.map((post) => (
                 <li key={post.slug}>
