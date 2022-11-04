@@ -46,8 +46,8 @@ export default function Top({
               一覧を見る
             </Link>
           </div>
-          <div className="jumpu-card px-4 py-6">
-            <ul className="list-disc pl-8 text-gray-700">
+          <div className="jumpu-card px-4 py-3">
+            <ul className="list-disc pl-8 text-gray-700 max-h-24 overflow-y-scroll">
               {posts.map((post) => (
                 <li key={post.slug}>
                   <Link
