@@ -46,7 +46,7 @@ class ImportBadgeCommandTests(TestCase):
             stdout=stdout,
             stderr=stderr,
         )
-        self.assertEqual(stdout.getvalue(), "OK\n")
+        self.assertTrue("OK\n" in stdout.getvalue())
         self.assertNotEqual(stderr.getvalue(), "NG\n")
 
     def test_run_ng(self):
@@ -59,7 +59,7 @@ class ImportBadgeCommandTests(TestCase):
             stdout=stdout,
             stderr=stderr,
         )
-        self.assertNotEqual(stdout.getvalue(), "OK\n")
+        self.assertFalse("OK\n" in stdout.getvalue())
         self.assertEqual(stderr.getvalue(), "NG\n")
 
     def test_find_portal_category_ok(self):
