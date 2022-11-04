@@ -15,15 +15,25 @@ function Footer({ className }: Props) {
     usePortalCategories();
   return (
     <footer className={clsx("bg-gray-50 py-6", className)}>
-      <div className="max-w-6xl xl:max-w-7xl mx-auto px-4 flex flex-col sm:flex-row flex-wrap gap-6 mb-6">
+      <div className="max-w-5xl xl:max-w-7xl mx-auto px-4 flex flex-col xl:justify-center sm:flex-row flex-wrap gap-8 mb-6">
         <div className="w-full xl:w-auto">
           <Link href={pagesPath.$url()} className="inline-block px-2">
-            <Image src="/logo.png" width={142} height={44} alt="" />
+            <Image
+              src="/logo.svg"
+              width={69}
+              height={27}
+              alt="トップページに戻る"
+            />
           </Link>
         </div>
         <section>
-          <h2 className="text-gray-400 text-xs mb-2">教員育成指標から探す</h2>
-          <ul className="text-gray-700 leading-7" aria-busy={!consumers}>
+          <h2 className="text-gray-700 text-xs font-bold mb-2">
+            教員育成指標から探す
+          </h2>
+          <ul
+            className="text-gray-700 text-sm leading-7"
+            aria-busy={!consumers}
+          >
             {!consumersError && consumers
               ? consumers.map((consumer) => (
                   <li key={consumer.consumer_id}>
@@ -46,8 +56,13 @@ function Footer({ className }: Props) {
           </ul>
         </section>
         <section>
-          <h2 className="text-gray-400 text-xs mb-2">カテゴリから探す</h2>
-          <ul className="text-gray-700 leading-7" aria-busy={!portalCategories}>
+          <h2 className="text-gray-700 text-xs font-bold mb-2">
+            カテゴリから探す
+          </h2>
+          <ul
+            className="text-gray-700 text-sm leading-7"
+            aria-busy={!portalCategories}
+          >
             {!portalCategoriesError && portalCategories
               ? portalCategories.map((portalCategory) => (
                   <li key={portalCategory.portal_category_id}>
@@ -69,7 +84,7 @@ function Footer({ className }: Props) {
                 ))}
           </ul>
         </section>
-        <ul className="text-gray-700 leading-7 sm:columns-2 [&>li]:break-inside-avoid">
+        <ul className="text-gray-700 text-sm leading-7 sm:columns-2 [&>li]:break-inside-avoid">
           <li>
             <Link href={pagesPath._slug("concept").$url()}>コンセプト</Link>
           </li>
@@ -101,8 +116,8 @@ function Footer({ className }: Props) {
           </li>
         </ul>
       </div>
-      <div className="flex justify-center text-gray-400 text-xs px-2">
-        <p>Copyright CCC-TIES 2022</p>
+      <div className="flex justify-center text-gray-700 text-xs px-2">
+        <p>Copyright (C) Osaka Kyoiku University. All rights reserved.</p>
       </div>
     </footer>
   );
