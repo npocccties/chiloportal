@@ -24,7 +24,7 @@ export default function Top({
   );
   return (
     <>
-      <Container className="max-w-5xl" as="article">
+      <Container className="max-w-5xl mt-8" as="article">
         <header className="mb-8">
           <Link
             href={pagesPath._slug("concept").$url()}
