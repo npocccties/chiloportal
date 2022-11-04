@@ -80,10 +80,21 @@ recommendedWisdomBadgesIds:
 ```yaml
 learningContents:
   - name: Example 1
+    type: public
     url: https://example.com/
+    description: Example 1 description
   - name: Example 2
+    type: private
     url: https://example.com/
+    description: Example 2 description
 ```
+
+| 項目名      | 説明                                                          |
+| :---------- | :------------------------------------------------------------ |
+| name        | 学習コンテンツの名称、必須                                    |
+| type        | 公開範囲の種類、 `"public"` と `"private"` いずれかの値、必須 |
+| url         | 学習コンテンツの URL、必須                                    |
+| description | 学習コンテンツの説明、必須                                    |
 
 ### マークダウンファイル
 

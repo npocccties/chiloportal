@@ -13,9 +13,11 @@ export const Config = {
         type: "object",
         properties: {
           name: { type: "string" },
+          type: { enum: ["public", "private"] },
           url: { type: "string", format: "url" },
+          description: { type: "string" },
         },
-        required: ["name", "url"],
+        required: ["name", "type", "url", "description"],
         additionalProperties: false,
       },
     },
