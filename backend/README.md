@@ -84,9 +84,18 @@
    * `deploy.sh` を実行すると chiloportal 内の変更は全て取り消されます
 1. `import.sh` の実行
    ```
-   ./import.sh {能力バッジを取得するURL} {左記URLのパラメータのIDとポータル独自カテゴリの主キーを記載したCSVファイルパス} {フロントエンドのビルド指定}
+   ./import.sh {能力バッジを取得するURL} {左記URLに与えるIDとポータル独自カテゴリの主キーを記載したCSVファイルパス} {フロントエンドのビルド指定}
    ```
    * 例： `./import.sh https://dev-lms.oku.cccties.org/badges/badge_json.php /opt/chiloportal/backend/test.csv 1`
+   * CSV書式：能力バッジを取得するURLに与えるパラメータ,ポータル独自カテゴリの主キー
+   * CSVヘッダー：無し
+   * CSVファイル凡例：  
+     ```
+     19,101
+     20,101
+     21,101
+     ```
+
 1. 備考  
    コンテナ起動  
    ```
