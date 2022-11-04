@@ -1,20 +1,19 @@
 #!/bin/sh
-if [ $# != 3 ]; then
+if [ $# != 2 ]; then
     echo "使用方法"
-    echo "第1引数：能力バッジの取得URL"
-    echo "第2引数：CSVファイルのパス（絶対/相対）"
-    echo "第3引数：フロントエンドのビルドを行うか否か（1: ビルドする ※デフォルト, 0: ビルドしない）"
+    echo "第1引数：CSVファイルのパス（絶対/相対）"
+    echo "第2引数：フロントエンドのビルドを行うか否か（1: ビルドする, 1以外: ビルドしない）"
     echo ""
     echo "CSVファイル書式："
-    echo "能力バッジの取得URLに引き渡すID,ポータル独自カテゴリID"
+    echo "能力バッジの取得URL,能力バッジの取得URLに引き渡すID,ポータル独自カテゴリID"
     echo ""
     echo "CSVファイル凡例"
-    echo "19,101"
-    echo "20,101"
-    echo "21,101"
+    echo "https://dev-lms.oku.cccties.org/badges/badge_json.php,19,101"
+    echo "https://dev-lms.oku.cccties.org/badges/badge_json.php,20,101"
+    echo "https://dev-lms.oku.cccties.org/badges/badge_json.php,21,101"
     echo ""
     echo "本スクリプトの使用例："
-    echo "./import.sh https://dev-lms.oku.cccties.org/badges/badge_json.php test.csv 1"
+    echo "./import.sh test.csv 1"
     exit 1
 fi
 echo $0
@@ -28,7 +27,7 @@ echo $3
 
 readonly BACKEND_DIR="${DIR}/backend"
 cd $BACKEND_DIR
-./import_badge.sh $1 $2
+./import_badge.sh $1
 RESULT=$?
 if [ $RESULT -eq 1 ]; then
     echo "インポートが正常に終了しませんでした。"

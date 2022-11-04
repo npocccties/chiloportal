@@ -84,7 +84,7 @@
    * `deploy.sh` を実行すると chiloportal 内の変更は全て取り消されます
 1. 能力バッジのインポート
    ```
-   ./import.sh {能力バッジを取得するURL} {CSVファイルパス ※以降、インポートCSV} {フロントエンドのビルド指定}
+   ./import.sh {能力バッジを取得するURL} {CSVファイルパス ※以降、インポートCSV} {フロントエンドのビルド指定（1: ビルドする, 1以外: ビルドしない）}
    ```
    * 例： `./import.sh https://dev-lms.oku.cccties.org/badges/badge_json.php /opt/test.csv 1`
    * インポートCSV書式：能力バッジを取得するURLに与えるパラメータ,ポータル独自カテゴリの主キー
