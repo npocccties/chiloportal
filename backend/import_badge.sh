@@ -34,7 +34,7 @@ while read line; do
 done < $CSV_PATH
 
 exit_code=0
-messages=("OK/NG,badge_json.php?id,portal_category.id,wisdom_badges.id")
+messages=("OK/NG,url,badge_json.php?id,portal_category.id,wisdom_badges.id")
 for line in ${lines[@]}; do
     echo "${line}"
     url=`echo ${line} | cut -d , -f 1`
