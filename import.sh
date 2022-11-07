@@ -29,7 +29,10 @@ echo $1
 echo $2
 
 readonly BACKEND_DIR="${DIR}/backend"
-readonly CSV_PATH="${DIR}/$1"
+CSV_PATH=$1
+if [[ "$CSV_PATH" != /* ]]; then
+    CSV_PATH="${DIR}/$1"
+fi
 cd $BACKEND_DIR
 ./import_badge.sh $CSV_PATH
 RESULT=$?
