@@ -38,7 +38,7 @@ messages=("OK/NG,url,badge_json.php?id,portal_category.id,wisdom_badges.id")
 for line in ${lines[@]}; do
     echo "${line}"
     url=`echo ${line} | cut -d , -f 1`
-    portal_category_id=`echo ${line} | cut -d , -f 3`
+    portal_category_id=`echo ${line} | cut -d , -f 2`
     import_result=`docker-compose exec -T app python /workspace/manage.py import_badge --url=${url} --pcid=${portal_category_id}`
     wisdom_badge_id=`echo "$import_result" | sed -e 's/[^0-9]//g'`
     if [[ $import_result == *"OK"* ]]; then
