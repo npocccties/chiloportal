@@ -68,7 +68,7 @@
    * 開発サーバー: `sudo cp chiloportal/backend/.env.dev-server chiloportal/backend/.env`
    * 本番サーバー: `sudo cp .env.production chiloportal/backend/.env`
    * 上記 `.env.production` は Public リポジトリに登録せずに Private リポジトリ等で管理してください
-1. chiloportal へ移動
+1. chiloportal/backend へ移動
    ```
    cd chiloportal
    ```
@@ -78,18 +78,15 @@
    ```
 1. デプロイ
    ```
-   ./deploy.sh
+   ./server_start.sh
    ```
-   * 権限付与後の `deploy.sh` は何度でも実行可能です
-   * `deploy.sh` を実行すると chiloportal 内の変更は全て取り消されます
+   * 権限付与後の `server_start.sh` は何度でも実行可能です
 1. 能力バッジのインポート
    ```
-   ./import.sh {CSVファイルパス ※以降、インポートCSV} {フロントエンドのビルドを行うか否かで省略可（--build: ビルドする ※デフォルト, --no-build: ビルドしない）}
+   ./import_badge.sh {CSVファイルパス ※以降、インポートCSV}
    ```
-   * ビルド時使用例： `./import.sh /opt/test.csv`
-   * ビルド時使用例： `./import.sh /opt/test.csv --build`
-   * ビルドなし時使用例： `./import.sh /opt/test.csv --no-build`
-   * インポートCSV書式：能力バッジを取得するURL,能力バッジを取得するURLに与えるパラメータ,ポータル独自カテゴリの主キー
+   * 使用例： `./import.sh test.csv`
+   * インポートCSV書式：能力バッジを取得するURL,ポータル独自カテゴリの主キー
    * インポートCSVヘッダー：無し
    * インポートCSVファイル凡例：  
      ```
@@ -98,7 +95,9 @@
      21,101
      ```
    * インポートの結果は `chiloportal/backend/import_result.csv` に出力されます
-   * インポート結果CSVファイル書式：OK/NG,能力バッジを取得するURLに与えるパラメータ,ポータル独自カテゴリの主キー,インポート済み能力バッジのID
+   * インポート結果CSVファイル書式：OK/NG,ポータル独自カテゴリの主キー,インポート済み能力バッジのID
+   * インポート後は　`chiloportal/frontend/build.sh` を実行してください（バッジの画像をフロントエンドに取り込むため）
+   * インポートとフロントエンドのビルドを併せて行いたい場合は `chiloportal/import.sh` を実行してください
 
 1. 備考  
    コンテナ起動  
