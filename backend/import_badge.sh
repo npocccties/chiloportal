@@ -29,7 +29,6 @@ echo "CSV_PATH: ${CSV_PATH}"
 
 lines=()
 while read line || [[ -n "${line}" ]]; do
-    echo "${line}"
     lines+=("$line")
 done < $CSV_PATH
 
