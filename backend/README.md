@@ -68,7 +68,7 @@
    * 開発サーバー: `sudo cp chiloportal/backend/.env.dev-server chiloportal/backend/.env`
    * 本番サーバー: `sudo cp .env.production chiloportal/backend/.env`
    * 上記 `.env.production` は Public リポジトリに登録せずに Private リポジトリ等で管理してください
-1. chiloportal へ移動
+1. chiloportal/backend へ移動
    ```
    cd chiloportal
    ```
@@ -78,15 +78,14 @@
    ```
 1. デプロイ
    ```
-   ./deploy.sh
+   ./server_start.sh
    ```
-   * 権限付与後の `deploy.sh` は何度でも実行可能です
-   * `deploy.sh` を実行すると chiloportal 内の変更は全て取り消されます
+   * 権限付与後の `server_start.sh` は何度でも実行可能です
 1. 能力バッジのインポート
    ```
    ./import_badge.sh {CSVファイルパス ※以降、インポートCSV}
    ```
-   * 使用例： `./import.sh /opt/test.csv`
+   * 使用例： `./import.sh test.csv`
    * インポートCSV書式：能力バッジを取得するURL,ポータル独自カテゴリの主キー
    * インポートCSVヘッダー：無し
    * インポートCSVファイル凡例：  
