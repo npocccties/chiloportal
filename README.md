@@ -30,9 +30,8 @@
    * インポートCSVヘッダー：無し
    * インポートCSVファイル凡例：  
      ```
-     19,101
-     20,101
-     21,101
+     https://dev-lms.oku.cccties.org/badges/badge_json.php?id=19,101
+     https://dev-lms.oku.cccties.org/badges/badge_json.php?id=20,101
      ```
    * インポートの結果は `chiloportal/backend/import_result.csv` に出力されます
    * インポート結果CSVファイル書式：OK/NG,能力バッジを取得するURLポータル独自カテゴリの主キー,インポート済み能力バッジのID
