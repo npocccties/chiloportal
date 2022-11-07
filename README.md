@@ -1,8 +1,27 @@
 # chiloportal
 
-## 能力バッジのインポート
+## 新規構築時
+
+1. git clone https://github.com/npocccties/chiloportal.git
+2. chiloportal/backend/.env 用意 (本番用)
+3. chiloportal/frontend/.env や 静的コンテンツを用意 (本番用)
+4. sudo chmod 755 chiloportal/deploy.sh
+5. chiloportal/deploy.sh ( ← フロントエンドのdocker ビルドも実行）
+※ 各 env  や 静的コンテンツがない場合は，停止 or デフォルト設定で実行
+
+## バックエンド設定更新時
+
+1. /backend/.env 更新
+2. chiloportal/backend/server_restart.sh
+
+## フロントエンド設定更新時
+
+1. /frontend/.env や 静的コンテンツを更新
+2. chiloportal/backend/build.sh
+
+## 能力バッジのインポート時
    ```
-   ./import.sh {CSVファイルパス ※以降、インポートCSV} {フロントエンドのビルドを行うか否かで省略可（--build: ビルドする ※デフォルト, --no-build: ビルドしない）}
+   chiloportal/import.sh {CSVファイルパス ※以降、インポートCSV} {フロントエンドのビルドを行うか否かで省略可（--build: ビルドする ※デフォルト, --no-build: ビルドしない）}
    ```
    * ビルド時使用例： `./import.sh /opt/test.csv`
    * ビルド時使用例： `./import.sh /opt/test.csv --build`
