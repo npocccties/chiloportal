@@ -5,7 +5,8 @@ from rest_framework import status
 
 
 class BaseApiTests(TestCase):
-    base_url = "https://dev-portal.oku.cccties.org/api/v1/"
+    # 下記ドメインは実在するものに変更してからテストしてください
+    base_url = "https://dev-portal.oku.example.org/api/v1/"
     consumer_detail_url = urljoin(base_url, "consumer/")
     consumer_list_url = urljoin(base_url, "consumer/list/")
     stage_field_list_url = urljoin(base_url, "stage/field/list/")
