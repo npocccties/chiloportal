@@ -55,6 +55,7 @@ services:
       - ALLOWED_HOSTS=$ALLOWED_HOSTS
       - JUDGE_BADGE=$JUDGE_BADGE
       - PER_PAGE=$PER_PAGE
+      - PORTAL_CATEGORY_SORT_ORDER=$PORTAL_CATEGORY_SORT_ORDER
     depends_on:
       - db
       - migration

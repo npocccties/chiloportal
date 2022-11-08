@@ -191,6 +191,7 @@
 |LETS_ENCRYPT|無料のSSL証明書の要否|無料のSSL証明書を使用するか否か<br>`true`: 使用する ※動作確認用<br>`false`: 使用しない ※本番リリース用|
 |DUMP_BACKUP_DIR|DBの圧縮ファイルのバックアップディレクトリ（絶対パス指定）|DBバックアップを実行すると `/var/chiloportal.dump` をダンプ出力するが、そのダンプファイルを下記命名で圧縮したうえで左記ディレクトリに格納する<br>`chiloportal.dump_{yyyyMMdd}.tar.gz`|
 |DUMP_BACKUP_COUNT|DBの圧縮ファイルの保持日数|・保持日数を経過したDBの圧縮ファイルは削除される (例)1週間、保持したい場合は `7` を指定する<br>・削除の契機は、DBバックアップの実行時|
+|PORTAL_CATEGORY_SORT_ORDER|ポータル独自カテゴリの並び順|・`/portalCategory/list` APIのレスポンスの並び順をカンマ区切りで指定する<br>・省略時もしくは該当なしの場合はDBの `portal_category` テーブルの登録順となる|
 
 
 # DBの確認
