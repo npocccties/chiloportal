@@ -1,5 +1,9 @@
 # chiloportal
 
+## 実行環境
+* Docker
+* Docker Compose (v2)
+
 ## 新規構築時
 
 1. git clone https://github.com/npocccties/chiloportal.git
