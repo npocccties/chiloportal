@@ -53,7 +53,7 @@
 
 1. 下記をインストール
    * Docker
-   * Docker Compose
+   * Docker Compose (v2)
    * Git  
 1. 適当なディレクトリへ移動
    ```
