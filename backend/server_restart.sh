@@ -11,6 +11,6 @@ if "${LETS_ENCRYPT}"; then
 else
     DOCKER_COMPOSE_YML="docker compose.production.yml"
 fi
-sudo cp $DOCKER_COMPOSE_YML docker compose.yml
+sudo cp $DOCKER_COMPOSE_YML docker-compose.yml
 /bin/sh server_stop.sh
 /bin/sh server_start.sh
