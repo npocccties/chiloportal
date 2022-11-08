@@ -29,6 +29,14 @@ class PortalCategoryListTests(BaseAPIViewTests):
         self.assert_portal_categories_sort(response.data, portal_categories)
         os.environ["PORTAL_CATEGORY_SORT_ORDER"] = portal_category_sort_order
 
+    def test_portal_category_list_200_mix(self):
+        factory = APIRequestFactory()
+        view = PortalCategoryList.as_view()
+        self.create_test_relation_data()
+        portal_categories = self.create_sort_test_data()
+        response = self.request_normal(factory, view, self.portal_category_list_url)
+        self.assert_portal_categories_sort(response.data, portal_categories)
+
     def test_portal_category_list_200_zero(self):
         factory = APIRequestFactory()
         view = PortalCategoryList.as_view()

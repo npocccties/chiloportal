@@ -34,4 +34,8 @@ class PortalCategoryList(BaseAPIView):
                     f"Could not sort. portal_categories.len: {len(portal_categories)} PORTAL_CATEGORY_SORT_ORDER: {portal_category_sort_order}"
                 )
                 return Response(portal_categories)
+            if len(sorted_array) != len(portal_categories):
+                self.logger.warn(
+                    f"Some portal categories matched, some did not. portal_categories.len: {len(portal_categories)} sorted_array.len: {len(sorted_array)}"
+                )
             return Response(sorted_array)
