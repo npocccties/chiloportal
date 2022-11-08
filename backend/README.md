@@ -65,9 +65,12 @@
    ```
    * 既にディレクトリが存在するならば `sudo rm -rf chiloportal` にて削除してください
 1. 環境変数を定義した `.env` を backend ディレクトリに配置
-   * 開発サーバー: `sudo cp chiloportal/backend/.env.dev-server chiloportal/backend/.env`
-   * 本番サーバー: `sudo cp .env.production chiloportal/backend/.env`
-   * 上記 `.env.production` は Public リポジトリに登録せずに Private リポジトリ等で管理してください
+   * 開発サーバー：
+      * `sudo cp chiloportal/backend/.env.dev-server chiloportal/backend/.env`
+      * 上記 `.env.dev-server` の `ALLOWED_HOSTS` には実在しないドメインを記載していますので、実在するドメインに変更してください
+   * 本番サーバー：
+      * `sudo cp .env.production chiloportal/backend/.env`
+      * 上記 `.env.production` は Public リポジトリに登録せずに Private リポジトリ等で管理してください
 1. chiloportal/backend へ移動
    ```
    cd chiloportal
@@ -90,8 +93,8 @@
    * インポートCSVヘッダー：無し
    * インポートCSVファイル凡例：  
      ```
-     https://dev-lms.oku.cccties.org/badges/badge_json.php?id=19,101
-     https://dev-lms.oku.cccties.org/badges/badge_json.php?id=20,101
+     https://dev-lms.oku.example.org/badges/badge_json.php?id=19,101
+     https://dev-lms.oku.example.org/badges/badge_json.php?id=20,101
      ```
    * インポートの結果は `chiloportal/backend/import_result.csv` に出力されます
    * インポート結果CSVファイル書式：OK/NG,ポータル独自カテゴリの主キー,インポート済み能力バッジのID
@@ -145,7 +148,7 @@
 
 ## 動作確認
 ### バックエンドAPI
-1. ブラウザから https://dev-portal.oku.cccties.org/api/v1/swagger/ にアクセス
+1. ブラウザから https://dev-portal.oku.example.org/api/v1/swagger/ にアクセス
 1. 該当のAPIを開いてから、「Try it out」を押下
 1. 必要に応じてパラメータ入力を行う
 1. 「Execute」を押下し、期待する値が得られているか確認する
@@ -153,12 +156,13 @@
 ### インポートコマンド
 1. インポート実行  
    ```
-   docker compose exec app python /workspace/manage.py import_badge --url={能力バッジを取得するURL} --pcid={ポータル独自カテゴリの主キー}
+   docker compose exec app python /workspace/manage.py import_badge --url={能力バッジの取得URL (*1)} --pcid={ポータル独自カテゴリの主キー}
    ```
    例
    ```
    docker compose exec app python /workspace/manage.py import_badge --url=https://opedu.lib.osaka-kyoiku.ac.jp/badges/badge_json.php?id=41 --pcid=1
    ```
+   * (*1) 能力バッジの取得URL: `Moodle` にあらかじめ登録している能力バッジのJSONを取得するためのURLです
 1. 能力バッジIDの確認  
    インポート実行するとコンソールに処理経過が出力され、最後に「wisdom_badge.id: {能力バッジID}」と出力されるので、その能力バッジIDをもとに関連データを作成してください。   
    出力例：
@@ -216,7 +220,7 @@ http://localhost/admin
 * ローカル環境で管理者を使用することはないと思いますが、使用する場合は 開発サーバー ⇒ 環境構築手順 ⇒ 備考 ⇒ 管理者作成 を参照し、管理者を作成しておいてください
 
 ## 開発サーバー
-https://dev-portal.oku.cccties.org/admin
+https://dev-portal.oku.example.org/admin
 
 * SQLを使用せずとも Django の管理画面からデータを作成することは可能です（1件毎の手入力となりますので効率は下がります）
 
