@@ -7,9 +7,9 @@ source ./.env
 echo $LETS_ENCRYPT
 DOCKER_COMPOSE_YML=""
 if "${LETS_ENCRYPT}"; then
-    DOCKER_COMPOSE_YML="docker compose.dev-server.yml"
+    DOCKER_COMPOSE_YML="docker-compose.dev-server.yml"
 else
-    DOCKER_COMPOSE_YML="docker compose.production.yml"
+    DOCKER_COMPOSE_YML="docker-compose.production.yml"
 fi
 sudo cp $DOCKER_COMPOSE_YML docker-compose.yml
 /bin/sh server_stop.sh
