@@ -132,13 +132,13 @@
 
    全てのコンテナログの確認  
    ```
-   docker-compose logs -f
+   docker compose logs -f
    ```
    * -f の後ろにコンテナ名（appやdb等）を入れると該当コンテナのみのログが見れます  
 
    管理者作成  
    ```
-   docker-compose exec app python /workspace/manage.py createsuperuser
+   docker compose exec app python /workspace/manage.py createsuperuser
    ```
    * Django の管理画面からログインするための管理者アカウントを作成します  
    * 本番環境では類推されにくいユーザ名およびパスワードを設定してください  
@@ -153,11 +153,11 @@
 ### インポートコマンド
 1. インポート実行  
    ```
-   docker-compose exec app python /workspace/manage.py import_badge --url={能力バッジを取得するURL} --pcid={ポータル独自カテゴリの主キー}
+   docker compose exec app python /workspace/manage.py import_badge --url={能力バッジを取得するURL} --pcid={ポータル独自カテゴリの主キー}
    ```
    例
    ```
-   docker-compose exec app python /workspace/manage.py import_badge --url=https://opedu.lib.osaka-kyoiku.ac.jp/badges/badge_json.php?id=41 --pcid=1
+   docker compose exec app python /workspace/manage.py import_badge --url=https://opedu.lib.osaka-kyoiku.ac.jp/badges/badge_json.php?id=41 --pcid=1
    ```
 1. 能力バッジIDの確認  
    インポート実行するとコンソールに処理経過が出力され、最後に「wisdom_badge.id: {能力バッジID}」と出力されるので、その能力バッジIDをもとに関連データを作成してください。   
@@ -173,7 +173,7 @@
 |環境変数名|説明|備考|
 |:--|:--|:--|
 |SECRET_KEY|Django で使用される署名用の秘密鍵|-|
-|DB_HOST|DBのホスト名|docker-compose.*.yml に記載されている`db`がホスト名|
+|DB_HOST|DBのホスト名|docker compose.*.yml に記載されている`db`がホスト名|
 |DB_NAME|DB名|-|
 |DB_USER|DBのユーザ名|-|
 |DB_PASS|DBのパスワード|-|
@@ -202,7 +202,7 @@
 1. SQL文の実行（下記はSELECT文を記載しています）
    ```
    cd chiloportal/backend
-   docker-compose exec db sh
+   docker compose exec db sh
    psql -d develop -U postgres
    select * from consumer;
    quit

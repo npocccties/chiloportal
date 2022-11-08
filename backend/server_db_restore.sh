@@ -11,7 +11,7 @@ fi
 source ./.env
 for i in {1..10};
 do
-    docker-compose exec -T db pg_restore --clean -h 127.0.0.1 -p 5432 -d $DB_NAME -U $DB_USER -v < /var/chiloportal.dump
+    docker compose exec -T db pg_restore --clean -h 127.0.0.1 -p 5432 -d $DB_NAME -U $DB_USER -v < /var/chiloportal.dump
     RESULT=$?
     if [ $RESULT -eq 0 ]; then
         break
