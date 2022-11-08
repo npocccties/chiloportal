@@ -645,14 +645,6 @@ class BaseAPIViewTests(TestCase):
             )
             i += 1
 
-    def assert_portal_categories_sort(self, array, portal_categories):
-        self.assertEqual(len(array), len(portal_categories))
-        i = 0
-        for category in portal_categories:
-            data = array[i]
-            self.assert_portal_category(data, category, 0)
-            i += 1
-
     def assert_portal_category(self, data, portal_category, badges_count):
         self.assertEqual(data["portal_category_id"], portal_category.id)
         self.assertEqual(data["name"], portal_category.name)
