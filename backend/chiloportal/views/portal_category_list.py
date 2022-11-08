@@ -11,7 +11,7 @@ class PortalCategoryList(BaseAPIView):
     def _get(self, request):
         queryset = (
             PortalCategory.objects.all()
-            .order_by("pk")
+            .order_by("sort_key")
             .annotate(Count("wisdom_badges_portal_category"))
         )
         if queryset.exists() == False:
