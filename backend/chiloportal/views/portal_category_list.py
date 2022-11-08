@@ -5,7 +5,6 @@ from ..swagger import *
 from ..responses import *
 from .base_api_view import *
 from django.db.models import Count
-import os
 
 
 class PortalCategoryList(BaseAPIView):
@@ -17,25 +16,4 @@ class PortalCategoryList(BaseAPIView):
         )
         if queryset.exists() == False:
             return Response([])
-        portal_categories = to_portal_categories(queryset)
-        portal_category_sort_order = os.environ.get("PORTAL_CATEGORY_SORT_ORDER")
-        if not portal_category_sort_order:
-            self.logger.warn("PORTAL_CATEGORY_SORT_ORDER is undefined.")
-            return Response(portal_categories)
-        else:
-            sorted_array = []
-            sort_orders = portal_category_sort_order.split(",")
-            for sort_order in sort_orders:
-                for portal_category in portal_categories:
-                    if sort_order == portal_category.get("name"):
-                        sorted_array.append(portal_category)
-            if len(sorted_array) == 0:
-                self.logger.warn(
-                    f"Could not sort. portal_categories.len: {len(portal_categories)} PORTAL_CATEGORY_SORT_ORDER: {portal_category_sort_order}"
-                )
-                return Response(portal_categories)
-            if len(sorted_array) != len(portal_categories):
-                self.logger.warn(
-                    f"Some portal categories matched, some did not. portal_categories.len: {len(portal_categories)} sorted_array.len: {len(sorted_array)}"
-                )
-            return Response(sorted_array)
+        return Response(to_portal_categories(queryset))
