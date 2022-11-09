@@ -93,8 +93,8 @@
    * インポートCSVヘッダー：無し
    * インポートCSVファイル凡例：  
      ```
-     https://dev-lms.oku.example.org/badges/badge_json.php?id=19,101
-     https://dev-lms.oku.example.org/badges/badge_json.php?id=20,101
+     https://dev-lms.example.org/badges/badge_json.php?id=19,101
+     https://dev-lms.example.org/badges/badge_json.php?id=20,101
      ```
    * インポートの結果は `chiloportal/backend/import_result.csv` に出力されます
    * インポート結果CSVファイル書式：OK/NG,ポータル独自カテゴリの主キー,インポート済み能力バッジのID
@@ -148,7 +148,7 @@
 
 ## 動作確認
 ### バックエンドAPI
-1. ブラウザから https://dev-portal.oku.example.org/api/v1/swagger/ にアクセス
+1. ブラウザから https://dev-portal.example.org/api/v1/swagger/ にアクセス
 1. 該当のAPIを開いてから、「Try it out」を押下
 1. 必要に応じてパラメータ入力を行う
 1. 「Execute」を押下し、期待する値が得られているか確認する
@@ -220,7 +220,7 @@ http://localhost/admin
 * ローカル環境で管理者を使用することはないと思いますが、使用する場合は 開発サーバー ⇒ 環境構築手順 ⇒ 備考 ⇒ 管理者作成 を参照し、管理者を作成しておいてください
 
 ## 開発サーバー
-https://dev-portal.oku.example.org/admin
+https://dev-portal.example.org/admin
 
 * SQLを使用せずとも Django の管理画面からデータを作成することは可能です（1件毎の手入力となりますので効率は下がります）
 
