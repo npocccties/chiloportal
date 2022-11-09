@@ -35,10 +35,10 @@ function WisdomBadgesItem({ wisdomBadges }: Props) {
             See Also: https://nextjs.org/docs/messages/next-image-unconfigured-host
           */}
           {typeof url === "string" && (
-            <img src={url} width={20} height={20} alt="" />
+            <img className="h-fit" src={url} width={20} height={20} alt="" />
           )}
           <span className="font-bold mr-1">{wisdomBadges.issuer_name}</span>
-          <span className="text-gray-500">発行</span>
+          <span className="text-gray-500 flex-shrink-0">発行</span>
         </p>
         <p className="text-sm text-gray-600 mb-2 line-clamp-2">
           {wisdomBadges.description}

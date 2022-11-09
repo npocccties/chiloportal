@@ -39,17 +39,17 @@ function WisdomBadgesCard({ wisdomBadges, className }: Props) {
           </div>
         )}
         <p className="text-sm text-gray-600 mb-2">{wisdomBadges.description}</p>
-        <p className="text-sm flex gap-2">
+        <p className="text-sm flex gap-2 items-center">
           {/* eslint-disable @next/next/no-img-element */}
           {/*
             NOTE: 事前に許可したホスト以外画像最適化の対象にできない
             See Also: https://nextjs.org/docs/messages/next-image-unconfigured-host
           */}
           {typeof url === "string" && (
-            <img src={url} width={20} height={20} alt="" />
+            <img className="h-fit" src={url} width={20} height={20} alt="" />
           )}
           <span className="font-bold mr-1">{wisdomBadges.issuer_name}</span>
-          <span className="text-gray-500">発行</span>
+          <span className="text-gray-500 flex-shrink-0">発行</span>
         </p>
       </section>
     </Link>
