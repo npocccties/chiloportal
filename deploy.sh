@@ -2,7 +2,6 @@
 DIR=$(cd $(dirname $0); pwd)
 sudo git checkout .
 sudo git pull
-sudo chmod 755 deploy.sh
 docker network rm app_network
 docker network create -d bridge app_network
 # frontend
