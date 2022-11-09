@@ -23,7 +23,7 @@ jobs:
           script: |
             cd /opt
             sudo git clone https://github.com/npocccties/chiloportal.git >& /dev/null
-            sudo cp chiloportal/frontend/.env.test chiloportal/frontend/.env
+            sudo cp .env.front.test chiloportal/frontend/.env
             sudo cp .env.manual-ssl-certs chiloportal/backend/.env
             # sudo cp chiloportal/backend/.env.dev-server chiloportal/backend/.env
             cd chiloportal
