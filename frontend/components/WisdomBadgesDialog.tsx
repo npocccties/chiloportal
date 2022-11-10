@@ -3,6 +3,7 @@ import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Consumer, BadgeDetail2 } from "api/@types";
 import useWisdomBadgesConsumers from "lib/use-wisdom-badges-consumers";
+import Fallback from "components/Fallback";
 
 function Consumers({ consumers }: { consumers: Consumer[] }) {
   return (
@@ -64,20 +65,29 @@ function WisdomBadgesDialog({ wisdomBadges, open, onClose }: Props) {
                 <Dialog.Title className="text-lg font-bold text-gray-500 mb-6">
                   このバッジは以下の教育委員会に認定されています
                 </Dialog.Title>
-                {!consumersError && consumers ? (
-                  <Consumers consumers={consumers} />
-                ) : (
-                  <div
-                    className="flex justify-center items-center w-full h-48"
-                    aria-hidden
-                  >
-                    <div className="jumpu-spinner">
-                      <svg viewBox="24 24 48 48">
-                        <circle cx="48" cy="48" r="16" />
-                      </svg>
+                <Fallback
+                  data={consumers}
+                  error={consumersError}
+                  pending={
+                    <div
+                      className="flex justify-center items-center w-full h-48"
+                      aria-hidden
+                    >
+                      <div className="jumpu-spinner">
+                        <svg viewBox="24 24 48 48">
+                          <circle cx="48" cy="48" r="16" />
+                        </svg>
+                      </div>
                     </div>
-                  </div>
-                )}
+                  }
+                  fallback={
+                    <p className="font-bold">
+                      認定している教育委員会は今のところありません。
+                    </p>
+                  }
+                >
+                  {(data) => <Consumers consumers={data} />}
+                </Fallback>
               </Dialog.Panel>
             </Transition.Child>
           </div>
