@@ -32,7 +32,7 @@ corepack yarn start # テストサーバーの起動
 ### Docker 環境
 
 ```shell
-cp .env.development .env # 環境変数の用意 (コピー元ファイルは .env.test でも可)
+cp .env.development .env # 環境変数の用意 (別途 .env.test 作成でも可)
 docker build -t frontend . # Docker イメージのビルド
 docker run --rm -p 3000:3000 frontend # Docker コンテナの起動
 ```
