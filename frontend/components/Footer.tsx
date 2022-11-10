@@ -99,11 +99,6 @@ function Footer({ className }: Props) {
             </Link>
           </li>
           <li>
-            <Link href={pagesPath._slug("about_site").$url()}>
-              このサイトについて
-            </Link>
-          </li>
-          <li>
             <a>サイトマップ</a>
           </li>
           <li>
