@@ -7,6 +7,7 @@ import usePortalCategories from "lib/use-portal-categories";
 import clsx from "clsx";
 import { pagesPath } from "lib/$path";
 import { NEXT_PUBLIC_MOODLE_DASHBOARD_URL } from "lib/env";
+import Fallback from "components/Fallback";
 
 type Props = {
   className?: string;
@@ -66,31 +67,37 @@ function Header({ className }: Props) {
               aria-busy={!portalCategories}
               onClick={() => close()}
             >
-              {!portalCategoriesError && portalCategories ? (
-                portalCategories.map((portalCategory) => (
-                  <li key={portalCategory.portal_category_id} role="menuitem">
-                    <Link
-                      href={pagesPath.portal_categories
-                        ._portalCategoryId(portalCategory.portal_category_id)
-                        .$url({ query: {} })}
-                      className="block w-max min-w-full px-4 py-3 rounded hover:text-white hover:bg-primary-700"
-                    >
-                      {portalCategory.name}
-                    </Link>
+              <Fallback
+                data={portalCategories}
+                error={portalCategoriesError}
+                pending={
+                  <li
+                    className="flex justify-center items-center w-48 h-72"
+                    aria-hidden
+                  >
+                    <div className="jumpu-spinner">
+                      <svg viewBox="24 24 48 48">
+                        <circle cx="48" cy="48" r="16" />
+                      </svg>
+                    </div>
                   </li>
-                ))
-              ) : (
-                <li
-                  className="flex justify-center items-center w-48 h-72"
-                  aria-hidden
-                >
-                  <div className="jumpu-spinner">
-                    <svg viewBox="24 24 48 48">
-                      <circle cx="48" cy="48" r="16" />
-                    </svg>
-                  </div>
-                </li>
-              )}
+                }
+              >
+                {(data) =>
+                  data.map((portalCategory) => (
+                    <li key={portalCategory.portal_category_id} role="menuitem">
+                      <Link
+                        href={pagesPath.portal_categories
+                          ._portalCategoryId(portalCategory.portal_category_id)
+                          .$url({ query: {} })}
+                        className="block w-max min-w-full px-4 py-3 rounded hover:text-white hover:bg-primary-700"
+                      >
+                        {portalCategory.name}
+                      </Link>
+                    </li>
+                  ))
+                }
+              </Fallback>
             </ul>
           )}
         </Popover>
@@ -102,31 +109,37 @@ function Header({ className }: Props) {
               aria-busy={!consumers}
               onClick={() => close()}
             >
-              {!consumersError && consumers ? (
-                consumers.map((consumer) => (
-                  <li key={consumer.consumer_id} role="menuitem">
-                    <Link
-                      href={pagesPath.consumers
-                        ._consumerId(consumer.consumer_id)
-                        .$url()}
-                      className="block w-max min-w-full px-4 py-3 rounded hover:text-white hover:bg-primary-700"
-                    >
-                      {consumer.name}の教員育成指標
-                    </Link>
+              <Fallback
+                data={consumers}
+                error={consumersError}
+                pending={
+                  <li
+                    className="flex justify-center items-center w-48 h-72"
+                    aria-hidden
+                  >
+                    <div className="jumpu-spinner">
+                      <svg viewBox="24 24 48 48">
+                        <circle cx="48" cy="48" r="16" />
+                      </svg>
+                    </div>
                   </li>
-                ))
-              ) : (
-                <li
-                  className="flex justify-center items-center w-48 h-72"
-                  aria-hidden
-                >
-                  <div className="jumpu-spinner">
-                    <svg viewBox="24 24 48 48">
-                      <circle cx="48" cy="48" r="16" />
-                    </svg>
-                  </div>
-                </li>
-              )}
+                }
+              >
+                {(data) =>
+                  data.map((consumer) => (
+                    <li key={consumer.consumer_id} role="menuitem">
+                      <Link
+                        href={pagesPath.consumers
+                          ._consumerId(consumer.consumer_id)
+                          .$url()}
+                        className="block w-max min-w-full px-4 py-3 rounded hover:text-white hover:bg-primary-700"
+                      >
+                        {consumer.name}の教員育成指標
+                      </Link>
+                    </li>
+                  ))
+                }
+              </Fallback>
             </ul>
           )}
         </Popover>
