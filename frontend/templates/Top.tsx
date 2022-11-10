@@ -9,6 +9,7 @@ import useBadges from "lib/use-badges";
 import Container from "components/Container";
 import WisdomBadgesCard from "components/WisdomBadgesCard";
 import PortalCategoryCard from "components/PortalCategoryCard";
+import Fallback from "components/Fallback";
 
 export default function Top({
   posts,
@@ -97,8 +98,18 @@ export default function Top({
             あなたが認められる能力バッジを獲得するために、いくつかの知識バッジを得なければなりません。少ない知識バッジで獲得できる能力バッジがあります。
           </p>
           <ul className="flex snap-x overflow-x-scroll pb-2 md:pb-0 px-4 md:px-0 -mx-4 md:mx-0 md:grid md:grid-cols-2 xl:grid-cols-3 gap-4">
-            {!wisdomBadgesListError && wisdomBadgesList
-              ? wisdomBadgesList.map((wisdomBadges) => (
+            <Fallback
+              data={wisdomBadgesList}
+              error={wisdomBadgesListError}
+              pending={[...Array(3)].map((_, index) => (
+                <li
+                  key={index}
+                  className="animate-pulse bg-gray-300 h-72 rounded-lg"
+                />
+              ))}
+            >
+              {(data) =>
+                data.map((wisdomBadges) => (
                   <li key={wisdomBadges.badges_id}>
                     <WisdomBadgesCard
                       className="h-full w-[300px] md:w-auto snap-center"
@@ -106,12 +117,8 @@ export default function Top({
                     />
                   </li>
                 ))
-              : [...Array(3)].map((_, index) => (
-                  <li
-                    key={index}
-                    className="animate-pulse bg-gray-300 h-72 rounded-lg"
-                  />
-                ))}
+              }
+            </Fallback>
           </ul>
         </section>
         <section className="mb-8">
@@ -119,8 +126,15 @@ export default function Top({
             カテゴリから探せる能力バッジ
           </h2>
           <ul className="md:grid md:grid-cols-2 xl:grid-cols-3">
-            {!portalCategoriesError && portalCategories
-              ? portalCategories.map((portalCategory) => (
+            <Fallback
+              data={portalCategories}
+              error={portalCategoriesError}
+              pending={[...Array(3)].map((_, index) => (
+                <li key={index} className="animate-pulse bg-gray-300 h-72" />
+              ))}
+            >
+              {(data) =>
+                data.map((portalCategory) => (
                   <li
                     key={portalCategory.portal_category_id}
                     className="border-b last:border-b-0 md:border-b-0 md:border-t md:border-r border-gray-300 md:[&:nth-child(2n)]:border-r-0 xl:[&:nth-child(2n)]:border-r xl:[&:nth-child(3n)]:border-r-0 md:[&:nth-child(-n+2)]:border-t-0 xl:[&:nth-child(-n+3)]:border-t-0"
@@ -131,12 +145,8 @@ export default function Top({
                     />
                   </li>
                 ))
-              : [...Array(3)].map((_, index) => (
-                  <li
-                    key={index}
-                    className="animate-pulse bg-gray-300 h-72 rounded-lg"
-                  />
-                ))}
+              }
+            </Fallback>
           </ul>
         </section>
         <section className="jumpu-card p-6 mb-8">
@@ -150,28 +160,37 @@ export default function Top({
             })}
             aria-busy={!consumers}
           >
-            {!consumersError && consumers ? (
-              consumers.map((consumer) => (
-                <li key={consumer.consumer_id} className="break-inside-avoid">
-                  <Link
-                    href={pagesPath.consumers
-                      ._consumerId(consumer.consumer_id)
-                      .$url()}
-                    className="underline"
-                  >
-                    {consumer.name}の教員育成指標
-                  </Link>
+            <Fallback
+              data={consumers}
+              error={consumersError}
+              pending={
+                <li
+                  className="flex justify-center items-center h-24"
+                  aria-hidden
+                >
+                  <div className="jumpu-spinner">
+                    <svg viewBox="24 24 48 48">
+                      <circle cx="48" cy="48" r="16" />
+                    </svg>
+                  </div>
                 </li>
-              ))
-            ) : (
-              <li className="flex justify-center items-center h-24" aria-hidden>
-                <div className="jumpu-spinner">
-                  <svg viewBox="24 24 48 48">
-                    <circle cx="48" cy="48" r="16" />
-                  </svg>
-                </div>
-              </li>
-            )}
+              }
+            >
+              {(data) =>
+                data.map((consumer) => (
+                  <li key={consumer.consumer_id} className="break-inside-avoid">
+                    <Link
+                      href={pagesPath.consumers
+                        ._consumerId(consumer.consumer_id)
+                        .$url()}
+                      className="underline"
+                    >
+                      {consumer.name}の教員育成指標
+                    </Link>
+                  </li>
+                ))
+              }
+            </Fallback>
           </ul>
         </section>
         <section>

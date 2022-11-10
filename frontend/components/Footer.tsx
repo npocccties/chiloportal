@@ -4,6 +4,7 @@ import Image from "next/image";
 import useConsumers from "lib/use-consumers";
 import usePortalCategories from "lib/use-portal-categories";
 import { pagesPath } from "lib/$path";
+import Fallback from "components/Fallback";
 
 type Props = {
   className?: string;
@@ -34,8 +35,19 @@ function Footer({ className }: Props) {
             className="text-gray-700 text-sm leading-7"
             aria-busy={!consumers}
           >
-            {!consumersError && consumers
-              ? consumers.map((consumer) => (
+            <Fallback
+              data={consumers}
+              error={consumersError}
+              pending={[...Array(10)].map((_, index) => (
+                <li
+                  key={index}
+                  className="animate-pulse bg-gray-300 w-64 h-4 my-3 rounded-full"
+                  aria-hidden
+                />
+              ))}
+            >
+              {(data) =>
+                data.map((consumer) => (
                   <li key={consumer.consumer_id}>
                     <Link
                       href={pagesPath.consumers
@@ -46,13 +58,8 @@ function Footer({ className }: Props) {
                     </Link>
                   </li>
                 ))
-              : [...Array(10)].map((_, index) => (
-                  <li
-                    key={index}
-                    className="animate-pulse bg-gray-300 w-64 h-4 my-3 rounded-full"
-                    aria-hidden
-                  />
-                ))}
+              }
+            </Fallback>
           </ul>
         </section>
         <section>
@@ -63,8 +70,19 @@ function Footer({ className }: Props) {
             className="text-gray-700 text-sm leading-7"
             aria-busy={!portalCategories}
           >
-            {!portalCategoriesError && portalCategories
-              ? portalCategories.map((portalCategory) => (
+            <Fallback
+              data={portalCategories}
+              error={portalCategoriesError}
+              pending={[...Array(10)].map((_, index) => (
+                <li
+                  key={index}
+                  className="animate-pulse bg-gray-300 w-48 h-4 my-3 rounded-full"
+                  aria-hidden
+                />
+              ))}
+            >
+              {(data) =>
+                data.map((portalCategory) => (
                   <li key={portalCategory.portal_category_id}>
                     <Link
                       href={pagesPath.portal_categories
@@ -75,13 +93,8 @@ function Footer({ className }: Props) {
                     </Link>
                   </li>
                 ))
-              : [...Array(10)].map((_, index) => (
-                  <li
-                    key={index}
-                    className="animate-pulse bg-gray-300 w-48 h-4 my-3 rounded-full"
-                    aria-hidden
-                  />
-                ))}
+              }
+            </Fallback>
           </ul>
         </section>
         <ul className="text-gray-700 text-sm leading-7 sm:columns-2 [&>li]:break-inside-avoid">
