@@ -108,9 +108,11 @@ function Footer({ className }: Props) {
               ご利用にあたって（免責事項）
             </Link>
           </li>
+          {/* TODO: サイトマップを実装したら追加して
           <li>
             <a>サイトマップ</a>
           </li>
+          */}
           <li>
             <Link href={pagesPath._slug("copyright").$url()}>
               教材の著作権について
