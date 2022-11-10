@@ -89,8 +89,13 @@ function Footer({ className }: Props) {
             <Link href={pagesPath._slug("concept").$url()}>OKUTEPについて</Link>
           </li>
           <li>
-            <Link href={pagesPath._slug("disclaimer").$url()}>
-              ご利用にあたって（免責事項）
+            <Link href={pagesPath._slug("about_us").$url()}>
+              私たちについて
+            </Link>
+          </li>
+          <li>
+            <Link href={pagesPath._slug("about_operator").$url()}>
+              運営元について
             </Link>
           </li>
           <li>
@@ -99,16 +104,18 @@ function Footer({ className }: Props) {
             </Link>
           </li>
           <li>
-            <Link href={pagesPath._slug("about_site").$url()}>
-              このサイトについて
+            <Link href={pagesPath._slug("disclaimer").$url()}>
+              ご利用にあたって（免責事項）
             </Link>
           </li>
+          {/* TODO: サイトマップを実装したら追加して
           <li>
             <a>サイトマップ</a>
           </li>
+          */}
           <li>
-            <Link href={pagesPath._slug("about_site").$url()}>
-              私たちについて
+            <Link href={pagesPath._slug("copyright").$url()}>
+              教材の著作権について
             </Link>
           </li>
           <li>
