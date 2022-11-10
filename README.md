@@ -30,7 +30,7 @@
    * ビルド時使用例： `./import.sh /opt/test.csv`
    * ビルド時使用例： `./import.sh /opt/test.csv --build`
    * ビルドなし時使用例： `./import.sh /opt/test.csv --no-build`
-   * インポートCSV書式：能力バッジを取得するURL,ポータル独自カテゴリの主キー
+   * インポートCSV書式：能力バッジの取得URL,ポータル独自カテゴリの主キー
    * インポートCSVヘッダー：無し
    * インポートCSVファイル凡例：  
      ```
@@ -38,4 +38,5 @@
      https://lms.example.org/badges/badge_json.php?id=20,101
      ```
    * インポートの結果は `chiloportal/backend/import_result.csv` に出力されます
-   * インポート結果CSVファイル書式：OK/NG,能力バッジを取得するURLポータル独自カテゴリの主キー,インポート済み能力バッジのID
+   * インポート結果CSVファイル書式：OK/NG,能力バッジの取得URL (*1),ポータル独自カテゴリの主キー,インポート済み能力バッジのID
+   * (*1) 能力バッジの取得URL: `Moodle` にあらかじめ登録している能力バッジのJSONを取得するためのURLです

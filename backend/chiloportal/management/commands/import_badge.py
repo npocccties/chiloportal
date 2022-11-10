@@ -19,7 +19,7 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument(
-            "--url", nargs="?", default="", type=str, help="能力バッジを取得するURL"
+            "--url", nargs="?", default="", type=str, help="能力バッジの取得URL"
         )
         parser.add_argument(
             "--pcid", nargs="?", default=0, type=int, help="ポータル独自カテゴリの主キー"
