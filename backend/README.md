@@ -89,7 +89,7 @@
    ./import_badge.sh {CSVファイルパス ※以降、インポートCSV}
    ```
    * 使用例： `./import.sh test.csv`
-   * インポートCSV書式：能力バッジを取得するURL,ポータル独自カテゴリの主キー
+   * インポートCSV書式：能力バッジの取得URL,ポータル独自カテゴリの主キー
    * インポートCSVヘッダー：無し
    * インポートCSVファイル凡例：  
      ```
@@ -160,7 +160,7 @@
    ```
    例
    ```
-   docker compose exec app python /workspace/manage.py import_badge --url=https://opedu.lib.osaka-kyoiku.ac.jp/badges/badge_json.php?id=41 --pcid=1
+   docker compose exec app python /workspace/manage.py import_badge --url=https://lms.example.org/badges/badge_json.php?id=41 --pcid=1
    ```
    * (*1) 能力バッジの取得URL: `Moodle` にあらかじめ登録している能力バッジのJSONを取得するためのURLです
 1. 能力バッジIDの確認  
