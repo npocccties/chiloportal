@@ -150,9 +150,12 @@ export default function Top({
           </ul>
         </section>
         <section className="jumpu-card p-6 mb-8">
-          <h2 className="text-xl text-gray-700 font-bold mb-4">
+          <h2 className="text-xl text-gray-700 font-bold mb-2">
             教員育成指標から探せる能力バッジ
           </h2>
+          <p className="text-sm text-gray-700 mb-3">
+            「教員育成指標」とは地域の教育委員会が教員に求められる資質や能力を、キャリア（経験年数）毎に明確にしたものです。
+          </p>
           <ul
             className={clsx({
               ["list-disc pl-6 text-primary-700 md:columns-2 lg:columns-3"]:
