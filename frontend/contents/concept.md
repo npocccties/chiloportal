@@ -1,5 +1,5 @@
 ---
-title: コンセプト
+title: OKUTEPについて
 slug: concept
 ---
 
