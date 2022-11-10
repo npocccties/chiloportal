@@ -86,7 +86,7 @@ function Footer({ className }: Props) {
         </section>
         <ul className="text-gray-700 text-sm leading-7 sm:columns-2 [&>li]:break-inside-avoid">
           <li>
-            <Link href={pagesPath._slug("concept").$url()}>コンセプト</Link>
+            <Link href={pagesPath._slug("concept").$url()}>OKUTEPについて</Link>
           </li>
           <li>
             <Link href={pagesPath._slug("disclaimer").$url()}>

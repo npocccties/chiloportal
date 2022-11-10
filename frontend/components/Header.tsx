@@ -14,7 +14,7 @@ type Props = {
 
 const contents = [
   {
-    title: "コンセプト",
+    title: "OKUTEPについて",
     slug: "concept",
   },
   {
