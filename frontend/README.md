@@ -25,6 +25,11 @@ corepack yarn dev # 開発サーバーの起動
 
 ```shell
 corepack yarn install # NPM パッケージのインストール
+cat << EOL > .env.test # テスト用環境変数の用意
+> NEXT_PUBLIC_API_MOCKING=false # モックサーバーを無効化
+> NEXT_PUBLIC_API_BASE_URL=<API のベースとなる URL>
+> NEXT_PUBLIC_MOODLE_DASHBOARD_URL=<Moodle ダッシュボードの URL>
+> EOL
 NODE_ENV=test corepack yarn build # テスト環境変数でのアプリケーションのビルド
 corepack yarn start # テストサーバーの起動
 ```
