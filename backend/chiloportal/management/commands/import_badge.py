@@ -132,8 +132,10 @@ class Command(BaseCommand):
             raise AppException("image.idのURLのContent-Typeがimageではありません。")
         ext = array[1]
         urlparsed = urlparse(image_id)
+        netloc = urlparsed.netloc
         urlpath = urlparsed.path
-        fname = urlpath.replace("/", ".")[1:]  # 先頭に/が付いているので、2文字目以降を抽出
+        fname = netloc.replace(":", ".").replace("/", ".")
+        fname += urlpath.replace("/", ".")
         filename = f"{fname}.{ext}"
         path = os.path.join(image_dir, filename)
         if os.path.exists(image_dir) == False:
