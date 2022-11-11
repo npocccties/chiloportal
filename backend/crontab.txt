@@ -1,0 +1,1 @@
+0 4 * * * /opt/chiloportal/backend/server_db_backup.sh

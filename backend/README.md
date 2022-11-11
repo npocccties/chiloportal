@@ -253,10 +253,10 @@ https://portal.example.org/admin
 ### SSL証明書
 * Let's Encrypt（無料SSL証明書）
 ### DBの日次バックアップ
-* `crontab -e` コマンドで夜間にバックアップを行う
-* cron 式は以下の通り
+* 必要に応じて `crontab` コマンドで夜間にバックアップを行うジョブを登録しておいてください
+* cron 式を記載したファイルを登録する
    ```
-   0 4 * * * /opt/chiloportal/backend/server_db_backup.sh
+   crontab chiloportal/backend/crontab.txt
    ```
 
 ## 本番サーバー
