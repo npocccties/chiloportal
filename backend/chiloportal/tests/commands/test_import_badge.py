@@ -28,7 +28,7 @@ class ImportBadgeCommandTests(TestCase):
     )
     image_dir = "/tmp/hoge/"
     downloaded_file = os.path.join(
-        image_dir, "pluginfile.php.1.badges.badgeimage.41.f1.png"
+        image_dir, "opedu.lib.osaka-kyoiku.ac.jp.pluginfile.php.1.badges.badgeimage.41.f1.png"
     )
     issuer_url = "https://opedu.lib.osaka-kyoiku.ac.jp/badges/issuer_json.php?id=41"
 
@@ -299,7 +299,7 @@ class ImportBadgeCommandTests(TestCase):
             "各種答申に示された教育改革の方向性、2017年改訂学習指導要領の実現を支える実践的知見、「日本型学校教育」の海外展開について知ることで、教育現場の内部から教育活動を改善し教師が学び続けることの重要性を認識する。",
         )
         self.assertEqual(
-            wisdom_badge.image_id, "pluginfile.php.1.badges.badgeimage.41.f1.png"
+            wisdom_badge.image_id, "opedu.lib.osaka-kyoiku.ac.jp.pluginfile.php.1.badges.badgeimage.41.f1.png"
         )
         self.assertEqual(
             wisdom_badge.image_author,
@@ -339,7 +339,7 @@ class ImportBadgeCommandTests(TestCase):
             '次の必要条件を完了した場合、ユーザにこのバッジが授与されます:\n* 「 すべて 」の次の活動が完了しました:\n"ビデオ - 1.はじめに"\n"ビデオ - 2.日本の教育課題を知る"\n"ビデオ - 3.教師の働き方を省察する"\n"ビデオ - 4.まとめ"\n"レッスン - 5.振り返り"\n\n',
         )
         self.assertEqual(
-            knowledge_badge1.image_id, "pluginfile.php.2395.badges.badgeimage.36.f1.png"
+            knowledge_badge1.image_id, "opedu.lib.osaka-kyoiku.ac.jp.pluginfile.php.2395.badges.badgeimage.36.f1.png"
         )
         self.assertEqual(
             knowledge_badge1.image_author,
@@ -368,7 +368,7 @@ class ImportBadgeCommandTests(TestCase):
             '次の必要条件を完了した場合、ユーザにこのバッジが授与されます:\n* 「 すべて 」の次の活動が完了しました:\n"ビデオ - 1.はじめに"\n"ビデオ - 2.誰がどのような文脈で、諸外国における授業研究を推進してきたのか？"\n"ビデオ - 3.なぜ日本型学校教育の重要な内容として、授業研究が注目されたのか？"\n"ビデオ - 4.学び続ける教師を支える、よりよい授業研究のあり方は？"\n"レッスン - 5.振り返り"\n\n',
         )
         self.assertEqual(
-            knowledge_badge4.image_id, "pluginfile.php.2395.badges.badgeimage.39.f1.png"
+            knowledge_badge4.image_id, "opedu.lib.osaka-kyoiku.ac.jp.pluginfile.php.2395.badges.badgeimage.39.f1.png"
         )
         self.assertEqual(
             knowledge_badge4.image_author,
