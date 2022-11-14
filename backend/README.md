@@ -71,6 +71,12 @@
    * 本番サーバー：
       * `sudo cp .env.production chiloportal/backend/.env`
       * 上記 `.env.production` は Public リポジトリに登録せずに Private リポジトリ等で管理してください
+1. WEBサーバーの定義を行った `nginx.conf` を backend ディレクトリに配置
+   * Let's Encrypt（無料SSL証明書）を使用する場合：
+      * `sudo cp chiloportal/backend/nginx.dev-server.conf chiloportal/backend/nginx.conf`
+   * 商用のSSL証明書を使用する場合：
+      * `sudo cp chiloportal/backend/nginx.production.conf chiloportal/backend/nginx.conf`
+   * 複製した `nginx.*.conf` ファイルに設定変更を行う場合は、別途管理を行い、それを原本としてください。
 1. chiloportal/backend へ移動
    ```
    cd chiloportal
