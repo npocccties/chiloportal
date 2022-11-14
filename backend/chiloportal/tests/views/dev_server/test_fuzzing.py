@@ -18,17 +18,7 @@ class FuzzingTests(BaseApiTests):
         thread.start()
         threads.append(thread)
         thread = threading.Thread(
-            target=self.request_framework_field_list
-        )
-        thread.start()
-        threads.append(thread)
-        thread = threading.Thread(
             target=self.request_framework_stage_list
-        )
-        thread.start()
-        threads.append(thread)
-        thread = threading.Thread(
-            target=self.request_wisdom_badges_list
         )
         thread.start()
         threads.append(thread)
