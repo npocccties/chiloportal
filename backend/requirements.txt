@@ -9,6 +9,7 @@ coreapi==2.3.3
 coreschema==0.0.4
 coverage==6.4.4
 Django==4.1
+django-axes==5.39.0
 django-cors-headers==3.13.0
 django-coverage-plugin==2.0.3
 django-ipware==4.0.2

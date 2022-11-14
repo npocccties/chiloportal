@@ -146,6 +146,12 @@
    * Django の管理画面からログインするための管理者アカウントを作成します  
    * 本番環境では類推されにくいユーザ名およびパスワードを設定してください  
 
+   アカウントロック解除  
+   ```
+   docker compose exec app python /workspace/manage.py axes_reset
+   ```
+   * Django の管理画面からログインに 3 回失敗するとアカウントロックが行われますので、上記コマンドにより解除してください  
+
 ## 動作確認
 ### バックエンドAPI
 1. ブラウザから https://portal.example.org/api/v1/swagger/ にアクセス
