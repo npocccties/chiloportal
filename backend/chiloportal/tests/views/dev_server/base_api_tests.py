@@ -6,7 +6,7 @@ from rest_framework import status
 
 class BaseApiTests(TestCase):
     # 下記ドメインは実在するものに変更してからテストしてください
-    base_url = "https://portal.example.org/api/v1/"
+    base_url = "https://dev-portal.oku.cccties.org/api/v1/"
     consumer_detail_url = urljoin(base_url, "consumer/")
     consumer_list_url = urljoin(base_url, "consumer/list/")
     stage_field_list_url = urljoin(base_url, "stage/field/list/")
@@ -41,23 +41,9 @@ class BaseApiTests(TestCase):
                 array = response.json()
                 self.assertEqual(len(array), self.test_data_count)
 
-    def request_framework_field_list(self):
-        for i in range(self.test_data_count):
-            response = requests.get(self.framework_field_list_url, {"framework_id": i + 1})
-            if response.status_code == status.HTTP_200_OK:
-                array = response.json()
-                self.assertEqual(len(array), 1)
-
     def request_framework_stage_list(self):
         for i in range(self.test_data_count):
             response = requests.get(self.framework_stage_list_url, {"framework_id": i + 1})
-            if response.status_code == status.HTTP_200_OK:
-                array = response.json()
-                self.assertEqual(len(array), 1)
-
-    def request_wisdom_badges_list(self):
-        for i in range(self.test_data_count):
-            response = requests.get(self.wisdom_badges_list_url, {"field_id": i + 1, "stage_id": i + 1})
             if response.status_code == status.HTTP_200_OK:
                 array = response.json()
                 self.assertEqual(len(array), 1)
