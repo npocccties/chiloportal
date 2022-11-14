@@ -229,6 +229,7 @@ http://localhost/admin
 https://portal.example.org/admin
 
 * SQLを使用せずとも Django の管理画面からデータを作成することは可能です（1件毎の手入力となりますので効率は下がります）
+* 特定のIPアドレスからのみ Django の管理画面にアクセスしたい場合は `nginx.*.conf` の `allow` と `deny` のコメントを外し、`allow` の `xxx.xxx.xxx.xxx` にグローバルIPアドレスを設定し、`server_restart.sh` を実行してください
 
 # ログファイル
 ログファイルのファイルサイズが 100MB に達するとバックアップを行い、7世代分を保持します。  
