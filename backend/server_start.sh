@@ -10,7 +10,7 @@ docker compose up -d
 docker compose exec -T app pip install --upgrade pip
 docker compose exec -T app pip install django-cors-headers
 docker compose exec -T app pip install django-ipware
-docker compose exec -T app pip install axes
+docker compose exec -T app pip install django-axes
 docker compose exec -T app python /workspace/manage.py makemigrations
 docker compose exec -T app python /workspace/manage.py migrate
 docker compose exec -d app python /workspace/manage.py collectstatic --no-input --clear
