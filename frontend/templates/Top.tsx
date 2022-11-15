@@ -92,7 +92,7 @@ export default function Top({
         <section className="mb-8">
           <p className="text-sm text-gray-700 mb-2">はじめての方におすすめ</p>
           <h2 className="text-xl text-gray-700 font-bold mb-4">
-            少ない回数で獲得できる能力バッジ
+            試しに受講してみる
           </h2>
           <p className="text-sm text-gray-700 mb-4">
             あなたが認められる能力バッジを獲得するために、いくつかの知識バッジを得なければなりません。少ない知識バッジで獲得できる能力バッジがあります。
