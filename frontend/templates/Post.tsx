@@ -32,9 +32,9 @@ function Post({ source, matter }: Props) {
         ]}
         leaf={matter.title}
       />
-      <aside className="mb-6">
-        <h1 className="text-2xl text-gray-700 mb-4">{matter.title}</h1>
-      </aside>
+      <header className="prose mb-6">
+        <h1 className="mb-4">{matter.title}</h1>
+      </header>
       <article className="prose">
         <MDXRemote {...source} components={components} />
       </article>
