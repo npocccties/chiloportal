@@ -15,7 +15,7 @@ export default function Stage({
   stages,
   stage,
   field,
-  wisdomBadgesListPerFields3PerField1,
+  wisdomBadgesListPerFields3,
 }: Props) {
   const { open, onOpen, onClose } = useDialog();
   return (
@@ -121,13 +121,13 @@ export default function Stage({
                       {field3_name}
                     </h4>
                     <ul>
-                      {wisdomBadgesListPerFields3PerField1[field1Index][
-                        field3Index
-                      ].map((wisdomBadges) => (
-                        <li className="mb-8" key={wisdomBadges.badges_id}>
-                          <WisdomBadgesItem wisdomBadges={wisdomBadges} />
-                        </li>
-                      ))}
+                      {wisdomBadgesListPerFields3[field3Index].map(
+                        (wisdomBadges) => (
+                          <li className="mb-8" key={wisdomBadges.badges_id}>
+                            <WisdomBadgesItem wisdomBadges={wisdomBadges} />
+                          </li>
+                        )
+                      )}
                     </ul>
                   </section>
                 ))}
