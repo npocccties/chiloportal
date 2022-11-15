@@ -203,16 +203,30 @@ export default function Top({
           <p className="text-gray-700 mb-4">
             バッジは取得できませんが、以下のコンテンツも提供しています。
           </p>
-          <ul className="list-disc pl-8 text-primary-700 md:columns-2 lg:columns-3">
+          <ul className="text-primary-700 grid grid-cols-1 md:grid-cols-2 gap-4">
             {learningContents.map((learningContent, index) => (
-              <li key={index} className="break-inside-avoid">
+              <li key={index}>
                 <a
-                  className="underline"
+                  className="h-full flex flex-col items-center justify-center hover:bg-primary-50 border border-primary-500 rounded-md px-6 py-4"
                   href={learningContent.url}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {learningContent.name}
+                  <h3 className="flex items-center mb-1">
+                    <span className="text-xl mr-4">{learningContent.name}</span>
+                    <Icon
+                      className="text-base inline"
+                      icon="fa-solid:external-link-alt"
+                    />
+                  </h3>
+                  {learningContent.type === "private" && (
+                    <p className="text-center text-sm text-primary-500">
+                      （受講者限定教材）
+                    </p>
+                  )}
+                  <p className="mt-3 text-sm text-primary-600">
+                    {learningContent.description}
+                  </p>
                 </a>
               </li>
             ))}
