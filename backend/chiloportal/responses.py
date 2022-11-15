@@ -1,5 +1,6 @@
 from collections import defaultdict
 from .enums import *
+from .utils import *
 
 
 def to_portal_categories(queryset):
@@ -208,7 +209,7 @@ def _to_field_detail(field_dict, field1key, field2keys, wisdom_dict):
         if not field2key.startswith(field1key):
             continue
         fields = sorted(field_dict[field2key], key=lambda f: f.sort_key)
-        wisdom_badge_id_array = sorted(wisdom_dict[field2key])
+        wisdom_badge_id_array = sorted(distinct_list(wisdom_dict[field2key]))
         field3_array = []
         for field in fields:
             field3_array.append(
