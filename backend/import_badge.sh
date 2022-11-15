@@ -47,7 +47,7 @@ for line in ${lines[@]}; do
         exit_code=1
     fi
     messages+=("$message")
-done < $CSV_PATH
+done
 
 echo "インポート結果："
 readonly RESULT_CSV_FNAME="import_result.csv"
