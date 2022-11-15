@@ -27,7 +27,9 @@ export type Props = {
   stages: Stage[];
   stage: Stage;
   field: FieldDetail;
-  wisdomBadgesListPerFields3: (BadgeDetail1 | BadgeDetail2)[][];
+  wisdomBadgesListPerFields: {
+    [fieldId: number]: (BadgeDetail1 | BadgeDetail2)[];
+  };
 };
 
 export async function getServerSideProps({
@@ -50,20 +52,22 @@ export async function getServerSideProps({
     const field = await client.stage.field.list.$get({
       query: { stage_id: Number(stageId) },
     });
-    const wisdomBadgesListPerFields3 = await Promise.all(
+    const wisdomBadgesListPerFields = await Promise.all(
       field.field1.flatMap(({ field2 }) =>
         field2.flatMap(({ field3 }) =>
-          field3.flatMap(({ wisdom_badges }) =>
-            client.badges.$get({
-              query: {
-                badges_type: "wisdom",
-                badges_ids: wisdom_badges.join(","),
-              },
-            })
+          field3.flatMap(({ field_id, wisdom_badges }) =>
+            client.badges
+              .$get({
+                query: {
+                  badges_type: "wisdom",
+                  badges_ids: wisdom_badges.join(","),
+                },
+              })
+              .then((result) => ({ [field_id]: result }))
           )
         )
       )
-    );
+    ).then((result) => Object.assign({}, ...result));
     return {
       props: {
         consumer,
@@ -71,7 +75,7 @@ export async function getServerSideProps({
         stages,
         stage,
         field,
-        wisdomBadgesListPerFields3,
+        wisdomBadgesListPerFields,
       },
     };
   } catch (e) {
