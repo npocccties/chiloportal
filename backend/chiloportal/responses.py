@@ -184,10 +184,16 @@ def get_fields_detail_keys(categorised_badge_set):
     wisdom_dict = defaultdict(list)
     for cb in categorised_badge_set:
         field = cb.goal.field
-        field1keys.add(field.field1_name)
-        field2keys.add(make_field2_key(field))
-        field_dict[make_field2_key(field)].append(field)
-        wisdom_dict[make_field2_key(field)].append(cb.wisdom_badges.id)
+        if field.field1_name not in field1keys:
+            field1keys.add(field.field1_name)
+        field2_key = make_field2_key(field)
+        if field2_key not in field2keys:
+            field2keys.add(field2_key)
+        field_result = list(filter(lambda f:True if f.id == field.id else False, field_dict[field2_key]))
+        if len(field_result) == 0:
+            field_dict[field2_key].append(field)
+        if cb.wisdom_badges.id not in wisdom_dict[field2_key]:
+            wisdom_dict[field2_key].append(cb.wisdom_badges.id)
     return field1keys, field2keys, field_dict, wisdom_dict
 
 
@@ -209,7 +215,7 @@ def _to_field_detail(field_dict, field1key, field2keys, wisdom_dict):
         if not field2key.startswith(field1key):
             continue
         fields = sorted(field_dict[field2key], key=lambda f: f.sort_key)
-        wisdom_badge_id_array = sorted(distinct_list(wisdom_dict[field2key]))
+        wisdom_badge_id_array = sorted(wisdom_dict[field2key])
         field3_array = []
         for field in fields:
             field3_array.append(
