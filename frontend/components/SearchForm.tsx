@@ -38,6 +38,7 @@ function SearchForm({ className, size = "medium" }: Props) {
           { ["text-lg"]: size === "large" }
         )}
         type="submit"
+        disabled={keyword.trim().length === 0}
         onClick={handleClick}
       >
         検索
