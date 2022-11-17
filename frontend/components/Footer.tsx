@@ -4,6 +4,7 @@ import Image from "next/image";
 import useConsumers from "lib/use-consumers";
 import usePortalCategories from "lib/use-portal-categories";
 import { pagesPath } from "lib/$path";
+import contents from "lib/contents";
 import Fallback from "components/Fallback";
 
 type Props = {
@@ -98,42 +99,13 @@ function Footer({ className }: Props) {
           </ul>
         </section>
         <ul className="text-gray-700 text-sm leading-7 sm:columns-2 [&>li]:break-inside-avoid">
-          <li>
-            <Link href={pagesPath._slug("concept").$url()}>OKUTEPについて</Link>
-          </li>
-          <li>
-            <Link href={pagesPath._slug("about_us").$url()}>
-              私たちについて
-            </Link>
-          </li>
-          <li>
-            <Link href={pagesPath._slug("about_operator").$url()}>
-              運営元について
-            </Link>
-          </li>
-          <li>
-            <Link href={pagesPath._slug("privacy_policy").$url()}>
-              プライバシーポリシー
-            </Link>
-          </li>
-          <li>
-            <Link href={pagesPath._slug("disclaimer").$url()}>
-              ご利用にあたって（免責事項）
-            </Link>
-          </li>
-          {/* TODO: サイトマップを実装したら追加して
-          <li>
-            <a>サイトマップ</a>
-          </li>
-          */}
-          <li>
-            <Link href={pagesPath._slug("copyright").$url()}>
-              教材の著作権について
-            </Link>
-          </li>
-          <li>
-            <Link href={pagesPath._slug("contact").$url()}>お問い合わせ</Link>
-          </li>
+          {contents.map((content) => (
+            <li key={content.slug}>
+              <Link href={pagesPath._slug(content.slug).$url()}>
+                {content.title}
+              </Link>
+            </li>
+          ))}
         </ul>
       </div>
       <div className="flex justify-center text-gray-700 text-xs px-2">

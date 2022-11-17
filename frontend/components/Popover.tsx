@@ -17,7 +17,7 @@ function Popover({ title, className, children }: Props) {
   return (
     <Base className={clsx("relative", className)}>
       <Base.Button className="group jumpu-text-button text-primary-700 inline-flex items-center rounded-md text-sm">
-        <span className="pr-2">{title}</span>
+        <span className="pr-2 whitespace-nowrap">{title}</span>
         <Icon
           icon="fa6-solid:chevron-down"
           className="text-primary-300"

@@ -1,57 +1,51 @@
+import { useId } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { Icon } from "@iconify/react";
 import Popover from "components/Popover";
 import SearchForm from "components/SearchForm";
 import useConsumers from "lib/use-consumers";
 import usePortalCategories from "lib/use-portal-categories";
+import useDialog from "lib/use-dialog";
 import clsx from "clsx";
 import { pagesPath } from "lib/$path";
+import contents from "lib/contents";
 import { NEXT_PUBLIC_MOODLE_DASHBOARD_URL } from "lib/env";
 import Fallback from "components/Fallback";
+import Menu from "components/Menu";
 
 type Props = {
   className?: string;
 };
 
-const contents = [
-  {
-    title: "OKUTEPについて",
-    slug: "concept",
-  },
-  {
-    title: "私たちについて",
-    slug: "about_us",
-  },
-  {
-    title: "運営元について",
-    slug: "about_operator",
-  },
-  {
-    title: "プライバシーポリシー",
-    slug: "privacy_policy",
-  },
-  {
-    title: "ご利用にあたって（免責事項）",
-    slug: "disclaimer",
-  },
-  {
-    title: "教材の著作権について",
-    slug: "copyright",
-  },
-  {
-    title: "お問い合わせ",
-    slug: "contact",
-  },
-] as const;
-
 function Header({ className }: Props) {
   const { data: consumers, error: consumersError } = useConsumers();
   const { data: portalCategories, error: portalCategoriesError } =
     usePortalCategories();
+  const { open, onOpen, onClose } = useDialog();
+  const id = useId();
   return (
     <header className={clsx("bg-white", className)}>
-      <div className="flex items-center gap-2 px-8 py-2 mx-auto max-w-6xl">
-        <Link href={pagesPath.$url()} className="px-2 mr-4">
+      <div className="relative flex items-center gap-1 px-4 py-2 mx-auto max-w-6xl">
+        <button
+          className="jumpu-icon-button group md:hidden"
+          onClick={onOpen}
+          aria-describedby={id}
+        >
+          <Icon className="text-xl text-primary-500" icon="fa6-solid:bars" />
+          <span
+            id={id}
+            role="tooltip"
+            className="![transform:translate(-50%,_150%)_scale(0)] group-hover:![transform:translate(-50%,_150%)_scale(1)]"
+          >
+            メニュー
+          </span>
+        </button>
+        <Menu open={open} onClose={onClose} />
+        <Link
+          href={pagesPath.$url()}
+          className="px-2 absolute md:static left-1/2 top-1/2 -translate-x-1/2 md:translate-x-0 -translate-y-1/2 md:translate-y-0 md:mr-4 shrink-0"
+        >
           <Image
             src="/logo.svg"
             width={69}
@@ -59,7 +53,7 @@ function Header({ className }: Props) {
             alt="トップページに戻る"
           />
         </Link>
-        <Popover className="hidden lg:block" title="カテゴリから探す">
+        <Popover className="hidden md:block" title="カテゴリから探す">
           {({ close }) => (
             <ul
               role="menu"
@@ -101,7 +95,7 @@ function Header({ className }: Props) {
             </ul>
           )}
         </Popover>
-        <Popover className="hidden lg:block" title="教員育成指標から探す">
+        <Popover className="hidden md:block" title="教員育成指標から探す">
           {({ close }) => (
             <ul
               role="menu"
@@ -143,7 +137,7 @@ function Header({ className }: Props) {
             </ul>
           )}
         </Popover>
-        <Popover className="hidden lg:block" title="OKUTEPについて">
+        <Popover className="hidden md:block" title="OKUTEPについて">
           {({ close }) => (
             <ul
               role="menu"
@@ -166,7 +160,7 @@ function Header({ className }: Props) {
         <div className="flex-1" />
         <SearchForm className="hidden xl:block mr-4" size="small" />
         <a
-          className="jumpu-text-button text-primary-700 text-sm"
+          className="jumpu-text-button text-primary-700 text-sm overflow-hidden whitespace-nowrap text-ellipsis shrink"
           href={NEXT_PUBLIC_MOODLE_DASHBOARD_URL}
           target="_blank"
           rel="noopener noreferrer"
