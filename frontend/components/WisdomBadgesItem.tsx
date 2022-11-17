@@ -40,9 +40,7 @@ function WisdomBadgesItem({ wisdomBadges }: Props) {
           <span className="font-bold mr-1">{wisdomBadges.issuer_name}</span>
           <span className="text-gray-500 flex-shrink-0">発行</span>
         </p>
-        <p className="text-sm text-gray-600 mb-2 line-clamp-2">
-          {wisdomBadges.description}
-        </p>
+        <p className="text-sm text-gray-600 mb-2">{wisdomBadges.description}</p>
         {"knowledge_badges_list" in wisdomBadges.detail && (
           <div className="jumpu-tag">
             知識バッジ{wisdomBadges.detail.knowledge_badges_list.length}
