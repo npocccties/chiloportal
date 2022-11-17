@@ -30,10 +30,6 @@ def to_consumer(consumer):
     }
 
 
-def to_criterias(queryset):
-    return [to_criteria(criteria) for criteria in queryset]
-
-
 def to_criteria(criteria):
     return {
         "criteria_id": criteria.id,
