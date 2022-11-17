@@ -38,7 +38,7 @@ function Menu({ open, onClose }: Props) {
             leaveFrom="translate-x-0"
             leaveTo="-translate-x-full"
           >
-            <Dialog.Panel className="w-full bg-white px-4 pt-3 pb-8 relative">
+            <Dialog.Panel className="w-full bg-white px-4 pt-3 pb-8 min-h-full relative">
               <button
                 className="jumpu-icon-button group mb-8 sticky top-3"
                 onClick={onClose}
