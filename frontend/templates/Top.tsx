@@ -137,7 +137,7 @@ export default function Top({
           </ul>
         </section>
         <section className="mb-8">
-          <h2 className="text-xl text-gray-700 font-bold mb-6 flex flex-wrap items-center gap-2">
+          <h2 className="text-xl text-gray-700 font-bold mb-2 flex flex-wrap items-center gap-2">
             カテゴリから探せる能力バッジ
             <Link
               className="text-primary-700 text-xs hover:underline whitespace-nowrap font-normal"
@@ -150,6 +150,9 @@ export default function Top({
               能力バッジとは？
             </Link>
           </h2>
+          <p className="text-sm text-gray-700 mb-4">
+            学術的な観点をもとにして，各自治体の教員育成指標も参考にしながら，オンライン学習で習得できる内容を「カテゴリ」として整理しました。
+          </p>
           <ul className="md:grid md:grid-cols-2 xl:grid-cols-3">
             <Fallback
               data={portalCategories}
