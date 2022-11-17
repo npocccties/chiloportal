@@ -37,8 +37,12 @@ export default function Top({
               学べるしくみ - OKUTEPのコンセプト
             </span>
           </Link>
-          <p className="text-sm text-gray-700 leading-7 mb-2">
+        </header>
+        <section className="px-6 py-4 mb-8 rounded-xl border border-primary-200 max-w-3xl mx-auto">
+          <h2 className="text-xl font-bold text-gray-700">
             OKUTEPは誰もが自由に学べるオープンな学びの場です。
+          </h2>
+          <p className="text-sm text-gray-700 leading-6 mb-2">
             <br />
             デジタルバッジ（※）は，あなたの自己実現のために活用できるデジタル証明書となります。
             <br />
@@ -61,7 +65,7 @@ export default function Top({
             <span className="text-primary-700 underline">OKUTEPとは</span>
             <Icon className="text-base" icon="fa6-solid:arrow-right" />
           </Link>
-        </header>
+        </section>
         <section className="mb-8">
           <div className="flex items-center gap-4 mb-4">
             <h2 className="text-xl text-gray-700 font-bold">
