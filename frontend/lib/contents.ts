@@ -5,8 +5,8 @@ export default [
     slug: "concept",
   },
   {
-    title: "私たちについて",
-    slug: "about_us",
+    title: "このサイトについて",
+    slug: "about_site",
   },
   {
     title: "運営元について",
