@@ -22,7 +22,7 @@ function KnowledgeBadgesItem({ className, knowledgeBadges }: Props) {
       </div>
       <div>
         <h3 className="text-lg text-gray-700 mb-2">{knowledgeBadges.name}</h3>
-        <p className="text-sm text-gray-600 mb-2 line-clamp-2">
+        <p className="text-sm text-gray-600 mb-2">
           {knowledgeBadges.description}
         </p>
         <ol className="text-xs text-gray-700">

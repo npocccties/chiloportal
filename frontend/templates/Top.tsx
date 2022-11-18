@@ -37,8 +37,12 @@ export default function Top({
               学べるしくみ - OKUTEPのコンセプト
             </span>
           </Link>
-          <p className="text-sm text-gray-700 leading-7 mb-2">
+        </header>
+        <section className="px-6 py-4 mb-8 rounded-xl border border-primary-200 max-w-3xl mx-auto">
+          <h2 className="text-xl font-bold text-gray-700">
             OKUTEPは誰もが自由に学べるオープンな学びの場です。
+          </h2>
+          <p className="text-sm text-gray-700 leading-6 mb-2">
             <br />
             デジタルバッジ（※）は，あなたの自己実現のために活用できるデジタル証明書となります。
             <br />
@@ -61,7 +65,7 @@ export default function Top({
             <span className="text-primary-700 underline">OKUTEPとは</span>
             <Icon className="text-base" icon="fa6-solid:arrow-right" />
           </Link>
-        </header>
+        </section>
         <section className="mb-8">
           <div className="flex items-center gap-4 mb-4">
             <h2 className="text-xl text-gray-700 font-bold">
@@ -92,10 +96,21 @@ export default function Top({
         <section className="mb-8">
           <p className="text-sm text-gray-700 mb-2">はじめての方におすすめ</p>
           <h2 className="text-xl text-gray-700 font-bold mb-4">
-            少ない回数で獲得できる能力バッジ
+            試しに受講してみる
           </h2>
           <p className="text-sm text-gray-700 mb-4">
             あなたが認められる能力バッジを獲得するために、いくつかの知識バッジを得なければなりません。少ない知識バッジで獲得できる能力バッジがあります。
+            <br />
+            <Link
+              className="text-primary-700 text-xs hover:underline whitespace-nowrap"
+              href={pagesPath._slug("about_badges").$url()}
+            >
+              <Icon
+                className="text-base inline mr-1"
+                icon="fa6-regular:circle-question"
+              />
+              能力バッジとは？
+            </Link>
           </p>
           <ul className="flex snap-x overflow-x-scroll pb-2 md:pb-0 px-4 md:px-0 -mx-4 md:mx-0 md:grid md:grid-cols-2 xl:grid-cols-3 gap-4">
             <Fallback
@@ -122,9 +137,22 @@ export default function Top({
           </ul>
         </section>
         <section className="mb-8">
-          <h2 className="text-xl text-gray-700 font-bold mb-6">
+          <h2 className="text-xl text-gray-700 font-bold mb-2 flex flex-wrap items-center gap-2">
             カテゴリから探せる能力バッジ
+            <Link
+              className="text-primary-700 text-xs hover:underline whitespace-nowrap font-normal"
+              href={pagesPath._slug("about_badges").$url()}
+            >
+              <Icon
+                className="text-base inline mr-1"
+                icon="fa6-regular:circle-question"
+              />
+              能力バッジとは？
+            </Link>
           </h2>
+          <p className="text-sm text-gray-700 mb-4">
+            学術的な観点をもとにして，各自治体の教員育成指標も参考にしながら，オンライン学習で習得できる内容を「カテゴリ」として整理しました。
+          </p>
           <ul className="md:grid md:grid-cols-2 xl:grid-cols-3">
             <Fallback
               data={portalCategories}
@@ -150,8 +178,18 @@ export default function Top({
           </ul>
         </section>
         <section className="jumpu-card p-6 mb-8">
-          <h2 className="text-xl text-gray-700 font-bold mb-2">
+          <h2 className="text-xl text-gray-700 font-bold mb-2 flex flex-wrap items-center gap-2">
             教員育成指標から探せる能力バッジ
+            <Link
+              className="text-primary-700 text-xs hover:underline whitespace-nowrap font-normal"
+              href={pagesPath._slug("about_badges").$url()}
+            >
+              <Icon
+                className="text-base inline mr-1"
+                icon="fa6-regular:circle-question"
+              />
+              能力バッジとは？
+            </Link>
           </h2>
           <p className="text-sm text-gray-700 mb-3">
             「教員育成指標」とは地域の教育委員会が教員に求められる資質や能力を、キャリア（経験年数）毎に明確にしたものです。
@@ -203,16 +241,30 @@ export default function Top({
           <p className="text-gray-700 mb-4">
             バッジは取得できませんが、以下のコンテンツも提供しています。
           </p>
-          <ul className="list-disc pl-8 text-primary-700 md:columns-2 lg:columns-3">
+          <ul className="text-primary-700 grid grid-cols-1 md:grid-cols-2 gap-4">
             {learningContents.map((learningContent, index) => (
-              <li key={index} className="break-inside-avoid">
+              <li key={index}>
                 <a
-                  className="underline"
+                  className="h-full flex flex-col items-center justify-center hover:bg-primary-50 border border-primary-500 rounded-md px-6 py-4"
                   href={learningContent.url}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {learningContent.name}
+                  <h3 className="flex items-center mb-1">
+                    <span className="text-xl mr-4">{learningContent.name}</span>
+                    <Icon
+                      className="text-base inline"
+                      icon="fa-solid:external-link-alt"
+                    />
+                  </h3>
+                  {learningContent.type === "private" && (
+                    <p className="text-center text-sm text-primary-500">
+                      （受講者限定教材）
+                    </p>
+                  )}
+                  <p className="mt-3 text-sm text-primary-600">
+                    {learningContent.description}
+                  </p>
                 </a>
               </li>
             ))}

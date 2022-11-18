@@ -38,7 +38,6 @@ function WisdomBadgesCard({ wisdomBadges, className }: Props) {
             つで獲得
           </div>
         )}
-        <p className="text-sm text-gray-600 mb-2">{wisdomBadges.description}</p>
         <p className="text-sm flex gap-2 items-center">
           {/* eslint-disable @next/next/no-img-element */}
           {/*

@@ -31,13 +31,14 @@
    * インポートコマンドの単体テスト：`chiloportal/tests/commands/*.py`
    * バックエンドAPIの単体テスト：`chiloportal/tests/views/*.py`
 
-## Pythonのパッケージのインストール時
+## 備考
+### Pythonのパッケージのインストール時
 1. pipコマンドにより Python のパッケージをインストールした場合、下記コマンドを実行し `requirements.txt` を更新してください。  
    ```
    pip freeze > requirements.txt
    ```
 
-## 単体テストのカバレッジ取得
+### 単体テストのカバレッジ取得
 1. 下記コマンド実行  
    ```
    pytest --cov --cov-branch --cov-report=term-missing --cov-report=html --ignore=chiloportal/tests/views/dev_server
@@ -46,6 +47,12 @@
    * 上記 html の coverage 列（カバレッジ：網羅率）は C0（命令網羅）とC1（分岐網羅）を含みます  
 1. カバレッジを確認して必要に応じてテストコードを追加
 1. 再度、カバレッジを出力する
+
+### サーバー環境のDBをローカルで再現
+1. サーバー環境でDBのバックアップが行われると `/var/chiloportal.dump` が生成されるので、それをローカルの `backend` 配下にコピーしたうえで、下記を実行してください。
+  ```
+  pg_restore --clean -h db -p 5432 -d develop -U postgres -v < chiloportal.dump
+  ```
 
 
 # 開発サーバー（または本番サーバー）

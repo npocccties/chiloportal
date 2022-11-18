@@ -23,4 +23,11 @@ jobs:
       run: |
         docker-compose ps
         docker-compose exec -T app python /workspace/manage.py test --exclude-tag=fuzzing
-
+    - name: Coverage
+      run: |
+        docker-compose exec -T app pytest --cov --cov-branch --cov-report=term-missing --junitxml=pytest.xml --ignore=chiloportal/tests/views/dev_server | tee pytest-coverage.txt
+    - name: Coverage comment
+      uses: MishaKav/pytest-coverage-comment@main
+      with:
+        pytest-coverage-path: backend/pytest-coverage.txt
+        junitxml-path: backend/pytest.xml

@@ -1,9 +1,9 @@
 import { GetStaticPropsResult } from "next";
 import Error from "next/error";
-import { BadgeDetail2 } from "api/@types";
 import Template from "templates/Top";
 import { readMarkdowns, Markdown } from "lib/markdown";
 import { readConfig } from "lib/config";
+import { Config } from "schemas/config";
 
 type ErrorProps = {
   title: string;
@@ -12,8 +12,8 @@ type ErrorProps = {
 
 export type Props = {
   posts: Markdown["data"]["matter"][];
-  recommendedWisdomBadgesIds: BadgeDetail2["badges_id"][];
-  learningContents: { name: string; url: string }[];
+  recommendedWisdomBadgesIds: NonNullable<Config["recommendedWisdomBadgesIds"]>;
+  learningContents: NonNullable<Config["learningContents"]>;
 };
 
 export async function getStaticProps(): Promise<
