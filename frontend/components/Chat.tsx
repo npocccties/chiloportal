@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useId } from "react";
 import { useRouter } from "next/router";
 import clsx from "clsx";
 import { Icon } from "@iconify/react";
+import TextareaAutosize from "react-textarea-autosize";
 import Link from "components/Link";
 import { client } from "lib/client";
 import { pagesPath } from "lib/$path";
@@ -228,11 +229,12 @@ function Chat({ className }: Props) {
         </ul>
         <hr className="border-gray-300 mx-4" />
         <form className="relative px-2 py-4">
-          <textarea
+          <TextareaAutosize
             value={textarea}
             onChange={handleChange}
             className="w-full p-2 resize-none"
-            rows={2}
+            minRows={2}
+            maxRows={6}
             placeholder="メッセージを入力…"
           />
           <button
