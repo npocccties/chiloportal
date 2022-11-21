@@ -12,7 +12,7 @@ function Layout({ children }: Props) {
       <Header className="sticky z-20 top-0 left-0 w-full" />
       {children}
       <Footer />
-      <Chat className="fixed bottom-0 right-[10vw]" />
+      <Chat className="fixed z-20 bottom-0 right-[10vw]" />
     </div>
   );
 }
