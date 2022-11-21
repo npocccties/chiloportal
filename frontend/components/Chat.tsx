@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useId } from "react";
+import { useRouter } from "next/router";
 import clsx from "clsx";
 import { Icon } from "@iconify/react";
 import Link from "components/Link";
@@ -53,6 +54,16 @@ function Chat({ className }: Props) {
   const id = useId();
   const [textarea, setTextarea] = useState("");
   const [expand, setExpand] = useState(false);
+  const handleClose = () => {
+    setExpand(false);
+  };
+  const { events } = useRouter();
+  useEffect(() => {
+    events.on("routeChangeStart", handleClose);
+    return () => {
+      events.off("routeChangeStart", handleClose);
+    };
+  });
   const handleClickExpand = async () => {
     setExpand(true);
     if (chats.length === 0) {
@@ -82,9 +93,6 @@ function Chat({ className }: Props) {
         ),
       });
     }
-  };
-  const handleClickCollapse = () => {
-    setExpand(false);
   };
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTextarea(event.target.value);
@@ -189,7 +197,7 @@ function Chat({ className }: Props) {
         <button
           className="w-full flex items-center bg-primary-700 rounded-t-xl p-4 text-white hover:bg-primary-600"
           aria-label="閉じる"
-          onClick={handleClickCollapse}
+          onClick={handleClose}
         >
           <span className="text-left font-bold flex-1">
             「学び」探しにお困りですか？
