@@ -189,7 +189,7 @@ function Chat({ className }: Props) {
       <nav
         id={id}
         className={clsx(
-          "absolute w-[80vw] sm:w-[24rem] bottom-0 right-0 bg-white shadow-xl transition-transform duration-150 ease-in-out",
+          "absolute w-[80vw] sm:w-[24rem] bottom-0 right-0 bg-white rounded-t-xl shadow-xl transition-transform duration-150 ease-in-out",
           {
             ["-bottom-full translate-y-full"]: !expand,
           }
@@ -232,7 +232,7 @@ function Chat({ className }: Props) {
           <TextareaAutosize
             value={textarea}
             onChange={handleChange}
-            className="w-full p-2 resize-none"
+            className="w-full p-2 resize-none dark:text-black"
             minRows={2}
             maxRows={6}
             placeholder="メッセージを入力…"
