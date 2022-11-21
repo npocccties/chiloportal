@@ -1,7 +1,7 @@
-import Link, { LinkProps } from "next/link";
 import { Icon } from "@iconify/react";
 import clsx from "clsx";
 import usePagination from "lib/use-pagination";
+import Link, { LinkProps } from "components/Link";
 
 type Props = {
   className?: string;

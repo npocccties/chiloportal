@@ -1,8 +1,8 @@
-import Link from "next/link";
 import Image from "next/image";
 import { BadgeDetail2 } from "api/@types";
 import { pagesPath } from "lib/$path";
 import { getImageUrl } from "lib/issuer";
+import Link from "components/Link";
 
 type Props = {
   wisdomBadges: BadgeDetail2;

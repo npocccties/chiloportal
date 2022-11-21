@@ -1,11 +1,11 @@
 import clsx from "clsx";
-import Link from "next/link";
 import Image from "next/image";
 import useConsumers from "lib/use-consumers";
 import usePortalCategories from "lib/use-portal-categories";
 import { pagesPath } from "lib/$path";
 import contents from "lib/contents";
 import Fallback from "components/Fallback";
+import Link from "components/Link";
 
 type Props = {
   className?: string;
