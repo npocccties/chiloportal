@@ -84,7 +84,7 @@ function Header({ className }: Props) {
                         href={pagesPath.portal_categories
                           ._portalCategoryId(portalCategory.portal_category_id)
                           .$url({ query: {} })}
-                        className="block w-max min-w-full px-4 py-3 rounded hover:text-white hover:bg-primary-700"
+                        className="block w-max min-w-full px-4 py-3 rounded hover:text-white hover:bg-primary-700 dark:text-black"
                       >
                         {portalCategory.name}
                       </Link>
@@ -126,7 +126,7 @@ function Header({ className }: Props) {
                         href={pagesPath.consumers
                           ._consumerId(consumer.consumer_id)
                           .$url()}
-                        className="block w-max min-w-full px-4 py-3 rounded hover:text-white hover:bg-primary-700"
+                        className="block w-max min-w-full px-4 py-3 rounded hover:text-white hover:bg-primary-700 dark:text-black"
                       >
                         {consumer.name}の教員育成指標
                       </Link>
@@ -148,7 +148,7 @@ function Header({ className }: Props) {
                 <li key={content.slug} role="menuitem">
                   <Link
                     href={pagesPath._slug(content.slug).$url()}
-                    className="block w-max min-w-full px-4 py-3 rounded hover:text-white hover:bg-primary-700"
+                    className="block w-max min-w-full px-4 py-3 rounded hover:text-white hover:bg-primary-700 dark:text-black"
                   >
                     {content.title}
                   </Link>

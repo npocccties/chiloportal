@@ -232,7 +232,7 @@ function Chat({ className }: Props) {
           <TextareaAutosize
             value={textarea}
             onChange={handleChange}
-            className="w-full p-2 resize-none"
+            className="w-full p-2 resize-none dark:text-black"
             minRows={2}
             maxRows={6}
             placeholder="メッセージを入力…"
