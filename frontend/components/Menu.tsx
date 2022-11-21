@@ -2,12 +2,12 @@ import { useEffect, Fragment, useId } from "react";
 import { useRouter } from "next/router";
 import { Dialog, Transition } from "@headlessui/react";
 import { Icon } from "@iconify/react";
-import Link from "next/link";
 import { pagesPath } from "lib/$path";
 import useConsumers from "lib/use-consumers";
 import usePortalCategories from "lib/use-portal-categories";
 import contents from "lib/contents";
 import Fallback from "components/Fallback";
+import Link from "components/Link";
 
 type Props = {
   open: boolean;

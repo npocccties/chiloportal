@@ -1,7 +1,7 @@
 import clsx from "clsx";
-import Link, { LinkProps } from "next/link";
 import { Icon } from "@iconify/react";
 import { Fragment } from "react";
+import Link, { LinkProps } from "components/Link";
 
 type Props = {
   className?: string;
