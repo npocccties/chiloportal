@@ -1,11 +1,13 @@
 import { GetStaticPropsResult, GetStaticPathsResult } from "next";
 import Error from "next/error";
+import Head from "next/head";
 import { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
 import remarkGfm from "remark-gfm";
 import Template from "templates/Post";
 import { readMarkdowns, Markdown } from "lib/markdown";
 import rehypeImageSize from "lib/rehype-image-size";
+import title from "lib/title";
 
 type Context = {
   params: { slug: string };
@@ -66,5 +68,12 @@ export async function getStaticPaths(): Promise<
 
 export default function Page(props: ErrorProps | Props) {
   if ("statusCode" in props) return <Error {...props} />;
-  return <Template {...props} />;
+  return (
+    <>
+      <Head>
+        <title>{title(props.matter.title)}</title>
+      </Head>
+      <Template {...props} />
+    </>
+  );
 }
