@@ -1,9 +1,11 @@
 import { GetServerSidePropsResult } from "next";
 import Error from "next/error";
+import Head from "next/head";
 import { client, getErrorProps } from "lib/client";
 import { PortalCategory } from "api/@types";
 import Template from "templates/PortalCategory";
 import { NEXT_PUBLIC_API_MOCKING } from "lib/env";
+import title from "lib/title";
 
 export type Query = { p?: string };
 
@@ -55,5 +57,12 @@ export async function getServerSideProps({
 
 export default function Page(props: ErrorProps | Props) {
   if ("statusCode" in props) return <Error {...props} />;
-  return <Template {...props} />;
+  return (
+    <>
+      <Head>
+        <title>{title(props.portalCategory.name)}</title>
+      </Head>
+      <Template {...props} />
+    </>
+  );
 }

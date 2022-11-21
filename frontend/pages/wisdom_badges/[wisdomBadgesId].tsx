@@ -1,6 +1,8 @@
 import { GetServerSidePropsResult } from "next";
 import Error from "next/error";
+import Head from "next/head";
 import { client, getErrorProps } from "lib/client";
+import title from "lib/title";
 import { BadgeDetail1, BadgeDetail2 } from "api/@types";
 import Template from "templates/WisdomBadges";
 
@@ -53,5 +55,12 @@ export async function getServerSideProps({
 
 export default function Page(props: ErrorProps | Props) {
   if ("statusCode" in props) return <Error {...props} />;
-  return <Template {...props} />;
+  return (
+    <>
+      <Head>
+        <title>{title(props.wisdomBadges.name)}</title>
+      </Head>
+      <Template {...props} />
+    </>
+  );
 }

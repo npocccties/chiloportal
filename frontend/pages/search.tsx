@@ -1,8 +1,10 @@
 import { GetServerSidePropsResult } from "next";
 import Error from "next/error";
+import Head from "next/head";
 import { client, getErrorProps } from "lib/client";
 import Template from "templates/Search";
 import { pagesPath } from "lib/$path";
+import title from "lib/title";
 
 export type Query = { q?: string; p?: string };
 
@@ -48,5 +50,12 @@ export async function getServerSideProps({
 
 export default function Page(props: ErrorProps | Props) {
   if ("statusCode" in props) return <Error {...props} />;
-  return <Template {...props} />;
+  return (
+    <>
+      <Head>
+        <title>{title(`検索結果「${props.keyword}」`)}</title>
+      </Head>
+      <Template {...props} />
+    </>
+  );
 }

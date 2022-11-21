@@ -1,9 +1,11 @@
 import { GetStaticPropsResult } from "next";
 import Error from "next/error";
+import Head from "next/head";
 import Template from "templates/Top";
 import { readMarkdowns, Markdown } from "lib/markdown";
 import { readConfig } from "lib/config";
 import { Config } from "schemas/config";
+import title from "lib/title";
 
 type ErrorProps = {
   title: string;
@@ -38,5 +40,12 @@ export async function getStaticProps(): Promise<
 
 export default function Page(props: ErrorProps | Props) {
   if ("statusCode" in props) return <Error {...props} />;
-  return <Template {...props} />;
+  return (
+    <>
+      <Head>
+        <title>{title()}</title>
+      </Head>
+      <Template {...props} />
+    </>
+  );
 }
