@@ -87,6 +87,18 @@
             ],
             "django": true,
             "justMyCode": true
+        },
+        {
+            "name": "Fuzzing Test (Frontend)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/manage.py",
+            "args": [
+                "test",
+                "chiloportal.tests.views.dev_server.test_fuzzing_front"
+            ],
+            "django": true,
+            "justMyCode": true
         }
     ],
     "inputs": [
