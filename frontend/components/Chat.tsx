@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef, useId } from "react";
 import { useRouter } from "next/router";
 import clsx from "clsx";
+import Link from "next/link";
 import { Icon } from "@iconify/react";
 import TextareaAutosize from "react-textarea-autosize";
-import Link from "components/Link";
 import { client } from "lib/client";
 import { pagesPath } from "lib/$path";
 import useChats from "lib/use-chats";

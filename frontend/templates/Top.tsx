@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import Link from "next/link";
 import { Icon } from "@iconify/react";
 import { Props } from "pages";
 import { pagesPath } from "lib/$path";
@@ -9,7 +10,6 @@ import Container from "components/Container";
 import WisdomBadgesCard from "components/WisdomBadgesCard";
 import PortalCategoryCard from "components/PortalCategoryCard";
 import Fallback from "components/Fallback";
-import Link from "components/Link";
 
 export default function Top({
   posts,

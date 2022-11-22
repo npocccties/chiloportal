@@ -1,7 +1,7 @@
+import Link from "next/link";
 import { Props } from "pages/posts";
 import Breadcrumbs from "components/Breadcrumbs";
 import Container from "components/Container";
-import Link from "components/Link";
 import { pagesPath } from "lib/$path";
 
 function Posts({ posts }: Props) {
