@@ -1,7 +1,7 @@
 import { useId } from "react";
+import Link from "next/link";
 import Image from "next/image";
 import { Icon } from "@iconify/react";
-import Link from "components/Link";
 import Popover from "components/Popover";
 import SearchForm from "components/SearchForm";
 import useConsumers from "lib/use-consumers";

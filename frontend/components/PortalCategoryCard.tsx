@@ -1,8 +1,8 @@
 import clsx from "clsx";
+import Link from "next/link";
 import Image from "next/image";
 import { PortalCategory } from "api/@types";
 import { pagesPath } from "lib/$path";
-import Link from "components/Link";
 
 type Props = {
   className?: string;

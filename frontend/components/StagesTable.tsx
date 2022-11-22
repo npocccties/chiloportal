@@ -1,8 +1,8 @@
 import clsx from "clsx";
+import Link, { LinkProps } from "next/link";
 import { Icon } from "@iconify/react";
 import { Consumer, Framework, Stage } from "api/@types";
 import { pagesPath } from "lib/$path";
-import Link, { LinkProps } from "components/Link";
 
 type Props = {
   className?: string;
