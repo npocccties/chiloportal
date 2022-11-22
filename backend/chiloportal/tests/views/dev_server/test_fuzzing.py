@@ -2,6 +2,7 @@ from django.test import tag
 import threading
 from .base_api_tests import *
 
+
 class FuzzingTests(BaseApiTests):
     @tag("fuzzing")
     def test_large_http_requests_200(self):
