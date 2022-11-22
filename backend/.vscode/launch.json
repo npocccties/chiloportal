@@ -77,25 +77,25 @@
             "justMyCode": true
         },
         {
-            "name": "Fuzzing Test (Backend API)",
+            "name": "Fuzzing Test (同時接続)",
             "type": "python",
             "request": "launch",
             "program": "${workspaceFolder}/manage.py",
             "args": [
                 "test",
-                "chiloportal.tests.views.dev_server.test_fuzzing"
+                "chiloportal.tests.views.dev_server.test_fuzzing_large"
             ],
             "django": true,
             "justMyCode": true
         },
         {
-            "name": "Fuzzing Test (Frontend)",
+            "name": "Fuzzing Test (長時間)",
             "type": "python",
             "request": "launch",
             "program": "${workspaceFolder}/manage.py",
             "args": [
                 "test",
-                "chiloportal.tests.views.dev_server.test_fuzzing_front"
+                "chiloportal.tests.views.dev_server.test_fuzzing_long_period"
             ],
             "django": true,
             "justMyCode": true
