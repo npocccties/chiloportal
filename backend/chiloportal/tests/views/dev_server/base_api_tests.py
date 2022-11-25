@@ -35,10 +35,12 @@ class BaseApiTests(TestCase):
         with open(filename, encoding="utf8", newline="") as f:
             csvreader = csv.reader(f)
             for rows in csvreader:
+                if len(rows) == 0:
+                    continue
                 http_row = rows[0]
                 if http_row[0] == "#":
                     continue
-                address = {http_row: rows[1]}
+                address = {http_row.strip(): rows[1].strip()}
                 proxies.append(address)
         return proxies
 
