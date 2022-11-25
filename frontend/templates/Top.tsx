@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import Link from "next/link";
+import Image from "next/image";
 import { Icon } from "@iconify/react";
 import { Props } from "pages";
 import { pagesPath } from "lib/$path";
@@ -23,13 +24,15 @@ export default function Top({
     "wisdom",
     recommendedWisdomBadgesIds
   );
+  const alt =
+    "科目を選び、バッジを獲得することで社会的評価や自信の証明が得られ、あなたと子供達と社会のウェルビーイングへとつながります。この関係性は、学習成果の活用と主体的な学びの循環によって形成されます";
   return (
     <>
       <Container className="max-w-5xl mt-8" as="article">
         <header className="mb-8">
           <Link
             href={pagesPath._slug("concept").$url()}
-            className="flex gap-4 items-center px-6 py-3 rounded-xl border-2 border-primary-500 mb-4 hover:bg-primary-50"
+            className="flex gap-4 items-center px-6 py-3 rounded-xl border-2 border-primary-500 mb-6 md:mb-12 hover:bg-primary-50"
           >
             <Icon className="text-primary-500 text-xl" icon="fa6-solid:bell" />
             <span className="text-sm text-primary-700">
@@ -37,6 +40,27 @@ export default function Top({
               学べるしくみ - OKUTEPのコンセプト
             </span>
           </Link>
+          <h1 className="hidden md:block mb-6 text-primary-700 text-[2rem] text-center font-bold">
+            <span className="text-4xl underline underline-offset-0 decoration-[#a6a63a]/20 decoration-8">
+              自ら学び続けるすべての人々のために
+            </span>
+            <br />
+            デジタルバッジであなたの学習成果を活用
+          </h1>
+          <Image
+            className="hidden md:block mx-auto"
+            src="/top-md.png"
+            width={946}
+            height={341}
+            alt={alt}
+          />
+          <Image
+            className="md:hidden mx-auto"
+            src="/top.png"
+            width={640}
+            height={282}
+            alt={alt}
+          />
         </header>
         <section className="px-6 py-4 mb-8 rounded-xl border border-primary-200 max-w-3xl mx-auto">
           <h2 className="text-xl font-bold text-gray-700">
