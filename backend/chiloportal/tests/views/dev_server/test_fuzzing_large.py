@@ -11,7 +11,7 @@ class FuzzingTests(BaseApiTests):
         for i in range(len(proxies)):
             thread = threading.Thread(
                 target=self.request_frontend_framework_stages_proxy,
-                args=(proxies[i],),
+                args=(proxies[i], 1),
             )
             thread.start()
             threads.append(thread)
