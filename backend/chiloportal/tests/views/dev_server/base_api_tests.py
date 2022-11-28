@@ -50,13 +50,15 @@ class BaseApiTests(TestCase):
             self.assertEqual(response.status_code, status.HTTP_200_OK)
             time.sleep(interval_secconds)
 
-    def request_frontend_framework_stages_proxy(self, proxy):
+    def request_frontend_framework_stages_proxy(self, proxy, count=1):
         self.status_results_ok = list()
         self.status_results_ng = list()
         try:
-            response = requests.get(self.frontend_framework_stages_url, proxies=proxy)
-            print(f"OK: {proxy}")
-            self.status_results_ok.append({"OK": proxy})
+            for i in range(count):
+                response = requests.get(self.frontend_framework_stages_url, proxies=proxy)
+                print(f"OK: {proxy}")
+                self.status_results_ok.append({"OK": proxy})
+                time.sleep(5)
         except requests.exceptions.RequestException as e:
             print(e)
             print(f"NG: {proxy}")
