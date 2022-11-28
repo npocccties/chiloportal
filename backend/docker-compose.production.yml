@@ -13,6 +13,7 @@ services:
       - ./static:/workspace/static
       - ${SSL_CERTS_DIR}/signed.crt:/etc/nginx/conf.d/signed.crt
       - ${SSL_CERTS_DIR}/domain.key:/etc/nginx/conf.d/domain.key
+      - ./50x.html:/usr/share/nginx/html/50x.html
     depends_on:
       - app
     restart: always
