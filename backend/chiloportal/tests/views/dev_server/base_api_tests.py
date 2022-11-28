@@ -8,7 +8,7 @@ import csv
 
 class BaseApiTests(TestCase):
     # 下記ドメインは実在するものに変更してからテストしてください
-    base_url = "https://test-portal.oku.cccties.org/"
+    base_url = "https://portal.example.org/"
     frontend_url = base_url
     frontend_framework_stages_url = urljoin(
         frontend_url, "consumers/1/frameworks/1/stages/1"
