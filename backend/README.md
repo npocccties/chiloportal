@@ -97,26 +97,6 @@
    ./server_start.sh
    ```
    * 権限付与後の `server_start.sh` は何度でも実行可能です
-1. app_network の Gateway の IPアドレスをリクエスト制限から外す
-   * `app_network` の Gateway を確認
-   ```
-   docker network ls
-   docker network inspect {前述コマンドにて確認した app_network の NETWORK ID を転記}
-   ```
-
-   * Gateway の表示例
-   ```
-   "Config": [
-      {
-         "Subnet": "172.22.0.0/16",
-         "Gateway": "172.22.0.1"
-      }
-   ]
-   ```
-
-   * `nginx.conf` を開き、`172.18.0.1` の箇所を `app_network` の Gateway の IPアドレスを転記してから保存する
-   * `./server_restart.sh` を実行
-
 1. 能力バッジのインポート
    ```
    ./import_badge.sh {CSVファイルパス ※以降、インポートCSV}
