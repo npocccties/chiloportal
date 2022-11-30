@@ -48,8 +48,8 @@ function Header({ className }: Props) {
         >
           <Image
             src="/logo.svg"
-            width={69}
-            height={27}
+            width={108}
+            height={24}
             alt="トップページに戻る"
           />
         </Link>
