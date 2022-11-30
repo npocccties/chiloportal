@@ -22,8 +22,8 @@ function Footer({ className }: Props) {
           <Link href={pagesPath.$url()} className="inline-block px-2">
             <Image
               src="/logo.svg"
-              width={69}
-              height={27}
+              width={108}
+              height={24}
               alt="トップページに戻る"
             />
           </Link>
