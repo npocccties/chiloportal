@@ -6,12 +6,13 @@
 export function getImagePath(type: string): string {
   switch (type) {
     case "ビデオ":
-      return "/criteria-video.png";
+      return "/criteria-video.svg";
     case "小テスト":
-      return "/criteria-test.png";
+      return "/criteria-test.svg";
     case "アンケート":
+      return "/criteria-survey.svg";
     case "レッスン":
     default:
-      return "/criteria-survey.png";
+      return "/criteria-lesson.svg";
   }
 }
