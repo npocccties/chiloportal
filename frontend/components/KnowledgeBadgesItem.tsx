@@ -18,7 +18,9 @@ function KnowledgeBadgesItem({ className, knowledgeBadges }: Props) {
           height={80}
           alt=""
         />
-        <div className="jumpu-tag">知識バッジ</div>
+        <div className="jumpu-tag cursor-auto bg-white text-gray-700 border border-gray-300">
+          知識バッジ
+        </div>
       </div>
       <div>
         <h3 className="text-lg text-gray-700 mb-2">{knowledgeBadges.name}</h3>
@@ -34,8 +36,8 @@ function KnowledgeBadgesItem({ className, knowledgeBadges }: Props) {
               >
                 <Image
                   src={getImagePath(criteria.type)}
-                  width={16}
-                  height={16}
+                  width={20}
+                  height={20}
                   alt={criteria.type}
                 />
                 <span>{criteria.name}</span>
