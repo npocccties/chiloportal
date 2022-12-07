@@ -26,7 +26,7 @@ function Header({ className }: Props) {
   const id = useId();
   return (
     <header className={clsx("bg-white", className)}>
-      <div className="relative flex items-center gap-1 px-4 py-2 mx-auto max-w-6xl overflow-x-auto">
+      <div className="relative flex items-center gap-1 px-4 py-2 mx-auto max-w-6xl">
         <button
           className="jumpu-icon-button group md:hidden"
           onClick={onOpen}
@@ -160,7 +160,7 @@ function Header({ className }: Props) {
         <div className="flex-1" />
         <SearchForm className="hidden xl:block mr-4" size="small" />
         <a
-          className="jumpu-text-button text-primary-700 text-sm whitespace-nowrap"
+          className="jumpu-text-button text-primary-700 text-sm overflow-hidden whitespace-nowrap text-ellipsis shrink"
           href={NEXT_PUBLIC_MOODLE_DASHBOARD_URL}
           target="_blank"
           rel="noopener noreferrer"
