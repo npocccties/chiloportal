@@ -47,7 +47,9 @@ export default function WisdomBadges({
             height={100}
             alt=""
           />
-          <div className="jumpu-tag">能力バッジ</div>
+          <div className="jumpu-tag cursor-auto bg-white text-base border border-gray-300">
+            能力バッジ
+          </div>
         </div>
         <div>
           <h1 className="text-4xl text-gray-700 mb-2">{wisdomBadges.name}</h1>
