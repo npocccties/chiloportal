@@ -29,7 +29,7 @@ export default function WisdomBadges({
 
   return (
     <Container
-      className="max-w-6xl md:grid gap-8 grid-cols-[auto_1fr]"
+      className="max-w-6xl md:grid gap-4 grid-cols-[auto_1fr]"
       style={{
         gridTemplateAreas: "'breadcrumbs breadcrumbs' 'aside article'",
       }}
@@ -47,7 +47,7 @@ export default function WisdomBadges({
         ]}
         leaf={wisdomBadges.name}
       />
-      <aside className="flex-shrink-0 flex flex-col items-center gap-1 [grid-area:aside] mb-6 md:mb-0">
+      <aside className="flex-shrink-0 flex flex-col items-center gap-1 [grid-area:aside] mb-6 md:mb-0 lg:mr-4">
         <Image
           className="max-w-[214px] md:w-[20vw] md:max-w-[152px] lg:max-w-[320px] mb-2"
           src={`/images/${wisdomBadges.image}`}
