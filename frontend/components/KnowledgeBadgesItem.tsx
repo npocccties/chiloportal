@@ -36,8 +36,8 @@ function KnowledgeBadgesItem({ className, knowledgeBadges }: Props) {
               >
                 <Image
                   src={getImagePath(criteria.type)}
-                  width={16}
-                  height={16}
+                  width={20}
+                  height={20}
                   alt={criteria.type}
                 />
                 <span>{criteria.name}</span>
