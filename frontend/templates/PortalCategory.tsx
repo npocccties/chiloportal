@@ -23,7 +23,6 @@ export default function PortalCategory({
       />
       <header className="flex gap-8 items-center mb-16">
         <Image
-          className="rounded-2xl"
           src={`/images/${portalCategory.image_url_path}`}
           width={200}
           height={200}
