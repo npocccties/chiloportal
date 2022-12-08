@@ -19,7 +19,7 @@ function Footer({ className }: Props) {
     <footer className={clsx("bg-gray-50 py-6", className)}>
       <div className="max-w-5xl xl:max-w-7xl mx-auto px-4 flex flex-col xl:justify-center sm:flex-row flex-wrap gap-8 mb-6">
         <div className="w-full xl:w-auto">
-          <Link href={pagesPath.$url()} className="inline-block px-2">
+          <Link href={pagesPath.$url()} className="inline-block">
             <Image
               src="/logo.svg"
               width={108}
