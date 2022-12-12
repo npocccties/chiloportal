@@ -63,16 +63,13 @@ export default function Top({
           />
         </header>
         <section className="px-6 py-4 mb-8 rounded-xl border border-primary-200 max-w-3xl mx-auto">
-          <h2 className="text-xl font-bold text-gray-700">
+          <h2 className="text-xl font-bold text-gray-700 mb-4">
             OKUTEPは誰もが自由に学べるオープンな学びの場です。
           </h2>
-          <p className="text-sm text-gray-700 leading-6 mb-2">
-            <br />
-            デジタルバッジ（※）は，あなたの自己実現のために活用できるデジタル証明書となります。
-            <br />
-            OKUTEPで学び続けることで、あなたのウェルビーイングを高め、子ども達が夢や希望を持てる社会の実現を目指します。
+          <p className="text-sm text-gray-700 leading-6 mb-3">
+            デジタルバッジ（※）は，あなたの自己実現のために活用できるデジタル証明書となります。OKUTEPで学び続けることで、あなたのウェルビーイングを高め、子ども達が夢や希望を持てる社会の実現を目指します。
           </p>
-          <p className="text-xs text-gray-700 mb-4">
+          <p className="text-xs text-gray-700">
             （※）デジタルバッジの取得は、提携する教育委員会に所属する教員のみとなります。詳しくは
             <Link
               className="text-primary-700 hover:underline"
@@ -82,13 +79,6 @@ export default function Top({
             </Link>
             をご覧下さい。
           </p>
-          <Link
-            className="inline-block flex gap-2 items-center text-xs text-primary-700 hover:underline"
-            href={pagesPath._slug("concept").$url()}
-          >
-            <span className="text-primary-700 underline">OKUTEPとは</span>
-            <Icon className="text-base" icon="fa6-solid:arrow-right" />
-          </Link>
         </section>
         <section className="mb-8">
           <div className="flex items-center gap-4 mb-4">
