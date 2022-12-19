@@ -178,17 +178,17 @@ def split_field2_key(key):
 
 
 def get_fields_detail_keys(categorised_badge_set):
-    field1keys = set()
-    field2keys = set()
+    field1keys = dict()
+    field2keys = dict()
     field_dict = defaultdict(list)
     wisdom_dict = defaultdict(list)
     for cb in categorised_badge_set:
         field = cb.goal.field
-        if field.field1_name not in field1keys:
-            field1keys.add(field.field1_name)
+        if field.field1_name not in field1keys.values():
+            field1keys[field.sort_key] = field.field1_name
         field2_key = make_field2_key(field)
-        if field2_key not in field2keys:
-            field2keys.add(field2_key)
+        if field2_key not in field2keys.values():
+            field2keys[field.sort_key] = field2_key
         field_result = list(
             filter(
                 lambda f: True if f.id == field.id else False, field_dict[field2_key]
@@ -207,19 +207,19 @@ def to_fields_detail(categorised_badge_set):
         categorised_badge_set
     )
     field1_list = []
-    for field1key in sorted(list(field1keys)):
+    for field1key, field1value in sorted(field1keys.items()):
         field1_list.append(
-            _to_field_detail(field_dict, field1key, field2keys, wisdom_dict)
+            _to_field_detail(field_dict, field1value, field2keys, wisdom_dict)
         )
     return {"field1": field1_list}
 
 
-def _to_field_detail(field_dict, field1key, field2keys, wisdom_dict):
+def _to_field_detail(field_dict, field1value, field2keys, wisdom_dict):
     field2_array = []
-    for field2key in sorted(list(field2keys)):
-        if not field2key.startswith(field1key):
+    for field2key, field2value in sorted(field2keys.items()):
+        if not field2value.startswith(field1value):
             continue
-        fields = sorted(field_dict[field2key], key=lambda f: f.sort_key)
+        fields = sorted(field_dict[field2value], key=lambda f: f.sort_key)
         field3_array = []
         for field in fields:
             field3_key = make_field3_key(field)
@@ -232,6 +232,6 @@ def _to_field_detail(field_dict, field1key, field2keys, wisdom_dict):
                 }
             )
         field2_array.append(
-            {"field2_name": split_field2_key(field2key)[1], "field3": field3_array}
+            {"field2_name": split_field2_key(field2value)[1], "field3": field3_array}
         )
-    return {"field1_name": field1key, "field2": field2_array}
+    return {"field1_name": field1value, "field2": field2_array}
