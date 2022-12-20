@@ -18,7 +18,7 @@ class CategorisedBadges(models.Model):
     goal = models.ForeignKey(
         "Goal", models.DO_NOTHING, related_name="categorised_badges_goal"
     )
-    description = models.TextField()
+    description = models.TextField(blank=True, null=True)
 
     class Meta:
         managed = True
@@ -120,8 +120,8 @@ class PortalCategory(models.Model):
 
 class Stage(models.Model):
     name = models.CharField(max_length=256)
-    sub_name = models.TextField()
-    description = models.TextField()
+    sub_name = models.TextField(blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
     sort_key = models.IntegerField()
 
     class Meta:
@@ -134,8 +134,8 @@ class Framework(models.Model):
         Consumer, models.DO_NOTHING, related_name="framework_consumer"
     )
     name = models.CharField(max_length=256)
-    description = models.TextField()
-    supplementary = models.TextField()
+    description = models.TextField(blank=True, null=True)
+    supplementary = models.TextField(blank=True, null=True)
     url = models.TextField()
     sort_key = models.IntegerField()
 

@@ -75,8 +75,8 @@ create table framework (
 	id		serial		not null,	-- 教員育成指標ID
 	consumer_id	int		not null	REFERENCES consumer,	-- コンシューマID
 	name		varchar(256)	not null,	-- 名称
-	description	text		not null,	-- 説明
-	supplementary	text		not null,	-- 補足説明
+	description	text		null,	-- 説明
+	supplementary	text		null,	-- 補足説明
 	url		text		not null,	-- PDFのURL
 	sort_key	int		not null,	-- 表示順
 	primary key (id)
@@ -85,8 +85,8 @@ create table framework (
 create table stage (
 	id		serial		not null,	-- 成長段階ID
 	name		varchar(256)	not null,	-- 名称
-	sub_name	text		not null,	-- 自由記述欄
-	description	text		not null,	-- 説明
+	sub_name	text		null,	-- 自由記述欄
+	description	text		null,	-- 説明
 	sort_key	int		not null,	-- 表示順
 	primary key (id)
 ); -- '成長段階'
@@ -112,6 +112,6 @@ create table categorised_badges (
 	id			serial	not null,	-- カテゴライズID
 	wisdom_badges_id	int	not null	REFERENCES wisdom_badges,	-- 能力バッジのID
 	goal_id			int	not null	REFERENCES goal,	-- 目標ID
-	description		text	not null,	-- 説明
+	description		text	null,	-- 説明
 	primary key (id)
 ); -- 'カテゴライズドバッジ'
