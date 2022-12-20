@@ -261,16 +261,9 @@ export default function Top({
                 <a
                   className="h-full flex flex-col items-center justify-center hover:bg-primary-50 border border-primary-500 rounded-md px-6 py-4"
                   href={learningContent.url}
-                  target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <h3 className="flex items-center mb-1">
-                    <span className="text-xl mr-4">{learningContent.name}</span>
-                    <Icon
-                      className="text-base inline"
-                      icon="fa-solid:external-link-alt"
-                    />
-                  </h3>
+                  <h3 className="text-xl mb-1">{learningContent.name}</h3>
                   {learningContent.type === "private" && (
                     <p className="text-center text-sm text-primary-500">
                       （受講者限定教材）
