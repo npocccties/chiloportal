@@ -162,7 +162,6 @@ function Header({ className }: Props) {
         <a
           className="jumpu-text-button text-primary-700 text-sm overflow-hidden whitespace-nowrap text-ellipsis shrink"
           href={NEXT_PUBLIC_MOODLE_DASHBOARD_URL}
-          target="_blank"
           rel="noopener noreferrer"
         >
           ログイン

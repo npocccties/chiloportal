@@ -118,7 +118,6 @@ export default function WisdomBadges({
         <a
           className="jumpu-button py-4 w-full text-center font-bold mb-8"
           href={wisdomBadges.alignments_targeturl}
-          target="_blank"
           rel="noreferrer noopener"
         >
           この科目を受講してバッジを取得する
