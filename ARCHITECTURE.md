@@ -21,7 +21,7 @@ https://github.com/npocccties/chiloportal/blob/develop/backend/sql/create_table.
 
 ## APIドキュメント
 
-[OpenAPI仕様に準拠した仕様書](https://github.com/npocccties/chiloportal/blob/develop/backend/doc/openapi.yaml)を参照してください。
+[OpenAPI仕様に準拠した仕様書](https://github.com/npocccties/chiloportal/blob/main/backend/doc/openapi.yaml)を参照してください。
 
 ## Code Map
 
