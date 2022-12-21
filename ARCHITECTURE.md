@@ -23,8 +23,10 @@ https://github.com/npocccties/chiloportal/blob/develop/backend/sql/create_table.
 
 ## Code Map
 
+### frontend
 
+### backend
 
-### docs/assets ([code](https://github.com/npocccties/chiloportal/tree/master/docs/assets))
+### docs/assets ([code](https://github.com/npocccties/chiloportal/tree/main/docs/assets))
 
 ドキュメント用の図の画像など静的ファイルのためのディレクトリ。
