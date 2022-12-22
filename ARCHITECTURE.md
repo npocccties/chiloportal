@@ -29,7 +29,11 @@ CSSフレームワークあるいはUIフレームワークと協調するヘッ
 アイコンフレームワーク。
 
 ### バックエンド
-* Django
+
+#### [Django](https://www.djangoproject.com/)
+
+Pythonで実装されたWebアプリケーションフレームワーク。
+主に、Django REST framework を使用しバックエンドAPIを実装している。
 
 ## DBスキーマの全体像
 
@@ -37,7 +41,7 @@ CSSフレームワークあるいはUIフレームワークと協調するヘッ
 
 ## DBテーブル定義
 
-https://github.com/npocccties/chiloportal/blob/develop/backend/sql/create_table.sql
+https://github.com/npocccties/chiloportal/tree/main/backend/sql/create_table.sql
 
 
 ## APIドキュメント
@@ -98,73 +102,73 @@ Reactコンポーネント。
 
 ### backend
 
-#### chiloportal/admin.py ([code](https://github.com/npocccties/chiloportal/blob/develop/backend/chiloportal/admin.py))
+#### backend/chiloportal/admin.py ([code](https://github.com/npocccties/chiloportal/tree/main/backend/chiloportal/admin.py))
 
 * Django の管理画面で DB に対して編集を行うことが出来るが、その対象を定義。
 * models.py の中のクラスを指定。
 
-#### chiloportal/apps.py ([code](https://github.com/npocccties/chiloportal/blob/develop/backend/chiloportal/apps.py))
+#### backend/chiloportal/apps.py ([code](https://github.com/npocccties/chiloportal/tree/main/backend/chiloportal/apps.py))
 
 アプリケーション構成を定義。
 
-#### chiloportal/enums.py ([code](https://github.com/npocccties/chiloportal/blob/develop/backend/chiloportal/enums.py))
+#### backend/chiloportal/enums.py ([code](https://github.com/npocccties/chiloportal/tree/main/backend/chiloportal/enums.py))
 
 列挙型を定義。
 
-#### chiloportal/exceptions.py ([code](https://github.com/npocccties/chiloportal/blob/develop/backend/chiloportal/exceptions.py))
+#### backend/chiloportal/exceptions.py ([code](https://github.com/npocccties/chiloportal/tree/main/backend/chiloportal/exceptions.py))
 
 例外クラスを定義。
 
-#### chiloportal/management/commands/import_badge.py ([code](https://github.com/npocccties/chiloportal/blob/develop/backend/chiloportal/management/commands/import_badge.py))
+#### backend/chiloportal/management/commands/import_badge.py ([code](https://github.com/npocccties/chiloportal/tree/main/backend/chiloportal/management/commands/import_badge.py))
 
 能力バッジのインポートコマンドを定義。
 
-#### chiloportal/models.py ([code](https://github.com/npocccties/chiloportal/blob/develop/backend/chiloportal/models.py))
+#### backend/chiloportal/models.py ([code](https://github.com/npocccties/chiloportal/tree/main/backend/chiloportal/models.py))
 
 DBテーブル定義で示した各テーブルとのデータのやりとりを行うクラス群を定義。
 
-#### chiloportal/responses.py ([code](https://github.com/npocccties/chiloportal/blob/develop/backend/chiloportal/responses.py))
+#### backend/chiloportal/responses.py ([code](https://github.com/npocccties/chiloportal/tree/main/backend/chiloportal/responses.py))
 
 各APIのレスポンスを定義。
 
-#### chiloportal/swagger.py ([code](https://github.com/npocccties/chiloportal/blob/develop/backend/chiloportal/swagger.py))
+#### backend/chiloportal/swagger.py ([code](https://github.com/npocccties/chiloportal/tree/main/backend/chiloportal/swagger.py))
 
 SwaggerUI 用のパラメータを定義。
 
-#### chiloportal/urls.py ([code](https://github.com/npocccties/chiloportal/blob/develop/backend/chiloportal/urls.py))
+#### backend/chiloportal/urls.py ([code](https://github.com/npocccties/chiloportal/tree/main/backend/chiloportal/urls.py))
 
 下記のURLディスパッチャを定義。
 * openapi.yaml（Chiloportal の OpenAPI を記載）
 * SwaggerUI
 
-#### chiloportal/utils.py ([code](https://github.com/npocccties/chiloportal/blob/develop/backend/chiloportal/utils.py))
+#### backend/chiloportal/utils.py ([code](https://github.com/npocccties/chiloportal/tree/main/backend/chiloportal/utils.py))
 
 ユーティリティクラスを定義。
 
-#### chiloportal/views ([code](https://github.com/npocccties/chiloportal/blob/develop/backend/chiloportal/views))
+#### backend/chiloportal/views ([code](https://github.com/npocccties/chiloportal/tree/main/backend/chiloportal/views))
 
-[Chiloportal の OpenAPI](https://github.com/npocccties/chiloportal/blob/develop/backend/doc/openapi.yaml) に記載された各APIのリクエストハンドラーを定義。
+[Chiloportal の OpenAPI](https://github.com/npocccties/chiloportal/tree/main/backend/doc/openapi.yaml) に記載された各APIのリクエストハンドラーを定義。
 
-#### chiloportal/tests ([code](https://github.com/npocccties/chiloportal/blob/develop/backend/chiloportal/tests))
+#### backend/chiloportal/tests ([code](https://github.com/npocccties/chiloportal/tree/main/backend/chiloportal/tests))
 
 単体テストコードを定義。
 
-#### project/asgi.py ([code](https://github.com/npocccties/chiloportal/blob/develop/backend/project/asgi.py))
+#### backend/project/asgi.py ([code](https://github.com/npocccties/chiloportal/tree/main/backend/project/asgi.py))
 
 ASGIを定義。
 
-#### project/settings.py ([code](https://github.com/npocccties/chiloportal/blob/develop/backend/project/settings.py))
+#### backend/project/settings.py ([code](https://github.com/npocccties/chiloportal/tree/main/backend/project/settings.py))
 
 * Django の動作設定。
 * 環境変数はここで受け渡している。
 
-#### project/urls.py ([code](https://github.com/npocccties/chiloportal/blob/develop/backend/project/urls.py))
+#### backend/project/urls.py ([code](https://github.com/npocccties/chiloportal/tree/main/backend/project/urls.py))
 
 下記のURLディスパッチャを定義。
 * Django の管理画面
 * Chiloportal
 
-#### project/wsgi.py ([code](https://github.com/npocccties/chiloportal/blob/develop/backend/project/wsgi.py))
+#### backend/project/wsgi.py ([code](https://github.com/npocccties/chiloportal/tree/main/backend/project/wsgi.py))
 
 WSGIを定義。
 
