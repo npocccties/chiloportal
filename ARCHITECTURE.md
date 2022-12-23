@@ -2,7 +2,7 @@
 
 ## 全体構成
 
-![アーキテクチャの構成図](docs/assets/arch.svg)
+![アーキテクチャの構成図](docs/assets/arch.png)
 
 ## フレームワーク
 
