@@ -1,0 +1,33 @@
+name: backend CI
+
+on:
+  pull_request:
+    paths:
+      - 'backend/**'
+      - '!backend/README.md'
+      - '!backend/LICENSE'
+defaults:
+  run:
+    working-directory: backend
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build docker containers
+      run: |
+        cp .env.localhost .env
+        cp docker-compose.localhost.yml docker-compose.yml
+        docker-compose up -d
+    - name: Run tests 
+      run: |
+        docker-compose ps
+        docker-compose exec -T app python /workspace/manage.py test --exclude-tag=fuzzing
+    - name: Coverage
+      run: |
+        docker-compose exec -T app pytest --cov --cov-branch --cov-report=term-missing --junitxml=pytest.xml --ignore=chiloportal/tests/views/dev_server | tee pytest-coverage.txt
+    - name: Coverage comment
+      uses: MishaKav/pytest-coverage-comment@main
+      with:
+        pytest-coverage-path: backend/pytest-coverage.txt
+        junitxml-path: backend/pytest.xml

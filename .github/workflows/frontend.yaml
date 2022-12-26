@@ -1,7 +1,7 @@
 on:
   pull_request:
-    paths-ignore:
-      - "backend/**"
+    paths:
+      - "frontend/**"
 defaults:
   run:
     working-directory: frontend
@@ -23,8 +23,9 @@ jobs:
         continue-on-error: true
         run: |
           corepack yarn format
-          echo "::set-output name=status::$(git status --porcelain)"
+          echo "status=$(git status --porcelain)" >> $GITHUB_OUTPUT
       - if: steps.format.outputs.status != ''
         run: |
-          git -c "user.name=github-actions[bot]" -c "user.email=github-actions[bot]@users.noreply.github.com" comit -a -m "bot: format"
+          git -c "user.name=github-actions[bot]" -c "user.email=github-actions[bot]@users.noreply.github.com" commit -a -m "bot: format"
+          git push origin HEAD
       - run: corepack yarn build

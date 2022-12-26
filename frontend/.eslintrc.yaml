@@ -1,3 +1,14 @@
 extends:
   - "next/core-web-vitals"
   - "prettier"
+plugins:
+  - canonical
+rules:
+  canonical/filename-match-exported: [error, kebab]
+overrides:
+  - files: "{components,templates}/**/*.tsx"
+    rules:
+      canonical/filename-match-exported: [error, pascal]
+  - files: "pages/**/*.tsx"
+    rules:
+      canonical/filename-match-exported: "off"
