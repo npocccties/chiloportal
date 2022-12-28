@@ -17,21 +17,22 @@ function WisdomBadgesCard({ wisdomBadges, className }: Props) {
       href={pagesPath.wisdom_badges
         ._wisdomBadgesId(wisdomBadges.badges_id)
         .$url()}
-      className={clsx("jumpu-card block hover:border-primary-700", className)}
+      className={clsx("jumpu-card px-12 py-8 flex items-center", className)}
     >
-      <div className="flex flex-col items-center justify-center gap-2 pt-4">
+      <div className="flex flex-col items-center justify-center flex-shrink-0 gap-2 pt-4">
         <Image
           src={`/images/${wisdomBadges.image}`}
-          width={80}
-          height={80}
+          width={240}
+          height={240}
           alt=""
+          className="w-[160px]"
         />
-        <div className="jumpu-tag bg-white text-gray-700 border border-gray-300 mb-2">
-          能力バッジ
-        </div>
+        <div className="text-xs text-gray-700 mb-2">能力バッジ</div>
       </div>
       <section className="px-4 pb-4">
-        <h3 className="text-xl text-gray-700 mb-2">{wisdomBadges.name}</h3>
+        <h3 className="text-2xl font-bold text-gray-700 mb-2">
+          {wisdomBadges.name}
+        </h3>
         {"knowledge_badges_list" in wisdomBadges.detail && (
           <div className="jumpu-tag bg-gray-50 text-gray-700 border-none hover:border-none mb-2">
             知識バッジ{wisdomBadges.detail.knowledge_badges_list.length}
