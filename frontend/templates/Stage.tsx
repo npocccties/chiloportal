@@ -20,7 +20,7 @@ export default function Stage({
   const { open, onOpen, onClose } = useDialog();
   return (
     <Container
-      className="lg:!px-4 max-w-none lg:grid gap-4 grid-cols-[1fr_20rem] bg-gray-50 mt-0 pt-8"
+      className="!px-4 lg:!px-8 max-w-none xl:grid gap-4 grid-cols-[1fr_16rem] bg-gray-50 my-0 pt-8"
       style={{
         gridTemplateAreas: "'breadcrumbs breadcrumbs' 'article aside'",
       }}
@@ -36,7 +36,7 @@ export default function Stage({
         ]}
         leaf={stage.name}
       />
-      <aside className="hidden lg:block [grid-area:aside]">
+      <aside className="hidden xl:block [grid-area:aside]">
         <div className="mb-8">
           <p className="text-sm text-gray-600 mb-4">
             こちらの内容は{consumer.name}のサイトでも資料が公開されています
