@@ -54,12 +54,12 @@ export default function Stage({
             <Icon className="inline" icon="fa-solid:external-link-alt" />
           </a>
         </div>
-        <nav className="rounded-xl bg-gray-50 p-4 sticky top-[4rem]">
-          <h2 className="text-sm text-gray-600 mb-4">
+        <nav className="rounded-xl py-4 sticky top-[4rem]">
+          <h2 className="text-sm text-gray-600 pb-2 pl-4 border-b border-gray-300">
             このページの指標項目の目次
           </h2>
           <FieldsIndex
-            className="max-h-[calc(100vh-10rem)] overflow-y-scroll"
+            className="max-h-[calc(100vh-10rem)] overflow-y-scroll pt-2"
             field={field}
           />
         </nav>
