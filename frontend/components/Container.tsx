@@ -11,7 +11,7 @@ function Container({ className, style, as = "main", children }: Props) {
   const As = as;
   return (
     <As
-      className={clsx("max-w-4xl mx-auto my-16 min-h-[33vh]", className)}
+      className={clsx("max-w-4xl mx-auto my-8 min-h-[33vh]", className)}
       style={style}
     >
       {children}
