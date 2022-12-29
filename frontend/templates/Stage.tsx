@@ -20,7 +20,7 @@ export default function Stage({
   const { open, onOpen, onClose } = useDialog();
   return (
     <Container
-      className="lg:max-w-6xl lg:grid gap-4 grid-cols-[1fr_20rem]"
+      className="lg:!px-4 max-w-none lg:grid gap-4 grid-cols-[1fr_20rem] bg-gray-50 mt-0 pt-8"
       style={{
         gridTemplateAreas: "'breadcrumbs breadcrumbs' 'article aside'",
       }}
@@ -65,7 +65,7 @@ export default function Stage({
         </nav>
       </aside>
       <article className="[grid-area:article]">
-        <h1 className="text-2xl mb-2">{framework.name}</h1>
+        <h1 className="text-4xl font-bold mb-2">{framework.name}</h1>
         <p className="mb-4 lg:hidden">
           <a
             className="jumpu-outlined-button inline-flex items-center text-sm"
@@ -92,23 +92,23 @@ export default function Stage({
           />
         </p>
         {field.field1.map(({ field1_name, field2 }, field1Index) => (
-          <section key={field1Index}>
+          <section key={field1Index} className="">
             <h2
               id={makeFieldId(field1_name, field1Index)}
-              className="text-2xl mb-4 scroll-mt-16"
+              className="text-3xl font-bold mb-4 scroll-mt-16"
             >
               {field1_name}
             </h2>
             {field2.map(({ field2_name, field3 }, field2Index) => (
-              <section key={field2Index}>
+              <section key={field2Index} className="pl-4">
                 <h3
                   id={makeFieldId(field2_name, field1Index, field2Index)}
-                  className="text-lg pb-2 mb-4 border-b border-solid border-gray-300 scroll-mt-16"
+                  className="text-2xl font-bold pb-2 mb-4 border-b border-solid border-gray-300 scroll-mt-16"
                 >
                   {field2_name}
                 </h3>
                 {field3.map(({ field_id, field3_name }, field3Index) => (
-                  <section key={field_id}>
+                  <section key={field_id} className="pl-4 mb-8">
                     <h4
                       id={makeFieldId(
                         field3_name,
@@ -120,10 +120,10 @@ export default function Stage({
                     >
                       {field3_name}
                     </h4>
-                    <ul>
+                    <ul className="grid lg:grid-cols-2 2xl:grid-cols-3 gap-4">
                       {wisdomBadgesListPerFields[field_id].map(
                         (wisdomBadges) => (
-                          <li className="mb-8" key={wisdomBadges.badges_id}>
+                          <li className="" key={wisdomBadges.badges_id}>
                             <WisdomBadgesItem wisdomBadges={wisdomBadges} />
                           </li>
                         )
