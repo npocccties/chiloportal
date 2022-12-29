@@ -107,8 +107,8 @@ export default function Top({
             </ul>
           </div>
         </section>
-        <section className="px-4 py-8 bg-gray-200 bg-opacity-30 overflow-hidden before:block before:absolute before:w-4/12 before:top-0 before:h-full before:-skew-x-12 before:-right-16 before:bg-primary-700 relative before:-z-10">
-          <div className="max-w-4xl m-auto mb-8 relative">
+        <section className="py-8 bg-gray-200 bg-opacity-30 overflow-hidden before:block before:absolute before:w-4/12 before:top-0 before:h-full before:-skew-x-12 before:-right-16 before:bg-primary-700 relative before:-z-10">
+          <div className="max-w-4xl m-auto mb-4 relative px-4">
             <p className=" text-gray-700 mb-2 font-bold">
               はじめての方におすすめ
             </p>
@@ -119,20 +119,20 @@ export default function Top({
               あなたが認められる能力バッジを獲得するために、いくつかの知識バッジを得なければなりません。
               <br />
               少ない知識バッジで獲得できる能力バッジがあります。
-              <br />
-              <Link
-                className="text-primary-700 text-xs hover:underline whitespace-nowrap"
-                href={pagesPath._slug("about_badges").$url()}
-              >
-                <Icon
-                  className="text-base inline mr-1"
-                  icon="fa6-regular:circle-question"
-                />
-                能力バッジとは？
-              </Link>
             </p>
+
+            <Link
+              className="text-primary-700 text-xs hover:underline whitespace-nowrap font-bold"
+              href={pagesPath._slug("about_badges").$url()}
+            >
+              <Icon
+                className="text-base inline mr-1"
+                icon="fa6-regular:circle-question"
+              />
+              能力バッジとは？
+            </Link>
           </div>
-          <ul className="flex snap-x overflow-x-scroll md:overflow-visible pb-2 md:pb-0 px-4 md:px-0 -mx-4 md:mx-0 md:grid md:grid-cols-2 xl:grid-cols-3 gap-4">
+          <ul className="flex overflow-x-scroll px-4 py-4 gap-4 w-screen xl:mx-auto xl:justify-center ">
             <Fallback
               data={wisdomBadgesList}
               error={wisdomBadgesListError}
@@ -145,9 +145,9 @@ export default function Top({
             >
               {(data) =>
                 data.map((wisdomBadges) => (
-                  <li key={wisdomBadges.badges_id}>
+                  <li key={wisdomBadges.badges_id} className="xl:flex-1">
                     <WisdomBadgesCard
-                      className="h-full w-[400px] md:w-auto snap-center shadow-lg transition hover:ring-2 ring-primary-400"
+                      className="h-full w-[400px] md:w-[500px] xl:w-auto shadow-lg transition hover:ring-2 ring-primary-400"
                       wisdomBadges={wisdomBadges}
                     />
                   </li>
@@ -175,7 +175,7 @@ export default function Top({
               能力バッジとは？
             </Link>
           </header>
-          <ul className="md:grid md:grid-cols-2 xl:grid-cols-3 max-w-7xl mx-auto gap-8 xl:gap-4 px-8 xl:px-4">
+          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto gap-2 lg:gap-4 px-4 lg:px-4">
             <Fallback
               data={portalCategories}
               error={portalCategoriesError}

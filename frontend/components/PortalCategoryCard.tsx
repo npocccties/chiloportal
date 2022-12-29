@@ -23,21 +23,20 @@ function PortalCategoryCard({ portalCategory, className }: Props) {
         </h3>
         <p className="text-sm text-gray-500">{portalCategory.description}</p>
       </section>
-      <div className="relative">
+      <div className="relative pb-8">
         <Image
-          className="block mx-auto pt-8 pb-4"
+          className="block mx-auto pb-4"
           src={`/images/${portalCategory.image_url_path}`}
           alt=""
           width={180}
           height={180}
         />
-        <p className="absolute top-4 right-4 text-sm text-center text-white font-bold bg-primary-700 rounded-full px-4 py-px">
-          {portalCategory.badges_count}
+        <p className="jumpu-tag absolute bottom-4 right-4 text-xs rounded-full px-4 py-1 flex gap-1 items-center">
+          <span>能力バッジ</span>
+          <span className="font-bold">{portalCategory.badges_count}</span>
+          <span>個</span>
         </p>
       </div>
-      <p className="px-4 pt-2 pb-6 text-xs text-gray-500">
-        能力バッジ（{portalCategory.badges_count}）
-      </p>
     </Link>
   );
 }
