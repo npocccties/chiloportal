@@ -46,7 +46,7 @@ export default function PortalCategory({
       <div className="bg-gray-100 shadow-inner">
         <ul className="grid md:grid-cols-2 gap-4 max-w-6xl mx-auto px-4 pt-4">
           {wisdomBadgesList.badges.map((wisdomBadges) => (
-            <li className="" key={wisdomBadges.badges_id}>
+            <li key={wisdomBadges.badges_id}>
               <WisdomBadgesItem wisdomBadges={wisdomBadges} />
             </li>
           ))}

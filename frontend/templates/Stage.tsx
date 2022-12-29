@@ -77,7 +77,7 @@ export default function Stage({
             <Icon className="inline" icon="fa-solid:external-link-alt" />
           </a>
         </p>
-        <p className="flex gap-4 items-center mb-8">
+        <p className="flex gap-4 items-center mb-4">
           <span className="text-lg">{stage.name}</span>
           <button className="jumpu-text-button" onClick={onOpen}>
             他の成長段階
