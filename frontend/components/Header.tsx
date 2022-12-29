@@ -26,7 +26,7 @@ function Header({ className }: Props) {
   const id = useId();
   return (
     <header className={clsx("bg-white", className)}>
-      <div className="relative flex items-center gap-1 px-4 py-2 mx-auto max-w-6xl">
+      <div className="relative flex items-center gap-1 px-4 xl:px-16 py-4 mx-auto border-b border-gray-200">
         <button
           className="jumpu-icon-button group md:hidden"
           onClick={onOpen}
@@ -44,16 +44,17 @@ function Header({ className }: Props) {
         <Menu open={open} onClose={onClose} />
         <Link
           href={pagesPath.$url()}
-          className="absolute md:static left-1/2 top-1/2 -translate-x-1/2 md:translate-x-0 -translate-y-1/2 md:translate-y-0 md:mr-4 shrink-0"
+          className="absolute md:static left-1/2 top-1/2 -translate-x-1/2 md:translate-x-0 -translate-y-1/2 md:translate-y-0 md:mr-4 xl:mr-12 shrink-0"
         >
           <Image
             src="/logo.svg"
             width={108}
             height={24}
             alt="トップページに戻る"
+            className="-translate-y-1 w-32"
           />
         </Link>
-        <Popover className="hidden md:block" title="カテゴリから探す">
+        <Popover className="hidden md:block font-bold" title="カテゴリから探す">
           {({ close }) => (
             <ul
               role="menu"
@@ -84,7 +85,7 @@ function Header({ className }: Props) {
                         href={pagesPath.portal_categories
                           ._portalCategoryId(portalCategory.portal_category_id)
                           .$url({ query: {} })}
-                        className="block w-max min-w-full px-4 py-3 rounded hover:text-white hover:bg-primary-700 dark:text-black"
+                        className="block w-max min-w-full px-4 py-3 rounded hover:text-white hover:bg-primary-700 dark:text-black font-normal"
                       >
                         {portalCategory.name}
                       </Link>
@@ -95,7 +96,10 @@ function Header({ className }: Props) {
             </ul>
           )}
         </Popover>
-        <Popover className="hidden md:block" title="教員育成指標から探す">
+        <Popover
+          className="hidden md:block font-bold"
+          title="教員育成指標から探す"
+        >
           {({ close }) => (
             <ul
               role="menu"
@@ -126,7 +130,7 @@ function Header({ className }: Props) {
                         href={pagesPath.consumers
                           ._consumerId(consumer.consumer_id)
                           .$url()}
-                        className="block w-max min-w-full px-4 py-3 rounded hover:text-white hover:bg-primary-700 dark:text-black"
+                        className="block w-max min-w-full px-4 py-3 rounded hover:text-white hover:bg-primary-700 dark:text-black font-normal"
                       >
                         {consumer.name}の教員育成指標
                       </Link>
@@ -137,7 +141,7 @@ function Header({ className }: Props) {
             </ul>
           )}
         </Popover>
-        <Popover className="hidden md:block" title="OKUTEPについて">
+        <Popover className="hidden md:block font-bold" title="OKUTEPについて">
           {({ close }) => (
             <ul
               role="menu"
@@ -148,7 +152,7 @@ function Header({ className }: Props) {
                 <li key={content.slug} role="menuitem">
                   <Link
                     href={pagesPath._slug(content.slug).$url()}
-                    className="block w-max min-w-full px-4 py-3 rounded hover:text-white hover:bg-primary-700 dark:text-black"
+                    className="block w-max min-w-full px-4 py-3 rounded hover:text-white hover:bg-primary-700 dark:text-black font-normal"
                   >
                     {content.title}
                   </Link>

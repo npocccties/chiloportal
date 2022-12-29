@@ -11,7 +11,7 @@ type Props = {
 
 function Breadcrumbs({ className, nodes, leaf }: Props) {
   return (
-    <div className={clsx("text-gray-700", className)}>
+    <div className={clsx("text-gray-700 text-xs", className)}>
       {nodes.map((node, index) => (
         <Fragment key={index}>
           <Link href={node.href} className="underline mr-2">
