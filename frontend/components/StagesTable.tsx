@@ -27,7 +27,7 @@ function StageLink({
     <Link
       href={href}
       className={clsx(
-        "px-4 py-2 flex gap-4 items-center font-bold underline hover:no-underline",
+        "px-4 py-4 flex gap-4 items-center font-bold text-sm",
         active ? "bg-primary-200" : "hover:bg-primary-50",
         className
       )}
