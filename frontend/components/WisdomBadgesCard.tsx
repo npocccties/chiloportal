@@ -17,7 +17,7 @@ function WisdomBadgesCard({ wisdomBadges, className }: Props) {
       href={pagesPath.wisdom_badges
         ._wisdomBadgesId(wisdomBadges.badges_id)
         .$url()}
-      className={clsx("jumpu-card px-12 py-8 flex items-center", className)}
+      className={clsx("jumpu-card px-8 py-6 flex items-center", className)}
     >
       <div className="flex flex-col items-center justify-center flex-shrink-0 gap-2 pt-4">
         <Image
@@ -48,8 +48,10 @@ function WisdomBadgesCard({ wisdomBadges, className }: Props) {
           {typeof url === "string" && (
             <img className="h-fit" src={url} width={20} height={20} alt="" />
           )}
-          <span className="font-bold mr-1">{wisdomBadges.issuer_name}</span>
-          <span className="text-gray-500 flex-shrink-0">発行</span>
+          <span className="font-bold text-gray-700 flex-shrink-0">
+            {wisdomBadges.issuer_name}
+          </span>
+          <span className="text-gray-500 text-xs flex-shrink-0">発行</span>
         </p>
       </section>
     </Link>

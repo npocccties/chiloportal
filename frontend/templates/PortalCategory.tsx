@@ -17,7 +17,7 @@ export default function PortalCategory({
   return (
     <Container as="article">
       <Breadcrumbs
-        className="mb-6"
+        className="mb-6 xl:mb-12"
         nodes={[{ name: "トップ", href: pagesPath.$url() }]}
         leaf={portalCategory.name}
       />
@@ -27,11 +27,14 @@ export default function PortalCategory({
           width={200}
           height={200}
           alt=""
+          className="w-4/12 xl:w-52 flex-shrink-0"
         />
         <div>
-          <h1 className="text-4xl text-gray-600 mb-2">{portalCategory.name}</h1>
-          <p className="font-bold text-gray-600 mb-4">
-            {portalCategory.badges_count}つの能力バッジがあります
+          <h1 className="text-4xl xl:text-5xl font-bold text-gray-600 mb-2">
+            {portalCategory.name}
+          </h1>
+          <p className="font-bold text-gray-600 text-base xl:text-xl mb-4">
+            {portalCategory.badges_count}個の能力バッジがあります
           </p>
           <p className="text-gray-500">{portalCategory.description}</p>
         </div>
