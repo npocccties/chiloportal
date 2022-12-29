@@ -28,11 +28,11 @@ export default function Top({
     "科目を選び、バッジを獲得することで社会的評価や自信の証明が得られ、あなたと子供達と社会のウェルビーイングへとつながります。この関係性は、学習成果の活用と主体的な学びの循環によって形成されます";
   return (
     <>
-      <Container className="max-w-5xl mt-8" as="article">
+      <article className="mt-8">
         <header className="mb-8">
           <Link
             href={pagesPath._slug("concept").$url()}
-            className="flex gap-4 items-center px-6 py-3 rounded-xl border-2 border-primary-500 mb-6 md:mb-12 hover:bg-primary-50"
+            className="flex gap-4 items-center px-6 py-3 rounded-xl border-2 border-primary-500 mb-6 md:mb-12 hover:bg-primary-50 max-w-4xl mx-auto my-8"
           >
             <Icon className="text-primary-500 text-xl" icon="fa6-solid:bell" />
             <span className="text-sm text-primary-700">
@@ -80,7 +80,7 @@ export default function Top({
             をご覧下さい。
           </p>
         </section>
-        <section className="mb-8">
+        <section className="mb-8 px-4 max-w-4xl mx-auto">
           <div className="flex items-center gap-4 mb-4">
             <h2 className="text-xl text-gray-700 font-bold">
               OKUTEPからのおしらせ
@@ -107,26 +107,32 @@ export default function Top({
             </ul>
           </div>
         </section>
-        <section className="mb-8">
-          <p className="text-sm text-gray-700 mb-2">はじめての方におすすめ</p>
-          <h2 className="text-xl text-gray-700 font-bold mb-4">
-            試しに受講してみる
-          </h2>
-          <p className="text-sm text-gray-700 mb-4">
-            あなたが認められる能力バッジを獲得するために、いくつかの知識バッジを得なければなりません。少ない知識バッジで獲得できる能力バッジがあります。
-            <br />
-            <Link
-              className="text-primary-700 text-xs hover:underline whitespace-nowrap"
-              href={pagesPath._slug("about_badges").$url()}
-            >
-              <Icon
-                className="text-base inline mr-1"
-                icon="fa6-regular:circle-question"
-              />
-              能力バッジとは？
-            </Link>
-          </p>
-          <ul className="flex snap-x overflow-x-scroll pb-2 md:pb-0 px-4 md:px-0 -mx-4 md:mx-0 md:grid md:grid-cols-2 xl:grid-cols-3 gap-4">
+        <section className="px-4 py-8 bg-gray-200 bg-opacity-30 overflow-hidden before:block before:absolute before:w-4/12 before:top-0 before:h-full before:-skew-x-12 before:-right-16 before:bg-primary-700 relative before:-z-10">
+          <div className="max-w-4xl m-auto mb-8 relative">
+            <p className=" text-gray-700 mb-2 font-bold">
+              はじめての方におすすめ
+            </p>
+            <h2 className="text-3xl text-gray-700 font-bold mb-4">
+              試しに受講してみる
+            </h2>
+            <p className="font-bold text-gray-700 mb-4">
+              あなたが認められる能力バッジを獲得するために、いくつかの知識バッジを得なければなりません。
+              <br />
+              少ない知識バッジで獲得できる能力バッジがあります。
+              <br />
+              <Link
+                className="text-primary-700 text-xs hover:underline whitespace-nowrap"
+                href={pagesPath._slug("about_badges").$url()}
+              >
+                <Icon
+                  className="text-base inline mr-1"
+                  icon="fa6-regular:circle-question"
+                />
+                能力バッジとは？
+              </Link>
+            </p>
+          </div>
+          <ul className="flex snap-x overflow-x-scroll md:overflow-visible pb-2 md:pb-0 px-4 md:px-0 -mx-4 md:mx-0 md:grid md:grid-cols-2 xl:grid-cols-3 gap-4">
             <Fallback
               data={wisdomBadgesList}
               error={wisdomBadgesListError}
@@ -141,7 +147,7 @@ export default function Top({
                 data.map((wisdomBadges) => (
                   <li key={wisdomBadges.badges_id}>
                     <WisdomBadgesCard
-                      className="h-full w-[300px] md:w-auto snap-center"
+                      className="h-full w-[400px] md:w-auto snap-center shadow-lg transition hover:ring-2 ring-primary-400"
                       wisdomBadges={wisdomBadges}
                     />
                   </li>
@@ -150,11 +156,16 @@ export default function Top({
             </Fallback>
           </ul>
         </section>
-        <section className="mb-8">
-          <h2 className="text-xl text-gray-700 font-bold mb-2 flex flex-wrap items-center gap-2">
-            カテゴリから探せる能力バッジ
+        <section className="mb-8 pb-8 bg-gray-50">
+          <header className="max-w-7xl mx-auto py-8 px-8 xl:px-4">
+            <h2 className="text-3xl text-gray-700 font-bold mb-4 flex flex-wrap items-center gap-2">
+              カテゴリから探せる能力バッジ
+            </h2>
+            <p className="font-bold text-gray-700 mb-4">
+              学術的な観点をもとにして各自治体の教員育成指標も参考にしながら、オンライン学習で習得できる内容を「カテゴリ」として整理しました。
+            </p>
             <Link
-              className="text-primary-700 text-xs hover:underline whitespace-nowrap font-normal"
+              className="text-primary-700 text-xs hover:underline whitespace-nowrap font-bold"
               href={pagesPath._slug("about_badges").$url()}
             >
               <Icon
@@ -163,11 +174,8 @@ export default function Top({
               />
               能力バッジとは？
             </Link>
-          </h2>
-          <p className="text-sm text-gray-700 mb-4">
-            学術的な観点をもとにして，各自治体の教員育成指標も参考にしながら，オンライン学習で習得できる内容を「カテゴリ」として整理しました。
-          </p>
-          <ul className="md:grid md:grid-cols-2 xl:grid-cols-3">
+          </header>
+          <ul className="md:grid md:grid-cols-2 xl:grid-cols-3 max-w-7xl mx-auto gap-8 xl:gap-4 px-8 xl:px-4">
             <Fallback
               data={portalCategories}
               error={portalCategoriesError}
@@ -179,7 +187,7 @@ export default function Top({
                 data.map((portalCategory) => (
                   <li
                     key={portalCategory.portal_category_id}
-                    className="border-b last:border-b-0 md:border-b-0 md:border-t md:border-r border-gray-300 md:[&:nth-child(2n)]:border-r-0 xl:[&:nth-child(2n)]:border-r xl:[&:nth-child(3n)]:border-r-0 md:[&:nth-child(-n+2)]:border-t-0 xl:[&:nth-child(-n+3)]:border-t-0"
+                    className="rounded-xl overflow-hidden shadow-lg transition hover:ring-2 ring-primary-400"
                   >
                     <PortalCategoryCard
                       className="h-full"
@@ -191,11 +199,16 @@ export default function Top({
             </Fallback>
           </ul>
         </section>
-        <section className="jumpu-card p-6 mb-8">
-          <h2 className="text-xl text-gray-700 font-bold mb-2 flex flex-wrap items-center gap-2">
-            教員育成指標から探せる能力バッジ
+        <section className="p-12 mb-8 max-w-6xl mx-auto">
+          <header className="mb-6">
+            <h2 className="text-3xl text-gray-700 font-bold mb-6">
+              教員育成指標から探せる能力バッジ
+            </h2>
+            <p className="font-bold text-gray-700">
+              「教員育成指標」とは地域の教育委員会が教員に求められる資質や能力を、キャリア（経験年数）毎に明確にしたものです。
+            </p>
             <Link
-              className="text-primary-700 text-xs hover:underline whitespace-nowrap font-normal"
+              className="text-primary-700 text-xs hover:underline whitespace-nowrap font-bold"
               href={pagesPath._slug("about_badges").$url()}
             >
               <Icon
@@ -204,10 +217,7 @@ export default function Top({
               />
               能力バッジとは？
             </Link>
-          </h2>
-          <p className="text-sm text-gray-700 mb-3">
-            「教員育成指標」とは地域の教育委員会が教員に求められる資質や能力を、キャリア（経験年数）毎に明確にしたものです。
-          </p>
+          </header>
           <ul
             className={clsx({
               ["list-disc pl-6 text-primary-700 md:columns-2 lg:columns-3"]:
@@ -233,7 +243,10 @@ export default function Top({
             >
               {(data) =>
                 data.map((consumer) => (
-                  <li key={consumer.consumer_id} className="break-inside-avoid">
+                  <li
+                    key={consumer.consumer_id}
+                    className="break-inside-avoid mb-2"
+                  >
                     <Link
                       href={pagesPath.consumers
                         ._consumerId(consumer.consumer_id)
@@ -248,36 +261,37 @@ export default function Top({
             </Fallback>
           </ul>
         </section>
-        <section>
-          <h2 className="text-xl text-gray-700 font-bold mb-4">
-            その他のコンテンツ
-          </h2>
-          <p className="text-gray-700 mb-4">
-            バッジは取得できませんが、以下のコンテンツも提供しています。
-          </p>
-          <ul className="text-primary-700 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <section className="pb-16 bg-gray-50">
+          <header className="p-12 max-w-6xl mx-auto">
+            <h2 className="text-3xl text-gray-700 font-bold mb-4">
+              その他のコンテンツ
+            </h2>
+            <p className="text-gray-700 font-bold">
+              バッジは取得できませんが、以下のコンテンツも提供しています。
+            </p>
+          </header>
+          <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 px-12 max-w-6xl mx-auto">
             {learningContents.map((learningContent, index) => (
-              <li key={index}>
+              <li
+                key={index}
+                className="rounded-xl bg-white overflow-hidden shadow-lg transition hover:ring-2 ring-primary-400"
+              >
                 <a
-                  className="h-full flex flex-col items-center justify-center hover:bg-primary-50 border border-primary-500 rounded-md px-6 py-4"
+                  className="flex flex-col items-center justify-center px-6 py-4 "
                   href={learningContent.url}
                   rel="noopener noreferrer"
                 >
                   <h3 className="text-xl mb-1">{learningContent.name}</h3>
                   {learningContent.type === "private" && (
-                    <p className="text-center text-sm text-primary-500">
-                      （受講者限定教材）
-                    </p>
+                    <p className="text-center text-sm">（受講者限定教材）</p>
                   )}
-                  <p className="mt-3 text-sm text-primary-600">
-                    {learningContent.description}
-                  </p>
+                  <p className="mt-3 text-sm">{learningContent.description}</p>
                 </a>
               </li>
             ))}
           </ul>
         </section>
-      </Container>
+      </article>
     </>
   );
 }
