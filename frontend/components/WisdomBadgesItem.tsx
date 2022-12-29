@@ -45,7 +45,7 @@ function WisdomBadgesItem({ wisdomBadges }: Props) {
           {wisdomBadges.description}
         </p>
         {"knowledge_badges_list" in wisdomBadges.detail && (
-          <div className="jumpu-tag bg-gray-50 text-gray-700 border-gray-300 hover:border-none">
+          <div className="jumpu-tag bg-gray-50 text-gray-700 border-gray-300">
             知識バッジ{wisdomBadges.detail.knowledge_badges_list.length}
             つで獲得
           </div>

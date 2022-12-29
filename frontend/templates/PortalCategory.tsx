@@ -28,16 +28,18 @@ export default function PortalCategory({
             width={200}
             height={200}
             alt=""
-            className="w-5/12 sm:w-40 lg:w-52 flex-shrink-0"
+            className="w-4/12 md:w-40 lg:w-52 flex-shrink-0"
           />
-          <div>
+          <div className="text-center md:text-left">
             <h1 className="text-3xl md:text-4xl xl:text-5xl font-bold text-gray-600 mb-2">
               {portalCategory.name}
             </h1>
             <p className="font-bold text-gray-600 xl:text-xl mb-4">
               {portalCategory.badges_count}個の能力バッジがあります
             </p>
-            <p className="text-gray-500">{portalCategory.description}</p>
+            <p className="text-gray-500 text-left">
+              {portalCategory.description}
+            </p>
           </div>
         </header>
       </Container>
