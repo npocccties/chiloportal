@@ -39,7 +39,7 @@ function Pagination({ className, totalCount, start, end, handleHref }: Props) {
             <Link
               href={handleHref(page)}
               className={clsx("jumpu-icon-button", {
-                ["bg-primary-100 hover:bg-primary-100 font-bold"]:
+                ["bg-primary-700 text-white pointer-events-none"]:
                   page === currentPage,
               })}
               aria-current={page === currentPage}
