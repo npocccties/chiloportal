@@ -156,7 +156,7 @@ export default function Top({
             </Fallback>
           </ul>
         </section>
-        <section className="mb-8 pb-8 bg-gray-50">
+        <section className="pb-8 bg-gray-50">
           <header className="max-w-7xl mx-auto py-8 px-8 xl:px-4">
             <h2 className="text-3xl text-gray-700 font-bold mb-4 flex flex-wrap items-center gap-2">
               カテゴリから探せる能力バッジ
@@ -199,67 +199,68 @@ export default function Top({
             </Fallback>
           </ul>
         </section>
-        <section className="p-12 mb-8 max-w-6xl mx-auto">
-          <header className="mb-6">
-            <h2 className="text-3xl text-gray-700 font-bold mb-6">
-              教員育成指標から探せる能力バッジ
-            </h2>
-            <p className="font-bold text-gray-700">
-              「教員育成指標」とは地域の教育委員会が教員に求められる資質や能力を、キャリア（経験年数）毎に明確にしたものです。
-            </p>
-            <Link
-              className="text-primary-700 text-xs hover:underline whitespace-nowrap font-bold"
-              href={pagesPath._slug("about_badges").$url()}
+        <section className="">
+          <div className="max-w-7xl mx-auto pt-16 pb-40 md:pb-64 lg:pb-96 px-16 bg-[url('/fig-search-index.svg')] bg-amber-700 bg-contain bg-no-repeat bg-bottom text-white">
+            <header className="mb-6">
+              <h2 className="text-3xl font-bold mb-6">
+                教員育成指標から探せる能力バッジ
+              </h2>
+              <p className="font-bold mb-4">
+                「教員育成指標」とは地域の教育委員会が教員に求められる資質や能力を、キャリア（経験年数）毎に明確にしたものです。
+              </p>
+              <Link
+                className="text-xs hover:underline whitespace-nowrap font-bold"
+                href={pagesPath._slug("about_badges").$url()}
+              >
+                <Icon
+                  className="text-base inline mr-1"
+                  icon="fa6-regular:circle-question"
+                />
+                能力バッジとは？
+              </Link>
+            </header>
+            <ul
+              className={clsx({
+                ["list-disc pl-6 md:columns-2 lg:columns-3"]: consumers,
+              })}
+              aria-busy={!consumers}
             >
-              <Icon
-                className="text-base inline mr-1"
-                icon="fa6-regular:circle-question"
-              />
-              能力バッジとは？
-            </Link>
-          </header>
-          <ul
-            className={clsx({
-              ["list-disc pl-6 text-primary-700 md:columns-2 lg:columns-3"]:
-                consumers,
-            })}
-            aria-busy={!consumers}
-          >
-            <Fallback
-              data={consumers}
-              error={consumersError}
-              pending={
-                <li
-                  className="flex justify-center items-center h-24"
-                  aria-hidden
-                >
-                  <div className="jumpu-spinner">
-                    <svg viewBox="24 24 48 48">
-                      <circle cx="48" cy="48" r="16" />
-                    </svg>
-                  </div>
-                </li>
-              }
-            >
-              {(data) =>
-                data.map((consumer) => (
+              <Fallback
+                data={consumers}
+                error={consumersError}
+                pending={
                   <li
-                    key={consumer.consumer_id}
-                    className="break-inside-avoid mb-2"
+                    className="flex justify-center items-center h-24"
+                    aria-hidden
                   >
-                    <Link
-                      href={pagesPath.consumers
-                        ._consumerId(consumer.consumer_id)
-                        .$url()}
-                      className="underline"
-                    >
-                      {consumer.name}の教員育成指標
-                    </Link>
+                    <div className="jumpu-spinner">
+                      <svg viewBox="24 24 48 48">
+                        <circle cx="48" cy="48" r="16" />
+                      </svg>
+                    </div>
                   </li>
-                ))
-              }
-            </Fallback>
-          </ul>
+                }
+              >
+                {(data) =>
+                  data.map((consumer) => (
+                    <li
+                      key={consumer.consumer_id}
+                      className="break-inside-avoid mb-2"
+                    >
+                      <Link
+                        href={pagesPath.consumers
+                          ._consumerId(consumer.consumer_id)
+                          .$url()}
+                        className="underline"
+                      >
+                        {consumer.name}の教員育成指標
+                      </Link>
+                    </li>
+                  ))
+                }
+              </Fallback>
+            </ul>
+          </div>
         </section>
         <section className="pb-16 bg-gray-50">
           <header className="p-12 max-w-6xl mx-auto">
