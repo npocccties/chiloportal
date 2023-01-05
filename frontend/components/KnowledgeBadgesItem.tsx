@@ -10,7 +10,7 @@ type Props = {
 
 function KnowledgeBadgesItem({ className, knowledgeBadges }: Props) {
   return (
-    <section className={clsx("flex items-center gap-4", className)}>
+    <section className={clsx("flex items-start gap-4", className)}>
       <div className="flex-shrink-0 flex flex-col items-center gap-1">
         <Image
           src={`/images/${knowledgeBadges.image}`}
@@ -18,12 +18,10 @@ function KnowledgeBadgesItem({ className, knowledgeBadges }: Props) {
           height={80}
           alt=""
         />
-        <div className="jumpu-tag cursor-auto bg-white text-gray-700 border border-gray-300">
-          知識バッジ
-        </div>
+        <div className="text-xs md:text-sm">知識バッジ</div>
       </div>
       <div>
-        <h3 className="text-lg text-gray-700 mb-2">{knowledgeBadges.name}</h3>
+        <h3 className="text-lg font-bold mb-2">{knowledgeBadges.name}</h3>
         <p className="text-sm text-gray-600 mb-2">
           {knowledgeBadges.description}
         </p>
