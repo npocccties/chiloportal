@@ -28,57 +28,118 @@ export default function Top({
     "科目を選び、バッジを獲得することで社会的評価や自信の証明が得られ、あなたと子供達と社会のウェルビーイングへとつながります。この関係性は、学習成果の活用と主体的な学びの循環によって形成されます";
   return (
     <>
-      <article className="mt-8">
-        <header className="mb-8">
-          <Link
-            href={pagesPath._slug("concept").$url()}
-            className="flex gap-4 items-center px-6 py-3 rounded-xl border-2 border-primary-500 mb-6 md:mb-12 hover:bg-primary-50 max-w-4xl mx-auto my-8"
-          >
-            <Icon className="text-primary-500 text-xl" icon="fa6-solid:bell" />
-            <span className="text-sm text-primary-700">
-              <span className="text-gray-700 mr-1">初めての方へ</span>
-              学べるしくみ - OKUTEPのコンセプト
-            </span>
-          </Link>
-          <h1 className="hidden md:block mb-6 text-primary-700 text-[2rem] text-center font-bold">
-            <span className="text-4xl underline underline-offset-0 decoration-[#a6a63a]/20 decoration-8">
-              自ら学び続けるすべての人々のために
-            </span>
-            <br />
-            デジタルバッジであなたの学習成果を活用
-          </h1>
-          <Image
-            className="hidden md:block mx-auto"
-            src="/top-md.png"
-            width={946}
-            height={341}
-            alt={alt}
-          />
-          <Image
-            className="md:hidden mx-auto"
-            src="/top.png"
-            width={640}
-            height={282}
-            alt={alt}
-          />
-        </header>
-        <section className="px-6 py-4 mb-8 rounded-xl border border-primary-200 max-w-3xl mx-auto">
-          <h2 className="text-xl font-bold text-gray-700 mb-4">
-            OKUTEPは誰もが自由に学べるオープンな学びの場です。
-          </h2>
-          <p className="text-sm text-gray-700 leading-6 mb-3">
-            デジタルバッジ（※）は，あなたの自己実現のために活用できるデジタル証明書となります。OKUTEPで学び続けることで、あなたのウェルビーイングを高め、子ども達が夢や希望を持てる社会の実現を目指します。
-          </p>
-          <p className="text-xs text-gray-700">
-            （※）デジタルバッジの取得は、提携する教育委員会に所属する教員のみとなります。詳しくは
+      <article className="">
+        <header className="bg-gradient-to-r from-purple-100 to-pink-300 h-[70vh] pt-8">
+          <div className="max-w-6xl mx-auto h-full relative">
+            <h1 className="text-3xl notosansjp font-bold pt-16 text-white cover-title">
+              <span className="text-7xl mb-3 inline-block leading-[1.05]">
+                自ら学び続ける
+                <br />
+                すべての人々のために
+              </span>
+              <br />
+              <span className="">デジタルバッジであなたの学習成果を活用</span>
+            </h1>
             <Link
-              className="text-primary-700 hover:underline"
               href={pagesPath._slug("concept").$url()}
+              className="inline-flex gap-4 items-center py-4 rounded-xl"
             >
-              こちら
+              <Icon className="text-xl" icon="fa6-solid:bell" />
+              <span className="mr-1 text-sm">初めての方へ</span>
+              <span className=" underline hover:no-underline">
+                学べるしくみ - OKUTEPのコンセプト
+              </span>
             </Link>
-            をご覧下さい。
-          </p>
+
+            <div className="absolute -bottom-4 left-0 backdrop-blur-md p-8 rounded-lg  bg-white/80">
+              <h2 className="text-sm  text-primary-700 mb-4">
+                色々な方法で能力バッジを獲得できます
+              </h2>
+              <ul className="prose leading-tight">
+                <li>
+                  <a
+                    href="#recommend-beginner"
+                    className="decoration-dotted hover:no-underline font-bold text-primary-700"
+                  >
+                    <Icon
+                      className="inline mr-2 text-sm"
+                      icon="fa6-solid:chevron-down"
+                    />
+                    試しに受講してみる
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#search-categories"
+                    className="decoration-dotted hover:no-underline font-bold text-primary-700"
+                  >
+                    <Icon
+                      className="inline mr-2 text-sm"
+                      icon="fa6-solid:chevron-down"
+                    />
+                    カテゴリから探せる能力バッジ
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#education-index"
+                    className="decoration-dotted hover:no-underline font-bold text-primary-700"
+                  >
+                    <Icon
+                      className="inline mr-2 text-sm"
+                      icon="fa6-solid:chevron-down"
+                    />
+                    教員育成指標から探せる能力バッジ
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#other-contents"
+                    className="decoration-dotted hover:no-underline font-bold text-primary-700"
+                  >
+                    <Icon
+                      className="inline mr-2 text-sm"
+                      icon="fa6-solid:chevron-down"
+                    />
+                    その他のコンテンツ
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </header>
+        <section className="px-6 py-16">
+          <div className="max-w-6xl mx-auto">
+            <div className="flex gap-4">
+              <Image
+                src="/top.png"
+                width={1280}
+                height={563}
+                alt=""
+                className="w-64 shrink-0"
+              />
+              <div className="">
+                <h2 className="text-2xl font-bold text-gray-700 mb-4">
+                  OKUTEPは誰もが自由に学べるオープンな学びの場です
+                </h2>
+                <p className="text-sm text-gray-700 leading-6 mb-3">
+                  デジタルバッジ（※）は，あなたの自己実現のために活用できるデジタル証明書となります。
+                  <br />
+                  OKUTEPで学び続けることで、あなたのウェルビーイングを高め、子ども達が夢や希望を持てる社会の実現を目指します。
+                </p>
+                <p className="text-xs text-gray-700">
+                  （※）デジタルバッジの取得は、提携する教育委員会に所属する教員のみとなります。詳しくは
+                  <Link
+                    className="text-primary-700 hover:underline"
+                    href={pagesPath._slug("concept").$url()}
+                  >
+                    こちら
+                  </Link>
+                  をご覧下さい。
+                </p>
+              </div>
+            </div>
+          </div>
         </section>
         <section className="mb-8 px-4 max-w-4xl mx-auto">
           <div className="flex items-center gap-4 mb-4">
@@ -107,7 +168,10 @@ export default function Top({
             </ul>
           </div>
         </section>
-        <section className="py-8 bg-gray-200 bg-opacity-30 overflow-hidden before:block before:absolute before:w-4/12 before:top-0 before:h-full before:-skew-x-12 before:-right-16 before:bg-primary-700 relative before:-z-10">
+        <section
+          id="recommend-beginner"
+          className="py-8 bg-gray-200 bg-opacity-30 overflow-hidden before:block before:absolute before:w-4/12 before:top-0 before:h-full before:-skew-x-12 before:-right-16 before:bg-primary-700 relative before:-z-10"
+        >
           <div className="max-w-4xl m-auto mb-4 relative px-4">
             <p className=" text-gray-700 mb-2 font-bold">
               はじめての方におすすめ
@@ -156,7 +220,7 @@ export default function Top({
             </Fallback>
           </ul>
         </section>
-        <section className="pb-8 bg-gray-50">
+        <section id="search-categories" className="pb-8 bg-gray-50">
           <header className="max-w-7xl mx-auto py-8 px-8 xl:px-4">
             <h2 className="text-3xl text-gray-700 font-bold mb-4 flex flex-wrap items-center gap-2">
               カテゴリから探せる能力バッジ
@@ -199,7 +263,7 @@ export default function Top({
             </Fallback>
           </ul>
         </section>
-        <section className="">
+        <section id="education-index">
           <div className="max-w-7xl mx-auto pt-16 pb-40 md:pb-64 lg:pb-96 px-16 bg-[url('/fig-search-index.svg')] bg-amber-700 bg-contain bg-no-repeat bg-bottom text-white">
             <header className="mb-6">
               <h2 className="text-3xl font-bold mb-6">
@@ -262,7 +326,7 @@ export default function Top({
             </ul>
           </div>
         </section>
-        <section className="pb-16 bg-gray-50">
+        <section id="other-contents" className="pb-16 bg-gray-50">
           <header className="p-12 max-w-6xl mx-auto">
             <h2 className="text-3xl text-gray-700 font-bold mb-4">
               その他のコンテンツ
