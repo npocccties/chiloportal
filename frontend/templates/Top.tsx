@@ -199,8 +199,8 @@ export default function Top({
             </Fallback>
           </ul>
         </section>
-        <section className="bg-[url('/fig-search-index.svg')] bg-red-50 bg-[40%_100%]  bg-no-repeat bg-[length:1800px_180px]">
-          <div className="max-w-7xl mx-auto pt-16 pb-40 md:pb-56 lg:pb-56 px-16 text-primary-700 ">
+        <section className="bg-[url('/fig-search-index.svg')] bg-cyan-50 bg-[40%_100%]  bg-no-repeat bg-[length:1800px_180px]">
+          <div className="max-w-7xl mx-auto pt-16 pb-40 md:pb-56 lg:pb-56 px-16 text-gray-700 ">
             <header className="mb-6">
               <h2 className="text-3xl font-bold mb-6">
                 教員育成指標から探せる能力バッジ
