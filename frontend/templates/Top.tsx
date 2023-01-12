@@ -199,8 +199,8 @@ export default function Top({
             </Fallback>
           </ul>
         </section>
-        <section className="">
-          <div className="max-w-7xl mx-auto pt-16 pb-40 md:pb-64 lg:pb-96 px-16 bg-[url('/fig-search-index.svg')] bg-amber-700 bg-contain bg-no-repeat bg-bottom text-white">
+        <section className="bg-[url('/fig-search-index.svg')] bg-red-50 bg-[40%_100%]  bg-no-repeat bg-[length:1800px_180px]">
+          <div className="max-w-7xl mx-auto pt-16 pb-40 md:pb-56 lg:pb-56 px-16 text-primary-700 ">
             <header className="mb-6">
               <h2 className="text-3xl font-bold mb-6">
                 教員育成指標から探せる能力バッジ
@@ -209,7 +209,7 @@ export default function Top({
                 「教員育成指標」とは地域の教育委員会が教員に求められる資質や能力を、キャリア（経験年数）毎に明確にしたものです。
               </p>
               <Link
-                className="text-xs hover:underline whitespace-nowrap font-bold"
+                className="text-xs hover:underline whitespace-nowrap font-bold text-primary-700"
                 href={pagesPath._slug("about_badges").$url()}
               >
                 <Icon
