@@ -171,7 +171,7 @@ export default function Top({
             <p className=" text-gray-700 mb-2 font-bold">
               はじめての方におすすめ
             </p>
-            <h2 className="text-3xl text-gray-700 font-bold mb-4">
+            <h2 className="text-2xl text-gray-700 font-bold mb-4">
               試しに受講してみる
             </h2>
             <p className="font-bold text-gray-700 mb-4">
@@ -215,12 +215,14 @@ export default function Top({
             </Fallback>
           </ul>
         </section>
-        <section id="search-categories" className="pb-8 bg-gray-50">
-          <header className="max-w-7xl mx-auto py-8 px-8 xl:px-4">
-            <h2 className="text-3xl text-gray-700 font-bold mb-4 flex flex-wrap items-center gap-2">
+
+        <section id="search-categories" className="pb-8 ">
+          <header className="max-w-7xl mx-auto py-12 px-8 xl:px-4 text-center">
+            <h2 className="text-3xl text-gray-700 font-bold mb-4 gap-2">
+
               カテゴリから探せる能力バッジ
             </h2>
-            <p className="font-bold text-gray-700 mb-4">
+            <p className="font-bold text-lg text-gray-700 mb-4 max-w-3xl mx-auto">
               学術的な観点をもとにして各自治体の教員育成指標も参考にしながら、オンライン学習で習得できる内容を「カテゴリ」として整理しました。
             </p>
             <Link
@@ -246,7 +248,7 @@ export default function Top({
                 data.map((portalCategory) => (
                   <li
                     key={portalCategory.portal_category_id}
-                    className="rounded-xl overflow-hidden shadow-lg transition hover:ring-2 ring-primary-400"
+                    className="rounded-lg border border-gray-200 overflow-hidden shadow-lg transition hover:ring-2 ring-primary-400"
                   >
                     <PortalCategoryCard
                       className="h-full"
@@ -258,8 +260,9 @@ export default function Top({
             </Fallback>
           </ul>
         </section>
-        <section id="education-index">
-          <div className="max-w-7xl mx-auto pt-16 pb-40 md:pb-64 lg:pb-96 px-16 bg-[url('/fig-search-index.svg')] bg-amber-700 bg-contain bg-no-repeat bg-bottom text-white">
+        <section id="education-index" className="bg-[url('/fig-search-index.svg')] bg-cyan-50 bg-[40%_100%]  bg-no-repeat bg-[length:1800px_180px]">
+          <div className="max-w-7xl mx-auto pt-16 pb-40 md:pb-56 lg:pb-56 px-16 text-gray-700 ">
+
             <header className="mb-6">
               <h2 className="text-3xl font-bold mb-6">
                 教員育成指標から探せる能力バッジ
@@ -268,7 +271,7 @@ export default function Top({
                 「教員育成指標」とは地域の教育委員会が教員に求められる資質や能力を、キャリア（経験年数）毎に明確にしたものです。
               </p>
               <Link
-                className="text-xs hover:underline whitespace-nowrap font-bold"
+                className="text-xs hover:underline whitespace-nowrap font-bold text-primary-700"
                 href={pagesPath._slug("about_badges").$url()}
               >
                 <Icon

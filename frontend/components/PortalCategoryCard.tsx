@@ -15,28 +15,31 @@ function PortalCategoryCard({ portalCategory, className }: Props) {
       href={pagesPath.portal_categories
         ._portalCategoryId(portalCategory.portal_category_id)
         .$url({ query: {} })}
-      className={clsx("flex flex-col bg-white", className)}
+      className={clsx("flex bg-white p-6 gap-x-6", className)}
     >
-      <section className="px-4 pt-6 pb-4 flex-1">
-        <h3 className="flex justify-center items-center text-2xl text-gray-700 text-center font-bold mb-4">
-          {portalCategory.name}
-        </h3>
-        <p className="text-sm text-gray-500">{portalCategory.description}</p>
-      </section>
-      <div className="relative pb-8">
+      <div className="">
         <Image
-          className="block mx-auto pb-4"
+          className="block mx-auto w-16"
           src={`/images/${portalCategory.image_url_path}`}
           alt=""
           width={180}
           height={180}
         />
-        <p className="jumpu-tag absolute bottom-4 right-4 text-xs rounded-full px-4 py-1 flex gap-1 items-center">
+      </div>
+      <section className="flex-1">
+        <h3 className="text-xl text-gray-700 font-bold mb-2">
+          {portalCategory.name}
+        </h3>
+        <p className="text-sm text-gray-800 mb-4">
+          {portalCategory.description}
+        </p>
+
+        <p className="jumpu-tag text-xs rounded-full px-4 py-1 inline-flex gap-1 items-center">
           <span>能力バッジ</span>
           <span className="font-bold">{portalCategory.badges_count}</span>
           <span>個</span>
         </p>
-      </div>
+      </section>
     </Link>
   );
 }
