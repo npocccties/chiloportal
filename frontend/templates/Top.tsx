@@ -29,16 +29,18 @@ export default function Top({
   return (
     <>
       <article className="">
-        <header className="bg-gradient-to-r from-purple-100 to-pink-300 h-[70vh] pt-8">
-          <div className="max-w-6xl mx-auto h-full relative">
-            <h1 className="text-3xl notosansjp font-bold pt-16 text-white cover-title">
-              <span className="text-7xl mb-3 inline-block leading-[1.05]">
+        <header className="bg-gradient-to-r from-purple-100 to-pink-300 h-[60vh] md:h-[70vh] pt-8">
+          <div className="px-4 lg:px-0 max-w-6xl mx-auto h-full relative">
+            <h1 className="text-3xl notosansjp font-bold pt-8 md:pt-16 text-white cover-title">
+              <span className="text-6xl md:text-7xl mb-3 inline-block leading-[1.05]">
                 自ら学び続ける
                 <br />
                 すべての人々のために
               </span>
               <br />
-              <span className="">デジタルバッジであなたの学習成果を活用</span>
+              <span className="text-2xl md:text-3xl">
+                デジタルバッジであなたの学習成果を活用
+              </span>
             </h1>
             <Link
               href={pagesPath._slug("concept").$url()}
@@ -51,7 +53,7 @@ export default function Top({
               </span>
             </Link>
 
-            <div className="absolute -bottom-4 left-0 backdrop-blur-md p-8 rounded-lg  bg-white/80">
+            <div className="absolute w-10/12 md:w-auto -bottom-10 md:-bottom-4 left-1/2 -translate-x-1/2 md:translate-x-0 md:left-0 backdrop-blur-md p-8 rounded-lg bg-white/80">
               <h2 className="text-sm  text-primary-700 mb-4">
                 色々な方法で能力バッジを獲得できます
               </h2>
@@ -110,14 +112,7 @@ export default function Top({
         </header>
         <section className="px-6 py-16">
           <div className="max-w-6xl mx-auto">
-            <div className="flex gap-4">
-              <Image
-                src="/top.png"
-                width={1280}
-                height={563}
-                alt=""
-                className="w-64 shrink-0"
-              />
+            <div className="">
               <div className="">
                 <h2 className="text-2xl font-bold text-gray-700 mb-4">
                   OKUTEPは誰もが自由に学べるオープンな学びの場です
