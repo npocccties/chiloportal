@@ -219,7 +219,6 @@ export default function Top({
         <section id="search-categories" className="pb-8 ">
           <header className="max-w-7xl mx-auto py-12 px-8 xl:px-4 text-center">
             <h2 className="text-3xl text-gray-700 font-bold mb-4 gap-2">
-
               カテゴリから探せる能力バッジ
             </h2>
             <p className="font-bold text-lg text-gray-700 mb-4 max-w-3xl mx-auto">
@@ -260,9 +259,11 @@ export default function Top({
             </Fallback>
           </ul>
         </section>
-        <section id="education-index" className="bg-[url('/fig-search-index.svg')] bg-cyan-50 bg-[40%_100%]  bg-no-repeat bg-[length:1800px_180px]">
+        <section
+          id="education-index"
+          className="bg-[url('/fig-search-index.svg')] bg-cyan-50 bg-[40%_100%]  bg-no-repeat bg-[length:1800px_180px]"
+        >
           <div className="max-w-7xl mx-auto pt-16 pb-40 md:pb-56 lg:pb-56 px-16 text-gray-700 ">
-
             <header className="mb-6">
               <h2 className="text-3xl font-bold mb-6">
                 教員育成指標から探せる能力バッジ
