@@ -187,7 +187,7 @@ export default function Top({
                 data.map((portalCategory) => (
                   <li
                     key={portalCategory.portal_category_id}
-                    className="rounded-lg overflow-hidden shadow-lg transition hover:ring-2 ring-primary-400"
+                    className="rounded-lg border border-gray-200 overflow-hidden shadow-lg transition hover:ring-2 ring-primary-400"
                   >
                     <PortalCategoryCard
                       className="h-full"
