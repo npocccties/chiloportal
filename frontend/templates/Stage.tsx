@@ -59,7 +59,7 @@ export default function Stage({
             このページの指標項目の目次
           </h2>
           <FieldsIndex
-            className="max-h-[calc(100vh-10rem)] overflow-y-scroll pt-2"
+            className="max-h-[calc(100vh-10rem)] overflow-y-scroll pt-2 py-16"
             field={field}
           />
         </nav>
