@@ -20,18 +20,17 @@ function PortalCategoryCard({ portalCategory, className }: Props) {
       <div className="">
         <Image
           className="block mx-auto w-16"
-          src={`/images/contemporary_challenges.png`}
-          /* src={`/images/${portalCategory.image_url_path}`} */
+          src={`/images/${portalCategory.image_url_path}`}
           alt=""
           width={180}
           height={180}
         />
       </div>
       <section className="flex-1">
-        <h3 className="text-2xl text-gray-700 font-bold mb-2">
+        <h3 className="text-xl text-gray-700 font-bold mb-2">
           {portalCategory.name}
         </h3>
-        <p className="text-sm text-gray-500 mb-4">
+        <p className="text-sm text-gray-800 mb-4">
           {portalCategory.description}
         </p>
 

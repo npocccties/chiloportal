@@ -156,12 +156,12 @@ export default function Top({
             </Fallback>
           </ul>
         </section>
-        <section className="pb-8 bg-gray-50">
-          <header className="max-w-7xl mx-auto py-8 px-8 xl:px-4">
-            <h2 className="text-3xl text-gray-700 font-bold mb-4 flex flex-wrap items-center gap-2">
+        <section className="pb-8 ">
+          <header className="max-w-7xl mx-auto py-12 px-8 xl:px-4 text-center">
+            <h2 className="text-3xl text-gray-700 font-bold mb-4 gap-2">
               カテゴリから探せる能力バッジ
             </h2>
-            <p className="font-bold text-gray-700 mb-4">
+            <p className="font-bold text-lg text-gray-700 mb-4 max-w-3xl mx-auto">
               学術的な観点をもとにして各自治体の教員育成指標も参考にしながら、オンライン学習で習得できる内容を「カテゴリ」として整理しました。
             </p>
             <Link
@@ -187,7 +187,7 @@ export default function Top({
                 data.map((portalCategory) => (
                   <li
                     key={portalCategory.portal_category_id}
-                    className="rounded-xl overflow-hidden shadow-lg transition hover:ring-2 ring-primary-400"
+                    className="rounded-lg overflow-hidden shadow-lg transition hover:ring-2 ring-primary-400"
                   >
                     <PortalCategoryCard
                       className="h-full"
