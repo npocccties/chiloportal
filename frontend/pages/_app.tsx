@@ -12,8 +12,20 @@ function App({ Component, pageProps }: AppProps) {
       <Head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@900&display=swap"
+          rel="stylesheet"
+        />
       </Head>
       <Component {...pageProps} />
+      <style jsx global>
+        {`
+          html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 4rem;
+          }
+        `}
+      </style>
     </Layout>
   );
 }

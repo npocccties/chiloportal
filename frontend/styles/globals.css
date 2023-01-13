@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.notosansjp {
+  font-family: "Noto Sans JP", sans-serif;
+  font-feature-settings: "pkna";
+}
+
+.cover-title {
+  background: -webkit-linear-gradient(
+    45deg,
+    rgb(245, 32, 181),
+    rgb(248, 180, 6)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
