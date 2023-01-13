@@ -112,7 +112,7 @@ export default function Top({
             <p className=" text-gray-700 mb-2 font-bold">
               はじめての方におすすめ
             </p>
-            <h2 className="text-3xl text-gray-700 font-bold mb-4">
+            <h2 className="text-2xl text-gray-700 font-bold mb-4">
               試しに受講してみる
             </h2>
             <p className="font-bold text-gray-700 mb-4">
