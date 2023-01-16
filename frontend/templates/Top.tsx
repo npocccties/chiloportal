@@ -165,16 +165,16 @@ export default function Top({
         </section>
         <section
           id="recommend-beginner"
-          className="py-8 bg-gray-200 bg-opacity-30 overflow-hidden before:block before:absolute before:w-4/12 before:top-0 before:h-full before:-skew-x-12 before:-right-16 before:bg-primary-700 relative before:-z-10"
+          className="pt-6 bg-gray-200 bg-opacity-30 overflow-hidden"
         >
-          <div className="max-w-4xl m-auto mb-4 relative px-4">
-            <p className=" text-gray-700 mb-2 font-bold">
+          <div className="max-w-4xl m-auto relative px-4">
+            <p className=" text-gray-700 text-sm mb-1 font-bold">
               はじめての方におすすめ
             </p>
-            <h2 className="text-2xl text-gray-700 font-bold mb-4">
+            <h2 className="text-xl text-gray-700 font-bold mb-2">
               試しに受講してみる
             </h2>
-            <p className="font-bold text-gray-700 mb-4">
+            <p className="text-sm text-gray-700 mb-2">
               あなたが認められる能力バッジを獲得するために、いくつかの知識バッジを得なければなりません。
               <br />
               少ない知識バッジで獲得できる能力バッジがあります。
@@ -191,7 +191,7 @@ export default function Top({
               能力バッジとは？
             </Link>
           </div>
-          <ul className="flex overflow-x-scroll px-4 py-4 gap-4 w-screen xl:mx-auto xl:justify-center ">
+          <ul className="flex overflow-x-scroll px-4 py-4 gap-4 w-screen xl:mx-auto xl:justify-center xl:max-w-7xl">
             <Fallback
               data={wisdomBadgesList}
               error={wisdomBadgesListError}
