@@ -216,12 +216,15 @@ export default function Top({
           </ul>
         </section>
 
-        <section id="search-categories" className="pb-8 ">
-          <header className="max-w-7xl mx-auto py-12 px-8 xl:px-4 text-center">
-            <h2 className="text-3xl text-gray-700 font-bold mb-4 gap-2">
+        <section
+          id="search-categories"
+          className="pb-8 before:block before:absolute before:w-4/12 before:top-0 before:h-full before:-skew-x-12 before:-right-16 before:bg-primary-700 relative before:-z-10"
+        >
+          <header className="max-w-7xl mx-auto py-12 px-8 xl:px-4 ">
+            <h2 className="text-5xl notosansjp text-primary-700 font-bold mb-4 gap-2 leading-tight">
               カテゴリから探せる能力バッジ
             </h2>
-            <p className="font-bold text-lg text-gray-700 mb-4 max-w-3xl mx-auto">
+            <p className="font-bold text-lg text-gray-700 mb-4 max-w-3xl ">
               学術的な観点をもとにして各自治体の教員育成指標も参考にしながら、オンライン学習で習得できる内容を「カテゴリ」として整理しました。
             </p>
             <Link
