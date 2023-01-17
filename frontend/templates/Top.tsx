@@ -264,10 +264,11 @@ export default function Top({
         </section>
         <section
           id="education-index"
-          className="bg-gray-50"
+          className="bg-gray-50 pb-28 relative before:bg-[url('/footer-bg.svg')] before:bg-[center_right] before:bg-no-repeat  before:w-full before:h-28 before:block before:absolute before:bottom-0 before:-z-1"
           /* className="bg-[url('/fig-search-index.svg')] bg-[40%_100%]  bg-no-repeat bg-[length:1800px_180px]" */
         >
-          <div className="max-w-7xl mx-auto pt-16 pb-8 px-8 xl:px-0 ">
+          <div className="absolute -top-10 left-0 w-full h-64 bg-[url('/title-search-education-index.svg')] bg-no-repeat"></div>
+          <div className="max-w-7xl lg:pl-64 mx-auto pt-32 pb-8 px-8 xl:px-0 ">
             <header className="mb-6">
               <h2 className="text-5xl notosansjp leading-tight font-bold mb-6">
                 教員育成指標から探せる能力バッジ

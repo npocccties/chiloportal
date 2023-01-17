@@ -16,12 +16,7 @@ function Footer({ className }: Props) {
   const { data: portalCategories, error: portalCategoriesError } =
     usePortalCategories();
   return (
-    <footer
-      className={clsx(
-        "bg-gray-800 mt-32 py-12 relative before:bg-[url('/footer-bg.svg')] before:bg-[center_right] before:bg-no-repeat  before:w-full before:h-28 before:block before:absolute before:-top-24 before:-z-1",
-        className
-      )}
-    >
+    <footer className={clsx("bg-gray-800 mt-4 py-12", className)}>
       <div className="max-w-5xl xl:max-w-7xl mx-auto px-4 flex flex-col xl:justify-center sm:flex-row flex-wrap gap-x-24 gap-y-8 mb-12 ">
         <div className="w-full xl:w-auto -translate-y-2">
           <Link href={pagesPath.$url()} className="inline-block">
