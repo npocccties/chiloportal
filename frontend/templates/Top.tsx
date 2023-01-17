@@ -110,8 +110,8 @@ export default function Top({
             </div>
           </div>
         </header>
-        <section className="px-6 py-16">
-          <div className="max-w-6xl mx-auto">
+        <section className="py-16">
+          <div className="px-6 max-w-4xl mx-auto">
             <div className="">
               <div className="">
                 <h2 className="text-2xl font-bold text-gray-700 mb-4">
@@ -264,9 +264,10 @@ export default function Top({
         </section>
         <section
           id="education-index"
+          className="bg-gray-50"
           /* className="bg-[url('/fig-search-index.svg')] bg-[40%_100%]  bg-no-repeat bg-[length:1800px_180px]" */
         >
-          <div className="max-w-7xl mx-auto pt-16 pb-40 md:pb-56 lg:pb-56 px-8 xl:px-0 ">
+          <div className="max-w-7xl mx-auto pt-16 pb-8 px-8 xl:px-0 ">
             <header className="mb-6">
               <h2 className="text-5xl notosansjp leading-tight font-bold mb-6">
                 教員育成指標から探せる能力バッジ
@@ -317,7 +318,7 @@ export default function Top({
                         href={pagesPath.consumers
                           ._consumerId(consumer.consumer_id)
                           .$url()}
-                        className="block border border-gray-300 rounded-lg px-6 py-4  transition hover:ring-2 ring-primary-400"
+                        className="block bg-white border border-gray-300 rounded-lg px-6 py-4  transition hover:ring-2 ring-primary-400"
                       >
                         {consumer.name}の教員育成指標
                       </Link>
@@ -328,7 +329,7 @@ export default function Top({
             </ul>
           </div>
         </section>
-        <section id="other-contents" className="pb-16 bg-gray-50">
+        <section id="other-contents" className="pb-16">
           <header className="p-12 max-w-6xl mx-auto">
             <h2 className="text-3xl text-gray-700 font-bold mb-4">
               その他のコンテンツ
