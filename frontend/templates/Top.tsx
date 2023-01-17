@@ -218,7 +218,7 @@ export default function Top({
 
         <section
           id="search-categories"
-          className="pb-8 before:block before:absolute before:w-4/12 before:top-0 before:h-full before:-skew-x-12 before:-right-16 before:bg-primary-700 relative before:-z-10"
+          className="pb-8 overflow-hidden before:hidden md:before:block before:absolute before:w-4/12 before:top-0 before:h-full before:-skew-x-12 before:-right-16 before:bg-primary-700 relative before:-z-10"
         >
           <header className="max-w-7xl mx-auto py-12 px-8 xl:px-4 ">
             <h2 className="text-5xl notosansjp text-primary-700 font-bold mb-4 gap-2 leading-tight">
@@ -264,14 +264,14 @@ export default function Top({
         </section>
         <section
           id="education-index"
-          className="bg-[url('/fig-search-index.svg')] bg-cyan-50 bg-[40%_100%]  bg-no-repeat bg-[length:1800px_180px]"
+          /* className="bg-[url('/fig-search-index.svg')] bg-[40%_100%]  bg-no-repeat bg-[length:1800px_180px]" */
         >
-          <div className="max-w-7xl mx-auto pt-16 pb-40 md:pb-56 lg:pb-56 px-16 text-gray-700 ">
+          <div className="max-w-7xl mx-auto pt-16 pb-40 md:pb-56 lg:pb-56 px-8 xl:px-0 ">
             <header className="mb-6">
-              <h2 className="text-3xl font-bold mb-6">
+              <h2 className="text-5xl notosansjp leading-tight font-bold mb-6">
                 教員育成指標から探せる能力バッジ
               </h2>
-              <p className="font-bold mb-4">
+              <p className="font-bold text-lg mb-4">
                 「教員育成指標」とは地域の教育委員会が教員に求められる資質や能力を、キャリア（経験年数）毎に明確にしたものです。
               </p>
               <Link
@@ -287,7 +287,7 @@ export default function Top({
             </header>
             <ul
               className={clsx({
-                ["list-disc pl-6 md:columns-2 lg:columns-3"]: consumers,
+                ["md:columns-2"]: consumers,
               })}
               aria-busy={!consumers}
             >
@@ -317,7 +317,7 @@ export default function Top({
                         href={pagesPath.consumers
                           ._consumerId(consumer.consumer_id)
                           .$url()}
-                        className="underline"
+                        className="block border border-gray-300 rounded-lg px-6 py-4  transition hover:ring-2 ring-primary-400"
                       >
                         {consumer.name}の教員育成指標
                       </Link>

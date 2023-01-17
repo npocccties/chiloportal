@@ -30,7 +30,7 @@ function WisdomBadgesCard({ wisdomBadges, className }: Props) {
         <div className="text-xs text-gray-700 mb-2">能力バッジ</div>
       </div>
       <section className="px-4 pb-4">
-        <h3 className="text-xl font-bold text-gray-700 mb-2">
+        <h3 className="text-xl font-bold text-gray-700 my-2">
           {wisdomBadges.name}
         </h3>
         {"knowledge_badges_list" in wisdomBadges.detail && (
