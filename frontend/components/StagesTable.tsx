@@ -27,7 +27,7 @@ function StageLink({
     <Link
       href={href}
       className={clsx(
-        "px-4 py-2 flex gap-4 items-center",
+        "px-4 py-4 flex gap-4 items-center font-bold text-sm",
         active ? "bg-primary-200" : "hover:bg-primary-50",
         className
       )}
@@ -60,7 +60,7 @@ function StagesTable({
         {stages.map((stage) => (
           <tr key={stage.stage_id}>
             {stage.sub_name === "" ? (
-              <td className="border p-0 text-gray-700" colSpan={2}>
+              <td className="border p-0 " colSpan={2}>
                 <StageLink
                   name={stage.name}
                   href={handleHref(stage)}
@@ -69,10 +69,10 @@ function StagesTable({
               </td>
             ) : (
               <>
-                <th className="border px-4 py-2 text-left text-gray-700 font-normal">
+                <th className="border px-4 py-2 text-left font-normal text-gray-500">
                   {stage.name}
                 </th>
-                <td className="border p-0 text-xs">
+                <td className="border p-0">
                   <StageLink
                     className="min-h-[2.5rem]"
                     name={stage.sub_name}

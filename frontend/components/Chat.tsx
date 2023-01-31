@@ -179,12 +179,15 @@ function Chat({ className }: Props) {
   return (
     <div className={clsx("", className)}>
       <button
-        className="absolute bottom-0 right-0 p-4 rounded-full bg-primary-700 shadow-xl hover:bg-primary-600 mb-8"
+        className="text-white flex gap-x-2 items-center absolute bottom-0 right-0 p-4 rounded-full bg-primary-700 shadow-xl hover:bg-primary-600 mb-8 border-2 border-white"
         aria-controls={id}
-        title="ボットと会話する"
+        title="チャットで問い合わせる"
         onClick={handleClickExpand}
       >
-        <Icon className="text-white text-3xl" icon="fa-regular:comment-dots" />
+        <Icon className="text-2xl shrink-0" icon="fa-regular:comment-dots" />
+        <span className="whitespace-nowrap font-bold">
+          チャットで問い合わせる
+        </span>
       </button>
       <nav
         id={id}

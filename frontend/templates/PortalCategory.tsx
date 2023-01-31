@@ -15,40 +15,50 @@ export default function PortalCategory({
       ._portalCategoryId(portalCategory.portal_category_id)
       .$url({ query: { p: String(page) } });
   return (
-    <Container as="article">
-      <Breadcrumbs
-        className="mb-6"
-        nodes={[{ name: "トップ", href: pagesPath.$url() }]}
-        leaf={portalCategory.name}
-      />
-      <header className="flex gap-8 items-center mb-16">
-        <Image
-          src={`/images/${portalCategory.image_url_path}`}
-          width={200}
-          height={200}
-          alt=""
+    <>
+      <Container as="article" className="min-h-0 px-8 lg:px-0 md:pb-0">
+        <Breadcrumbs
+          className="mb-6 xl:mb-12"
+          nodes={[{ name: "トップ", href: pagesPath.$url() }]}
+          leaf={portalCategory.name}
         />
-        <div>
-          <h1 className="text-4xl text-gray-600 mb-2">{portalCategory.name}</h1>
-          <p className="font-bold text-gray-600 mb-4">
-            {portalCategory.badges_count}つの能力バッジがあります
-          </p>
-          <p className="text-gray-500">{portalCategory.description}</p>
-        </div>
-      </header>
-      <ul>
-        {wisdomBadgesList.badges.map((wisdomBadges) => (
-          <li className="mb-8" key={wisdomBadges.badges_id}>
-            <WisdomBadgesItem wisdomBadges={wisdomBadges} />
-          </li>
-        ))}
-      </ul>
-      <Pagination
-        totalCount={wisdomBadgesList.total_count}
-        start={wisdomBadgesList.start}
-        end={wisdomBadgesList.end}
-        handleHref={handleHref}
-      />
-    </Container>
+        <header className="flex flex-col md:flex-row gap-4 md:gap-8 items-center md:py-8">
+          <Image
+            src={`/images/${portalCategory.image_url_path}`}
+            width={200}
+            height={200}
+            alt=""
+            className="w-4/12 md:w-40 lg:w-52 flex-shrink-0"
+          />
+          <div className="text-center md:text-left">
+            <h1 className="text-3xl md:text-4xl xl:text-5xl font-bold text-gray-600 mb-2">
+              {portalCategory.name}
+            </h1>
+            <p className="font-bold text-gray-600 xl:text-xl mb-4">
+              {portalCategory.badges_count}個の能力バッジがあります
+            </p>
+            <p className="text-gray-500 text-left">
+              {portalCategory.description}
+            </p>
+          </div>
+        </header>
+      </Container>
+      <div className="bg-gray-100 shadow-inner">
+        <ul className="grid md:grid-cols-2 gap-4 max-w-6xl mx-auto px-4 pt-4">
+          {wisdomBadgesList.badges.map((wisdomBadges) => (
+            <li key={wisdomBadges.badges_id}>
+              <WisdomBadgesItem wisdomBadges={wisdomBadges} />
+            </li>
+          ))}
+        </ul>
+        <Pagination
+          totalCount={wisdomBadgesList.total_count}
+          start={wisdomBadgesList.start}
+          end={wisdomBadgesList.end}
+          handleHref={handleHref}
+          className="py-12 justify-center"
+        />
+      </div>
+    </>
   );
 }
