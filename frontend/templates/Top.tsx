@@ -11,6 +11,8 @@ import Container from "components/Container";
 import WisdomBadgesCard from "components/WisdomBadgesCard";
 import PortalCategoryCard from "components/PortalCategoryCard";
 import Fallback from "components/Fallback";
+import SearchForm from "components/SearchForm";
+import { NEXT_PUBLIC_MOODLE_DASHBOARD_URL } from "lib/env";
 
 export default function Top({
   posts,
@@ -29,84 +31,112 @@ export default function Top({
   return (
     <>
       <article className="">
-        <header className="bg-gradient-to-r from-purple-100 to-pink-300 h-[60vh] md:h-[70vh] pt-8">
-          <div className="px-4 lg:px-0 max-w-6xl mx-auto h-full relative">
-            <h1 className="text-3xl notosansjp font-bold pt-8 md:pt-16 text-white cover-title">
-              <span className="text-6xl md:text-7xl mb-3 inline-block leading-[1.05]">
-                自ら学び続ける
+        <header className="bg-[url('/images/hero/3-generation-family-holding-hands-greenly-street.jpg')] bg-center bg-cover  ">
+          <div className="bg-gray-800 bg-opacity-60 inset-0 h-full pb-4">
+            <div className="px-4 lg:px-0 max-w-6xl mx-auto h-full relative">
+              <h1 className="text-3xl notosansjp font-bold pt-24 md:pt-16 text-white text-center">
+                <span className="text-3xl sm:text-6xl md:text-7xl mb-1 md:mb-3 inline-block leading-[1.05]">
+                  自ら学び続ける
+                  <br />
+                  すべての人々のために
+                </span>
                 <br />
-                すべての人々のために
-              </span>
-              <br />
-              <span className="text-2xl md:text-3xl">
-                デジタルバッジであなたの学習成果を活用
-              </span>
-            </h1>
-            <Link
-              href={pagesPath._slug("concept").$url()}
-              className="inline-flex gap-4 items-center py-4 rounded-xl"
-            >
-              <Icon className="text-xl" icon="fa6-solid:bell" />
-              <span className="mr-1 text-sm">初めての方へ</span>
-              <span className=" underline hover:no-underline">
-                学べるしくみ - OKUTEPのコンセプト
-              </span>
-            </Link>
+                <span className="text-base sm:text-xl md:text-3xl">
+                  デジタルバッジであなたの学習成果を活用
+                </span>
+              </h1>
 
-            <div className="absolute w-10/12 md:w-auto -bottom-10 md:-bottom-4 left-1/2 -translate-x-1/2 md:translate-x-0 md:left-0 backdrop-blur-md p-8 rounded-lg bg-white/80">
-              <h2 className="text-sm  text-primary-700 mb-4">
-                色々な方法で能力バッジを獲得できます
-              </h2>
-              <ul className="prose leading-tight">
-                <li>
-                  <a
-                    href="#recommend-beginner"
-                    className="decoration-dotted hover:no-underline font-bold text-primary-700"
-                  >
-                    <Icon
-                      className="inline mr-2 text-sm"
-                      icon="fa6-solid:chevron-down"
-                    />
-                    試しに受講してみる
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#search-categories"
-                    className="decoration-dotted hover:no-underline font-bold text-primary-700"
-                  >
-                    <Icon
-                      className="inline mr-2 text-sm"
-                      icon="fa6-solid:chevron-down"
-                    />
-                    カテゴリから探せる能力バッジ
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#education-index"
-                    className="decoration-dotted hover:no-underline font-bold text-primary-700"
-                  >
-                    <Icon
-                      className="inline mr-2 text-sm"
-                      icon="fa6-solid:chevron-down"
-                    />
-                    教員育成指標から探せる能力バッジ
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#other-contents"
-                    className="decoration-dotted hover:no-underline font-bold text-primary-700"
-                  >
-                    <Icon
-                      className="inline mr-2 text-sm"
-                      icon="fa6-solid:chevron-down"
-                    />
-                    その他のコンテンツ
-                  </a>
-                </li>
-              </ul>
+              <div className="my-2 md:my-8 text-center">
+                <SearchForm className="bg-primary-50 bg-opacity-20 rounded-lg p-1 md:p-4 inline-block text-sm md:text-base min-w-[60%] " />
+              </div>
+
+              <div className="my-8 flex items-center justify-center gap-x-4">
+                <a
+                  className="text-sm md:text-base jumpu-outlined-button text-white border-white hover:bg-white/10 font-bold"
+                  href={NEXT_PUBLIC_MOODLE_DASHBOARD_URL}
+                  rel="noopener noreferrer"
+                >
+                  ログイン
+                </a>
+
+                <a
+                  className="text-sm md:text-base jumpu-outlined-button text-white border-white hover:bg-white/10 font-bold"
+                  href={NEXT_PUBLIC_MOODLE_DASHBOARD_URL}
+                  rel="noopener noreferrer"
+                >
+                  新規登録
+                </a>
+              </div>
+
+              <Link
+                href={pagesPath._slug("concept").$url()}
+                className="flex gap-x-2 md:items-center justify-center mb-16 rounded-xl text-white"
+              >
+                <div className="flex gap-2">
+                  <Icon className="text-xl" icon="fa6-solid:bell" />
+                  <span className="mr-1 text-xs md:text-sm">初めての方へ</span>
+                </div>
+                <span className="text-xs md:text-md text-left underline hover:no-underline">
+                  学べるしくみ - OKUTEPのコンセプト
+                </span>
+              </Link>
+              <div className="flex justify-center">
+                <div className="inline-block flex-col backdrop-blur-[1px] p-6 md:p-8 rounded-lg bg-black/30 ">
+                  <h2 className="text-xs text-white mb-2 md:mb-4 font-bold">
+                    色々な方法で能力バッジを獲得できます
+                  </h2>
+                  <ul className="prose leading-tight">
+                    <li>
+                      <a
+                        href="#recommend-beginner"
+                        className="decoration-dotted hover:no-underline text-xs ms:text-sm text-white"
+                      >
+                        <Icon
+                          className="inline mr-2 text-sm"
+                          icon="fa6-solid:chevron-down"
+                        />
+                        試しに受講してみる
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="#search-categories"
+                        className="decoration-dotted hover:no-underline text-white  text-xs ms:text-sm"
+                      >
+                        <Icon
+                          className="inline mr-2 text-sm"
+                          icon="fa6-solid:chevron-down"
+                        />
+                        カテゴリから探せる能力バッジ
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="#education-index"
+                        className="decoration-dotted hover:no-underline  text-white  text-xs ms:text-sm"
+                      >
+                        <Icon
+                          className="inline mr-2 text-sm"
+                          icon="fa6-solid:chevron-down"
+                        />
+                        教員育成指標から探せる能力バッジ
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="#other-contents"
+                        className="decoration-dotted hover:no-underline  text-white  text-xs ms:text-sm"
+                      >
+                        <Icon
+                          className="inline mr-2 text-sm"
+                          icon="fa6-solid:chevron-down"
+                        />
+                        その他のコンテンツ
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
         </header>
