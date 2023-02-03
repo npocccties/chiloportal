@@ -31,11 +31,11 @@ export default function Top({
   return (
     <>
       <article className="">
-        <header className="bg-[url('/images/hero/3-generation-family-holding-hands-greenly-street.jpg')] bg-center bg-cover  ">
-          <div className="bg-gray-800 bg-opacity-60 inset-0 h-full pb-4">
+        <header className="bg-[url('/images/hero/carefree-happy-asian-girl-finish-working-looking-satisfied-sitting-home-with-laptop-computer.jpg')] bg-center bg-cover  ">
+          <div className="bg-gray-800 bg-opacity-60 inset-0 h-full pb-8">
             <div className="px-4 lg:px-0 max-w-6xl mx-auto h-full relative">
-              <h1 className="text-3xl notosansjp font-bold pt-24 md:pt-16 text-white text-center">
-                <span className="text-3xl sm:text-6xl md:text-7xl mb-1 md:mb-3 inline-block leading-[1.05]">
+              <h1 className="text-3xl notosansjp font-bold pt-16 md:pt-20 text-white text-center">
+                <span className="text-4xl sm:text-6xl md:text-7xl mb-1 md:mb-3 inline-block !leading-[1.1]">
                   自ら学び続ける
                   <br />
                   すべての人々のために
@@ -70,7 +70,7 @@ export default function Top({
 
               <Link
                 href={pagesPath._slug("concept").$url()}
-                className="flex gap-x-2 md:items-center justify-center mb-16 rounded-xl text-white"
+                className="flex gap-x-2 md:items-center justify-center mb-8 rounded-xl text-white"
               >
                 <div className="flex gap-2">
                   <Icon className="text-xl" icon="fa6-solid:bell" />
@@ -294,13 +294,14 @@ export default function Top({
         </section>
         <section
           id="education-index"
-          className="bg-gray-50 pb-28 relative before:bg-[url('/footer-bg.svg')] before:bg-[center_right] before:bg-no-repeat  before:w-full before:h-28 before:block before:absolute before:bottom-0 before:-z-1"
+          className="bg-primary-100 border-primary-700 border-t-8 pb-28 relative before:bg-[url('/footer-bg.svg')] before:bg-no-repeat before:block before:absolute before:-bottom-2 before:right-0 before:-z-1 before:w-[600px] before:h-[600px] before:bg-cover"
           /* className="bg-[url('/fig-search-index.svg')] bg-[40%_100%]  bg-no-repeat bg-[length:1800px_180px]" */
         >
-          <div className="absolute -top-10 left-0 w-full h-64 bg-[url('/title-search-education-index.svg')] bg-no-repeat"></div>
-          <div className="max-w-7xl lg:pl-64 mx-auto pt-32 pb-8 px-8 xl:px-0 ">
+          <div className="absolute -left-2 w-[200px] h-[222px] bg-[url('/title-search-education-index.svg')] bg-no-repeat -top-5 lg:-top-7 bg-[length:100px_100px] lg:bg-[length:150px_150px]"></div>
+
+          <div className="max-w-5xl px-4 md:pl-10 lg:pl-36 lg:pr-8 mx-auto pt-24 lg:pt-16 pb-8 relative z-10 ">
             <header className="mb-6">
-              <h2 className="text-5xl notosansjp leading-tight font-bold mb-6">
+              <h2 className="text-5xl notosansjp leading-tight font-bold mb-6 text-primary-700">
                 教員育成指標から探せる能力バッジ
               </h2>
               <p className="font-bold text-lg mb-4">
