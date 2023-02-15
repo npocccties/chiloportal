@@ -54,6 +54,7 @@ lib/$path.ts
 # images
 public/images/*
 !public/images/mock*
+!public/images/hero/
 
 # overrides
 overrides/*
