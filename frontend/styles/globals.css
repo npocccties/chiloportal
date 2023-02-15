@@ -16,3 +16,16 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+.top-header h1 {
+  text-shadow: 0 0 16px rgba(0, 0, 0, 0.4);
+}
+
+.top-toc {
+}
+.top-toc li {
+  @apply mt-2;
+}
+.top-toc li a {
+  @apply decoration-dotted underline hover:no-underline text-sm;
+}

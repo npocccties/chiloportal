@@ -30,118 +30,111 @@ export default function Top({
     "科目を選び、バッジを獲得することで社会的評価や自信の証明が得られ、あなたと子供達と社会のウェルビーイングへとつながります。この関係性は、学習成果の活用と主体的な学びの循環によって形成されます";
   return (
     <>
-      <article className="">
-        <header className="bg-[url('/images/hero/carefree-happy-asian-girl-finish-working-looking-satisfied-sitting-home-with-laptop-computer.jpg')] bg-center bg-cover  ">
-          <div className="bg-gray-800 bg-opacity-60 inset-0 h-full pb-8">
-            <div className="px-4 lg:px-0 max-w-6xl mx-auto h-full relative">
-              <h1 className="text-3xl notosansjp font-bold pt-16 md:pt-20 text-white text-center">
-                <span className="text-4xl sm:text-6xl md:text-7xl mb-1 md:mb-3 inline-block !leading-[1.1]">
-                  自ら学び続ける
+      <article>
+        <header className="bg-[url('/images/hero/okutep-hero-sm.jpg')] md:bg-[url('/images/hero/okutep-hero-md.jpg')] lg:bg-[url('/images/hero/okutep-hero.jpg')] bg-center lg:bg-left bg-cover h-[70vh] lg:h-[80vh] top-header">
+          <div className="bg-gray-800 bg-opacity-10 md:bg-transparent h-full">
+            <div className="max-w-7xl mx-auto h-full grid place-content-center lg:place-content-end ">
+              <div className="-translate-y-24 lg:-translate-y-1/2 lg:pr-4">
+                <h1 className="text-3xl notosansjp font-bold text-white text-center">
+                  <span className="text-4xl sm:text-5xl text-center lg:text-left inline-block !leading-[1.1]">
+                    自ら学び続ける
+                    <br />
+                    すべての人々のために
+                  </span>
                   <br />
-                  すべての人々のために
-                </span>
-                <br />
-                <span className="text-base sm:text-xl md:text-3xl">
-                  デジタルバッジであなたの学習成果を活用
-                </span>
-              </h1>
+                  <span className="text-base sm:text-xl lg:text-2xl lg:text-left my-4 lg:my-5 block">
+                    デジタルバッジであなたの学習成果を活用
+                  </span>
+                </h1>
 
-              <div className="my-2 md:my-8 text-center">
-                <SearchForm className="bg-primary-50 bg-opacity-20 rounded-lg p-1 md:p-4 inline-block text-sm md:text-base min-w-[60%] " />
-              </div>
-
-              <div className="my-8 flex items-center justify-center gap-x-4">
-                <a
-                  className="text-sm md:text-base jumpu-outlined-button text-white border-white hover:bg-white/10 font-bold"
-                  href={NEXT_PUBLIC_MOODLE_DASHBOARD_URL}
-                  rel="noopener noreferrer"
-                >
-                  ログイン
-                </a>
-
-                <a
-                  className="text-sm md:text-base jumpu-outlined-button text-white border-white hover:bg-white/10 font-bold"
-                  href={NEXT_PUBLIC_MOODLE_DASHBOARD_URL}
-                  rel="noopener noreferrer"
-                >
-                  新規登録
-                </a>
-              </div>
-
-              <Link
-                href={pagesPath._slug("concept").$url()}
-                className="flex gap-x-2 md:items-center justify-center mb-8 rounded-xl text-white"
-              >
-                <div className="flex gap-2">
-                  <Icon className="text-xl" icon="fa6-solid:bell" />
-                  <span className="mr-1 text-xs md:text-sm">初めての方へ</span>
+                <div className="my-4 lg:my-5 text-center">
+                  <SearchForm className="bg-primary-50 bg-opacity-20 rounded-lg p-1 md:p-2 inline-block text-sm md:text-base min-w-[60%] " />
                 </div>
-                <span className="text-xs md:text-md text-left underline hover:no-underline">
-                  学べるしくみ - OKUTEPのコンセプト
-                </span>
-              </Link>
-              <div className="flex justify-center">
-                <div className="inline-block flex-col backdrop-blur-[1px] p-6 md:p-8 rounded-lg bg-black/30 ">
-                  <h2 className="text-xs text-white mb-2 md:mb-4 font-bold">
-                    色々な方法で能力バッジを獲得できます
-                  </h2>
-                  <ul className="prose leading-tight">
-                    <li>
-                      <a
-                        href="#recommend-beginner"
-                        className="decoration-dotted hover:no-underline text-xs ms:text-sm text-white"
-                      >
-                        <Icon
-                          className="inline mr-2 text-sm"
-                          icon="fa6-solid:chevron-down"
-                        />
-                        試しに受講してみる
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#search-categories"
-                        className="decoration-dotted hover:no-underline text-white  text-xs ms:text-sm"
-                      >
-                        <Icon
-                          className="inline mr-2 text-sm"
-                          icon="fa6-solid:chevron-down"
-                        />
-                        カテゴリから探せる能力バッジ
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#education-index"
-                        className="decoration-dotted hover:no-underline  text-white  text-xs ms:text-sm"
-                      >
-                        <Icon
-                          className="inline mr-2 text-sm"
-                          icon="fa6-solid:chevron-down"
-                        />
-                        教員育成指標から探せる能力バッジ
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#other-contents"
-                        className="decoration-dotted hover:no-underline  text-white  text-xs ms:text-sm"
-                      >
-                        <Icon
-                          className="inline mr-2 text-sm"
-                          icon="fa6-solid:chevron-down"
-                        />
-                        その他のコンテンツ
-                      </a>
-                    </li>
-                  </ul>
+
+                <div className="flex items-center justify-center gap-x-4 my-4 lg:my-6">
+                  <a
+                    className="text-sm lg:text-base jumpu-outlined-button text-white border-white hover:bg-white/10 font-bold"
+                    href={NEXT_PUBLIC_MOODLE_DASHBOARD_URL}
+                    rel="noopener noreferrer"
+                  >
+                    ログイン
+                  </a>
+
+                  <a
+                    className="text-sm lg:text-base jumpu-outlined-button text-white border-white hover:bg-white/10 font-bold"
+                    href={NEXT_PUBLIC_MOODLE_DASHBOARD_URL}
+                    rel="noopener noreferrer"
+                  >
+                    新規登録
+                  </a>
                 </div>
               </div>
             </div>
           </div>
         </header>
-        <section className="py-16">
-          <div className="px-6 max-w-4xl mx-auto">
+
+        <div className="flex flex-col sm:flex-row gap-4 items-center justify-between py-4 max-w-4xl mx-auto px-4 xl:px-0 sm:-mt-20">
+          <div className="flex justify-center top-toc shrink-0">
+            <div className="inline-block flex-col border sm:shadow-lg bg-white px-6 py-6">
+              <h2 className="mb-4 font-bold">
+                色々な方法で能力バッジを獲得できます
+              </h2>
+              <ul className="leading-tight">
+                <li>
+                  <a href="#recommend-beginner">
+                    <Icon
+                      className="inline mr-2 text-sm"
+                      icon="fa6-solid:chevron-down"
+                    />
+                    試しに受講してみる
+                  </a>
+                </li>
+                <li>
+                  <a href="#search-categories">
+                    <Icon
+                      className="inline mr-2 text-sm"
+                      icon="fa6-solid:chevron-down"
+                    />
+                    カテゴリから探せる能力バッジ
+                  </a>
+                </li>
+                <li>
+                  <a href="#education-index">
+                    <Icon
+                      className="inline mr-2 text-sm"
+                      icon="fa6-solid:chevron-down"
+                    />
+                    教員育成指標から探せる能力バッジ
+                  </a>
+                </li>
+                <li>
+                  <a href="#other-contents">
+                    <Icon
+                      className="inline mr-2 text-sm"
+                      icon="fa6-solid:chevron-down"
+                    />
+                    その他のコンテンツ
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <Link
+            href={pagesPath._slug("concept").$url()}
+            className="flex gap-x-2 flex-col md:flex-row md:items-center justify-center mb-2 rounded-xl "
+          >
+            <div className="flex gap-2">
+              <Icon className="text-xl" icon="fa6-solid:bell" />
+              <span className="mr-1 text-xs md:text-sm">初めての方へ</span>
+            </div>
+            <span className="text-xs md:text-md text-left underline hover:no-underline">
+              学べるしくみ - OKUTEPのコンセプト
+            </span>
+          </Link>
+        </div>
+
+        <section className="border-t border-gray-300 px-4 xl:px-0">
+          <div className="max-w-4xl mx-auto py-8">
             <div className="">
               <div className="">
                 <h2 className="text-2xl font-bold text-gray-700 mb-4">
@@ -166,7 +159,7 @@ export default function Top({
             </div>
           </div>
         </section>
-        <section className="mb-8 px-4 max-w-4xl mx-auto">
+        <section className="mb-8 max-w-4xl mx-auto px-4 md:px-0">
           <div className="flex items-center gap-4 mb-4">
             <h2 className="text-xl text-gray-700 font-bold">
               OKUTEPからのおしらせ
@@ -320,7 +313,7 @@ export default function Top({
             </header>
             <ul
               className={clsx({
-                ["md:columns-2"]: consumers,
+                ["grid gap-x-4 grid-cols-1 md:grid-cols-2"]: consumers,
               })}
               aria-busy={!consumers}
             >

@@ -51,7 +51,7 @@ function Header({ className }: Props) {
             width={108}
             height={24}
             alt="トップページに戻る"
-            className="w-28 md:w-32"
+            className="md:ml-8 w-24 -translate-y-0.5"
           />
         </Link>
         <Popover className="hidden md:block font-bold" title="カテゴリから探す">

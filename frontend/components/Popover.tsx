@@ -20,7 +20,7 @@ function Popover({ title, className, children }: Props) {
         <span className="pr-2 whitespace-nowrap">{title}</span>
         <Icon
           icon="fa6-solid:chevron-down"
-          className="text-gray-400"
+          className="text-primary-600"
           aria-hidden="true"
         />
       </Base.Button>
