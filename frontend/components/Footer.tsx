@@ -16,10 +16,12 @@ function Footer({ className }: Props) {
   const { data: portalCategories, error: portalCategoriesError } =
     usePortalCategories();
   return (
-    <footer className={clsx("bg-gray-800 mt-4 py-12", className)}>
-      <div className="max-w-5xl xl:max-w-7xl mx-auto px-4 flex flex-col xl:justify-center sm:flex-row flex-wrap gap-x-24 gap-y-8 mb-12 ">
+    <footer
+      className={clsx("bg-gray-800 mt-4 pb-32 lg:pb-12 py-12", className)}
+    >
+      <div className="max-w-5xl xl:max-w-7xl mx-auto px-16 xl:px-4 flex flex-col xl:justify-center sm:flex-row flex-wrap gap-x-24 gap-y-8 mb-12 ">
         <div className="w-full xl:w-auto -translate-y-2">
-          <Link href={pagesPath.$url()} className="inline-block">
+          <Link href={pagesPath.$url()} className="inline-block -translate-x-3">
             <Image
               src="/logo-white.svg"
               width={108}
@@ -101,7 +103,7 @@ function Footer({ className }: Props) {
             </Fallback>
           </ul>
         </section>
-        <ul className="text-gray-300 text-xs leading-8 md:leading-6 sm:columns-2 [&>li]:break-inside-avoid">
+        <ul className="text-gray-300 text-xs leading-8 md:leading-6 xl:columns-2 [&>li]:break-inside-avoid">
           {contents.map((content) => (
             <li key={content.slug}>
               <Link
