@@ -287,12 +287,12 @@ export default function Top({
         </section>
         <section
           id="education-index"
-          className="bg-primary-100 border-primary-700 border-t-8 pb-28 relative before:bg-[url('/footer-bg.svg')] before:bg-no-repeat before:block before:absolute before:-bottom-2 before:right-0 before:-z-1 before:w-[600px] before:h-[600px] before:bg-cover"
-          /* className="bg-[url('/fig-search-index.svg')] bg-[40%_100%]  bg-no-repeat bg-[length:1800px_180px]" */
+          className=" bg-primary-100 pb-28 relative before:bg-[url('/footer-bg.svg')] before:bg-no-repeat before:block
+          before:absolute before:-bottom-2 before:right-0 before:-z-1
+          before:w-[600px] before:h-[600px] before:bg-cover"
         >
-          <div className="absolute -left-2 w-[200px] h-[222px] bg-[url('/title-search-education-index.svg')] bg-no-repeat -top-5 lg:-top-7 bg-[length:100px_100px] lg:bg-[length:150px_150px]"></div>
-
-          <div className="max-w-5xl px-4 md:pl-10 lg:pl-36 lg:pr-8 mx-auto pt-24 lg:pt-16 pb-8 relative z-10 ">
+          <div className="opacity-20 2xl:opacity-100 absolute h-full w-full bg-[url('/bg-search-index.png')] bg-cover lg:bg-[length:700px] bg-no-repeat md:bg-left bg-center"></div>
+          <div className="max-w-6xl px-4 md:pl-10 lg:pl-80 lg:pr-8 mx-auto pt-12 lg:pt-16 pb-8 relative z-10 ">
             <header className="mb-6">
               <h2 className="text-5xl notosansjp leading-tight font-bold mb-6 text-primary-700">
                 教員育成指標から探せる能力バッジ
