@@ -73,9 +73,9 @@ export default function Top({
           </div>
         </header>
 
-        <div className="flex flex-col sm:flex-row gap-4 items-center justify-between py-4 max-w-4xl mx-auto px-4 xl:px-0 sm:-mt-20">
-          <div className="flex justify-center top-toc shrink-0">
-            <div className="inline-block flex-col border sm:shadow-lg bg-white px-6 py-6">
+        <div className="flex flex-col sm:flex-row gap-4 items-center justify-between py-4 max-w-4xl mx-auto px-4 xl:px-0">
+          <div className="flex justify-center top-toc sm:-mt-20 grow self-stretch">
+            <div className="flex-col border sm:shadow-lg bg-white px-6 py-6 w-full">
               <h2 className="mb-4 font-bold">
                 色々な方法で能力バッジを獲得できます
               </h2>
@@ -119,21 +119,24 @@ export default function Top({
               </ul>
             </div>
           </div>
-          <Link
-            href={pagesPath._slug("concept").$url()}
-            className="flex gap-x-2 flex-col md:flex-row md:items-center justify-center mb-2 rounded-xl "
-          >
-            <div className="flex gap-2">
-              <Icon className="text-xl" icon="fa6-solid:bell" />
-              <span className="mr-1 text-xs md:text-sm">初めての方へ</span>
-            </div>
-            <span className="text-xs md:text-md text-left underline hover:no-underline">
-              学べるしくみ - OKUTEPのコンセプト
-            </span>
-          </Link>
+
+          <div className="self-stretch flex justify-center items-center grow">
+            <Link
+              href={pagesPath._slug("concept").$url()}
+              className="flex gap-x-2 flex-col md:flex-row md:items-center justify-center border border-gray-200 p-8 w-full"
+            >
+              <div className="flex gap-2">
+                <Icon className="text-xl" icon="fa6-solid:bell" />
+                <span className="mr-1 text-xs lg:text-sm">初めての方へ</span>
+              </div>
+              <span className="text-xs lg:text-base text-left underline hover:no-underline">
+                学べるしくみ - OKUTEPのコンセプト
+              </span>
+            </Link>
+          </div>
         </div>
 
-        <section className="border-t border-gray-300 px-4 xl:px-0">
+        <section className="px-4 xl:px-0">
           <div className="max-w-4xl mx-auto py-8">
             <div className="">
               <div className="">
