@@ -290,12 +290,11 @@ export default function Top({
         </section>
         <section
           id="education-index"
-          className=" bg-primary-100 pb-28 relative before:bg-[url('/footer-bg.svg')] before:bg-no-repeat before:block
+          className=" pb-16 relative before:bg-[url('/footer-bg.svg')] before:bg-no-repeat before:block
           before:absolute before:-bottom-2 before:right-0 before:-z-1
-          before:w-[600px] before:h-[600px] before:bg-cover"
+          before:w-[600px] before:h-[600px] before:bg-cover flex flex-col lg:flex-row border border-t-gray-200"
         >
-          <div className="opacity-20 2xl:opacity-100 absolute h-full w-full bg-[url('/bg-search-index.png')] bg-cover lg:bg-[length:700px] bg-no-repeat md:bg-left bg-center"></div>
-          <div className="max-w-6xl px-4 md:pl-10 lg:pl-80 lg:pr-8 mx-auto pt-12 lg:pt-16 pb-8 relative z-10 ">
+          <div className="px-4 lg:px-16 pt-12 lg:pt-16 pb-8 relative z-10 ">
             <header className="mb-6">
               <h2 className="text-5xl notosansjp leading-tight font-bold mb-6 text-primary-700">
                 教員育成指標から探せる能力バッジ
@@ -355,6 +354,15 @@ export default function Top({
                 }
               </Fallback>
             </ul>
+          </div>
+          <div className="shrink-0 w-4/12 min-w-[300px] mx-auto lg:w-4/12 flex items-center justify-center">
+            <Image
+              src={"/bg-search-index.png"}
+              width={240}
+              height={240}
+              alt=""
+              className="w-full"
+            />
           </div>
         </section>
         <section id="other-contents" className="pb-16">
