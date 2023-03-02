@@ -290,19 +290,33 @@ export default function Top({
         </section>
         <section
           id="education-index"
-          className=" bg-primary-100 pb-28 relative before:bg-[url('/footer-bg.svg')] before:bg-no-repeat before:block
-          before:absolute before:-bottom-2 before:right-0 before:-z-1
-          before:w-[600px] before:h-[600px] before:bg-cover"
+          className="border-t border-gray-200 bg-gray-50"
         >
-          <div className="opacity-20 2xl:opacity-100 absolute h-full w-full bg-[url('/bg-search-index.png')] bg-cover lg:bg-[length:700px] bg-no-repeat md:bg-left bg-center"></div>
-          <div className="max-w-6xl px-4 md:pl-10 lg:pl-80 lg:pr-8 mx-auto pt-12 lg:pt-16 pb-8 relative z-10 ">
+          <div className="px-8 lg:px-16 py-12 lg:py-16 relative z-10 max-w-6xl mx-auto">
             <header className="mb-6">
               <h2 className="text-5xl notosansjp leading-tight font-bold mb-6 text-primary-700">
-                教員育成指標から探せる能力バッジ
+                地域課題とあなたのキャリアに応じて探せる能力バッジ
               </h2>
-              <p className="font-bold text-lg mb-4">
-                「教員育成指標」とは地域の教育委員会が教員に求められる資質や能力を、キャリア（経験年数）毎に明確にしたものです。
-              </p>
+              <section className="mb-8">
+                <h3 className="font-bold text-2xl mb-4 text-primary-700">
+                  地域ごとの課題を解決し、ニーズに応える
+                </h3>
+                <p className="leading-relaxed">
+                  各教育委員会では、地域の教育課題やニーズにあわせた教員の資質能力を教員育成指標として示しています。
+                  あなたの地域の教員育成指標から能力バッジを探すことで、あなたが直面している課題の解決、あるいは地域のニーズに応えられるかもしれません。
+                </p>
+              </section>
+              <section className="mb-8">
+                <h3 className="font-bold text-2xl mb-4 text-primary-700">
+                  キャリアにあわせた最適な学びへのアクセス
+                </h3>
+                <p className="leading-relaxed mb-4">
+                  教員育成指標は、教員のキャリアにあわせて身につけるべき能力をキャリアステージとして示しています。あなたが若手教員であってもベテラン教員であっても、教員育成指標から能力バッジを探すことで今のスキルや経験に応じて無理なく学ぶことができます。
+                </p>
+                <small className="text-gray-600 mb-4 block">
+                  「教員育成指標」とは地域の教育委員会が教員に求められる資質や能力を、キャリア（経験年数）毎に明確にしたものです。
+                </small>
+              </section>
               <Link
                 className="text-xs hover:underline whitespace-nowrap font-bold text-primary-700"
                 href={pagesPath._slug("about_badges").$url()}
