@@ -33,7 +33,7 @@ function SearchForm({ className, size = "medium" }: Props) {
       />
       <button
         className={clsx(
-          "jumpu-button",
+          "jumpu-button disabled:bg-gray-400",
           { ["text-sm"]: size === "small" },
           { ["text-lg"]: size === "large" }
         )}

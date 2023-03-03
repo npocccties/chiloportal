@@ -11,6 +11,8 @@ import Container from "components/Container";
 import WisdomBadgesCard from "components/WisdomBadgesCard";
 import PortalCategoryCard from "components/PortalCategoryCard";
 import Fallback from "components/Fallback";
+import SearchForm from "components/SearchForm";
+import { NEXT_PUBLIC_MOODLE_DASHBOARD_URL } from "lib/env";
 
 export default function Top({
   posts,
@@ -28,41 +30,58 @@ export default function Top({
     "科目を選び、バッジを獲得することで社会的評価や自信の証明が得られ、あなたと子供達と社会のウェルビーイングへとつながります。この関係性は、学習成果の活用と主体的な学びの循環によって形成されます";
   return (
     <>
-      <article className="">
-        <header className="bg-gradient-to-r from-purple-100 to-pink-300 h-[60vh] md:h-[70vh] pt-8">
-          <div className="px-4 lg:px-0 max-w-6xl mx-auto h-full relative">
-            <h1 className="text-3xl notosansjp font-bold pt-8 md:pt-16 text-white cover-title">
-              <span className="text-6xl md:text-7xl mb-3 inline-block leading-[1.05]">
-                自ら学び続ける
-                <br />
-                すべての人々のために
-              </span>
-              <br />
-              <span className="text-2xl md:text-3xl">
-                デジタルバッジであなたの学習成果を活用
-              </span>
-            </h1>
-            <Link
-              href={pagesPath._slug("concept").$url()}
-              className="inline-flex gap-4 items-center py-4 rounded-xl"
-            >
-              <Icon className="text-xl" icon="fa6-solid:bell" />
-              <span className="mr-1 text-sm">初めての方へ</span>
-              <span className=" underline hover:no-underline">
-                学べるしくみ - OKUTEPのコンセプト
-              </span>
-            </Link>
+      <article>
+        <header className="bg-[url('/images/hero/okutep-hero-sm.jpg')] md:bg-[url('/images/hero/okutep-hero-md.jpg')] lg:bg-[url('/images/hero/okutep-hero.jpg')] bg-center lg:bg-left bg-cover h-[70vh] lg:h-[80vh] top-header">
+          <div className="bg-gray-800 bg-opacity-10 md:bg-transparent h-full">
+            <div className="max-w-7xl mx-auto h-full grid place-content-center lg:place-content-end ">
+              <div className="-translate-y-24 lg:-translate-y-1/2 lg:pr-4">
+                <h1 className="text-3xl notosansjp font-bold text-white text-center">
+                  <span className="text-4xl sm:text-5xl text-center lg:text-left inline-block !leading-[1.1]">
+                    自ら学び続ける
+                    <br />
+                    すべての人々のために
+                  </span>
+                  <br />
+                  <span className="text-base sm:text-xl lg:text-2xl lg:text-left my-4 lg:my-5 block">
+                    デジタルバッジであなたの学習成果を活用
+                  </span>
+                </h1>
 
-            <div className="absolute w-10/12 md:w-auto -bottom-10 md:-bottom-4 left-1/2 -translate-x-1/2 md:translate-x-0 md:left-0 backdrop-blur-md p-8 rounded-lg bg-white/80">
-              <h2 className="text-sm  text-primary-700 mb-4">
+                <div className="my-4 lg:my-5 text-center">
+                  <SearchForm className="bg-primary-50 bg-opacity-20 rounded-lg p-1 md:p-2 inline-block text-sm md:text-base min-w-[60%] " />
+                </div>
+
+                <div className="flex items-center justify-center gap-x-4 my-4 lg:my-6">
+                  <a
+                    className="text-sm lg:text-base jumpu-outlined-button text-white border-white hover:bg-white/10 font-bold"
+                    href={NEXT_PUBLIC_MOODLE_DASHBOARD_URL}
+                    rel="noopener noreferrer"
+                  >
+                    ログイン
+                  </a>
+
+                  <a
+                    className="text-sm lg:text-base jumpu-outlined-button text-white border-white hover:bg-white/10 font-bold"
+                    href={NEXT_PUBLIC_MOODLE_DASHBOARD_URL}
+                    rel="noopener noreferrer"
+                  >
+                    新規登録
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <div className="flex flex-col sm:flex-row gap-4 items-center justify-between py-4 max-w-4xl mx-auto px-4 xl:px-0">
+          <div className="flex justify-center top-toc sm:-mt-20 grow self-stretch">
+            <div className="flex-col border sm:shadow-lg bg-white px-6 py-6 w-full">
+              <h2 className="mb-4 font-bold">
                 色々な方法で能力バッジを獲得できます
               </h2>
-              <ul className="prose leading-tight">
+              <ul className="leading-tight">
                 <li>
-                  <a
-                    href="#recommend-beginner"
-                    className="decoration-dotted hover:no-underline font-bold text-primary-700"
-                  >
+                  <a href="#recommend-beginner">
                     <Icon
                       className="inline mr-2 text-sm"
                       icon="fa6-solid:chevron-down"
@@ -71,10 +90,7 @@ export default function Top({
                   </a>
                 </li>
                 <li>
-                  <a
-                    href="#search-categories"
-                    className="decoration-dotted hover:no-underline font-bold text-primary-700"
-                  >
+                  <a href="#search-categories">
                     <Icon
                       className="inline mr-2 text-sm"
                       icon="fa6-solid:chevron-down"
@@ -83,10 +99,7 @@ export default function Top({
                   </a>
                 </li>
                 <li>
-                  <a
-                    href="#education-index"
-                    className="decoration-dotted hover:no-underline font-bold text-primary-700"
-                  >
+                  <a href="#education-index">
                     <Icon
                       className="inline mr-2 text-sm"
                       icon="fa6-solid:chevron-down"
@@ -95,10 +108,7 @@ export default function Top({
                   </a>
                 </li>
                 <li>
-                  <a
-                    href="#other-contents"
-                    className="decoration-dotted hover:no-underline font-bold text-primary-700"
-                  >
+                  <a href="#other-contents">
                     <Icon
                       className="inline mr-2 text-sm"
                       icon="fa6-solid:chevron-down"
@@ -109,9 +119,25 @@ export default function Top({
               </ul>
             </div>
           </div>
-        </header>
-        <section className="py-16">
-          <div className="px-6 max-w-4xl mx-auto">
+
+          <div className="self-stretch flex justify-center items-center grow">
+            <Link
+              href={pagesPath._slug("concept").$url()}
+              className="flex gap-x-2 flex-col md:flex-row md:items-center justify-center border border-gray-200 p-8 w-full"
+            >
+              <div className="flex gap-2">
+                <Icon className="text-xl" icon="fa6-solid:bell" />
+                <span className="mr-1 text-xs lg:text-sm">初めての方へ</span>
+              </div>
+              <span className="text-xs lg:text-base text-left underline hover:no-underline">
+                学べるしくみ - OKUTEPのコンセプト
+              </span>
+            </Link>
+          </div>
+        </div>
+
+        <section className="px-4 xl:px-0">
+          <div className="max-w-4xl mx-auto py-8">
             <div className="">
               <div className="">
                 <h2 className="text-2xl font-bold text-gray-700 mb-4">
@@ -136,7 +162,7 @@ export default function Top({
             </div>
           </div>
         </section>
-        <section className="mb-8 px-4 max-w-4xl mx-auto">
+        <section className="mb-8 max-w-4xl mx-auto px-4 md:px-0">
           <div className="flex items-center gap-4 mb-4">
             <h2 className="text-xl text-gray-700 font-bold">
               OKUTEPからのおしらせ
@@ -264,18 +290,33 @@ export default function Top({
         </section>
         <section
           id="education-index"
-          className="bg-gray-50 pb-28 relative before:bg-[url('/footer-bg.svg')] before:bg-[center_right] before:bg-no-repeat  before:w-full before:h-28 before:block before:absolute before:bottom-0 before:-z-1"
-          /* className="bg-[url('/fig-search-index.svg')] bg-[40%_100%]  bg-no-repeat bg-[length:1800px_180px]" */
+          className="border-t border-gray-200 bg-gray-50"
         >
-          <div className="absolute -top-10 left-0 w-full h-64 bg-[url('/title-search-education-index.svg')] bg-no-repeat"></div>
-          <div className="max-w-7xl lg:pl-64 mx-auto pt-32 pb-8 px-8 xl:px-0 ">
+          <div className="px-8 lg:px-16 py-12 lg:py-16 relative z-10 max-w-6xl mx-auto">
             <header className="mb-6">
-              <h2 className="text-5xl notosansjp leading-tight font-bold mb-6">
-                教員育成指標から探せる能力バッジ
+              <h2 className="text-5xl notosansjp leading-tight font-bold mb-6 text-primary-700">
+                地域課題とあなたのキャリアに応じて探せる能力バッジ
               </h2>
-              <p className="font-bold text-lg mb-4">
-                「教員育成指標」とは地域の教育委員会が教員に求められる資質や能力を、キャリア（経験年数）毎に明確にしたものです。
-              </p>
+              <section className="mb-8">
+                <h3 className="font-bold text-2xl mb-4 text-primary-700">
+                  地域ごとの課題を解決し、ニーズに応える
+                </h3>
+                <p className="leading-relaxed">
+                  各教育委員会では、地域の教育課題やニーズにあわせた教員の資質能力を教員育成指標として示しています。
+                  あなたの地域の教員育成指標から能力バッジを探すことで、あなたが直面している課題の解決、あるいは地域のニーズに応えられるかもしれません。
+                </p>
+              </section>
+              <section className="mb-8">
+                <h3 className="font-bold text-2xl mb-4 text-primary-700">
+                  キャリアにあわせた最適な学びへのアクセス
+                </h3>
+                <p className="leading-relaxed mb-4">
+                  教員育成指標は、教員のキャリアにあわせて身につけるべき能力をキャリアステージとして示しています。あなたが若手教員であってもベテラン教員であっても、教員育成指標から能力バッジを探すことで今のスキルや経験に応じて無理なく学ぶことができます。
+                </p>
+                <small className="text-gray-600 mb-4 block">
+                  「教員育成指標」とは地域の教育委員会が教員に求められる資質や能力を、キャリア（経験年数）毎に明確にしたものです。
+                </small>
+              </section>
               <Link
                 className="text-xs hover:underline whitespace-nowrap font-bold text-primary-700"
                 href={pagesPath._slug("about_badges").$url()}
@@ -289,7 +330,7 @@ export default function Top({
             </header>
             <ul
               className={clsx({
-                ["md:columns-2"]: consumers,
+                ["grid gap-x-4 grid-cols-1 md:grid-cols-2"]: consumers,
               })}
               aria-busy={!consumers}
             >
