@@ -28,6 +28,8 @@ tags:
     description: バッジを承認しているコンシューマの一覧
   - name: consumer framework list
     description: 指定したコンシューマIDの育成指標一覧
+  - name: consumer framework badges list
+    description: 各コンシューマに関連する教育指標およびバッジ一覧取得
 paths:
   /consumer:
     get:
@@ -335,6 +337,21 @@ paths:
                   $ref: '#/components/schemas/Framework'
         '400':
           description: Invalid ID supplied
+  /consumer/framework/badges/list:
+    get:
+      tags:
+        - consumer framework badges list
+      description: 各コンシューマに関連する教育指標およびバッジ一覧を取得します
+      operationId: findConsumerFrameworkBadgesList
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ConsumerFrameworkBadge'
 
 components:
   schemas:
@@ -650,6 +667,44 @@ components:
         - issuer_email
         - digital_badge_class_id
         - detail
+    knowledge:
+      type: array
+      items:
+        $ref: '#/components/schemas/Criteria'
+    ConsumerFrameworkBadge:
+      type: object
+      properties:
+        consumer_name:
+          type: string
+          example: consumer101
+        framework_invisible:
+          type: boolean
+          example: false
+        field1_name:
+          type: string
+          example: field1011
+        digital_badge_class_id:
+          type: string
+          example: digitalbadge_classID
+        wisdom_badges_name:
+          type: string
+          example: digitalbadge101
+        wisdom_badges_description:
+          type: string
+          example: digitalbadge101 description ...
+        knowledge_badges_count:
+          type: integer
+          format: int64
+          example: 5
+      additionalProperties: false
+      required:
+        - consumer_name
+        - framework_invisible
+        - field1_name
+        - digital_badge_class_id
+        - wisdom_badges_name
+        - wisdom_badges_description
+        - knowledge_badges_count
     wisdom:
       type: object
       properties:
@@ -660,7 +715,3 @@ components:
       additionalProperties: false
       required:
         - knowledge_badges_list
-    knowledge:
-      type: array
-      items:
-        $ref: '#/components/schemas/Criteria'

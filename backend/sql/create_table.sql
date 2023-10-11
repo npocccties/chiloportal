@@ -78,6 +78,7 @@ create table framework (
 	description	text		null,	-- 説明
 	supplementary	text		null,	-- 補足説明
 	url		text		not null,	-- PDFのURL
+	invisible boolean		not null	default false,	-- 非表示フラグ
 	sort_key	int		not null,	-- 表示順
 	primary key (id)
 ); -- '教員育成指標'

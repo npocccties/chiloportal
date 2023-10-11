@@ -798,6 +798,7 @@ class BaseAPIViewTests(TestCase):
                 supplementary=f"さぷりめんたり{i + 1}",
                 sort_key=i,
                 url=f"url{i + 1}",
+                invisible=False,
             )
             consumers.append(cons)
             frameworks.append(frm)

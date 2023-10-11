@@ -137,6 +137,7 @@ class Framework(models.Model):
     description = models.TextField(blank=True, null=True)
     supplementary = models.TextField(blank=True, null=True)
     url = models.TextField()
+    invisible = models.BooleanField()
     sort_key = models.IntegerField()
 
     class Meta:

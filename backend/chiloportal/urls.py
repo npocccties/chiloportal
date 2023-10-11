@@ -2,6 +2,8 @@ from django.urls import path, re_path
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
+
+from chiloportal.views.consumer_framework_badges_list import ConsumerFrameworkBadgesList
 from .views import *
 from drf_yasg.generators import OpenAPISchemaGenerator
 
@@ -60,6 +62,11 @@ urlpatterns = [
         "consumer/framework/list/",
         ConsumerFrameworkList.as_view(),
         name="consumer-framework-list",
+    ),
+    path(
+        "consumer/framework/badges/list/",
+        ConsumerFrameworkBadgesList.as_view(),
+        name="consumer-framework-badges-list",
     ),
 ]
 
