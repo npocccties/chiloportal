@@ -32,7 +32,7 @@ class ConsumerBadgesList(BaseAPIView):
         )
         queryset = (
             WisdomBadges.objects.all().filter(
-                categorised_badges_wisdom_badges__goal__stage__invisible=invisible
+                categorised_badges_wisdom_badges__goal__stage__invisible__in=[invisible, False]
             ).prefetch_related(
                 "knowledge_badges_wisdom_badges",
                 categorised_badges_prefetch,
