@@ -123,6 +123,7 @@ class Stage(models.Model):
     sub_name = models.TextField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     sort_key = models.IntegerField()
+    invisible = models.BooleanField()
 
     class Meta:
         managed = True
@@ -137,7 +138,6 @@ class Framework(models.Model):
     description = models.TextField(blank=True, null=True)
     supplementary = models.TextField(blank=True, null=True)
     url = models.TextField()
-    invisible = models.BooleanField()
     sort_key = models.IntegerField()
 
     class Meta:

@@ -28,8 +28,8 @@ tags:
     description: バッジを承認しているコンシューマの一覧
   - name: consumer framework list
     description: 指定したコンシューマIDの育成指標一覧
-  - name: consumer framework badges list
-    description: 各コンシューマに関連する教育指標およびバッジ一覧取得
+  - name: consumer badges list
+    description: 各コンシューマに関連する教育指標および成長段階ならびにバッジ一覧取得
 paths:
   /consumer:
     get:
@@ -337,12 +337,19 @@ paths:
                   $ref: '#/components/schemas/Framework'
         '400':
           description: Invalid ID supplied
-  /consumer/framework/badges/list:
+  /consumer/badges/list:
     get:
       tags:
-        - consumer framework badges list
-      description: 各コンシューマに関連する教育指標およびバッジ一覧を取得します
-      operationId: findConsumerFrameworkBadgesList
+        - consumer badges list
+      description: 各コンシューマに関連する教育指標および成長段階ならびにバッジ一覧取得を取得します
+      operationId: findConsumerBadgesList
+      parameters:
+        - name: invisible
+          in: query
+          description: 成長段階の非表示フラグが立っているデータを取得します
+          required: true
+          schema:
+            type: boolean
       responses:
         '200':
           description: Successful operation
@@ -351,7 +358,9 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ConsumerFrameworkBadge'
+                  $ref: '#/components/schemas/ConsumerBadge'
+        '400':
+          description: Invalid invisible supplied
 
 components:
   schemas:
@@ -671,13 +680,22 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/Criteria'
-    ConsumerFrameworkBadge:
+    ConsumerBadge:
       type: object
       properties:
         consumer_name:
           type: string
           example: consumer101
-        framework_invisible:
+        consumer_id:
+          type: integer
+          example: 1
+        framework_name:
+          type: string
+          example: framework101
+        stage_name:
+          type: string
+          example: stage101
+        stage_invisible:
           type: boolean
           example: false
         field1_name:
@@ -686,6 +704,9 @@ components:
         digital_badge_class_id:
           type: string
           example: digitalbadge_classID
+        wisdom_badges_id:
+          type: integer
+          example: 35
         wisdom_badges_name:
           type: string
           example: digitalbadge101
@@ -699,9 +720,13 @@ components:
       additionalProperties: false
       required:
         - consumer_name
-        - framework_invisible
+        - consumer_id
+        - framework_name
+        - stage_name
+        - stage_invisible
         - field1_name
         - digital_badge_class_id
+        - wisdom_badges_id
         - wisdom_badges_name
         - wisdom_badges_description
         - knowledge_badges_count

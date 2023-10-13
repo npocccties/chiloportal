@@ -1,4 +1,4 @@
 -- 非表示フラグ追加用
-alter table framework add column invisible boolean;
-update framework set invisible = false;
-alter table framework alter column invisible set not null;
+alter table stage add column invisible boolean;
+update stage set invisible = false;
+alter table stage alter column invisible set not null;
