@@ -2,10 +2,13 @@ from django.urls import path, re_path
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
+
+from chiloportal.views.consumer_badges_list import ConsumerBadgesList
 from .views import *
 from drf_yasg.generators import OpenAPISchemaGenerator
 
 app_name = "chiloportal"
+
 
 class BothHttpAndHttpsSchemaGenerator(OpenAPISchemaGenerator):
     def get_schema(self, request, public):
@@ -16,7 +19,8 @@ class BothHttpAndHttpsSchemaGenerator(OpenAPISchemaGenerator):
         else:
             schema.schemes = ["https"]
         return schema
- 
+
+
 schema_view = get_schema_view(
     openapi.Info(
         title="Chiloportal backend API",
@@ -60,6 +64,11 @@ urlpatterns = [
         "consumer/framework/list/",
         ConsumerFrameworkList.as_view(),
         name="consumer-framework-list",
+    ),
+    path(
+        "consumer/badges/list/",
+        ConsumerBadgesList.as_view(),
+        name="consumer-framework-badges-list",
     ),
 ]
 
