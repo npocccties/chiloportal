@@ -24,9 +24,10 @@ jobs:
             cd /opt
             sudo git clone https://github.com/npocccties/chiloportal.git >& /dev/null
             sudo cp .env.front.test chiloportal/frontend/.env
-            sudo cp .env.manual-ssl-certs chiloportal/backend/.env
-            # sudo cp chiloportal/backend/.env.dev-server chiloportal/backend/.env
-            sudo cp nginx.manual-ssl-certs.conf chiloportal/backend/nginx.conf
+            # sudo cp .env.manual-ssl-certs chiloportal/backend/.env
+            sudo cp .env.dev chiloportal/backend/.env
+            # sudo cp nginx.manual-ssl-certs.conf chiloportal/backend/nginx.conf
+            sudo cp nginx.dev-server.conf chiloportal/backend/nginx.conf
             cd chiloportal
             sudo chmod 755 deploy.sh
             ./deploy.sh
