@@ -689,9 +689,15 @@ components:
         consumer_id:
           type: integer
           example: 1
+        framework_id:
+          type: integer
+          example: 1
         framework_name:
           type: string
           example: framework101
+        stage_id:
+          type: integer
+          example: 1
         stage_name:
           type: string
           example: stage101
