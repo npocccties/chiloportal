@@ -243,7 +243,9 @@ def to_consumer_framework_badges(wisdom_badge):
     return {
         "consumer_id": wisdom_badge['categorised_badges_wisdom_badges__goal__framework__consumer__id'],
         "consumer_name": wisdom_badge['categorised_badges_wisdom_badges__goal__framework__consumer__name'],
+        "framework_id": wisdom_badge['categorised_badges_wisdom_badges__goal__framework__id'],
         "framework_name": wisdom_badge['categorised_badges_wisdom_badges__goal__framework__name'],
+        "stage_id": wisdom_badge['categorised_badges_wisdom_badges__goal__stage__id'],
         "stage_name": wisdom_badge['categorised_badges_wisdom_badges__goal__stage__name'],
         "stage_invisible": wisdom_badge['categorised_badges_wisdom_badges__goal__stage__invisible'],
         "field1_name": wisdom_badge['categorised_badges_wisdom_badges__goal__field__field1_name'],
