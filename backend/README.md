@@ -196,6 +196,7 @@
 |環境変数名|説明|備考|
 |:--|:--|:--|
 |SECRET_KEY|Django で使用される署名用の秘密鍵|-|
+|BCRYPT_HASH|DBのデータとして設定されるBCryptのハッシュ値|-|
 |DB_HOST|DBのホスト名|docker-compose.*.yml に記載されている`db`がホスト名|
 |DB_NAME|DB名|-|
 |DB_USER|DBのユーザ名|-|

@@ -8,7 +8,8 @@ from django.db.models import Prefetch
 from django.db.models import Count
 from distutils.util import strtobool
 from django.db.models import Q
-
+import bcrypt
+import os
 
 class ConsumerBadgesList(BaseAPIView):
     swagger_query_params = [
@@ -27,10 +28,15 @@ class ConsumerBadgesList(BaseAPIView):
                 "goal__stage",
             ),
         )
+        filter_args = Q()
+        filter_args |= Q(categorised_badges_wisdom_badges__goal__stage__password="")
+        filter_args |= Q(categorised_badges_wisdom_badges__goal__stage__password__isnull=True)
+        hashedPassword = os.getenv("BCRYPT_HASH", "")
+        if bcrypt.checkpw(password.encode(), hashedPassword.encode()):
+            filter_args |= Q(categorised_badges_wisdom_badges__goal__stage__password=hashedPassword)
         queryset = (
             WisdomBadges.objects.all().filter(
-                Q(categorised_badges_wisdom_badges__goal__stage__password__in=[password, ""]) |
-                Q(categorised_badges_wisdom_badges__goal__stage__password__isnull=True)
+                filter_args
             ).prefetch_related(
                 "knowledge_badges_wisdom_badges",
                 categorised_badges_prefetch,
