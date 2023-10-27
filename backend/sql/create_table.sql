@@ -87,7 +87,7 @@ create table stage (
 	name		varchar(256)	not null,	-- 名称
 	sub_name	text		null,	-- 自由記述欄
 	description	text		null,	-- 説明
-	invisible boolean		not null	default false,	-- 非表示フラグ
+	password text null,	-- パスワード
 	sort_key	int		not null,	-- 表示順
 	primary key (id)
 ); -- '成長段階'

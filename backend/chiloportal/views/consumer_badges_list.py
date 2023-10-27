@@ -11,16 +11,12 @@ from distutils.util import strtobool
 
 class ConsumerBadgesList(BaseAPIView):
     swagger_query_params = [
-        SwaggerQueryParam("invisible", True, schema=coreschema.Boolean()),
+        SwaggerQueryParam("password", False, schema=coreschema.String()),
     ]
     filter_backends = (SwaggerQueryParamFilter,)
 
     def _get(self, request):
-        invisible_str = self.request.GET.get("invisible")
-        if invisible_str == None:
-            self.logger.error("Not exist invisible")
-            raise ParseError("Invalid invisible supplied")
-        invisible = bool(strtobool(invisible_str))
+        password = self.request.GET.get("password")
         categorised_badges_prefetch = Prefetch(
             "categorised_badges_wisdom_badges",
             queryset=CategorisedBadges.objects.select_related(
@@ -32,7 +28,7 @@ class ConsumerBadgesList(BaseAPIView):
         )
         queryset = (
             WisdomBadges.objects.all().filter(
-                categorised_badges_wisdom_badges__goal__stage__invisible__in=[invisible, False]
+                categorised_badges_wisdom_badges__goal__stage__password__in=[password, None, ""]
             ).prefetch_related(
                 "knowledge_badges_wisdom_badges",
                 categorised_badges_prefetch,
@@ -47,7 +43,7 @@ class ConsumerBadgesList(BaseAPIView):
                 "categorised_badges_wisdom_badges__goal__stage__id",
                 "categorised_badges_wisdom_badges__goal__stage__name",
                 "categorised_badges_wisdom_badges__goal__stage__sort_key",
-                "categorised_badges_wisdom_badges__goal__stage__invisible",
+                "categorised_badges_wisdom_badges__goal__stage__password",
                 "categorised_badges_wisdom_badges__goal__framework__consumer__id",
                 "categorised_badges_wisdom_badges__goal__framework__consumer__name",
                 "categorised_badges_wisdom_badges__goal__field__field1_name",

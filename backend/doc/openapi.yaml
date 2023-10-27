@@ -344,12 +344,11 @@ paths:
       description: 各コンシューマに関連する教育指標および成長段階ならびにバッジ一覧取得を取得します
       operationId: findConsumerBadgesList
       parameters:
-        - name: invisible
+        - name: password
           in: query
-          description: 成長段階の非表示フラグが立っているデータを取得します
-          required: true
+          description: 成長段階のパスワードと一致するデータを取得します
           schema:
-            type: boolean
+            type: string
       responses:
         '200':
           description: Successful operation
@@ -360,7 +359,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/ConsumerBadge'
         '400':
-          description: Invalid invisible supplied
+          description: Invalid password supplied
 
 components:
   schemas:
@@ -701,9 +700,9 @@ components:
         stage_name:
           type: string
           example: stage101
-        stage_invisible:
-          type: boolean
-          example: false
+        stage_password:
+          type: string
+          example: stage101_pass
         field1_name:
           type: string
           example: field1011
@@ -729,7 +728,7 @@ components:
         - consumer_id
         - framework_name
         - stage_name
-        - stage_invisible
+        - stage_password
         - field1_name
         - digital_badge_class_id
         - wisdom_badges_id
