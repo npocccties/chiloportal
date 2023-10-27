@@ -7,6 +7,7 @@ from .base_api_view import *
 from django.db.models import Prefetch
 from django.db.models import Count
 from distutils.util import strtobool
+from django.db.models import Q
 
 
 class ConsumerBadgesList(BaseAPIView):
@@ -28,7 +29,8 @@ class ConsumerBadgesList(BaseAPIView):
         )
         queryset = (
             WisdomBadges.objects.all().filter(
-                categorised_badges_wisdom_badges__goal__stage__password__in=[password, None, ""]
+                Q(categorised_badges_wisdom_badges__goal__stage__password__in=[password, ""]) |
+                Q(categorised_badges_wisdom_badges__goal__stage__password__isnull=True)
             ).prefetch_related(
                 "knowledge_badges_wisdom_badges",
                 categorised_badges_prefetch,
