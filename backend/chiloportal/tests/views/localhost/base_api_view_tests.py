@@ -170,27 +170,27 @@ class BaseAPIViewTests(TestCase):
         )
         self.stg1 = Stage.objects.create(
             name="ほげすてーじ1", sub_name="さぶねーむ1", description="これはほげすてーじ1です。", sort_key=1
-            , invisible=False
+            , password=""
         )
         self.stg2 = Stage.objects.create(
             name="ほげすてーじ2", sub_name="さぶねーむ2", description="これはほげすてーじ2です。", sort_key=2
-            , invisible=False
+            , password=""
         )
         self.stg3 = Stage.objects.create(
             name="ほげすてーじ3", sub_name="さぶねーむ3", description="これはほげすてーじ3です。", sort_key=3
-            , invisible=False
+            , password=""
         )
         self.stg4 = Stage.objects.create(
             name="ほげすてーじ4", sub_name="さぶねーむ4", description="これはほげすてーじ4です。", sort_key=4
-            , invisible=False
+            , password=""
         )
         self.stg5 = Stage.objects.create(
             name="ほげすてーじ5", sub_name="さぶねーむ5", description="これはほげすてーじ5です。", sort_key=5
-            , invisible=False
+            , password=""
         )
         self.stg6 = Stage.objects.create(
             name="ほげすてーじ6", sub_name="さぶねーむ6", description="これはほげすてーじ6です。", sort_key=6
-            , invisible=False
+            , password=""
         )
         self.goal1 = Goal.objects.create(
             framework=self.frm1,
@@ -788,7 +788,7 @@ class BaseAPIViewTests(TestCase):
                 sub_name=f"さぶねーむ{i + 1}",
                 description=f"これはほげすてーじです. {i + 1}",
                 sort_key=i,
-                invisible=False,
+                password="",
             )
             stages.append(stage)
         return stages
