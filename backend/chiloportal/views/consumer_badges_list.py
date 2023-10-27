@@ -32,7 +32,8 @@ class ConsumerBadgesList(BaseAPIView):
         filter_args |= Q(categorised_badges_wisdom_badges__goal__stage__password="")
         filter_args |= Q(categorised_badges_wisdom_badges__goal__stage__password__isnull=True)
         hashedPassword = os.getenv("BCRYPT_HASH", "")
-        if bcrypt.checkpw(password.encode(), hashedPassword.encode()):
+        self.logger.debug(f"BCRYPT_HASH: {hashedPassword}")
+        if password and bcrypt.checkpw(password.encode(), hashedPassword.encode()):
             filter_args |= Q(categorised_badges_wisdom_badges__goal__stage__password=hashedPassword)
         queryset = (
             WisdomBadges.objects.all().filter(
