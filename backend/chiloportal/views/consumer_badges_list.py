@@ -10,15 +10,18 @@ from distutils.util import strtobool
 from django.db.models import Q
 import bcrypt
 import os
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
+
 
 class ConsumerBadgesList(BaseAPIView):
-    swagger_query_params = [
-        SwaggerQueryParam("password", False, schema=coreschema.String()),
-    ]
-    filter_backends = (SwaggerQueryParamFilter,)
+    header_param = openapi.Parameter('Authorization', openapi.IN_HEADER, description="成長段階のパスワード", type=openapi.TYPE_STRING)
+    @swagger_auto_schema(manual_parameters=[header_param])
+    def get(self, request):
+        return self.get_proc(request)
 
     def _get(self, request):
-        password = self.request.GET.get("password")
+        password = self.request.headers.get("Authorization")
         categorised_badges_prefetch = Prefetch(
             "categorised_badges_wisdom_badges",
             queryset=CategorisedBadges.objects.select_related(
@@ -30,18 +33,22 @@ class ConsumerBadgesList(BaseAPIView):
         )
         filter_args = Q()
         filter_args |= Q(categorised_badges_wisdom_badges__goal__stage__password="")
-        filter_args |= Q(categorised_badges_wisdom_badges__goal__stage__password__isnull=True)
+        filter_args |= Q(
+            categorised_badges_wisdom_badges__goal__stage__password__isnull=True
+        )
         hashedPassword = os.getenv("BCRYPT_HASH", "")
-        self.logger.debug(f"BCRYPT_HASH: {hashedPassword}")
         if password and bcrypt.checkpw(password.encode(), hashedPassword.encode()):
-            filter_args |= Q(categorised_badges_wisdom_badges__goal__stage__password=hashedPassword)
+            filter_args |= Q(
+                categorised_badges_wisdom_badges__goal__stage__password=hashedPassword
+            )
         queryset = (
-            WisdomBadges.objects.all().filter(
-                filter_args
-            ).prefetch_related(
+            WisdomBadges.objects.all()
+            .filter(filter_args)
+            .prefetch_related(
                 "knowledge_badges_wisdom_badges",
                 categorised_badges_prefetch,
-            ).values(
+            )
+            .values(
                 "id",
                 "name",
                 "badge_class_id",
