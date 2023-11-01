@@ -12,7 +12,7 @@ import bcrypt
 import os
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
-
+from rest_framework.exceptions import ValidationError
 
 class ConsumerBadgesList(BaseAPIView):
     header_param = openapi.Parameter('Authorization', openapi.IN_HEADER, description="成長段階のパスワード", type=openapi.TYPE_STRING)
@@ -21,7 +21,25 @@ class ConsumerBadgesList(BaseAPIView):
         return self.get_proc(request)
 
     def _get(self, request):
+        filter_args = Q()
+        filter_args |= Q(categorised_badges_wisdom_badges__goal__stage__password="")
+        filter_args |= Q(
+            categorised_badges_wisdom_badges__goal__stage__password__isnull=True
+        )
         password = self.request.headers.get("Authorization")
+        # パスワードチェック
+        if password:
+            str = os.getenv("BCRYPT_SALT", "")
+            salt = bytes(str.encode())
+            hashedPassword = bcrypt.hashpw(password.encode(), salt).decode('utf-8')
+            result = Stage.objects.filter(password=hashedPassword)
+            count = result.count()
+            if count == 0:
+                raise ValidationError('Invalid password supplied')
+            filter_args |= Q(
+                categorised_badges_wisdom_badges__goal__stage__password=hashedPassword
+            )
+
         categorised_badges_prefetch = Prefetch(
             "categorised_badges_wisdom_badges",
             queryset=CategorisedBadges.objects.select_related(
@@ -31,16 +49,6 @@ class ConsumerBadgesList(BaseAPIView):
                 "goal__stage",
             ),
         )
-        filter_args = Q()
-        filter_args |= Q(categorised_badges_wisdom_badges__goal__stage__password="")
-        filter_args |= Q(
-            categorised_badges_wisdom_badges__goal__stage__password__isnull=True
-        )
-        hashedPassword = os.getenv("BCRYPT_HASH", "")
-        if password and bcrypt.checkpw(password.encode(), hashedPassword.encode()):
-            filter_args |= Q(
-                categorised_badges_wisdom_badges__goal__stage__password=hashedPassword
-            )
         queryset = (
             WisdomBadges.objects.all()
             .filter(filter_args)

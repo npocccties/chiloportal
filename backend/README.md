@@ -196,7 +196,6 @@
 |環境変数名|説明|備考|
 |:--|:--|:--|
 |SECRET_KEY|Django で使用される署名用の秘密鍵|-|
-|BCRYPT_HASH|DBのデータとして設定されるBCryptのハッシュ値|-|
 |DB_HOST|DBのホスト名|docker-compose.*.yml に記載されている`db`がホスト名|
 |DB_NAME|DB名|-|
 |DB_USER|DBのユーザ名|-|
@@ -231,6 +230,28 @@
    select * from consumer;
    quit
    exit
+   ```
+
+# 成長段階のパスワードのハッシュ値の生成に使用するためのソルト生成
+1. 以下のスクリプトの 'pass' の文字列を任意のパスワードに差し替え、app コンテナで実行してください。
+   ```
+   python
+   import bcrypt
+   salt = bcrypt.gensalt(rounds=12, prefix=b'2a')
+   print(salt.decode('utf-8'))
+   ```
+1. スクリプト実行後、以下のような文字列が出力されるのでソルトとしてご使用ください。（環境変数：BCRYPT_SALT に使用）
+   ```
+   $2a$12$aqYLqFynQDdDs5CeyIcKFO
+   ```
+1. 前述のソルトをもとに、以下のスクリプトを実行してください。
+   ```
+   hashedPassword = bcrypt.hashpw('pass'.encode(), salt)
+   print(hashedPassword.decode('utf-8'))
+   ```
+1. スクリプト実行後、以下のような文字列が出力されるのでパスワードのハッシュ値としてご使用ください。
+   ```
+   $2a$12$aqYLqFynQDdDs5CeyIcKFOKis5Bq7Slv6bYYNQfQCIzbuqvMNoX1W
    ```
 
 # Django の管理画面
