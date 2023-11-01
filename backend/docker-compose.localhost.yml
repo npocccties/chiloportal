@@ -24,7 +24,7 @@ services:
       - ALLOWED_HOSTS=$ALLOWED_HOSTS
       - JUDGE_BADGE=$JUDGE_BADGE
       - PER_PAGE=$PER_PAGE
-      - BCRYPT_HASH=$BCRYPT_HASH
+      - BCRYPT_SALT=$BCRYPT_SALT
     depends_on:
       - db
       - migration
