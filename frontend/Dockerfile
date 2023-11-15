@@ -24,7 +24,7 @@ RUN corepack yarn build
 FROM base as install
 RUN corepack yarn workspaces focus --all --production
 
-FROM gcr.io/distroless/nodejs:20
+FROM gcr.io/distroless/nodejs20-debian12
 WORKDIR /app
 ENV NODE_ENV=production
 COPY public/ ./public
