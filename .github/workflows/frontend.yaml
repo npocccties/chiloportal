@@ -2,6 +2,7 @@ on:
   pull_request:
     paths:
       - "frontend/**"
+      - "backend/doc/openapi.yaml"
 defaults:
   run:
     working-directory: frontend
@@ -28,4 +29,5 @@ jobs:
         run: |
           git -c "user.name=github-actions[bot]" -c "user.email=github-actions[bot]@users.noreply.github.com" commit -a -m "bot: format"
           git push origin HEAD
-      - run: corepack yarn build
+      - run: cp .env.development .env
+      - run: docker build -t frontend .
