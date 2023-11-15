@@ -27,9 +27,10 @@ export async function readMarkdowns(
   if (filenames.length === 0) return [];
   const files = await Promise.all(
     filenames.map((filename) =>
-      read(join(path, filename), "utf8").then(
-        (file) => matter(file, { strip: true }) as Markdown
-      )
+      read(join(path, filename), "utf8").then((file) => {
+        matter(file, { strip: true });
+        return file as Markdown;
+      })
     )
   );
   const ajv = new Ajv();
