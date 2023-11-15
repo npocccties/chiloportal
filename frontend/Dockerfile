@@ -1,4 +1,4 @@
-FROM node:16.18.0-slim as base
+FROM node:20.9.0-slim as base
 WORKDIR /app
 COPY .yarnrc.yml yarn.lock package.json ./
 COPY .yarn/ ./.yarn
@@ -24,7 +24,7 @@ RUN corepack yarn build
 FROM base as install
 RUN corepack yarn workspaces focus --all --production
 
-FROM gcr.io/distroless/nodejs:16
+FROM gcr.io/distroless/nodejs:20
 WORKDIR /app
 ENV NODE_ENV=production
 COPY public/ ./public

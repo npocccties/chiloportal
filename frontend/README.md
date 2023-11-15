@@ -3,7 +3,7 @@
 ## 動作環境
 
 - OS: Unix 系（Windows では [WSL](https://docs.microsoft.com/ja-jp/windows/wsl/install) 等をお使いください）
-- Node.js: ~~[Active LTS](https://nodejs.org/en/about/releases/)~~ v16.18.0
+- Node.js: [Active LTS](https://nodejs.org/en/about/releases/)
 - Docker (任意)
 
 ## 開発
