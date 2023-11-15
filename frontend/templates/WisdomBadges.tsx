@@ -80,7 +80,7 @@ export default function WisdomBadges({
                   knowledgeBadgesList.flatMap((knowledgeBadges) =>
                     "length" in knowledgeBadges.detail
                       ? knowledgeBadges.detail
-                      : []
+                      : [],
                   ).length
                 }
                 研修

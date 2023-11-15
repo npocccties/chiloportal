@@ -24,7 +24,7 @@ export default function Top({
     usePortalCategories();
   const { data: wisdomBadgesList, error: wisdomBadgesListError } = useBadges(
     "wisdom",
-    recommendedWisdomBadgesIds
+    recommendedWisdomBadgesIds,
   );
   const alt =
     "科目を選び、バッジを獲得することで社会的評価や自信の証明が得られ、あなたと子供達と社会のウェルビーイングへとつながります。この関係性は、学習成果の活用と主体的な学びの循環によって形成されます";

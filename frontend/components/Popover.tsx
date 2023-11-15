@@ -8,7 +8,7 @@ type Props = {
   disabled?: boolean;
   children(props: {
     close: (
-      ref?: React.MutableRefObject<HTMLElement | null> | HTMLElement
+      ref?: React.MutableRefObject<HTMLElement | null> | HTMLElement,
     ) => void;
   }): React.ReactNode;
 };

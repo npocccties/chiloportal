@@ -24,7 +24,7 @@ function SearchForm({ className, size = "medium" }: Props) {
         className={clsx(
           "jumpu-input flex-1 mr-2",
           { ["text-sm"]: size === "small" },
-          { ["text-lg"]: size === "large" }
+          { ["text-lg"]: size === "large" },
         )}
         type="search"
         name="q"
@@ -35,7 +35,7 @@ function SearchForm({ className, size = "medium" }: Props) {
         className={clsx(
           "jumpu-button disabled:bg-gray-400",
           { ["text-sm"]: size === "small" },
-          { ["text-lg"]: size === "large" }
+          { ["text-lg"]: size === "large" },
         )}
         type="submit"
         disabled={keyword.trim().length === 0}

@@ -65,10 +65,10 @@ export async function getServerSideProps({
                   badges_ids: wisdom_badges.join(","),
                 },
               })
-              .then((result) => ({ [field_id]: result }))
-          )
-        )
-      )
+              .then((result) => ({ [field_id]: result })),
+          ),
+        ),
+      ),
     ).then((result) => Object.assign({}, ...result));
     return {
       props: {

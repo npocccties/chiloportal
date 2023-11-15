@@ -37,7 +37,7 @@ export async function getServerSideProps({
       ? (await import("mocks/faker")).portalCategory()
       : portalCategories.find(
           (portalCategory) =>
-            portalCategory.portal_category_id === Number(portalCategoryId)
+            portalCategory.portal_category_id === Number(portalCategoryId),
         );
     if (!portalCategory)
       return { props: { title: "PortalCategory Not Found", statusCode: 404 } };

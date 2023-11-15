@@ -12,10 +12,10 @@ async function fetcher(_: typeof key, badgesId: number) {
 
 export default function useWisdomBadgesConsumers(
   badgesId: number,
-  shouldFetch: boolean = true
+  shouldFetch: boolean = true,
 ) {
   return useSWRImmutable<Consumer[]>(
     shouldFetch ? [key, badgesId] : null,
-    fetcher
+    fetcher,
   );
 }

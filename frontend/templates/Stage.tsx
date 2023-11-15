@@ -114,7 +114,7 @@ export default function Stage({
                         field3_name,
                         field1Index,
                         field2Index,
-                        field3Index
+                        field3Index,
                       )}
                       className="font-bold text-gray-700 mb-4 scroll-mt-16"
                     >
@@ -126,7 +126,7 @@ export default function Stage({
                           <li className="" key={wisdomBadges.badges_id}>
                             <WisdomBadgesItem wisdomBadges={wisdomBadges} />
                           </li>
-                        )
+                        ),
                       )}
                     </ul>
                   </section>

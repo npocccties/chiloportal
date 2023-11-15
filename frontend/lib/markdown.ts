@@ -17,7 +17,7 @@ export type Markdown = VFile & { data: Required<VFile["data"]> };
  */
 export async function readMarkdowns(
   dirname: string,
-  sort: boolean = false
+  sort: boolean = false,
 ): Promise<Error | Markdown[]> {
   const overrides = await readdir("overrides");
   const path = overrides.some((override) => override === dirname)
@@ -30,21 +30,21 @@ export async function readMarkdowns(
       read(join(path, filename), "utf8").then((file) => {
         matter(file, { strip: true });
         return file as Markdown;
-      })
-    )
+      }),
+    ),
   );
   const ajv = new Ajv();
   addFormats(ajv);
   const valid = ajv.validate(
     Frontmatters,
-    files.map((file) => file.data.matter)
+    files.map((file) => file.data.matter),
   );
   if (!valid) return new Error(ajv.errorsText(ajv.errors));
   if (sort)
     return files.sort(
       (a, b) =>
         new Date(b.data.matter.datePublished ?? "1970-01-01").getTime() -
-        new Date(a.data.matter.datePublished ?? "1970-01-01").getTime()
+        new Date(a.data.matter.datePublished ?? "1970-01-01").getTime(),
     );
   return files;
 }

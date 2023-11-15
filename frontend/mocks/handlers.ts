@@ -14,11 +14,11 @@ import {
 export const handlers = [
   restGet(client.consumer, (_req, res, ctx) => res(ctx.json(consumer()))),
   restGet(client.consumer.list, (_req, res, ctx) =>
-    res(ctx.json([...Array(10)].map(consumer)))
+    res(ctx.json([...Array(10)].map(consumer))),
   ),
   restGet(client.stage.field.list, (_req, res, ctx) => res(ctx.json(field()))),
   restGet(client.portalCategory.list, (_req, res, ctx) =>
-    res(ctx.json([...Array(10)].map(portalCategory)))
+    res(ctx.json([...Array(10)].map(portalCategory))),
   ),
   restGet(client.portalCategory.badges.list, (req, res, ctx) => {
     const perPage = 30;
@@ -29,16 +29,16 @@ export const handlers = [
         total_count: 3000,
         start: perPage * (pageNumber - 1) + 1,
         end: perPage * pageNumber,
-      })
+      }),
     );
   }),
   restGet(client.framework, (_req, res, ctx) => res(ctx.json(framework()))),
   restGet(client.framework.stage.list, (_req, res, ctx) =>
-    res(ctx.json([...Array(3)].map(stage)))
+    res(ctx.json([...Array(3)].map(stage))),
   ),
   restGet(client.badges, (req, res, ctx) => {
     const badgesIds = (req.url.searchParams.get("badges_ids") ?? "1").split(
-      ","
+      ",",
     );
     switch (req.url.searchParams.get("badges_type")) {
       case "wisdom":
@@ -58,13 +58,13 @@ export const handlers = [
         total_count: 3000,
         start: perPage * (pageNumber - 1) + 1,
         end: perPage * pageNumber,
-      })
+      }),
     );
   }),
   restGet(client.wisdomBadges.consumer.list, (_req, res, ctx) =>
-    res(ctx.json([...Array(10)].map(consumer)))
+    res(ctx.json([...Array(10)].map(consumer))),
   ),
   restGet(client.consumer.framework.list, (_req, res, ctx) =>
-    res(ctx.json([...Array(3)].map(framework)))
+    res(ctx.json([...Array(3)].map(framework))),
   ),
 ];

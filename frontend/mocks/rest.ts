@@ -26,7 +26,7 @@ export function restGet<T extends Get>(
     RestRequest<A1<T["get"]>["body"]>,
     RestContext,
     Awaited<ReturnType<T["get"]>>["body"]
-  >
+  >,
 ) {
   return rest.get(api.$path(), resolver);
 }
@@ -46,7 +46,7 @@ export function restPost<T extends Post>(
     RestRequest<A1<T["post"]>["body"]>,
     RestContext,
     Awaited<ReturnType<T["post"]>>["body"]
-  >
+  >,
 ) {
   return rest.post(api.$path(), resolver);
 }
@@ -66,7 +66,7 @@ export function restPut<T extends Put>(
     RestRequest<A1<T["put"]>["body"]>,
     RestContext,
     Awaited<ReturnType<T["put"]>>["body"]
-  >
+  >,
 ) {
   return rest.put(api.$path(), resolver);
 }
@@ -86,7 +86,7 @@ export function restPatch<T extends Patch>(
     RestRequest<A1<T["patch"]>["body"]>,
     RestContext,
     Awaited<ReturnType<T["patch"]>>["body"]
-  >
+  >,
 ) {
   return rest.patch(api.$path(), resolver);
 }
@@ -106,7 +106,7 @@ export function restDelete<T extends Delete>(
     RestRequest<A1<T["delete"]>["body"]>,
     RestContext,
     Awaited<ReturnType<T["delete"]>>["body"]
-  >
+  >,
 ) {
   return rest.delete(api.$path(), resolver);
 }

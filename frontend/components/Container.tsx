@@ -13,7 +13,7 @@ function Container({ className, style, as = "main", children }: Props) {
     <As
       className={clsx(
         "max-w-4xl mx-auto my-8 px-4 xl:px-0 min-h-[33vh]",
-        className
+        className,
       )}
       style={style}
     >

@@ -25,7 +25,7 @@ function WisdomBadgesDialog({ wisdomBadges, open, onClose }: Props) {
   const [shouldFetch, setShouldFetch] = useState(false);
   const { data: consumers, error: consumersError } = useWisdomBadgesConsumers(
     wisdomBadges.badges_id,
-    shouldFetch
+    shouldFetch,
   );
   const handleEnter = () => {
     setShouldFetch(true);

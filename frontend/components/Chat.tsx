@@ -195,7 +195,7 @@ function Chat({ className }: Props) {
           "absolute w-[80vw] sm:w-[24rem] bottom-0 right-0 bg-white rounded-t-xl shadow-xl transition-transform duration-150 ease-in-out",
           {
             ["-bottom-full translate-y-full"]: !expand,
-          }
+          },
         )}
       >
         <button
@@ -227,7 +227,7 @@ function Chat({ className }: Props) {
               >
                 {chat.body}
               </li>
-            )
+            ),
           )}
         </ul>
         <hr className="border-gray-300 mx-4" />
@@ -244,7 +244,7 @@ function Chat({ className }: Props) {
             type="button"
             className={clsx(
               "absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 p-3 rounded-full bg-primary-700 shadow-xl hover:bg-primary-600",
-              textarea.trim().length === 0 && "bg-gray-500 hover:bg-gray-500"
+              textarea.trim().length === 0 && "bg-gray-500 hover:bg-gray-500",
             )}
             title="メッセージを送る"
             disabled={textarea.trim().length === 0}
