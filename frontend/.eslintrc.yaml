@@ -4,11 +4,15 @@ extends:
 plugins:
   - canonical
 rules:
-  canonical/filename-match-exported: [error, kebab]
+  canonical/filename-match-exported:
+    - error
+    - transforms: kebab
 overrides:
   - files: "{components,templates}/**/*.tsx"
     rules:
-      canonical/filename-match-exported: [error, pascal]
+      canonical/filename-match-exported:
+        - error
+        - transforms: pascal
   - files: "pages/**/*.tsx"
     rules:
       canonical/filename-match-exported: "off"
