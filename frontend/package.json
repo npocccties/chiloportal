@@ -57,7 +57,7 @@
     "unified": "^10.1.2"
   },
   "engines": {
-    "node": "^16.18.0"
+    "node": "^20.9.0"
   },
   "homepage": "https://github.com/npocccties/chiloportal#readme",
   "keywords": [
