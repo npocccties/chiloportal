@@ -4,18 +4,20 @@ import { Consumer } from "api/@types";
 
 const key = "wisdomBadges/consumer/list" as const;
 
-async function fetcher(_: typeof key, badgesId: number) {
+type Key = {
+  key: typeof key;
+  badgesId: number;
+};
+
+async function fetcher({ key: _, badgesId }: Key): Promise<Consumer[]> {
   return client.wisdomBadges.consumer.list.$get({
     query: { badges_id: badgesId },
   });
 }
 
 export default function useWisdomBadgesConsumers(
-  badgesId: number,
+  badgesId: Key["badgesId"],
   shouldFetch: boolean = true,
 ) {
-  return useSWRImmutable<Consumer[]>(
-    shouldFetch ? [key, badgesId] : null,
-    fetcher,
-  );
+  return useSWRImmutable(shouldFetch ? { key, badgesId } : null, fetcher);
 }
