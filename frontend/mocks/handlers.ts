@@ -1,5 +1,5 @@
+import { http, HttpResponse } from "msw";
 import { client } from "lib/client";
-import { restGet } from "./rest";
 import {
   consumer,
   field,
@@ -8,63 +8,59 @@ import {
   knowledgeBadges,
   framework,
   stage,
-  criteria,
 } from "./faker";
 
 export const handlers = [
-  restGet(client.consumer, (_req, res, ctx) => res(ctx.json(consumer()))),
-  restGet(client.consumer.list, (_req, res, ctx) =>
-    res(ctx.json([...Array(10)].map(consumer))),
+  http.get(client.consumer.$path(), () => HttpResponse.json(consumer())),
+  http.get(client.consumer.list.$path(), () =>
+    HttpResponse.json([...Array(10)].map(consumer)),
   ),
-  restGet(client.stage.field.list, (_req, res, ctx) => res(ctx.json(field()))),
-  restGet(client.portalCategory.list, (_req, res, ctx) =>
-    res(ctx.json([...Array(10)].map(portalCategory))),
+  http.get(client.stage.field.list.$path(), () => HttpResponse.json(field())),
+  http.get(client.portalCategory.list.$path(), () =>
+    HttpResponse.json([...Array(10)].map(portalCategory)),
   ),
-  restGet(client.portalCategory.badges.list, (req, res, ctx) => {
+  http.get(client.portalCategory.badges.list.$path(), ({ request }) => {
     const perPage = 30;
-    const pageNumber = Number(req.url.searchParams.get("page_number") ?? 1);
-    return res(
-      ctx.json({
-        badges: [...Array(30)].map(wisdomBadges),
-        total_count: 3000,
-        start: perPage * (pageNumber - 1) + 1,
-        end: perPage * pageNumber,
-      }),
-    );
+    const url = new URL(request.url);
+    const pageNumber = Number(url.searchParams.get("page_number") ?? 1);
+    return HttpResponse.json({
+      badges: [...Array(30)].map(wisdomBadges),
+      total_count: 3000,
+      start: perPage * (pageNumber - 1) + 1,
+      end: perPage * pageNumber,
+    });
   }),
-  restGet(client.framework, (_req, res, ctx) => res(ctx.json(framework()))),
-  restGet(client.framework.stage.list, (_req, res, ctx) =>
-    res(ctx.json([...Array(3)].map(stage))),
+  http.get(client.framework.$path(), () => HttpResponse.json(framework())),
+  http.get(client.framework.stage.list.$path(), () =>
+    HttpResponse.json([...Array(3)].map(stage)),
   ),
-  restGet(client.badges, (req, res, ctx) => {
-    const badgesIds = (req.url.searchParams.get("badges_ids") ?? "1").split(
-      ",",
-    );
-    switch (req.url.searchParams.get("badges_type")) {
+  http.get(client.badges.$path(), ({ request }) => {
+    const url = new URL(request.url);
+    const badgesIds = (url.searchParams.get("badges_ids") ?? "1").split(",");
+    switch (url.searchParams.get("badges_type")) {
       case "wisdom":
-        return res(ctx.json(badgesIds.map(wisdomBadges)));
+        return HttpResponse.json(badgesIds.map(wisdomBadges));
       case "knowledge":
-        return res(ctx.json(badgesIds.map(knowledgeBadges)));
+        return HttpResponse.json(badgesIds.map(knowledgeBadges));
       default:
-        return res(ctx.status(400));
+        return new HttpResponse(null, { status: 400 });
     }
   }),
-  restGet(client.wisdomBadges.list.keyword, (req, res, ctx) => {
+  http.get(client.wisdomBadges.list.keyword.$path(), ({ request }) => {
     const perPage = 30;
-    const pageNumber = Number(req.url.searchParams.get("page_number") ?? 1);
-    return res(
-      ctx.json({
-        badges: [...Array(30)].map(wisdomBadges),
-        total_count: 3000,
-        start: perPage * (pageNumber - 1) + 1,
-        end: perPage * pageNumber,
-      }),
-    );
+    const url = new URL(request.url);
+    const pageNumber = Number(url.searchParams.get("page_number") ?? 1);
+    return HttpResponse.json({
+      badges: [...Array(30)].map(wisdomBadges),
+      total_count: 3000,
+      start: perPage * (pageNumber - 1) + 1,
+      end: perPage * pageNumber,
+    });
   }),
-  restGet(client.wisdomBadges.consumer.list, (_req, res, ctx) =>
-    res(ctx.json([...Array(10)].map(consumer))),
+  http.get(client.wisdomBadges.consumer.list.$path(), () =>
+    HttpResponse.json([...Array(10)].map(consumer)),
   ),
-  restGet(client.consumer.framework.list, (_req, res, ctx) =>
-    res(ctx.json([...Array(3)].map(framework))),
+  http.get(client.consumer.framework.list.$path(), () =>
+    HttpResponse.json([...Array(3)].map(framework)),
   ),
 ];
