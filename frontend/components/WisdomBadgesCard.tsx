@@ -34,7 +34,7 @@ function WisdomBadgesCard({ wisdomBadges, className }: Props) {
           {wisdomBadges.name}
         </h3>
         {"knowledge_badges_list" in wisdomBadges.detail && (
-          <div className="jumpu-tag bg-gray-50 text-gray-700 border-none hover:border-none mb-2">
+          <div className="jumpu-tag bg-gray-50 text-gray-700 border-none mb-2">
             知識バッジ{wisdomBadges.detail.knowledge_badges_list.length}
             つで獲得
           </div>

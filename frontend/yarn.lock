@@ -1657,14 +1657,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jumpu-ui/tailwindcss@npm:^1.0.1-alpha.5":
-  version: 1.0.1-alpha.5
-  resolution: "@jumpu-ui/tailwindcss@npm:1.0.1-alpha.5"
+"@jumpu-ui/tailwindcss@npm:^1.0.1-alpha.6":
+  version: 1.0.1-alpha.6
+  resolution: "@jumpu-ui/tailwindcss@npm:1.0.1-alpha.6"
   dependencies:
     mini-svg-data-uri: ^1.4.4
   peerDependencies:
     tailwindcss: ^3
-  checksum: 1971b8fd6480d3f06d467c8ef37b7aec8b040d6609408fd917058c4d97cbf203a63735fcbe6841073f2623e51f45c2780e45a1b53ef1b0136ab9eacafefb1dbf
+  checksum: 9fa5783b9778570627eb69ab3384f6d61eaefe25484841b3e3e595f6b5ffc6a05a647a908ecd1855684ee6661b92cff6f5d8e87ec996e6796b81548020f34347
   languageName: node
   linkType: hard
 
@@ -4427,7 +4427,7 @@ __metadata:
     "@faker-js/faker": ^7.5.0
     "@headlessui/react": ^1.6.6
     "@iconify/react": ^3.2.2
-    "@jumpu-ui/tailwindcss": ^1.0.1-alpha.5
+    "@jumpu-ui/tailwindcss": ^1.0.1-alpha.6
     "@svgr/webpack": ^6.5.1
     "@tailwindcss/typography": ^0.5.7
     "@types/node": ^18.7.5
