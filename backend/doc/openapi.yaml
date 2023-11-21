@@ -344,9 +344,9 @@ paths:
       description: 各コンシューマに関連する教育指標および成長段階ならびにバッジ一覧取得を取得します
       operationId: findConsumerBadgesList
       parameters:
-        - name: password
-          in: query
-          description: 成長段階のパスワードと一致するデータを取得します
+        - name: Authorization
+          in: header
+          description: 成長段階のパスワードを指定し、一致するデータを取得します
           schema:
             type: string
       responses:
