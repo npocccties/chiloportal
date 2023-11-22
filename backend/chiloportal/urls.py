@@ -4,6 +4,7 @@ from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 
 from chiloportal.views.consumer_badges_list import ConsumerBadgesList
+from chiloportal.views.consumer_goal_list import ConsumerGoalList
 from .views import *
 from drf_yasg.generators import OpenAPISchemaGenerator
 
@@ -66,9 +67,14 @@ urlpatterns = [
         name="consumer-framework-list",
     ),
     path(
+        "consumer/goal/list/",
+        ConsumerGoalList.as_view(),
+        name="consumer-goal-list",
+    ),
+    path(
         "consumer/badges/list/",
         ConsumerBadgesList.as_view(),
-        name="consumer-framework-badges-list",
+        name="consumer-badges-list",
     ),
 ]
 

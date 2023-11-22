@@ -16,17 +16,19 @@ from rest_framework.exceptions import ValidationError
 from .. import utils
 
 class ConsumerBadgesList(BaseAPIView):
-    swagger_query_params = [SwaggerQueryParam("goal_id", True)]
+    swagger_query_params = [SwaggerQueryParam("framework_id", True), SwaggerQueryParam("stage_id", True)]
     filter_backends = (SwaggerQueryParamFilter,)
     header_param = openapi.Parameter('Authorization', openapi.IN_HEADER, description="成長段階のパスワード", type=openapi.TYPE_STRING)
-    
+
     @swagger_auto_schema(manual_parameters=[header_param])
     def get(self, request):
         return self.get_proc(request)
 
     def _get(self, request):
-        goal_id = request.GET.get("goal_id")
-        if goal_id == None or utils.is_int(goal_id) == False:
+        framework_id = request.GET.get("framework_id")
+        stage_id = request.GET.get("stage_id")
+        if (framework_id == None or utils.is_int(framework_id) == False or
+            stage_id == None or utils.is_int(stage_id) == False):
             raise ParseError("Invalid parameters supplied")
         filter_args = Q()
         filter_args |= Q(categorised_badges_wisdom_badges__goal__stage__password="")
@@ -61,7 +63,8 @@ class ConsumerBadgesList(BaseAPIView):
             WisdomBadges.objects.all()
             .filter(
                 filter_args,
-                categorised_badges_wisdom_badges__goal_id=goal_id
+                categorised_badges_wisdom_badges__goal__framework__id=framework_id,
+                categorised_badges_wisdom_badges__goal__stage__id=stage_id,
             )
             .prefetch_related(
                 "knowledge_badges_wisdom_badges",
@@ -94,4 +97,4 @@ class ConsumerBadgesList(BaseAPIView):
         )
         if queryset.exists() == False:
             return Response([])
-        return Response(to_consumer_framework_badges_list(queryset))
+        return Response(to_consumer_badges_list(queryset))

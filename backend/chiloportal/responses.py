@@ -236,10 +236,24 @@ def _to_field_detail(field_dict, field1value, field2keys, wisdom_dict):
         )
     return {"field1_name": field1value, "field2": field2_array}
 
-def to_consumer_framework_badges_list(wisdom_badge_set):
-    return [to_consumer_framework_badges(wisdom_badge) for wisdom_badge in wisdom_badge_set]
+def to_consumer_goal_list(goal_set):
+    return [to_consumer_goal(goal) for goal in goal_set]
 
-def to_consumer_framework_badges(wisdom_badge):
+def to_consumer_goal(goal):
+    return {
+        "consumer_id": goal['framework__consumer__id'],
+        "consumer_name": goal['framework__consumer__name'],
+        "framework_id": goal['framework__id'],
+        "framework_name": goal['framework__name'],
+        "stage_id": goal['stage__id'],
+        "stage_name": goal['stage__name'],
+        "stage_password": goal['stage__password'],
+    }
+
+def to_consumer_badges_list(wisdom_badge_set):
+    return [to_consumer_badges(wisdom_badge) for wisdom_badge in wisdom_badge_set]
+
+def to_consumer_badges(wisdom_badge):
     return {
         "consumer_id": wisdom_badge['categorised_badges_wisdom_badges__goal__framework__consumer__id'],
         "consumer_name": wisdom_badge['categorised_badges_wisdom_badges__goal__framework__consumer__name'],
