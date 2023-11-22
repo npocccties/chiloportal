@@ -247,6 +247,7 @@ def to_consumer_goal(goal):
         "framework_name": goal['framework__name'],
         "stage_id": goal['stage__id'],
         "stage_name": goal['stage__name'],
+        "field1_name": goal['field__field1_name'],
     }
 
 def to_consumer_badges_list(wisdom_badge_set):

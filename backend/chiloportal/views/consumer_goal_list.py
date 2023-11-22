@@ -51,6 +51,7 @@ class ConsumerGoalList(BaseAPIView):
                 "framework__consumer",
                 "framework",
                 "stage",
+                "field",
             )
             .values(
                 "framework__consumer__id",
@@ -61,11 +62,13 @@ class ConsumerGoalList(BaseAPIView):
                 "stage__id",
                 "stage__name",
                 "stage__sort_key",
+                "field__field1_name",
             )
             .order_by(
                 "framework__consumer__name",
                 "framework__sort_key",
                 "stage__sort_key",
+                "field__sort_key",
             )
             .annotate(stage_count=Count("stage"))
         )

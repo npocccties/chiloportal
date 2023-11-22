@@ -737,6 +737,9 @@ components:
         stage_name:
           type: string
           example: stage101
+        field1_name:
+          type: string
+          example: field1011
     ConsumerBadge:
       type: object
       properties:
