@@ -344,6 +344,12 @@ paths:
       description: 各コンシューマに関連する教育指標および成長段階ならびにバッジ一覧取得を取得します
       operationId: findConsumerBadgesList
       parameters:
+        - name: goal_id
+          in: query
+          description: goal id
+          required: true
+          schema:
+            type: number
         - name: Authorization
           in: header
           description: 成長段階のパスワードを指定し、一致するデータを取得します
@@ -359,7 +365,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/ConsumerBadge'
         '400':
-          description: Invalid password supplied
+          description: Invalid parameters supplied
 
 components:
   schemas:

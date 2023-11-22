@@ -13,19 +13,27 @@ import os
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.exceptions import ValidationError
+from .. import utils
 
 class ConsumerBadgesList(BaseAPIView):
+    swagger_query_params = [SwaggerQueryParam("goal_id", True)]
+    filter_backends = (SwaggerQueryParamFilter,)
     header_param = openapi.Parameter('Authorization', openapi.IN_HEADER, description="成長段階のパスワード", type=openapi.TYPE_STRING)
+    
     @swagger_auto_schema(manual_parameters=[header_param])
     def get(self, request):
         return self.get_proc(request)
 
     def _get(self, request):
+        goal_id = request.GET.get("goal_id")
+        if goal_id == None or utils.is_int(goal_id) == False:
+            raise ParseError("Invalid parameters supplied")
         filter_args = Q()
         filter_args |= Q(categorised_badges_wisdom_badges__goal__stage__password="")
         filter_args |= Q(
             categorised_badges_wisdom_badges__goal__stage__password__isnull=True
         )
+
         password = self.request.headers.get("Authorization")
         # パスワードチェック
         if password:
@@ -35,7 +43,7 @@ class ConsumerBadgesList(BaseAPIView):
             result = Stage.objects.filter(password=hashedPassword)
             count = result.count()
             if count == 0:
-                raise ValidationError('Invalid password supplied')
+                raise ValidationError('Invalid parameters supplied')
             filter_args |= Q(
                 categorised_badges_wisdom_badges__goal__stage__password=hashedPassword
             )
@@ -51,7 +59,10 @@ class ConsumerBadgesList(BaseAPIView):
         )
         queryset = (
             WisdomBadges.objects.all()
-            .filter(filter_args)
+            .filter(
+                filter_args,
+                categorised_badges_wisdom_badges__goal_id=goal_id
+            )
             .prefetch_related(
                 "knowledge_badges_wisdom_badges",
                 categorised_badges_prefetch,
