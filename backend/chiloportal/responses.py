@@ -247,7 +247,6 @@ def to_consumer_goal(goal):
         "framework_name": goal['framework__name'],
         "stage_id": goal['stage__id'],
         "stage_name": goal['stage__name'],
-        "stage_password": goal['stage__password'],
     }
 
 def to_consumer_badges_list(wisdom_badge_set):
@@ -261,7 +260,6 @@ def to_consumer_badges(wisdom_badge):
         "framework_name": wisdom_badge['categorised_badges_wisdom_badges__goal__framework__name'],
         "stage_id": wisdom_badge['categorised_badges_wisdom_badges__goal__stage__id'],
         "stage_name": wisdom_badge['categorised_badges_wisdom_badges__goal__stage__name'],
-        "stage_password": wisdom_badge['categorised_badges_wisdom_badges__goal__stage__password'],
         "field1_name": wisdom_badge['categorised_badges_wisdom_badges__goal__field__field1_name'],
         "digital_badge_class_id": wisdom_badge['badge_class_id'],
         "wisdom_badges_id": wisdom_badge['id'],

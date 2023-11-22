@@ -81,7 +81,6 @@ class ConsumerBadgesList(BaseAPIView):
                 "categorised_badges_wisdom_badges__goal__stage__id",
                 "categorised_badges_wisdom_badges__goal__stage__name",
                 "categorised_badges_wisdom_badges__goal__stage__sort_key",
-                "categorised_badges_wisdom_badges__goal__stage__password",
                 "categorised_badges_wisdom_badges__goal__framework__consumer__id",
                 "categorised_badges_wisdom_badges__goal__framework__consumer__name",
                 "categorised_badges_wisdom_badges__goal__field__field1_name",

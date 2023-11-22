@@ -359,7 +359,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ConsumerBadge'
+                  $ref: '#/components/schemas/ConsumerGoal'
         '400':
           description: Invalid password supplied
   /consumer/badges/list:
@@ -716,12 +716,9 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/Criteria'
-    ConsumerBadge:
+    ConsumerGoal:
       type: object
       properties:
-        goal_id:
-          type: integer
-          example: 1
         consumer_name:
           type: string
           example: consumer101
@@ -740,9 +737,27 @@ components:
         stage_name:
           type: string
           example: stage101
-        stage_password:
+    ConsumerBadge:
+      type: object
+      properties:
+        consumer_name:
           type: string
-          example: stage101_pass
+          example: consumer101
+        consumer_id:
+          type: integer
+          example: 1
+        framework_id:
+          type: integer
+          example: 1
+        framework_name:
+          type: string
+          example: framework101
+        stage_id:
+          type: integer
+          example: 1
+        stage_name:
+          type: string
+          example: stage101
         field1_name:
           type: string
           example: field1011

@@ -61,7 +61,6 @@ class ConsumerGoalList(BaseAPIView):
                 "stage__id",
                 "stage__name",
                 "stage__sort_key",
-                "stage__password",
             )
             .order_by(
                 "framework__consumer__name",
