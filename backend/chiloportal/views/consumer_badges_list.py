@@ -13,19 +13,29 @@ import os
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.exceptions import ValidationError
+from .. import utils
 
 class ConsumerBadgesList(BaseAPIView):
+    swagger_query_params = [SwaggerQueryParam("framework_id", True), SwaggerQueryParam("stage_id", True)]
+    filter_backends = (SwaggerQueryParamFilter,)
     header_param = openapi.Parameter('Authorization', openapi.IN_HEADER, description="成長段階のパスワード", type=openapi.TYPE_STRING)
+
     @swagger_auto_schema(manual_parameters=[header_param])
     def get(self, request):
         return self.get_proc(request)
 
     def _get(self, request):
+        framework_id = request.GET.get("framework_id")
+        stage_id = request.GET.get("stage_id")
+        if (framework_id == None or utils.is_int(framework_id) == False or
+            stage_id == None or utils.is_int(stage_id) == False):
+            raise ParseError("Invalid parameters supplied")
         filter_args = Q()
         filter_args |= Q(categorised_badges_wisdom_badges__goal__stage__password="")
         filter_args |= Q(
             categorised_badges_wisdom_badges__goal__stage__password__isnull=True
         )
+
         password = self.request.headers.get("Authorization")
         # パスワードチェック
         if password:
@@ -35,7 +45,7 @@ class ConsumerBadgesList(BaseAPIView):
             result = Stage.objects.filter(password=hashedPassword)
             count = result.count()
             if count == 0:
-                raise ValidationError('Invalid password supplied')
+                raise ValidationError('Invalid parameters supplied')
             filter_args |= Q(
                 categorised_badges_wisdom_badges__goal__stage__password=hashedPassword
             )
@@ -51,7 +61,11 @@ class ConsumerBadgesList(BaseAPIView):
         )
         queryset = (
             WisdomBadges.objects.all()
-            .filter(filter_args)
+            .filter(
+                filter_args,
+                categorised_badges_wisdom_badges__goal__framework__id=framework_id,
+                categorised_badges_wisdom_badges__goal__stage__id=stage_id,
+            )
             .prefetch_related(
                 "knowledge_badges_wisdom_badges",
                 categorised_badges_prefetch,
@@ -67,7 +81,6 @@ class ConsumerBadgesList(BaseAPIView):
                 "categorised_badges_wisdom_badges__goal__stage__id",
                 "categorised_badges_wisdom_badges__goal__stage__name",
                 "categorised_badges_wisdom_badges__goal__stage__sort_key",
-                "categorised_badges_wisdom_badges__goal__stage__password",
                 "categorised_badges_wisdom_badges__goal__framework__consumer__id",
                 "categorised_badges_wisdom_badges__goal__framework__consumer__name",
                 "categorised_badges_wisdom_badges__goal__field__field1_name",
@@ -76,11 +89,11 @@ class ConsumerBadgesList(BaseAPIView):
                 "categorised_badges_wisdom_badges__goal__framework__consumer__name",
                 "categorised_badges_wisdom_badges__goal__framework__sort_key",
                 "categorised_badges_wisdom_badges__goal__stage__sort_key",
-                "categorised_badges_wisdom_badges__goal__field__field1_name",
+                "categorised_badges_wisdom_badges__goal__field__sort_key",
                 "name",
             )
             .annotate(knowledge_badges_count=Count("knowledge_badges_wisdom_badges"))
         )
         if queryset.exists() == False:
             return Response([])
-        return Response(to_consumer_framework_badges_list(queryset))
+        return Response(to_consumer_badges_list(queryset))

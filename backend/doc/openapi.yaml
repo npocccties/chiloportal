@@ -28,6 +28,8 @@ tags:
     description: バッジを承認しているコンシューマの一覧
   - name: consumer framework list
     description: 指定したコンシューマIDの育成指標一覧
+  - name: consumer goal list
+    description: コンシューマに関連する教育指標および成長段階の取得
   - name: consumer badges list
     description: 各コンシューマに関連する教育指標および成長段階ならびにバッジ一覧取得
 paths:
@@ -337,16 +339,51 @@ paths:
                   $ref: '#/components/schemas/Framework'
         '400':
           description: Invalid ID supplied
+  /consumer/goal/list:
+    get:
+      tags:
+        - consumer goal list
+      description: コンシューマに関連する教育指標および成長段階を取得します
+      operationId: findConsumerGoalList
+      parameters:
+        - name: Authorization
+          in: header
+          description: 成長段階のパスワードを指定し、一致するデータを取得します
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ConsumerGoal'
+        '400':
+          description: Invalid password supplied
   /consumer/badges/list:
     get:
       tags:
         - consumer badges list
-      description: 各コンシューマに関連する教育指標および成長段階ならびにバッジ一覧取得を取得します
+      description: コンシューマに関連する教育指標および成長段階ならびにバッジ一覧取得を取得します
       operationId: findConsumerBadgesList
       parameters:
-        - name: password
+        - name: framework_id
           in: query
-          description: 成長段階のパスワードと一致するデータを取得します
+          description: framework id
+          required: true
+          schema:
+            type: number
+        - name: stage_id
+          in: query
+          description: stage id
+          required: true
+          schema:
+            type: number
+        - name: Authorization
+          in: header
+          description: 成長段階のパスワードを指定し、一致するデータを取得します
           schema:
             type: string
       responses:
@@ -359,7 +396,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/ConsumerBadge'
         '400':
-          description: Invalid password supplied
+          description: Invalid parameters supplied
 
 components:
   schemas:
@@ -679,6 +716,30 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/Criteria'
+    ConsumerGoal:
+      type: object
+      properties:
+        consumer_name:
+          type: string
+          example: consumer101
+        consumer_id:
+          type: integer
+          example: 1
+        framework_id:
+          type: integer
+          example: 1
+        framework_name:
+          type: string
+          example: framework101
+        stage_id:
+          type: integer
+          example: 1
+        stage_name:
+          type: string
+          example: stage101
+        field1_name:
+          type: string
+          example: field1011
     ConsumerBadge:
       type: object
       properties:
@@ -700,9 +761,6 @@ components:
         stage_name:
           type: string
           example: stage101
-        stage_password:
-          type: string
-          example: stage101_pass
         field1_name:
           type: string
           example: field1011
