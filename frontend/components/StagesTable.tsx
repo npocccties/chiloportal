@@ -29,7 +29,7 @@ function StageLink({
       className={clsx(
         "px-4 py-4 flex gap-4 items-center font-bold text-sm",
         active ? "bg-primary-200" : "hover:bg-primary-50",
-        className
+        className,
       )}
     >
       <span className="flex-1 text-ellipsis">{name}</span>

@@ -15,7 +15,7 @@ function Pagination({ className, totalCount, start, end, handleHref }: Props) {
   const { currentPage, nextPage, prevPage, pages } = usePagination(
     totalCount,
     start,
-    end
+    end,
   );
   return (
     <ul className={clsx("flex items-center gap-2", className)}>
@@ -51,7 +51,7 @@ function Pagination({ className, totalCount, start, end, handleHref }: Props) {
           <li key={index} aria-hidden>
             …
           </li>
-        )
+        ),
       )}
       <li>
         {nextPage ? (

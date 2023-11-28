@@ -1,5 +1,5 @@
 import { atom } from "jotai";
-import { useAtomValue, useUpdateAtom } from "jotai/utils";
+import { useAtom, useAtomValue } from "jotai/react";
 
 type Chat = {
   type: "bot" | "user";
@@ -8,19 +8,19 @@ type Chat = {
 
 const chatsAtom = atom<Chat[]>([]);
 
-const pushChatAtom = atom<null, Chat>(null, (get, set, chat) => {
+const pushChatAtom = atom(null, (get, set, chat: Chat) => {
   set(chatsAtom, [...get(chatsAtom), chat]);
 });
 
-const popChatAtom = atom<null, undefined>(null, (get, set) => {
+const popChatAtom = atom(null, (get, set) => {
   const chats = get(chatsAtom);
   set(chatsAtom, chats.slice(0, chats.length - 1));
 });
 
 function useChats() {
   const chats = useAtomValue(chatsAtom);
-  const pushChat = useUpdateAtom(pushChatAtom);
-  const popChat = useUpdateAtom(popChatAtom);
+  const [, pushChat] = useAtom(pushChatAtom);
+  const [, popChat] = useAtom(popChatAtom);
   return { chats, pushChat, popChat };
 }
 

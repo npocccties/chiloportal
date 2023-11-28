@@ -30,12 +30,14 @@ export async function getStaticProps({
   if (markdowns instanceof globalThis.Error)
     return { props: { title: markdowns.message, statusCode: 500 } };
   const markdown = markdowns.find(
-    (markdown) => markdown.data.matter.slug === slug
+    (markdown) => markdown.data.matter.slug === slug,
   );
   if (!markdown)
     return { props: { title: "Content Not Found", statusCode: 404 } };
   const source = await serialize(markdown.value.toString(), {
     mdxOptions: {
+      // @ts-expect-error Pluggable型がJSDocとTSで不一致
+      // See https://github.com/orgs/rehypejs/discussions/63
       rehypePlugins: [rehypeImageSize],
       remarkPlugins: [remarkGfm],
     },
@@ -61,7 +63,7 @@ export async function getStaticPaths(): Promise<
             },
           }) => ({
             params: { slug },
-          })
+          }),
         )
       : [];
   return { paths, fallback: false };

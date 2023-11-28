@@ -1,7 +1,7 @@
 function usePagination(
   totalCount: number,
   start: number,
-  end: number
+  end: number,
 ): {
   totalPages: number;
   currentPage: number;

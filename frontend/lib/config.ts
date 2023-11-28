@@ -12,7 +12,7 @@ export async function readConfig(): Promise<Error | Config> {
     ? join("overrides", filename)
     : filename;
   const file = await readFile(path, "utf8").catch(
-    () => "recommendedWisdomBadgesIds: []\nlearningContents: []\n"
+    () => "recommendedWisdomBadgesIds: []\nlearningContents: []\n",
   );
   const config = YAML.parse(file);
   const ajv = new Ajv();

@@ -80,7 +80,7 @@ function Menu({ open, onClose }: Props) {
                           <Link
                             href={pagesPath.portal_categories
                               ._portalCategoryId(
-                                portalCateogry.portal_category_id
+                                portalCateogry.portal_category_id,
                               )
                               .$url({ query: {} })}
                           >

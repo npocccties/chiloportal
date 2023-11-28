@@ -4,10 +4,12 @@ import { Consumer } from "api/@types";
 
 const key = "consumer/list" as const;
 
-async function fetcher(_: typeof key) {
+type Key = typeof key;
+
+async function fetcher(_: Key): Promise<Consumer[]> {
   return client.consumer.list.$get();
 }
 
 export default function useConsumers() {
-  return useSWRImmutable<Consumer[]>(key, fetcher);
+  return useSWRImmutable(key, fetcher);
 }

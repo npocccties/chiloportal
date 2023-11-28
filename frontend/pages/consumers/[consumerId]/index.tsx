@@ -33,8 +33,8 @@ export async function getServerSideProps({
     });
     const stagesPerFrameworks = await Promise.all(
       frameworks.map(({ framework_id }) =>
-        client.framework.stage.list.$get({ query: { framework_id } })
-      )
+        client.framework.stage.list.$get({ query: { framework_id } }),
+      ),
     );
     return {
       props: { consumer, frameworks, stagesPerFrameworks },
