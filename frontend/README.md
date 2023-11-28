@@ -38,7 +38,7 @@ corepack yarn start # テストサーバーの起動
 
 ```shell
 cp .env.development .env # 環境変数の用意 (別途 .env.test 作成でも可)
-docker build -t frontend . # Docker イメージのビルド
+docker build -t frontend -f ../Dockerfile.frontend .. # Docker イメージのビルド
 docker run --rm -p 3000:3000 frontend # Docker コンテナの起動
 ```
 
@@ -144,7 +144,7 @@ cat << EOL > .env # 環境変数の用意
 > NEXT_PUBLIC_API_BASE_URL=<API のベースとなる URL>
 > NEXT_PUBLIC_MOODLE_DASHBOARD_URL=<Moodle ダッシュボードの URL>
 > EOL
-docker build -t frontend . # Docker イメージのビルド
+docker build -t frontend -f ../Dockerfile.frontend .. # Docker イメージのビルド
 docker run --rm -p 3000:3000 frontend # Docker コンテナの起動
 ```
 
