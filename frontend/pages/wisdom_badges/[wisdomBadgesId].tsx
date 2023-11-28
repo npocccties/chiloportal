@@ -1,7 +1,7 @@
 import { GetServerSidePropsResult } from "next";
 import Error from "next/error";
 import Head from "next/head";
-import { client, getErrorProps } from "lib/client";
+import { client, getErrorProps } from "lib/node-client";
 import title from "lib/title";
 import { BadgeDetail1, BadgeDetail2 } from "api/@types";
 import Template from "templates/WisdomBadges";

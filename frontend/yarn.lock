@@ -71,12 +71,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aspida/fetch@npm:^1.11.0":
-  version: 1.11.0
-  resolution: "@aspida/fetch@npm:1.11.0"
-  dependencies:
-    aspida: "npm:^1.7.1"
-  checksum: c46deeefcc0a95cea4def3f308a908fef1c4f96cb6998bd7df59877d58a828a5da9d0fca8eadf0161c69a6844af1789a579676f580e44d4a9c5b4ee3b8a8c091
+"@aspida/fetch@npm:^1.14.0":
+  version: 1.14.0
+  resolution: "@aspida/fetch@npm:1.14.0"
+  peerDependencies:
+    aspida: ^1.14.0
+  checksum: 31e7205ed5de9202c90dad9468e894b80373053ab816b310b2a168a79755deb6105f68dfa1a6f1511d6afb5cd52975537271d4d797670d3572bf0972bbc795ac
+  languageName: node
+  linkType: hard
+
+"@aspida/node-fetch@npm:^1.14.0":
+  version: 1.14.0
+  resolution: "@aspida/node-fetch@npm:1.14.0"
+  peerDependencies:
+    aspida: ^1.14.0
+    node-fetch: ""
+  checksum: 7ae27ecf06847087f82b2bd6e9d8f7df444e644e094e02d58b0164c7a54a9528d13670370de5110921a2f9a4b0b8089bc2d7b8956db7140eeb976c60c80a838f
   languageName: node
   linkType: hard
 
@@ -2195,6 +2205,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node-fetch@npm:^2.6.9":
+  version: 2.6.9
+  resolution: "@types/node-fetch@npm:2.6.9"
+  dependencies:
+    "@types/node": "npm:*"
+    form-data: "npm:^4.0.0"
+  checksum: fc46141516191699b5f34fdf3516d3bd67421ad18da9f14785252abd22c1aa7a80ea5bcde835531b33df681f2b0d671786c3e987941547532fb447d77ebb8588
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:*":
+  version: 20.10.0
+  resolution: "@types/node@npm:20.10.0"
+  dependencies:
+    undici-types: "npm:~5.26.4"
+  checksum: c7d5ddbdbf3491e2363135c9611eb6bfae90eda2957279237fa232bcb29cd0df1cc3ee149d6de9915b754262a531ee2d57d33c9ecd58d763e8ad4856113822f3
+  languageName: node
+  linkType: hard
+
 "@types/node@npm:^18.7.5":
   version: 18.7.5
   resolution: "@types/node@npm:18.7.5"
@@ -2654,7 +2683,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"aspida@npm:^1.13.3, aspida@npm:^1.14.0, aspida@npm:^1.7.1":
+"aspida@npm:^1.13.3, aspida@npm:^1.14.0":
   version: 1.14.0
   resolution: "aspida@npm:1.14.0"
   dependencies:
@@ -4423,7 +4452,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "frontend@workspace:."
   dependencies:
-    "@aspida/fetch": "npm:^1.11.0"
+    "@aspida/fetch": "npm:^1.14.0"
+    "@aspida/node-fetch": "npm:^1.14.0"
     "@faker-js/faker": "npm:^7.5.0"
     "@headlessui/react": "npm:^1.6.6"
     "@iconify/react": "npm:^3.2.2"
@@ -4431,6 +4461,7 @@ __metadata:
     "@svgr/webpack": "npm:^6.5.1"
     "@tailwindcss/typography": "npm:^0.5.7"
     "@types/node": "npm:^18.7.5"
+    "@types/node-fetch": "npm:^2.6.9"
     "@types/react": "npm:^18.0.17"
     "@types/react-dom": "npm:^18.0.6"
     ajv: "npm:^8.12.0"
@@ -4449,6 +4480,7 @@ __metadata:
     msw: "npm:^2.0.6"
     next: "npm:^14.0.2"
     next-mdx-remote: "npm:^4.4.1"
+    node-fetch: "npm:^2.7.0"
     npm-run-all: "npm:^4.1.5"
     openapi2aspida: "npm:^0.23.2"
     pathpida: "npm:^0.22.0"
@@ -7203,7 +7235,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-fetch@npm:^2.6.1, node-fetch@npm:^2.6.7":
+"node-fetch@npm:^2.6.1, node-fetch@npm:^2.6.7, node-fetch@npm:^2.7.0":
   version: 2.7.0
   resolution: "node-fetch@npm:2.7.0"
   dependencies:
@@ -9491,6 +9523,13 @@ __metadata:
     has-symbols: "npm:^1.0.3"
     which-boxed-primitive: "npm:^1.0.2"
   checksum: 06e1ee41c1095e37281cb71a975cb3350f7cb470a0665d2576f02cc9564f623bd90cfc0183693b8a7fdf2d242963dcc3010b509fa3ac683f540c765c0f3e7e43
+  languageName: node
+  linkType: hard
+
+"undici-types@npm:~5.26.4":
+  version: 5.26.5
+  resolution: "undici-types@npm:5.26.5"
+  checksum: 0097779d94bc0fd26f0418b3a05472410408877279141ded2bd449167be1aed7ea5b76f756562cb3586a07f251b90799bab22d9019ceba49c037c76445f7cddd
   languageName: node
   linkType: hard
 
