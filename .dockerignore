@@ -1,0 +1,3 @@
+frontend/.env.*
+!frontend/.env.production
+frontend/node_modules
