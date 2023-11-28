@@ -3,6 +3,7 @@ import { join } from "node:path";
 import { read } from "to-vfile";
 import { matter } from "vfile-matter";
 import { VFile } from "vfile";
+import fg from "fast-glob";
 import Ajv from "ajv";
 import addFormats from "ajv-formats";
 import { Frontmatters } from "schemas/frontmatter";
@@ -20,16 +21,16 @@ export async function readMarkdowns(
   sort: boolean = false,
 ): Promise<Error | Markdown[]> {
   const overrides = await readdir("overrides");
-  const path = overrides.some((override) => override === dirname)
+  const dirPath = overrides.some((override) => override === dirname)
     ? join("overrides", dirname)
     : dirname;
-  const filenames = await readdir(path);
-  if (filenames.length === 0) return [];
-  const files = await Promise.all(
-    filenames.map((filename) =>
-      read(join(path, filename), "utf8").then((file) => {
-        matter(file, { strip: true });
-        return file as Markdown;
+  const filePaths = await fg.async(join(dirPath, "**", "*.md"));
+  if (filePaths.length === 0) return [];
+  const markdowns = await Promise.all(
+    filePaths.map((filePath) =>
+      read(filePath, "utf8").then((markdown) => {
+        matter(markdown, { strip: true });
+        return markdown as Markdown;
       }),
     ),
   );
@@ -37,14 +38,14 @@ export async function readMarkdowns(
   addFormats(ajv);
   const valid = ajv.validate(
     Frontmatters,
-    files.map((file) => file.data.matter),
+    markdowns.map((markdown) => markdown.data.matter),
   );
   if (!valid) return new Error(ajv.errorsText(ajv.errors));
   if (sort)
-    return files.sort(
+    return markdowns.sort(
       (a, b) =>
         new Date(b.data.matter.datePublished ?? "1970-01-01").getTime() -
         new Date(a.data.matter.datePublished ?? "1970-01-01").getTime(),
     );
-  return files;
+  return markdowns;
 }
