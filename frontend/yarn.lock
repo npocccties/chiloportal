@@ -2205,6 +2205,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node-fetch@npm:^2.6.9":
+  version: 2.6.9
+  resolution: "@types/node-fetch@npm:2.6.9"
+  dependencies:
+    "@types/node": "npm:*"
+    form-data: "npm:^4.0.0"
+  checksum: fc46141516191699b5f34fdf3516d3bd67421ad18da9f14785252abd22c1aa7a80ea5bcde835531b33df681f2b0d671786c3e987941547532fb447d77ebb8588
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:*":
+  version: 20.10.0
+  resolution: "@types/node@npm:20.10.0"
+  dependencies:
+    undici-types: "npm:~5.26.4"
+  checksum: c7d5ddbdbf3491e2363135c9611eb6bfae90eda2957279237fa232bcb29cd0df1cc3ee149d6de9915b754262a531ee2d57d33c9ecd58d763e8ad4856113822f3
+  languageName: node
+  linkType: hard
+
 "@types/node@npm:^18.7.5":
   version: 18.7.5
   resolution: "@types/node@npm:18.7.5"
@@ -4442,6 +4461,7 @@ __metadata:
     "@svgr/webpack": "npm:^6.5.1"
     "@tailwindcss/typography": "npm:^0.5.7"
     "@types/node": "npm:^18.7.5"
+    "@types/node-fetch": "npm:^2.6.9"
     "@types/react": "npm:^18.0.17"
     "@types/react-dom": "npm:^18.0.6"
     ajv: "npm:^8.12.0"
@@ -9503,6 +9523,13 @@ __metadata:
     has-symbols: "npm:^1.0.3"
     which-boxed-primitive: "npm:^1.0.2"
   checksum: 06e1ee41c1095e37281cb71a975cb3350f7cb470a0665d2576f02cc9564f623bd90cfc0183693b8a7fdf2d242963dcc3010b509fa3ac683f540c765c0f3e7e43
+  languageName: node
+  linkType: hard
+
+"undici-types@npm:~5.26.4":
+  version: 5.26.5
+  resolution: "undici-types@npm:5.26.5"
+  checksum: 0097779d94bc0fd26f0418b3a05472410408877279141ded2bd449167be1aed7ea5b76f756562cb3586a07f251b90799bab22d9019ceba49c037c76445f7cddd
   languageName: node
   linkType: hard
 
