@@ -1,17 +1,10 @@
-import { FromSchema } from "json-schema-to-ts";
+import { JSONSchema, FromSchema } from "json-schema-to-ts";
+import { Post } from "./post";
+import { Menu } from "./menu";
+import { Page } from "./page";
 
-export const Frontmatters = {
-  type: "array",
-  items: {
-    type: "object",
-    properties: {
-      title: { type: "string" },
-      slug: { type: "string" },
-      datePublished: { type: "string", format: "date" },
-    },
-    required: ["title", "slug"],
-    additionalProperties: false,
-  },
-} as const;
+export const Frontmatter = {
+  oneOf: [Post, Menu, Page],
+} as const satisfies JSONSchema;
 
-export type Frontmatters = FromSchema<typeof Frontmatters>;
+export type Frontmatter = FromSchema<typeof Frontmatter>;

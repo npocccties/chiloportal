@@ -1,3 +1,4 @@
+import { JSONSchema } from "json-schema-to-ts";
 import { readdir } from "node:fs/promises";
 import { join } from "node:path";
 import { read } from "to-vfile";
@@ -6,20 +7,52 @@ import { VFile } from "vfile";
 import fg from "fast-glob";
 import Ajv from "ajv";
 import addFormats from "ajv-formats";
-import { Frontmatters } from "schemas/frontmatter";
+import { Frontmatter, Post, Menu, Page } from "schemas";
 
-export type Markdown = VFile & { data: Required<VFile["data"]> };
+export type Markdown<T extends Frontmatter = Frontmatter> = VFile & {
+  data: Required<VFile["data"]> & { matter: T };
+};
+export type MarkdownResult<T extends Frontmatter["type"]> = Markdown<
+  T extends "post" ? Post : T extends "menu" ? Menu : Page
+>;
+
+/** おしらせか否か判定する関数 */
+export const isPost = (markdown: Markdown): markdown is Markdown<Post> =>
+  markdown.data.matter.type === "post";
+
+/** メニューか否か判定する関数 */
+export const isMenu = (markdown: Markdown): markdown is Markdown<Menu> =>
+  markdown.data.matter.type === "menu";
+
+/** ページか否か判定する関数 */
+export const isPage = (markdown: Markdown): markdown is Markdown<Page> =>
+  markdown.data.matter.type === "page";
+
+/** おしらせをソートする関数 */
+export function sortPosts(posts: Markdown<Post>[]): Markdown<Post>[] {
+  return posts.sort(
+    (a, b) =>
+      new Date(b.data.matter.datePublished).getTime() -
+      new Date(a.data.matter.datePublished).getTime(),
+  );
+}
+
+/** メニューをソートする関数 */
+export function sortMenus(menus: Markdown<Menu>[]): Markdown<Menu>[] {
+  return menus.sort((a, b) => b.data.matter.order - a.data.matter.order);
+}
 
 /**
  * ディレクトリ内のマークダウンファイルの内容を取得する関数
  * @params dirname マークダウンファイルが存在するディレクトリ名
- * @params sort 公開日順にソートするか否か
+ * @params options.type マークダウンファイルの種類
+ * @params options.sort ソートするか否か
  * @returns VFile の配列
  */
-export async function readMarkdowns(
+export async function readMarkdowns<T extends Frontmatter["type"]>(
   dirname: string,
-  sort: boolean = false,
-): Promise<Error | Markdown[]> {
+  { type, sort }: { type: T; sort: boolean },
+): Promise<Error | MarkdownResult<T>[]> {
   const overrides = await readdir("overrides");
   const dirPath = overrides.some((override) => override === dirname)
     ? join("overrides", dirname)
@@ -37,15 +70,17 @@ export async function readMarkdowns(
   const ajv = new Ajv();
   addFormats(ajv);
   const valid = ajv.validate(
-    Frontmatters,
+    { type: "array", items: Frontmatter } satisfies JSONSchema,
     markdowns.map((markdown) => markdown.data.matter),
   );
   if (!valid) return new Error(ajv.errorsText(ajv.errors));
-  if (sort)
-    return markdowns.sort(
-      (a, b) =>
-        new Date(b.data.matter.datePublished ?? "1970-01-01").getTime() -
-        new Date(a.data.matter.datePublished ?? "1970-01-01").getTime(),
-    );
-  return markdowns;
+  if (type === "post") {
+    const posts = markdowns.filter(isPost);
+    return (sort ? sortPosts(posts) : posts) as MarkdownResult<T>[];
+  }
+  if (type === "menu") {
+    const menus = markdowns.filter(isMenu);
+    return (sort ? sortMenus(menus) : menus) as MarkdownResult<T>[];
+  }
+  return markdowns.filter(isPage) as MarkdownResult<T>[];
 }
