@@ -9,6 +9,8 @@ import {
   framework,
   stage,
   criteria,
+  consumerGoal,
+  consumerBadge,
 } from "./faker";
 
 export const handlers = [
@@ -66,5 +68,11 @@ export const handlers = [
   ),
   restGet(client.consumer.framework.list, (_req, res, ctx) =>
     res(ctx.json([...Array(3)].map(framework)))
+  ),
+  restGet(client.consumer.goal.list, (_req, res, ctx) =>
+    res(ctx.json([...Array(3)].map(consumerGoal)))
+  ),
+  restGet(client.consumer.badges.list, (_req, res, ctx) =>
+    res(ctx.json([...Array(3)].map(consumerBadge)))
   ),
 ];

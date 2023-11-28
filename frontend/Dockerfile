@@ -18,7 +18,7 @@ COPY schemas/ ./schemas
 COPY styles/ ./styles
 COPY templates/ ./templates
 ADD https://raw.githubusercontent.com/npocccties/chiloportal/develop/backend/doc/openapi.yaml /backend/doc/openapi.yaml
-RUN echo "a9cfc6c94f55cdeac753c895f05760f9  ../backend/doc/openapi.yaml" > md5sum.txt && md5sum -c md5sum.txt
+RUN echo "7622f5b529f8d54eae786d25cbcd2378  ../backend/doc/openapi.yaml" > md5sum.txt && md5sum -c md5sum.txt
 RUN corepack yarn build
 
 FROM base as install
