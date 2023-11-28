@@ -7,6 +7,8 @@ import {
   Framework,
   Stage,
   Criteria,
+  ConsumerGoal,
+  ConsumerBadge,
 } from "api/@types";
 
 export const consumer = (): Consumer => ({
@@ -103,4 +105,29 @@ export const criteria = (): Criteria => ({
     Math.floor(Math.random() * 4)
   ],
   name: "1." + faker.animal.cetacean(),
+});
+
+export const consumerGoal = (): ConsumerGoal => ({
+  consumer_name: faker.company.name(),
+  consumer_id: faker.datatype.number(),
+  framework_id: faker.datatype.number(),
+  framework_name: faker.animal.cow(),
+  stage_id: faker.datatype.number(),
+  stage_name: faker.animal.crocodilia(),
+  field1_name: faker.animal.bear(),
+});
+
+export const consumerBadge = (): ConsumerBadge => ({
+  consumer_name: faker.company.name(),
+  consumer_id: faker.datatype.number(),
+  framework_id: faker.datatype.number(),
+  framework_name: faker.animal.cow(),
+  stage_id: faker.datatype.number(),
+  stage_name: faker.animal.crocodilia(),
+  field1_name: faker.animal.bear(),
+  digital_badge_class_id: faker.datatype.string(),
+  wisdom_badges_id: faker.datatype.number(),
+  wisdom_badges_name: faker.animal.cat(),
+  wisdom_badges_description: faker.lorem.paragraph(),
+  knowledge_badges_count: faker.datatype.number(),
 });
