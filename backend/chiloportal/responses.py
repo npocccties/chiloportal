@@ -38,10 +38,10 @@ def to_criteria(criteria):
     }
 
 
-def to_pager_wisdom_badges(page):
+def to_pager_wisdom_badges(page, output_portal_category=False):
     badge_array = []
     for wisdom_badge in page.object_list:
-        badge_array.append(to_wisdom_badge(wisdom_badge))
+        badge_array.append(to_wisdom_badge(wisdom_badge, output_portal_category))
     return {
         "badges": badge_array,
         "total_count": page.paginator.object_list.count(),
@@ -50,8 +50,8 @@ def to_pager_wisdom_badges(page):
     }
 
 
-def to_pager_wisdom_badges_all(queryset):
-    badge_array = [to_wisdom_badge(badge) for badge in queryset]
+def to_pager_wisdom_badges_all(queryset, output_portal_category=False):
+    badge_array = [to_wisdom_badge(badge, output_portal_category) for badge in queryset]
     return {
         "badges": badge_array,
         "total_count": len(badge_array),
