@@ -5,26 +5,30 @@ from ..swagger import *
 from ..responses import *
 from .base_api_view import *
 from .. import utils
+from django.db.models import Q
 
 
 class PortalCategoryBadgesList(BaseAPIView):
     swagger_query_params = [
-        SwaggerQueryParam("portal_category_id", True),
+        SwaggerQueryParam("portal_category_id", False),
         SwaggerQueryParam("page_number", False),
     ]
     filter_backends = (SwaggerQueryParamFilter,)
 
     def _get(self, request):
         id = self.request.GET.get("portal_category_id")
-        if id == None or utils.is_int(id) == False:
+        if id != None and utils.is_int(id) == False:
             self.logger.error(f"Invalid portal_category_id: {id}")
             raise ParseError("Invalid parameters supplied")
         page_number = self.request.GET.get("page_number")
         if page_number != None and utils.is_int(page_number) == False:
             self.logger.error(f"Invalid page_number: {page_number}")
             raise ParseError("Invalid parameters supplied")
+        filter_args = Q()
+        if id:
+            filter_args |= Q(portal_category_id=id)
         queryset = (
-            WisdomBadges.objects.filter(portal_category_id=id)
+            WisdomBadges.objects.filter(filter_args)
             .order_by("pk")
             .distinct()
             .select_related("issuer", "portal_category")
