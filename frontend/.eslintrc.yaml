@@ -9,6 +9,9 @@ rules:
   canonical/filename-match-exported:
     - error
     - transforms: kebab
+  "@typescript-eslint/no-unused-vars":
+    - error
+    - argsIgnorePattern: "_"
 overrides:
   - files: "{components,templates}/**/*.tsx"
     rules:

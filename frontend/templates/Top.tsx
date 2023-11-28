@@ -1,13 +1,11 @@
 import clsx from "clsx";
 import Link from "next/link";
-import Image from "next/image";
 import { Icon } from "@iconify/react";
 import { Props } from "pages";
 import { pagesPath } from "lib/$path";
 import useConsumers from "lib/use-consumers";
 import usePortalCategories from "lib/use-portal-categories";
 import useBadges from "lib/use-badges";
-import Container from "components/Container";
 import WisdomBadgesCard from "components/WisdomBadgesCard";
 import PortalCategoryCard from "components/PortalCategoryCard";
 import Fallback from "components/Fallback";
@@ -26,8 +24,6 @@ export default function Top({
     "wisdom",
     recommendedWisdomBadgesIds,
   );
-  const alt =
-    "科目を選び、バッジを獲得することで社会的評価や自信の証明が得られ、あなたと子供達と社会のウェルビーイングへとつながります。この関係性は、学習成果の活用と主体的な学びの循環によって形成されます";
   return (
     <>
       <article>
