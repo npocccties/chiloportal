@@ -1,6 +1,7 @@
 import { faker } from "@faker-js/faker";
 import {
   Consumer,
+  Issuer,
   FieldDetail,
   PortalCategory,
   BadgeDetail1,
@@ -13,6 +14,13 @@ import {
 
 export const consumer = (): Consumer => ({
   consumer_id: faker.datatype.number(),
+  name: faker.company.name(),
+  url: faker.internet.url(),
+  email: faker.internet.email(),
+});
+
+export const issuer = (): Issuer => ({
+  issuer_id: faker.datatype.number(),
   name: faker.company.name(),
   url: faker.internet.url(),
   email: faker.internet.email(),
