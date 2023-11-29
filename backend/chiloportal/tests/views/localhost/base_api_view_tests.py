@@ -10,6 +10,7 @@ class BaseAPIViewTests(TestCase):
     base_url = "http://localhost:8000"
     consumer_detail_url = urljoin(base_url, "consumer/")
     consumer_list_url = urljoin(base_url, "consumer/list/")
+    issuer_list_url = urljoin(base_url, "issuer/list/")
     stage_field_list_url = urljoin(base_url, "stage/field/list/")
     portal_category_list_url = urljoin(base_url, "portalCategory/list/")
     portal_category_badge_list_url = urljoin(base_url, "portalCategory/badges/list/")
@@ -622,6 +623,20 @@ class BaseAPIViewTests(TestCase):
         self.assertEqual(data["name"], consumer.name)
         self.assertEqual(data["url"], consumer.url)
         self.assertEqual(data["email"], consumer.email)
+
+    def assert_issuers(self, array, expect_array):
+        self.assertEqual(len(array), len(expect_array))
+        i = 0
+        for issuer in expect_array:
+            data = array[i]
+            self.assert_issuer(data, issuer)
+            i += 1
+
+    def assert_issuer(self, data, issuer):
+        self.assertEqual(data["issuer_id"], issuer.id)
+        self.assertEqual(data["name"], issuer.name)
+        self.assertEqual(data["url"], issuer.url)
+        self.assertEqual(data["email"], issuer.email)
 
     def assert_field(
         self, field1, field2, field3, expect_field, expect_wisdom_badge_id_list=None

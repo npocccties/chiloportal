@@ -2,6 +2,7 @@ import { http, HttpResponse } from "msw";
 import { client } from "lib/client";
 import {
   consumer,
+  issuer,
   field,
   portalCategory,
   wisdomBadges,
@@ -16,6 +17,9 @@ export const handlers = [
   http.get(client.consumer.$path(), () => HttpResponse.json(consumer())),
   http.get(client.consumer.list.$path(), () =>
     HttpResponse.json([...Array(10)].map(consumer)),
+  ),
+  http.get(client.issuer.list.$path(), () =>
+    HttpResponse.json([...Array(10)].map(issuer)),
   ),
   http.get(client.stage.field.list.$path(), () => HttpResponse.json(field())),
   http.get(client.portalCategory.list.$path(), () =>

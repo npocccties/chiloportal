@@ -29,6 +29,16 @@ def to_consumer(consumer):
         "email": consumer.email,
     }
 
+def to_issuers(queryset):
+    return [to_issuer(issuer) for issuer in queryset]
+
+def to_issuer(issuer):
+    return {
+        "issuer_id": issuer.id,
+        "name": issuer.name,
+        "url": issuer.url,
+        "email": issuer.email,
+    }
 
 def to_criteria(criteria):
     return {
