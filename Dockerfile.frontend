@@ -6,16 +6,15 @@ COPY frontend/.yarn/ ./.yarn
 FROM base as build
 RUN corepack yarn install --immutable
 COPY frontend/.env* frontend/.eslintrc.yaml frontend/.gitignore \
-  frontend/config.yaml frontend/next.config.js frontend/postcss.config.js \
+  frontend/next.config.js frontend/postcss.config.js \
   frontend/tailwind.config.js frontend/tsconfig.json frontend/vfile-env.d.ts \
   ./
 COPY frontend/components/ ./components
 COPY frontend/contents/ ./contents
+COPY frontend/examples/ ./examples
 COPY frontend/lib/ ./lib
 COPY frontend/mocks/ ./mocks
-COPY frontend/overrides/ ./overrides
 COPY frontend/pages/ ./pages
-COPY frontend/posts/ ./posts
 COPY frontend/public/ ./public
 COPY frontend/schemas/ ./schemas
 COPY frontend/styles/ ./styles

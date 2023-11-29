@@ -6,6 +6,7 @@ import { serialize } from "next-mdx-remote/serialize";
 import remarkGfm from "remark-gfm";
 import Template from "templates/Post";
 import { readMarkdowns, Markdown } from "lib/markdown";
+import { Post } from "schemas";
 import rehypeImageSize from "lib/rehype-image-size";
 import title from "lib/title";
 
@@ -20,13 +21,14 @@ type ErrorProps = {
 
 export type Props = {
   source: MDXRemoteSerializeResult;
-  matter: Markdown["data"]["matter"];
+  matter: Markdown<Post>["data"]["matter"];
 };
 
 export async function getStaticProps({
   params: { slug },
 }: Context): Promise<GetStaticPropsResult<ErrorProps | Props>> {
-  const markdowns = await readMarkdowns("posts");
+  const markdowns = await readMarkdowns({ type: "post", sort: false });
+
   if (markdowns instanceof globalThis.Error)
     return { props: { title: markdowns.message, statusCode: 500 } };
   const markdown = markdowns.find(
@@ -52,19 +54,12 @@ export async function getStaticProps({
 export async function getStaticPaths(): Promise<
   GetStaticPathsResult<Context["params"]>
 > {
-  const markdowns = await readMarkdowns("posts");
-  const paths =
-    "map" in markdowns
-      ? markdowns.map(
-          ({
-            data: {
-              matter: { slug },
-            },
-          }) => ({
-            params: { slug },
-          }),
-        )
-      : [];
+  const markdowns = await readMarkdowns({ type: "post", sort: false });
+  if (markdowns instanceof globalThis.Error)
+    return { paths: [], fallback: false };
+  const paths = markdowns.map((markdown) => ({
+    params: { slug: markdown.data.matter.slug },
+  }));
   return { paths, fallback: false };
 }
 

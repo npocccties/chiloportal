@@ -56,6 +56,6 @@ public/images/*
 !public/images/mock*
 !public/images/hero/
 
-# overrides
-overrides/*
-!overrides/.keep
+# contents
+contents/*
+!contents/.keep

@@ -1,6 +1,8 @@
 ---
 title: OKUTEPについて
+type: menu
 slug: concept
+order: 1
 ---
 
 ## OKUTEP が目指すこと

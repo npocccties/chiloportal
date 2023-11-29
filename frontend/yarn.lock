@@ -4410,7 +4410,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-glob@npm:^3.2.9, fast-glob@npm:^3.3.0, fast-glob@npm:^3.3.1":
+"fast-glob@npm:^3.2.9, fast-glob@npm:^3.3.0, fast-glob@npm:^3.3.1, fast-glob@npm:^3.3.2":
   version: 3.3.2
   resolution: "fast-glob@npm:3.3.2"
   dependencies:
@@ -4597,6 +4597,7 @@ __metadata:
     eslint-config-next: "npm:^14.0.2"
     eslint-config-prettier: "npm:^9.0.0"
     eslint-plugin-canonical: "npm:^4.15.1"
+    fast-glob: "npm:^3.3.2"
     fixpack: "npm:^4.0.0"
     image-size: "npm:^1.0.2"
     jotai: "npm:^2.5.1"

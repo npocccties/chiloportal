@@ -6,6 +6,7 @@ import { serialize } from "next-mdx-remote/serialize";
 import remarkGfm from "remark-gfm";
 import Template from "templates/Content";
 import { readMarkdowns, Markdown } from "lib/markdown";
+import { Page as MdPage, Menu } from "schemas";
 import rehypeImageSize from "lib/rehype-image-size";
 import title from "lib/title";
 
@@ -20,16 +21,21 @@ type ErrorProps = {
 
 export type Props = {
   source: MDXRemoteSerializeResult;
-  matter: Markdown["data"]["matter"];
+  matter: Markdown<MdPage | Menu>["data"]["matter"];
 };
 
 export async function getStaticProps({
   params: { slug },
 }: Context): Promise<GetStaticPropsResult<ErrorProps | Props>> {
-  const markdowns = await readMarkdowns("contents");
-  if (markdowns instanceof globalThis.Error)
-    return { props: { title: markdowns.message, statusCode: 500 } };
-  const markdown = markdowns.find(
+  const [pages, menus] = await Promise.all([
+    readMarkdowns({ type: "page", sort: false }),
+    readMarkdowns({ type: "menu", sort: false }),
+  ]);
+  if (pages instanceof globalThis.Error)
+    return { props: { title: pages.message, statusCode: 500 } };
+  if (menus instanceof globalThis.Error)
+    return { props: { title: menus.message, statusCode: 500 } };
+  const markdown = [...pages, ...menus].find(
     (markdown) => markdown.data.matter.slug === slug,
   );
   if (!markdown)
@@ -53,19 +59,15 @@ export async function getStaticProps({
 export async function getStaticPaths(): Promise<
   GetStaticPathsResult<Context["params"]>
 > {
-  const markdowns = await readMarkdowns("contents");
-  const paths =
-    "map" in markdowns
-      ? markdowns.map(
-          ({
-            data: {
-              matter: { slug },
-            },
-          }) => ({
-            params: { slug },
-          }),
-        )
-      : [];
+  const [pages, menus] = await Promise.all([
+    readMarkdowns({ type: "page", sort: false }),
+    readMarkdowns({ type: "menu", sort: false }),
+  ]);
+  if (pages instanceof globalThis.Error) return { paths: [], fallback: false };
+  if (menus instanceof globalThis.Error) return { paths: [], fallback: false };
+  const paths = [...pages, ...menus].map((markdown) => ({
+    params: { slug: markdown.data.matter.slug },
+  }));
   return { paths, fallback: false };
 }
 

@@ -4,7 +4,7 @@ import Head from "next/head";
 import Template from "templates/Top";
 import { readMarkdowns, Markdown } from "lib/markdown";
 import { readConfig } from "lib/config";
-import { Config } from "schemas/config";
+import { Post, Config } from "schemas";
 import title from "lib/title";
 
 type ErrorProps = {
@@ -13,7 +13,7 @@ type ErrorProps = {
 };
 
 export type Props = {
-  posts: Markdown["data"]["matter"][];
+  posts: Markdown<Post>["data"]["matter"][];
   recommendedWisdomBadgesIds: NonNullable<Config["recommendedWisdomBadgesIds"]>;
   learningContents: NonNullable<Config["learningContents"]>;
 };
@@ -21,7 +21,7 @@ export type Props = {
 export async function getStaticProps(): Promise<
   GetStaticPropsResult<ErrorProps | Props>
 > {
-  const markdowns = await readMarkdowns("posts", true);
+  const markdowns = await readMarkdowns({ type: "post", sort: true });
   if (markdowns instanceof globalThis.Error)
     return { props: { title: markdowns.message, statusCode: 500 } };
   const posts = markdowns.map((markdown) => markdown.data.matter);
