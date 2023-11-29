@@ -1,5 +1,4 @@
 import { JSONSchema } from "json-schema-to-ts";
-import { readdir } from "node:fs/promises";
 import { join } from "node:path";
 import { read } from "to-vfile";
 import { matter } from "vfile-matter";
@@ -57,10 +56,8 @@ export async function readMarkdowns<T extends Frontmatter["type"]>({
   sort: boolean;
 }): Promise<Error | MarkdownResult<T>[]> {
   const dirname = "contents";
-  const overrides = await readdir("overrides");
-  const dirPath = overrides.some((override) => override === dirname)
-    ? join("overrides", dirname)
-    : dirname;
+  const contents = await fg.async(join(dirname, "**", "*.md"));
+  const dirPath = contents.length > 0 ? dirname : "examples";
   const filePaths = await fg.async(join(dirPath, "**", "*.md"));
   if (filePaths.length === 0) return [];
   const markdowns = await Promise.all(

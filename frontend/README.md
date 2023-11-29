@@ -55,15 +55,16 @@ docker run --rm -p 3000:3000 frontend # Docker コンテナの起動
 
 ## 静的コンテンツ
 
-### 上書き
+### サンプル
 
-overrides ディレクトリに静的コンテンツを配置した場合、そちらを参照して表示します。overrides ディレクトリ外の静的コンテンツについては参照しなくなります。
+examples ディレクトリに動作確認用のファイルが配置されています。contents ディレクトリに静的コンテンツを配置した場合、そちらを参照して表示します。contents ディレクトリ外の静的コンテンツについては参照しなくなります。
 
 各静的コンテンツについて以下の条件で参照先を切り替えます。
 
-- YAML ファイルかマークダウンファイル: overrides/contents ディレクトリが存在するか否か
+- YAML ファイル: contents/\*\*/\*.(yml|yaml) ファイルが存在するか否か
+- マークダウンファイル: contents/\*\*/\*.md ファイルが存在するか否か
 
-### contents/config.yaml あるいは overrides/contents/config.yaml
+### contents/\*\*/\*.(yml|yaml)
 
 #### recommendedWisdomBadgesIds
 
@@ -101,7 +102,7 @@ learningContents:
 
 [^type]: あくまで URL 先の学習コンテンツが公開であるか非公開であるか示すものであり、本アプリケーションとしてはいずれの値でも表示します。
 
-### contents/\*\*/\*.md あるいは overrides/contents/\*\*/\*.md
+### contents/\*\*/\*.md
 
 #### おしらせ
 
