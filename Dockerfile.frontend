@@ -14,7 +14,6 @@ COPY frontend/contents/ ./contents
 COPY frontend/examples/ ./examples
 COPY frontend/lib/ ./lib
 COPY frontend/mocks/ ./mocks
-COPY frontend/overrides/ ./overrides
 COPY frontend/pages/ ./pages
 COPY frontend/public/ ./public
 COPY frontend/schemas/ ./schemas
