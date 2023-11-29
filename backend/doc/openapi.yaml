@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: Portal Badges API
   description: 教員研修システム向けバッジ関連データ取得API
-  version: 0.9.7
+  version: 0.9.8
 servers:
   - url: https://chiloportal.example.com/api/v1
 tags:
@@ -70,6 +70,21 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Consumer'
+  /issuer/list:
+    get:
+      tags:
+        - issuer list
+      description: 登録されている発行機関を一覧で返却します
+      operationId: findIssuerList
+      responses:
+        '200':
+          description: successful opperation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Issuer'
   /stage/field/list:
     get:
       tags:
@@ -419,6 +434,28 @@ components:
       additionalProperties: false
       required:
         - consumer_id
+        - name
+        - url
+        - email
+    Issuer:
+      type: object
+      properties:
+        issuer_id:
+          type: integer
+          format: int64
+          example: 101
+        name:
+          type: string
+          example: issuer101
+        url:
+          type: string
+          example: https://example.com/issuer101/
+        email:
+          type: string
+          example: issuer101@example.com
+      additionalProperties: false
+      required:
+        - issuer_id
         - name
         - url
         - email
