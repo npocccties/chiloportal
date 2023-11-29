@@ -10,13 +10,12 @@ export default function Issuer({ posts, learningContents }: Props) {
           <li key={post.slug}>{post.title}</li>
         ))}
       </ul>
-      <h2>おすすめバッジ</h2>
+      <h2>その他コンテンツ</h2>
       <ul>
         {learningContents.map((learningContent, index) => (
           <li key={index}>{learningContent.name}</li>
         ))}
       </ul>
-      <h2>その他コンテンツ</h2>
     </Container>
   );
 }
