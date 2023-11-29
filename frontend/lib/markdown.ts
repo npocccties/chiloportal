@@ -59,8 +59,8 @@ function filterByIssuer(
  * ディレクトリ内のマークダウンファイルの内容を取得する関数
  * @params options.type マークダウンファイルの種類
  * @params options.sort ソートするか否か
- * @params options.issuerId 発行者の識別子（未指定ならば大学連合とみなす）
- * @params options.allIssuer 大学連合を含むすべての発行機関のファイルを得るか否か
+ * @params options.issuerId 発行者の識別子（未指定ならば大学連携とみなす）
+ * @params options.allIssuer 大学連携を含むすべての発行機関のファイルを得るか否か
  * @returns VFile の配列
  */
 export async function readMarkdowns<T extends Frontmatter["type"]>({
