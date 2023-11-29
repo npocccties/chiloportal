@@ -5,6 +5,7 @@ export const Post = {
   properties: {
     type: { const: "post" },
     title: { type: "string" },
+    issuerId: { type: "number" },
     slug: { type: "string" },
     datePublished: { type: "string", format: "date" },
   },

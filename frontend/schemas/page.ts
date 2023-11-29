@@ -5,6 +5,7 @@ export const Page = {
   properties: {
     type: { const: "page" },
     title: { type: "string" },
+    issuerId: { type: "number" },
     slug: { type: "string" },
   },
   required: ["type", "title", "slug"],

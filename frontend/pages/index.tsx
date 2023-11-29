@@ -3,7 +3,7 @@ import Error from "next/error";
 import Head from "next/head";
 import Template from "templates/Top";
 import { readMarkdowns, Markdown } from "lib/markdown";
-import { readConfig } from "lib/config";
+import { readConfigs } from "lib/config";
 import { Post, Config } from "schemas";
 import title from "lib/title";
 
@@ -25,10 +25,12 @@ export async function getStaticProps(): Promise<
   if (markdowns instanceof globalThis.Error)
     return { props: { title: markdowns.message, statusCode: 500 } };
   const posts = markdowns.map((markdown) => markdown.data.matter);
-  const config = await readConfig();
-  if (config instanceof globalThis.Error)
-    return { props: { title: config.message, statusCode: 500 } };
-  const { recommendedWisdomBadgesIds = [], learningContents = [] } = config;
+  const configs = await readConfigs();
+  if (configs instanceof globalThis.Error)
+    return { props: { title: configs.message, statusCode: 500 } };
+  if (configs.length === 0)
+    return { props: { title: "Config Not Found", statusCode: 500 } };
+  const { recommendedWisdomBadgesIds = [], learningContents = [] } = configs[0];
   return {
     props: {
       posts,
