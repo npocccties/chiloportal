@@ -5,6 +5,7 @@ export const Menu = {
   properties: {
     type: { const: "menu" },
     title: { type: "string" },
+    issuerId: { type: "number" },
     slug: { type: "string" },
     order: { type: "number" },
   },

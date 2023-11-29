@@ -3,6 +3,7 @@ import { FromSchema } from "json-schema-to-ts";
 export const Config = {
   type: "object",
   properties: {
+    issuerId: { type: "number" },
     recommendedWisdomBadgesIds: {
       type: "array",
       items: { type: "number" },

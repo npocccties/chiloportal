@@ -28,7 +28,7 @@ export const isPage = (markdown: Markdown): markdown is Markdown<Page> =>
   markdown.data.matter.type === "page";
 
 /** おしらせをソートする関数 */
-export function sortPosts(posts: Markdown<Post>[]): Markdown<Post>[] {
+function sortPosts(posts: Markdown<Post>[]): Markdown<Post>[] {
   return posts.sort(
     (a, b) =>
       new Date(b.data.matter.datePublished).getTime() -
@@ -37,23 +37,42 @@ export function sortPosts(posts: Markdown<Post>[]): Markdown<Post>[] {
 }
 
 /** メニューをソートする関数 */
-export function sortMenus(menus: Markdown<Menu>[]): Markdown<Menu>[] {
+function sortMenus(menus: Markdown<Menu>[]): Markdown<Menu>[] {
   return menus.sort((a, b) => b.data.matter.order - a.data.matter.order);
+}
+
+/** 発行機関別に抽出する関数 */
+function filterByIssuer(
+  markdowns: Markdown[],
+  allIssuer: boolean,
+  issuerId?: number,
+): Markdown[] {
+  if (allIssuer) return markdowns;
+  return issuerId
+    ? markdowns.filter((markdown) => markdown.data.matter.issuerId === issuerId)
+    : markdowns.filter(
+        (markdown) => markdown.data.matter.issuerId === undefined,
+      );
 }
 
 /**
  * ディレクトリ内のマークダウンファイルの内容を取得する関数
- * @params dirname マークダウンファイルが存在するディレクトリ名
  * @params options.type マークダウンファイルの種類
  * @params options.sort ソートするか否か
+ * @params options.issuerId 発行者の識別子（未指定ならば大学連携とみなす）
+ * @params options.allIssuer 大学連携を含むすべての発行機関のファイルを得るか否か
  * @returns VFile の配列
  */
 export async function readMarkdowns<T extends Frontmatter["type"]>({
   type,
   sort,
+  issuerId,
+  allIssuer = false,
 }: {
   type: T;
   sort: boolean;
+  issuerId?: number;
+  allIssuer?: boolean;
 }): Promise<Error | MarkdownResult<T>[]> {
   const dirname = "contents";
   const contents = await fg.async(join(dirname, "**", "*.md"));
@@ -75,13 +94,14 @@ export async function readMarkdowns<T extends Frontmatter["type"]>({
     markdowns.map((markdown) => markdown.data.matter),
   );
   if (!valid) return new Error(ajv.errorsText(ajv.errors));
+  const issuerMarkdowns = filterByIssuer(markdowns, allIssuer, issuerId);
   if (type === "post") {
-    const posts = markdowns.filter(isPost);
+    const posts = issuerMarkdowns.filter(isPost);
     return (sort ? sortPosts(posts) : posts) as MarkdownResult<T>[];
   }
   if (type === "menu") {
-    const menus = markdowns.filter(isMenu);
+    const menus = issuerMarkdowns.filter(isMenu);
     return (sort ? sortMenus(menus) : menus) as MarkdownResult<T>[];
   }
-  return markdowns.filter(isPage) as MarkdownResult<T>[];
+  return issuerMarkdowns.filter(isPage) as MarkdownResult<T>[];
 }
