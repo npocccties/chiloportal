@@ -27,7 +27,7 @@ export type Props = {
 export async function getStaticProps({
   params: { slug },
 }: Context): Promise<GetStaticPropsResult<ErrorProps | Props>> {
-  const markdowns = await readMarkdowns("posts", { type: "post", sort: false });
+  const markdowns = await readMarkdowns({ type: "post", sort: false });
 
   if (markdowns instanceof globalThis.Error)
     return { props: { title: markdowns.message, statusCode: 500 } };
@@ -54,7 +54,7 @@ export async function getStaticProps({
 export async function getStaticPaths(): Promise<
   GetStaticPathsResult<Context["params"]>
 > {
-  const markdowns = await readMarkdowns("posts", { type: "post", sort: false });
+  const markdowns = await readMarkdowns({ type: "post", sort: false });
   if (markdowns instanceof globalThis.Error)
     return { paths: [], fallback: false };
   const paths = markdowns.map((markdown) => ({

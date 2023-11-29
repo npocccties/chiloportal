@@ -6,7 +6,8 @@ import addFormats from "ajv-formats";
 import { Config } from "schemas/config";
 
 export async function readConfig(): Promise<Error | Config> {
-  const filename = "config.yaml";
+  const dirname = "contents";
+  const filename = join(dirname, "config.yaml");
   const overrides = await readdir("overrides");
   const path = overrides.some((override) => override === filename)
     ? join("overrides", filename)

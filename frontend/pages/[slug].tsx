@@ -28,14 +28,8 @@ export async function getStaticProps({
   params: { slug },
 }: Context): Promise<GetStaticPropsResult<ErrorProps | Props>> {
   const [pages, menus] = await Promise.all([
-    readMarkdowns("contents", {
-      type: "page",
-      sort: false,
-    }),
-    readMarkdowns("contents", {
-      type: "menu",
-      sort: false,
-    }),
+    readMarkdowns({ type: "page", sort: false }),
+    readMarkdowns({ type: "menu", sort: false }),
   ]);
   if (pages instanceof globalThis.Error)
     return { props: { title: pages.message, statusCode: 500 } };
@@ -66,14 +60,8 @@ export async function getStaticPaths(): Promise<
   GetStaticPathsResult<Context["params"]>
 > {
   const [pages, menus] = await Promise.all([
-    readMarkdowns("contents", {
-      type: "page",
-      sort: false,
-    }),
-    readMarkdowns("contents", {
-      type: "menu",
-      sort: false,
-    }),
+    readMarkdowns({ type: "page", sort: false }),
+    readMarkdowns({ type: "menu", sort: false }),
   ]);
   if (pages instanceof globalThis.Error) return { paths: [], fallback: false };
   if (menus instanceof globalThis.Error) return { paths: [], fallback: false };

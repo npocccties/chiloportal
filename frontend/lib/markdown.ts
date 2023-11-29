@@ -49,10 +49,14 @@ export function sortMenus(menus: Markdown<Menu>[]): Markdown<Menu>[] {
  * @params options.sort ソートするか否か
  * @returns VFile の配列
  */
-export async function readMarkdowns<T extends Frontmatter["type"]>(
-  dirname: string,
-  { type, sort }: { type: T; sort: boolean },
-): Promise<Error | MarkdownResult<T>[]> {
+export async function readMarkdowns<T extends Frontmatter["type"]>({
+  type,
+  sort,
+}: {
+  type: T;
+  sort: boolean;
+}): Promise<Error | MarkdownResult<T>[]> {
+  const dirname = "contents";
   const overrides = await readdir("overrides");
   const dirPath = overrides.some((override) => override === dirname)
     ? join("overrides", dirname)

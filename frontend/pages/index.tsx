@@ -21,7 +21,7 @@ export type Props = {
 export async function getStaticProps(): Promise<
   GetStaticPropsResult<ErrorProps | Props>
 > {
-  const markdowns = await readMarkdowns("posts", { type: "post", sort: true });
+  const markdowns = await readMarkdowns({ type: "post", sort: true });
   if (markdowns instanceof globalThis.Error)
     return { props: { title: markdowns.message, statusCode: 500 } };
   const posts = markdowns.map((markdown) => markdown.data.matter);
