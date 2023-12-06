@@ -87,6 +87,7 @@ class ConsumerBadgesList(BaseAPIView):
             )
             # field の sort_key を含むとデータ重複が発生するので、敢えて外している
             .order_by(
+                "categorised_badges_wisdom_badges__goal__field__field1_name",
                 "categorised_badges_wisdom_badges__goal__framework__consumer__name",
                 "categorised_badges_wisdom_badges__goal__framework__sort_key",
                 "categorised_badges_wisdom_badges__goal__stage__sort_key",
@@ -96,7 +97,4 @@ class ConsumerBadgesList(BaseAPIView):
         )
         if queryset.exists() == False:
             return Response([])
-        results = to_consumer_badges_list(queryset)
-        # SQLで field の sort_key を使用してソートできないので名前でソートする
-        results = sorted(results, key=lambda v: v['field1_name'])
-        return Response(results)
+        return Response(to_consumer_badges_list(queryset))
