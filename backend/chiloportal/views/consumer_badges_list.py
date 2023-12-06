@@ -89,7 +89,6 @@ class ConsumerBadgesList(BaseAPIView):
                 "categorised_badges_wisdom_badges__goal__framework__consumer__name",
                 "categorised_badges_wisdom_badges__goal__framework__sort_key",
                 "categorised_badges_wisdom_badges__goal__stage__sort_key",
-                "categorised_badges_wisdom_badges__goal__field__sort_key",
                 "name",
             )
             .annotate(knowledge_badges_count=Count("knowledge_badges_wisdom_badges"))
