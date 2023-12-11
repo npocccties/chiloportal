@@ -8,6 +8,7 @@ import { readConfigs } from "lib/config";
 import { Post, Config } from "schemas";
 import { NEXT_PUBLIC_API_MOCKING } from "lib/env";
 import title from "lib/title";
+import getStaticIssuerIds from "lib/get-static-issuer-ids";
 
 export type Context = {
   params: { issuerId: string };
@@ -54,25 +55,9 @@ export async function getStaticPaths(): Promise<
   GetStaticPathsResult<Context["params"]>
 > {
   if (NEXT_PUBLIC_API_MOCKING) {
-    const [markdowns, configs] = await Promise.all([
-      readMarkdowns({ type: "post", sort: false, allIssuer: true }),
-      readConfigs({ allIssuer: true }),
-    ]);
-    if (markdowns instanceof globalThis.Error)
-      return { paths: [], fallback: false };
-    if (configs instanceof globalThis.Error)
-      return { paths: [], fallback: false };
-    const issuerIds = new Set<string>();
-    for (const markdown of markdowns) {
-      if (!markdown.data.matter.issuerId) continue;
-      issuerIds.add(String(markdown.data.matter.issuerId));
-    }
-    for (const config of configs) {
-      if (!config.issuerId) continue;
-      issuerIds.add(String(config.issuerId));
-    }
-    const paths = Array.from(issuerIds).map((issuerId) => ({
-      params: { issuerId },
+    const issuerIds = await getStaticIssuerIds();
+    const paths = issuerIds.map((issuerId) => ({
+      params: { issuerId: String(issuerId) },
     }));
     return { paths, fallback: false };
   }
