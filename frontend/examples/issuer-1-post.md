@@ -1,5 +1,5 @@
 ---
-title: Example 1
+title: Issuer 1 Example 1
 issuerId: 1
 type: post
 slug: example-1
