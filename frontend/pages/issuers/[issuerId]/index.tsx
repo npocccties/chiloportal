@@ -8,6 +8,7 @@ import { readConfigs } from "lib/config";
 import { Post, Config } from "schemas";
 import { NEXT_PUBLIC_API_MOCKING } from "lib/env";
 import title from "lib/title";
+import { Issuer } from "api/@types";
 import getStaticIssuerIds from "lib/get-static-issuer-ids";
 
 export type Context = {
@@ -20,6 +21,7 @@ type ErrorProps = {
 };
 
 export type Props = {
+  issuer: Issuer;
   posts: Markdown<Post>["data"]["matter"][];
   recommendedWisdomBadgesIds: NonNullable<Config["recommendedWisdomBadgesIds"]>;
   learningContents: NonNullable<Config["learningContents"]>;
@@ -42,8 +44,23 @@ export async function getStaticProps({
   if (configs.length === 0)
     return { props: { title: "Issuer Not Found", statusCode: 404 } };
   const { recommendedWisdomBadgesIds = [], learningContents = [] } = configs[0];
+  const issuers = await client.issuer.list.$get().catch(() => []);
+  let issuer: Issuer | undefined;
+  if (NEXT_PUBLIC_API_MOCKING) {
+    if (!issuers[0])
+      return { props: { title: "Issuer Not Found", statusCode: 404 } };
+    issuer = {
+      ...issuers[0],
+      issuer_id: Number(issuerId),
+    } satisfies Issuer;
+  } else {
+    issuer = issuers.find((issuer) => issuer.issuer_id === Number(issuerId));
+    if (!issuer)
+      return { props: { title: "Issuer Not Found", statusCode: 404 } };
+  }
   return {
     props: {
+      issuer,
       posts,
       recommendedWisdomBadgesIds,
       learningContents,
