@@ -1,9 +1,18 @@
 import Image from "next/image";
 import { MDXRemote } from "next-mdx-remote";
-import { Props } from "pages/posts/[slug]";
 import Breadcrumbs from "components/Breadcrumbs";
 import Container from "components/Container";
 import { pagesPath } from "lib/$path";
+import { MDXRemoteSerializeResult } from "next-mdx-remote";
+import { Post as PostSchema } from "schemas";
+import { Markdown } from "lib/markdown";
+import { Issuer } from "api/@types";
+
+type Props = {
+  issuer?: Issuer;
+  source: MDXRemoteSerializeResult;
+  matter: Markdown<PostSchema>["data"]["matter"];
+};
 
 const components = {
   img: (props: Pick<React.ImgHTMLAttributes<HTMLImageElement>, "src">) => {
@@ -22,14 +31,19 @@ const components = {
   },
 };
 
-function Post({ source, matter }: Props) {
+function Post({ issuer, source, matter }: Props) {
   return (
     <Container>
       <Breadcrumbs
         className="mb-6"
         nodes={[
           { name: "トップ", href: pagesPath.$url() },
-          { name: "OKUTEPからのおしらせ", href: pagesPath.posts.$url() },
+          issuer
+            ? {
+                name: issuer.name,
+                href: pagesPath.issuers._issuerId(issuer.issuer_id).$url(),
+              }
+            : { name: "OKUTEPからのおしらせ", href: pagesPath.posts.$url() },
         ]}
         leaf={matter.title}
       />
