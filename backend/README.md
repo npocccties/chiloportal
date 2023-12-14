@@ -245,6 +245,10 @@
    ```
    $2a$12$aqYLqFynQDdDs5CeyIcKFO
    ```
+   既にソルト作成済みの場合、1. の bcrypt.gensalt の行を以下に差し替えてください。
+   ```
+   salt = '$2a$12$aqYLqFynQDdDs5CeyIcKFO'.encode('utf-8')
+   ```
 1. 前述のソルトをもとに、以下のスクリプトを実行してください。
    ```
    hashedPassword = bcrypt.hashpw('pass'.encode(), salt)
