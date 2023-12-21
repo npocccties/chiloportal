@@ -93,7 +93,7 @@ class ConsumerBadgesList(BaseAPIView):
                 "categorised_badges_wisdom_badges__goal__stage__sort_key",
                 "name",
             )
-            .annotate(knowledge_badges_count=Count("knowledge_badges_wisdom_badges"))
+            .annotate(knowledge_badges_count=Count("knowledge_badges_wisdom_badges", distinct=True))
         )
         if queryset.exists() == False:
             return Response([])
