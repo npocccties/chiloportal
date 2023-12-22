@@ -11,7 +11,7 @@ export default function Top({ issuers }: Props) {
         教員生涯学習プラットフォーム 「オゾン」
       </h1>
       <p className="font-serif font-bold text-lg mb-12">
-        Teachers' Life-Long Education Platform OZONE
+        Teachers&apos; Life-Long Education Platform OZONE
       </p>
       {/* TODO: キャッチコピーを確定したものに差し替えて */}
       <p className="text-sm font-bold mx-auto max-w-xl text-left mb-12">
