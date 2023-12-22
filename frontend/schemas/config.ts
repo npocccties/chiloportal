@@ -4,6 +4,7 @@ export const Config = {
   type: "object",
   properties: {
     issuerId: { type: "number" },
+    backgroundImage: { type: "string" },
     recommendedWisdomBadgesIds: {
       type: "array",
       items: { type: "number" },

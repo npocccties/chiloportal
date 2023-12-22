@@ -23,6 +23,7 @@ type ErrorProps = {
 export type Props = {
   issuer: Issuer;
   posts: Markdown<Post>["data"]["matter"][];
+  backgroundImage: string | null;
   recommendedWisdomBadgesIds: NonNullable<Config["recommendedWisdomBadgesIds"]>;
   learningContents: NonNullable<Config["learningContents"]>;
 };
@@ -43,7 +44,11 @@ export async function getStaticProps({
     return { props: { title: configs.message, statusCode: 500 } };
   if (configs.length === 0)
     return { props: { title: "Issuer Not Found", statusCode: 404 } };
-  const { recommendedWisdomBadgesIds = [], learningContents = [] } = configs[0];
+  const {
+    backgroundImage = null,
+    recommendedWisdomBadgesIds = [],
+    learningContents = [],
+  } = configs[0];
   const issuers = await client.issuer.list.$get().catch(() => []);
   let issuer: Issuer | undefined;
   if (NEXT_PUBLIC_API_MOCKING) {
@@ -62,6 +67,7 @@ export async function getStaticProps({
     props: {
       issuer,
       posts,
+      backgroundImage,
       recommendedWisdomBadgesIds,
       learningContents,
     },
