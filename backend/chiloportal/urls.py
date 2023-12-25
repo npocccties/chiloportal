@@ -5,6 +5,7 @@ from rest_framework import permissions
 
 from chiloportal.views.consumer_badges_list import ConsumerBadgesList
 from chiloportal.views.consumer_goal_list import ConsumerGoalList
+from chiloportal.views.badges_list import BadgesList
 from .views import *
 from drf_yasg.generators import OpenAPISchemaGenerator
 
@@ -52,6 +53,7 @@ urlpatterns = [
         name="framework-stage-list",
     ),
     path("badges/", BadgesDetail.as_view(), name="badges-detail"),
+    path("badges/list/", BadgesList.as_view(), name="badges-list"),
     path(
         "wisdomBadges/list/keyword/",
         WisdomBadgesListKeyword.as_view(),
