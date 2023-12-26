@@ -5,6 +5,7 @@ from ..swagger import *
 from ..responses import *
 from .base_api_view import *
 from .. import utils
+from django.db.models import Q
 
 
 class FrameworkStageList(BaseAPIView):
@@ -17,7 +18,7 @@ class FrameworkStageList(BaseAPIView):
             raise ParseError("Invalid ID supplied")
         # パスワードが設定されているデータは、e-ポートフォリオでしか使用しないのでポータルサイトでは取得しない
         queryset = (
-            Stage.objects.filter(goal_stage__framework_id=id, password__in=[None, ""])
+            Stage.objects.filter(Q(goal_stage__framework_id=id), Q(password__isnull=True) | Q(password=""))
             .order_by("sort_key")
             .distinct()
         )
