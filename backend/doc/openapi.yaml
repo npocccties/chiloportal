@@ -803,7 +803,3 @@ components:
       additionalProperties: false
       required:
         - knowledge_badges_list
-    knowledge:
-      type: array
-      items:
-        $ref: '#/components/schemas/Criteria'
