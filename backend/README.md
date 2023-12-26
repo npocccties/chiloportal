@@ -210,6 +210,7 @@
 |LETS_ENCRYPT|無料のSSL証明書の要否|無料のSSL証明書を使用するか否か<br>`true`: 使用する ※動作確認用<br>`false`: 使用しない ※本番リリース用|
 |DUMP_BACKUP_DIR|DBの圧縮ファイルのバックアップディレクトリ（絶対パス指定）|DBバックアップを実行すると `/var/chiloportal.dump` をダンプ出力するが、そのダンプファイルを下記命名で圧縮したうえで左記ディレクトリに格納する<br>`chiloportal.dump_{yyyyMMdd}.tar.gz`|
 |DUMP_BACKUP_COUNT|DBの圧縮ファイルの保持日数|・保持日数を経過したDBの圧縮ファイルは削除される (例)1週間、保持したい場合は `7` を指定する<br>・削除の契機は、DBバックアップの実行時<br>・起点は昨日|
+|BCRYPT_SALT|成長段階のパスワードのハッシュ値のソルト<br>※$の直前にはバックスラッシュを付与してエスケープすること|-|
 
 
 # DBの確認
@@ -230,6 +231,32 @@
    select * from consumer;
    quit
    exit
+   ```
+
+# 成長段階のパスワードのハッシュ値の生成に使用するためのソルト生成
+1. 以下のスクリプトの 'pass' の文字列を任意のパスワードに差し替え、app コンテナで実行してください。※python が実行できる環境であれば app コンテナで実行する必要はありませんが、「pip install bcrypt」で bcrypt をインストールしてください。
+   ```
+   python
+   import bcrypt
+   salt = bcrypt.gensalt(rounds=12, prefix=b'2a')
+   print(salt.decode('utf-8'))
+   ```
+1. スクリプト実行後、以下のような文字列が出力されるのでソルトとしてご使用ください。（環境変数：BCRYPT_SALT に使用 ※$の直前にはバックスラッシュを付与してエスケープすること）
+   ```
+   $2a$12$aqYLqFynQDdDs5CeyIcKFO
+   ```
+   既にソルト作成済みの場合、1. の bcrypt.gensalt の行を以下に差し替えてください。
+   ```
+   salt = '$2a$12$aqYLqFynQDdDs5CeyIcKFO'.encode('utf-8')
+   ```
+1. 前述のソルトをもとに、以下のスクリプトを実行してください。
+   ```
+   hashedPassword = bcrypt.hashpw('pass'.encode(), salt)
+   print(hashedPassword.decode('utf-8'))
+   ```
+1. スクリプト実行後、以下のような文字列が出力されるのでパスワードのハッシュ値としてご使用ください。
+   ```
+   $2a$12$aqYLqFynQDdDs5CeyIcKFOKis5Bq7Slv6bYYNQfQCIzbuqvMNoX1W
    ```
 
 # Django の管理画面

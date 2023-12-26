@@ -123,6 +123,7 @@ class Stage(models.Model):
     sub_name = models.TextField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     sort_key = models.IntegerField()
+    password = models.TextField(blank=True, null=True)
 
     class Meta:
         managed = True
