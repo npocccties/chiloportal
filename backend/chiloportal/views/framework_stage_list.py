@@ -5,6 +5,7 @@ from ..swagger import *
 from ..responses import *
 from .base_api_view import *
 from .. import utils
+from django.db.models import Q
 
 
 class FrameworkStageList(BaseAPIView):
@@ -15,9 +16,9 @@ class FrameworkStageList(BaseAPIView):
         id = request.GET.get("framework_id")
         if id == None or utils.is_int(id) == False:
             raise ParseError("Invalid ID supplied")
-        # ƒpƒXƒ[ƒh‚ªİ’è‚³‚ê‚Ä‚¢‚éƒf[ƒ^‚ÍAe-ƒ|[ƒgƒtƒHƒŠƒI‚Å‚µ‚©g—p‚µ‚È‚¢‚Ì‚Åƒ|[ƒ^ƒ‹ƒTƒCƒg‚Å‚Íæ“¾‚µ‚È‚¢
+        # ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒè¨­å®šã•ã‚Œã¦ã„ã‚‹ãƒ‡ãƒ¼ã‚¿ã¯ã€e-ãƒãƒ¼ãƒˆãƒ•ã‚©ãƒªã‚ªã§ã—ã‹ä½¿ç”¨ã—ãªã„ã®ã§ãƒãƒ¼ã‚¿ãƒ«ã‚µã‚¤ãƒˆã§ã¯å–å¾—ã—ãªã„
         queryset = (
-            Stage.objects.filter(goal_stage__framework_id=id, password__in=[None, ""])
+            Stage.objects.filter(Q(goal_stage__framework_id=id), Q(password__isnull=True) | Q(password=""))
             .order_by("sort_key")
             .distinct()
         )
