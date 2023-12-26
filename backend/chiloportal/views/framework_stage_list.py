@@ -15,8 +15,9 @@ class FrameworkStageList(BaseAPIView):
         id = request.GET.get("framework_id")
         if id == None or utils.is_int(id) == False:
             raise ParseError("Invalid ID supplied")
+        # パスワードが設定されているデータは、e-ポートフォリオでしか使用しないのでポータルサイトでは取得しない
         queryset = (
-            Stage.objects.filter(goal_stage__framework_id=id)
+            Stage.objects.filter(goal_stage__framework_id=id, password__in=[None, ""])
             .order_by("sort_key")
             .distinct()
         )

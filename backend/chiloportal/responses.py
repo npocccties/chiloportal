@@ -38,10 +38,10 @@ def to_criteria(criteria):
     }
 
 
-def to_pager_wisdom_badges(page):
+def to_pager_wisdom_badges(page, output_portal_category=False):
     badge_array = []
     for wisdom_badge in page.object_list:
-        badge_array.append(to_wisdom_badge(wisdom_badge))
+        badge_array.append(to_wisdom_badge(wisdom_badge, output_portal_category))
     return {
         "badges": badge_array,
         "total_count": page.paginator.object_list.count(),
@@ -50,8 +50,8 @@ def to_pager_wisdom_badges(page):
     }
 
 
-def to_pager_wisdom_badges_all(queryset):
-    badge_array = [to_wisdom_badge(badge) for badge in queryset]
+def to_pager_wisdom_badges_all(queryset, output_portal_category=False):
+    badge_array = [to_wisdom_badge(badge, output_portal_category) for badge in queryset]
     return {
         "badges": badge_array,
         "total_count": len(badge_array),
@@ -235,3 +235,36 @@ def _to_field_detail(field_dict, field1value, field2keys, wisdom_dict):
             {"field2_name": split_field2_key(field2value)[1], "field3": field3_array}
         )
     return {"field1_name": field1value, "field2": field2_array}
+
+def to_consumer_goal_list(goal_set):
+    return [to_consumer_goal(goal) for goal in goal_set]
+
+def to_consumer_goal(goal):
+    return {
+        "consumer_id": goal['framework__consumer__id'],
+        "consumer_name": goal['framework__consumer__name'],
+        "framework_id": goal['framework__id'],
+        "framework_name": goal['framework__name'],
+        "stage_id": goal['stage__id'],
+        "stage_name": goal['stage__name'],
+        "field1_name": goal['field__field1_name'],
+    }
+
+def to_consumer_badges_list(wisdom_badge_set):
+    return [to_consumer_badges(wisdom_badge) for wisdom_badge in wisdom_badge_set]
+
+def to_consumer_badges(wisdom_badge):
+    return {
+        "consumer_id": wisdom_badge['categorised_badges_wisdom_badges__goal__framework__consumer__id'],
+        "consumer_name": wisdom_badge['categorised_badges_wisdom_badges__goal__framework__consumer__name'],
+        "framework_id": wisdom_badge['categorised_badges_wisdom_badges__goal__framework__id'],
+        "framework_name": wisdom_badge['categorised_badges_wisdom_badges__goal__framework__name'],
+        "stage_id": wisdom_badge['categorised_badges_wisdom_badges__goal__stage__id'],
+        "stage_name": wisdom_badge['categorised_badges_wisdom_badges__goal__stage__name'],
+        "field1_name": wisdom_badge['categorised_badges_wisdom_badges__goal__field__field1_name'],
+        "digital_badge_class_id": wisdom_badge['badge_class_id'],
+        "wisdom_badges_id": wisdom_badge['id'],
+        "wisdom_badges_name": wisdom_badge['name'],
+        "wisdom_badges_description": wisdom_badge['description'],
+        "knowledge_badges_count": wisdom_badge['knowledge_badges_count'],
+    }

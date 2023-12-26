@@ -10,6 +10,10 @@ import urllib.parse
 import os
 from django.db import connection, reset_queries
 from ipware import get_client_ip
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
+from rest_framework.decorators import api_view
+from django.utils.decorators import method_decorator
 
 
 class BaseAPIView(APIView):
@@ -17,6 +21,9 @@ class BaseAPIView(APIView):
     logger = logging.getLogger(__name__)
 
     def get(self, request):
+        return self.get_proc(request)
+
+    def get_proc(self, request):
         class_name = type(self).__name__
         method_name = sys._getframe().f_code.co_name
         self.logger.debug(f"------- {class_name}.{method_name} start -------")
