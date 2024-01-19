@@ -8,7 +8,7 @@ import { readConfigs } from "lib/config";
 import { Post, Config } from "schemas";
 import { NEXT_PUBLIC_API_MOCKING } from "lib/env";
 import title from "lib/title";
-import { Issuer } from "api/@types";
+import { PortalCategory, Issuer } from "api/@types";
 import getStaticIssuerIds from "lib/get-static-issuer-ids";
 
 export type Context = {
@@ -21,6 +21,9 @@ type ErrorProps = {
 };
 
 export type Props = {
+  portalCategories: PortalCategory[];
+  issuerBadgesCount: number;
+  portalCategoryBadgesCounts: number[];
   issuer: Issuer;
   posts: Markdown<Post>["data"]["matter"][];
   backgroundImage: string | null;
@@ -44,6 +47,27 @@ export async function getStaticProps({
     return { props: { title: configs.message, statusCode: 500 } };
   if (configs.length === 0)
     return { props: { title: "Issuer Not Found", statusCode: 404 } };
+  const portalCategories = await client.portalCategory.list
+    .$get()
+    .catch(() => []);
+  const issuerBadgesCount = await client.badges.list
+    .$get({
+      query: {
+        issuer_id: Number(issuerId),
+      },
+    })
+    .then(({ total_count }) => total_count)
+    .catch(() => 0);
+  const portalCategoryBadgesCounts = await Promise.all(
+    portalCategories.map((portalCategory) =>
+      client.badges.list
+        .$get({
+          query: { portal_category_id: portalCategory.portal_category_id },
+        })
+        .then(({ total_count }) => total_count)
+        .catch(() => 0),
+    ),
+  );
   const {
     backgroundImage = null,
     recommendedWisdomBadgesIds = [],
@@ -65,6 +89,9 @@ export async function getStaticProps({
   }
   return {
     props: {
+      issuerBadgesCount,
+      portalCategoryBadgesCounts,
+      portalCategories,
       issuer,
       posts,
       backgroundImage,
