@@ -10,6 +10,8 @@ tags:
     description: コンシューマ情報取得
   - name: consumer list
     description: コンシューマ情報一覧
+  - name: issuer list
+    description: 発行機関一覧
   - name: stage field list
     description: 成長段階に関連する指標項目一覧
   - name: portal category list
@@ -22,6 +24,8 @@ tags:
     description: 育成指標に関連する成長段階一覧
   - name: badges
     description: バッジ情報取得
+  - name: badges list
+    description: バッジ一覧取得
   - name: keyword search
     description: キーワードバッジ検索
   - name: badges consumer list
