@@ -52,6 +52,17 @@ export const handlers = [
         return new HttpResponse(null, { status: 400 });
     }
   }),
+  http.get(client.badges.list.$path(), ({ request }) => {
+    const perPage = 30;
+    const url = new URL(request.url);
+    const pageNumber = Number(url.searchParams.get("page_number") ?? 1);
+    return HttpResponse.json({
+      badges: [...Array(30)].map(wisdomBadges),
+      total_count: 3000,
+      start: perPage * (pageNumber - 1) + 1,
+      end: perPage * pageNumber,
+    });
+  }),
   http.get(client.wisdomBadges.list.keyword.$path(), ({ request }) => {
     const perPage = 30;
     const url = new URL(request.url);
