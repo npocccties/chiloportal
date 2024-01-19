@@ -21,7 +21,9 @@ export default function Page(props: ErrorProps | Props) {
   if ("statusCode" in props) return <Error {...props} />;
   return (
     <>
-      <Head>{title("バッジを探す")}</Head>
+      <Head>
+        <title>{title("バッジを探す")}</title>
+      </Head>
       <Template {...props} />
     </>
   );
