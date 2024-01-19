@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Props } from "pages";
 import { pagesPath } from "lib/$path";
 import IssuerCard from "components/IssuerCard";
+import { Icon } from "@iconify/react";
 
 export default function Top({ issuers }: Props) {
   return (
@@ -20,8 +21,15 @@ export default function Top({ issuers }: Props) {
       </p>
       {/* TODO: バッジをさがす画面への動線を用意して */}
       <Link
+        className="jumpu-outlined-button inline-flex items-center gap-2 text-black text-base font-bold px-rel16 py-rel4 border-black border-2 mb-6"
+        href={pagesPath.discover.$url()}
+      >
+        バッジをさがす
+        <Icon icon="fa6-solid:arrow-right" />
+      </Link>
+      <Link
         href={pagesPath.posts.$url()}
-        className="block text-sm font-bold text-primary-700 hover:underline mb-12"
+        className="block text-sm font-bold text-black underline underline-offset-4 mb-12"
       >
         オゾンからのお知らせ
       </Link>
