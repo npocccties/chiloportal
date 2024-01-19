@@ -8,6 +8,9 @@ import Image from "next/image";
 import { getImageUrl } from "lib/issuer";
 
 export default function Issuer({
+  issuerBadgesCount,
+  portalCategories,
+  portalCategoryBadgesCounts,
   issuer,
   posts,
   backgroundImage,
@@ -108,13 +111,36 @@ export default function Issuer({
             </ul>
           </section>
           <section style={{ gridArea: "badges" }}>
-            <h2 className="flex gap-4 items-center text-xl font-bold border-b-4 border-black pb-2">
+            <h2 className="flex gap-4 items-center text-xl font-bold border-b-4 border-black pb-2 mb-4">
               <span className="inline-flex bg-black rounded-xl p-3">
                 <Image src="/fig-badge.svg" alt="" width={20} height={20} />
               </span>
               {issuer.name}の能力バッジ
             </h2>
-            {/* TODO: 能力バッジに関する要約を表示して */}
+            <div className="jumpu-card px-8 py-6">
+              <p className="text-sm mb-6">
+                {issuer.name}は現在、
+                <br />
+                <span className="text-6xl leading-snug font-bold">
+                  {issuerBadgesCount}
+                </span>
+                <br />
+                個の能力バッジを発行しています。
+              </p>
+              <h3 className="flex items-center gap-2 -ml-4 text-base text-gray-900 font-bold mb-3">
+                <Image src="/category.svg" alt="" width={20} height={24} />
+                カテゴリ
+              </h3>
+              <ul className="list-disc pl-4 text-sm text-gray-700 inline-flex flex-wrap gap-2">
+                {portalCategories.map((portalCateogry, index) => (
+                  <li key={portalCateogry.portal_category_id} className="ml-3">
+                    {portalCateogry.name}（{portalCategoryBadgesCounts[index]}
+                    個）
+                  </li>
+                ))}
+              </ul>
+              {/* TODO: 大学別に能力バッジを探す画面への動線を実装して */}
+            </div>
           </section>
         </div>
       </Container>
