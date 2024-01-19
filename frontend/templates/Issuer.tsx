@@ -54,7 +54,7 @@ export default function Issuer({
           style={{
             gridTemplate: `
         "posts badges"
-        "learningContents ."
+        "learningContents badges"
         `,
           }}
         >
