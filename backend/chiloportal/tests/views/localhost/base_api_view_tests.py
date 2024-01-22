@@ -616,6 +616,15 @@ class BaseAPIViewTests(TestCase):
         self.ct4 = Criteria.objects.create(
             knowledge_badges=self.kb3, type="ほげ", name="ほげコースD", sort_key=4
         )
+        self.ct5 = Criteria.objects.create(
+            knowledge_badges=self.kb4, type="ほげ", name="ほげコースE2", sort_key=2
+        )
+        self.ct6 = Criteria.objects.create(
+            knowledge_badges=self.kb4, type="ほげ", name="ほげコースE1", sort_key=1
+        )
+        self.ct7 = Criteria.objects.create(
+            knowledge_badges=self.kb4, type="ほげ", name="ほげコースE3", sort_key=3
+        )
 
     def assert_consumers(self, array, expect_array):
         self.assertEqual(len(array), len(expect_array))
@@ -761,11 +770,10 @@ class BaseAPIViewTests(TestCase):
         self.assertEqual(data["digital_badge_class_id"], knowledge_badge.badge_class_id)
         list = data.get("detail")
         self.assertEqual(len(list), len(criteria_list))
-        for criteria in list:
-            for expect_criteria in criteria_list:
-                self.assertEqual(criteria["criteria_id"], expect_criteria.id)
-                self.assertEqual(criteria["type"], expect_criteria.type)
-                self.assertEqual(criteria["name"], expect_criteria.name)
+        for i, criteria in enumerate(list):
+            self.assertEqual(criteria["criteria_id"], criteria_list[i].id)
+            self.assertEqual(criteria["type"], criteria_list[i].type)
+            self.assertEqual(criteria["name"], criteria_list[i].name)
 
     def assert_criteria(self, data, criteria):
         self.assertEqual(data["criteria_id"], criteria.id)
