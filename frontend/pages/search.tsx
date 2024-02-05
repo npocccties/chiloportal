@@ -5,6 +5,7 @@ import { client, getErrorProps } from "lib/node-client";
 import Template from "templates/Search";
 import { pagesPath } from "lib/$path";
 import title from "lib/title";
+import parsePageQuery from "lib/parse-page-query";
 
 export type Query = { q?: string; p?: string };
 
@@ -28,7 +29,7 @@ export async function getServerSideProps({
   query: { q = "", p },
 }: Context): Promise<GetServerSidePropsResult<ErrorProps | Props>> {
   try {
-    const pageNumber = Number(p);
+    const pageNumber = parsePageQuery(p);
     if (q.trim().length === 0)
       return {
         redirect: { destination: pagesPath.$url().pathname, permanent: false },
@@ -36,7 +37,7 @@ export async function getServerSideProps({
     const wisdomBadgesList = await client.wisdomBadges.list.keyword.$get({
       query: {
         keyword: q,
-        page_number: Number.isInteger(pageNumber) ? pageNumber : 1,
+        page_number: pageNumber,
       },
     });
 
