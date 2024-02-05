@@ -44,7 +44,7 @@ export async function getServerSideProps({
     const wisdomBadgesList = await client.portalCategory.badges.list.$get({
       query: {
         portal_category_id: portalCategory.portal_category_id,
-        page_number: Number.isInteger(pageNumber) ? pageNumber : undefined,
+        page_number: Number.isInteger(pageNumber) ? pageNumber : 1,
       },
     });
     return {

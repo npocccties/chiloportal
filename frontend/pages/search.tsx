@@ -36,7 +36,7 @@ export async function getServerSideProps({
     const wisdomBadgesList = await client.wisdomBadges.list.keyword.$get({
       query: {
         keyword: q,
-        page_number: Number.isInteger(pageNumber) ? pageNumber : undefined,
+        page_number: Number.isInteger(pageNumber) ? pageNumber : 1,
       },
     });
 

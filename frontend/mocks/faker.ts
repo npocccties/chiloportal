@@ -139,3 +139,21 @@ export const consumerBadge = (): ConsumerBadge => ({
   wisdom_badges_description: faker.lorem.paragraph(),
   knowledge_badges_count: faker.datatype.number(),
 });
+
+export const paginatedWisdomBadges = (
+  pageNumber?: number,
+): {
+  badges: BadgeDetail1[];
+  total_count: number;
+  start: number;
+  end: number;
+} => {
+  const perPage = 30;
+  const totalCount = 3000;
+  return {
+    badges: [...Array(pageNumber ? perPage : totalCount)].map(wisdomBadges),
+    total_count: totalCount,
+    start: perPage * ((pageNumber ?? 1) - 1) + 1,
+    end: pageNumber ? Math.min(perPage * pageNumber, totalCount) : totalCount,
+  };
+};

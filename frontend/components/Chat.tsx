@@ -115,7 +115,7 @@ function Chat({ className }: Props) {
     try {
       const { badges: badgesList, total_count } =
         await client.wisdomBadges.list.keyword.$get({
-          query: { keyword },
+          query: { keyword, page_number: 1 },
         });
       popChat();
       total_count === 0

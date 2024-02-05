@@ -11,6 +11,7 @@ import {
   stage,
   consumerGoal,
   consumerBadge,
+  paginatedWisdomBadges,
 } from "./faker";
 
 export const handlers = [
@@ -26,15 +27,9 @@ export const handlers = [
     HttpResponse.json([...Array(10)].map(portalCategory)),
   ),
   http.get(client.portalCategory.badges.list.$path(), ({ request }) => {
-    const perPage = 30;
     const url = new URL(request.url);
     const pageNumber = Number(url.searchParams.get("page_number") ?? 1);
-    return HttpResponse.json({
-      badges: [...Array(30)].map(wisdomBadges),
-      total_count: 3000,
-      start: perPage * (pageNumber - 1) + 1,
-      end: perPage * pageNumber,
-    });
+    return HttpResponse.json(paginatedWisdomBadges(pageNumber));
   }),
   http.get(client.framework.$path(), () => HttpResponse.json(framework())),
   http.get(client.framework.stage.list.$path(), () =>
@@ -53,26 +48,14 @@ export const handlers = [
     }
   }),
   http.get(client.badges.list.$path(), ({ request }) => {
-    const perPage = 30;
     const url = new URL(request.url);
-    const pageNumber = Number(url.searchParams.get("page_number") ?? 1);
-    return HttpResponse.json({
-      badges: [...Array(30)].map(wisdomBadges),
-      total_count: 3000,
-      start: perPage * (pageNumber - 1) + 1,
-      end: perPage * pageNumber,
-    });
+    const pageNumber = Number(url.searchParams.get("page_number"));
+    return HttpResponse.json(paginatedWisdomBadges(pageNumber));
   }),
   http.get(client.wisdomBadges.list.keyword.$path(), ({ request }) => {
-    const perPage = 30;
     const url = new URL(request.url);
-    const pageNumber = Number(url.searchParams.get("page_number") ?? 1);
-    return HttpResponse.json({
-      badges: [...Array(30)].map(wisdomBadges),
-      total_count: 3000,
-      start: perPage * (pageNumber - 1) + 1,
-      end: perPage * pageNumber,
-    });
+    const pageNumber = Number(url.searchParams.get("page_number"));
+    return HttpResponse.json(paginatedWisdomBadges(pageNumber));
   }),
   http.get(client.wisdomBadges.consumer.list.$path(), () =>
     HttpResponse.json([...Array(10)].map(consumer)),
