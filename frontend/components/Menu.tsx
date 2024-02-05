@@ -4,7 +4,6 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
 import { pagesPath } from "lib/$path";
-import useConsumers from "lib/use-consumers";
 import usePortalCategories from "lib/use-portal-categories";
 import contents from "lib/contents";
 import Fallback from "components/Fallback";
@@ -21,7 +20,6 @@ function Menu({ open, onClose }: Props) {
       events.off("routeChangeStart", onClose);
     };
   });
-  const { data: consumers, error: consumersError } = useConsumers();
   const { data: portalCategories, error: portalCategoriesError } =
     usePortalCategories();
   const id = useId();
@@ -85,37 +83,6 @@ function Menu({ open, onClose }: Props) {
                               .$url({ query: {} })}
                           >
                             {portalCateogry.name}
-                          </Link>
-                        </li>
-                      ))
-                    }
-                  </Fallback>
-                </ul>
-              </section>
-              <section className="mb-8">
-                <h2 className="text-xs font-bold text-gray-700 mb-4">
-                  教員育成指標から探す
-                </h2>
-                <ul className="text-sm text-gray-700 leading-8">
-                  <Fallback
-                    data={consumers}
-                    error={consumersError}
-                    pending={[...Array(10)].map((_, index) => (
-                      <li
-                        key={index}
-                        className="animate-pulse bg-gray-300 w-48 h-4 my-3 rounded-full"
-                      />
-                    ))}
-                  >
-                    {(data) =>
-                      data.map((consumer) => (
-                        <li key={consumer.consumer_id}>
-                          <Link
-                            href={pagesPath.consumers
-                              ._consumerId(consumer.consumer_id)
-                              .$url()}
-                          >
-                            {consumer.name}
                           </Link>
                         </li>
                       ))

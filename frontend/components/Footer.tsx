@@ -1,7 +1,6 @@
 import clsx from "clsx";
 import Link from "next/link";
 import Image from "next/image";
-import useConsumers from "lib/use-consumers";
 import usePortalCategories from "lib/use-portal-categories";
 import { pagesPath } from "lib/$path";
 import contents from "lib/contents";
@@ -12,7 +11,6 @@ type Props = {
 };
 
 function Footer({ className }: Props) {
-  const { data: consumers, error: consumersError } = useConsumers();
   const { data: portalCategories, error: portalCategoriesError } =
     usePortalCategories();
   return (
@@ -31,42 +29,6 @@ function Footer({ className }: Props) {
             />
           </Link>
         </div>
-        <section>
-          <h2 className="text-gray-100 text-md font-bold mb-4">
-            教員育成指標から探す
-          </h2>
-          <ul
-            className="text-gray-300 text-xs leading-8 md:leading-6"
-            aria-busy={!consumers}
-          >
-            <Fallback
-              data={consumers}
-              error={consumersError}
-              pending={[...Array(10)].map((_, index) => (
-                <li
-                  key={index}
-                  className="animate-pulse bg-gray-300 w-64 h-4 my-3 rounded-full"
-                  aria-hidden
-                />
-              ))}
-            >
-              {(data) =>
-                data.map((consumer) => (
-                  <li key={consumer.consumer_id}>
-                    <Link
-                      href={pagesPath.consumers
-                        ._consumerId(consumer.consumer_id)
-                        .$url()}
-                      className="hover:text-white"
-                    >
-                      {consumer.name}の教員育成指標
-                    </Link>
-                  </li>
-                ))
-              }
-            </Fallback>
-          </ul>
-        </section>
         <section>
           <h2 className="text-gray-100 text-md font-bold mb-4">
             カテゴリから探す
