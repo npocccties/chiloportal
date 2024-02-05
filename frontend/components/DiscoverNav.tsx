@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { Props } from "pages/discover";
 import { pagesPath } from "lib/$path";
 
-export default function (props: Props) {
+export default function DiscoverNav(props: Props) {
   return (
     <nav>
       <ul>
