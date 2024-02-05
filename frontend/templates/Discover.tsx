@@ -203,7 +203,7 @@ export default function Discover({
       <Breadcrumbs
         className="mb-6"
         nodes={[{ name: "トップ", href: pagesPath.$url() }]}
-        leaf="バッジを探す"
+        leaf="バッジをさがす"
       />
       <h1 className="text-3xl font-bold">バッジを探す</h1>
       <div
