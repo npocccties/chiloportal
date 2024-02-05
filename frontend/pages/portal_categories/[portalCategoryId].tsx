@@ -6,6 +6,7 @@ import { PortalCategory } from "api/@types";
 import Template from "templates/PortalCategory";
 import { NEXT_PUBLIC_API_MOCKING } from "lib/env";
 import title from "lib/title";
+import parsePageQuery from "lib/parse-page-query";
 
 export type Query = { p?: string };
 
@@ -31,7 +32,7 @@ export async function getServerSideProps({
   query: { p },
 }: Context): Promise<GetServerSidePropsResult<ErrorProps | Props>> {
   try {
-    const pageNumber = Number(p);
+    const pageNumber = parsePageQuery(p);
     const portalCategories = await client.portalCategory.list.$get();
     const portalCategory = NEXT_PUBLIC_API_MOCKING
       ? (await import("mocks/faker")).portalCategory()
@@ -44,7 +45,7 @@ export async function getServerSideProps({
     const wisdomBadgesList = await client.portalCategory.badges.list.$get({
       query: {
         portal_category_id: portalCategory.portal_category_id,
-        page_number: Number.isInteger(pageNumber) ? pageNumber : 1,
+        page_number: pageNumber,
       },
     });
     return {
