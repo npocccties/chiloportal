@@ -22,7 +22,7 @@ export default function Top({ issuers }: Props) {
       {/* TODO: バッジをさがす画面への動線を用意して */}
       <Link
         className="jumpu-outlined-button inline-flex items-center gap-2 text-black text-base font-bold px-rel16 py-rel4 border-black border-2 mb-6"
-        href={pagesPath.discover.$url()}
+        href={pagesPath.discover.$url({ query: {} })}
       >
         バッジをさがす
         <Icon icon="fa6-solid:arrow-right" />
