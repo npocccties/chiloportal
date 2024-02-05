@@ -4,9 +4,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
 import { pagesPath } from "lib/$path";
-import usePortalCategories from "lib/use-portal-categories";
 import contents from "lib/contents";
-import Fallback from "components/Fallback";
 
 type Props = {
   open: boolean;
@@ -20,8 +18,6 @@ function Menu({ open, onClose }: Props) {
       events.off("routeChangeStart", onClose);
     };
   });
-  const { data: portalCategories, error: portalCategoriesError } =
-    usePortalCategories();
   const id = useId();
   return (
     <Transition appear show={open} as={Fragment}>
@@ -54,42 +50,6 @@ function Menu({ open, onClose }: Props) {
                   閉じる
                 </span>
               </button>
-              <section className="mb-8">
-                <h2 className="text-xs font-bold text-gray-700 mb-4">
-                  カテゴリから探す
-                </h2>
-                <ul
-                  className="text-sm text-gray-700 leading-8"
-                  aria-busy={!portalCategories}
-                >
-                  <Fallback
-                    data={portalCategories}
-                    error={portalCategoriesError}
-                    pending={[...Array(10)].map((_, index) => (
-                      <li
-                        key={index}
-                        className="animate-pulse bg-gray-300 w-48 h-4 my-3 rounded-full"
-                      />
-                    ))}
-                  >
-                    {(data) =>
-                      data.map((portalCateogry) => (
-                        <li key={portalCateogry.portal_category_id}>
-                          <Link
-                            href={pagesPath.portal_categories
-                              ._portalCategoryId(
-                                portalCateogry.portal_category_id,
-                              )
-                              .$url({ query: {} })}
-                          >
-                            {portalCateogry.name}
-                          </Link>
-                        </li>
-                      ))
-                    }
-                  </Fallback>
-                </ul>
-              </section>
               <section>
                 <ul className="text-sm text-gray-700 leading-7">
                   {contents.map((content) => (

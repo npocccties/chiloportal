@@ -4,13 +4,11 @@ import Image from "next/image";
 import { Icon } from "@iconify/react";
 import Popover from "components/Popover";
 import SearchForm from "components/SearchForm";
-import usePortalCategories from "lib/use-portal-categories";
 import useDialog from "lib/use-dialog";
 import clsx from "clsx";
 import { pagesPath } from "lib/$path";
 import contents from "lib/contents";
 import { NEXT_PUBLIC_MOODLE_DASHBOARD_URL } from "lib/env";
-import Fallback from "components/Fallback";
 import Menu from "components/Menu";
 
 type Props = {
@@ -18,8 +16,6 @@ type Props = {
 };
 
 function Header({ className }: Props) {
-  const { data: portalCategories, error: portalCategoriesError } =
-    usePortalCategories();
   const { open, onOpen, onClose } = useDialog();
   const id = useId();
   return (
@@ -52,48 +48,6 @@ function Header({ className }: Props) {
             className="md:ml-8 w-24 -translate-y-0.5"
           />
         </Link>
-        <Popover className="hidden md:block font-bold" title="カテゴリから探す">
-          {({ close }) => (
-            <ul
-              role="menu"
-              className="jumpu-card p-2 text-sm overflow-y-scroll max-h-[80vh]"
-              aria-busy={!portalCategories}
-              onClick={() => close()}
-            >
-              <Fallback
-                data={portalCategories}
-                error={portalCategoriesError}
-                pending={
-                  <li
-                    className="flex justify-center items-center w-48 h-72"
-                    aria-hidden
-                  >
-                    <div className="jumpu-spinner">
-                      <svg viewBox="24 24 48 48">
-                        <circle cx="48" cy="48" r="16" />
-                      </svg>
-                    </div>
-                  </li>
-                }
-              >
-                {(data) =>
-                  data.map((portalCategory) => (
-                    <li key={portalCategory.portal_category_id} role="menuitem">
-                      <Link
-                        href={pagesPath.portal_categories
-                          ._portalCategoryId(portalCategory.portal_category_id)
-                          .$url({ query: {} })}
-                        className="block w-max min-w-full px-4 py-3 rounded hover:text-white hover:bg-primary-700 dark:text-black font-normal"
-                      >
-                        {portalCategory.name}
-                      </Link>
-                    </li>
-                  ))
-                }
-              </Fallback>
-            </ul>
-          )}
-        </Popover>
         <Popover className="hidden md:block font-bold" title="OKUTEPについて">
           {({ close }) => (
             <ul

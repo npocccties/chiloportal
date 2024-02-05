@@ -39,10 +39,8 @@ export default function WisdomBadges({
         nodes={[
           { name: "トップ", href: pagesPath.$url() },
           {
-            name: wisdomBadges.portal_category_name,
-            href: pagesPath.portal_categories
-              ._portalCategoryId(wisdomBadges.portal_category_id)
-              .$url({ query: {} }),
+            name: "バッジをさがす",
+            href: pagesPath.discover.$url({ query: {} }),
           },
         ]}
         leaf={wisdomBadges.name}
