@@ -132,6 +132,8 @@
    ```
    * `server_stop.sh` と `server_start.sh` を呼びます
 
+   DBのデータはvolumeによって保持されますが、万が一復元が必要な場合は後述のDBリストアコマンドを実行してください。
+
    DBバックアップ  
    ```
    chiloportal/backend/server_db_backup.sh

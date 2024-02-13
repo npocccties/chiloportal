@@ -45,6 +45,7 @@ services:
     depends_on:
       - db
       - migration
+    restart: always
 
   migration:
     build: .
@@ -78,10 +79,13 @@ services:
     ports:
       - 5433:5432
     volumes:
-      - ./postgresql/data:/var/lib/postgresql
+      - db_data:/var/lib/postgresql/data
       - ./sql:/docker-entrypoint-initdb.d
+    restart: always
 
 networks:
   app_network:
     driver: bridge
     external: true
+volumes:
+  db_data:
