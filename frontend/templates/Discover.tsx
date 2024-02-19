@@ -12,6 +12,7 @@ import {
 } from "pages/discover";
 import { pagesPath } from "lib/$path";
 import Pagination from "components/Pagination";
+import WisdomBadgesItem from "components/WisdomBadgesItem";
 
 function All(props: AllBadges) {
   const handleHref = (page: number) =>
@@ -22,13 +23,7 @@ function All(props: AllBadges) {
       <ul>
         {props.badges.badges.map((badge) => (
           <li key={badge.badges_id}>
-            <Link
-              href={pagesPath.wisdom_badges
-                ._wisdomBadgesId(String(badge.badges_id))
-                .$url()}
-            >
-              {badge.name}
-            </Link>
+            <WisdomBadgesItem wisdomBadges={badge} />
           </li>
         ))}
       </ul>
@@ -67,13 +62,7 @@ function Issuer(props: IssuerBadges) {
       <ul>
         {props.badges.badges.map((badge) => (
           <li key={badge.badges_id}>
-            <Link
-              href={pagesPath.wisdom_badges
-                ._wisdomBadgesId(String(badge.badges_id))
-                .$url()}
-            >
-              {badge.name}
-            </Link>
+            <WisdomBadgesItem wisdomBadges={badge} />
           </li>
         ))}
       </ul>
@@ -105,13 +94,7 @@ function Category(props: CategoryBadges) {
       <ul>
         {props.badges.badges.map((badge) => (
           <li key={badge.badges_id}>
-            <Link
-              href={pagesPath.wisdom_badges
-                ._wisdomBadgesId(String(badge.badges_id))
-                .$url()}
-            >
-              {badge.name}
-            </Link>
+            <WisdomBadgesItem wisdomBadges={badge} />
           </li>
         ))}
       </ul>
@@ -172,13 +155,7 @@ function Framework(props: FrameworkBadges) {
                       <ul>
                         {props.badges[field_id].map((badge) => (
                           <li key={badge.badges_id}>
-                            <Link
-                              href={pagesPath.wisdom_badges
-                                ._wisdomBadgesId(String(badge.badges_id))
-                                .$url()}
-                            >
-                              {badge.name}
-                            </Link>
+                            <WisdomBadgesItem wisdomBadges={badge} />
                           </li>
                         ))}
                       </ul>

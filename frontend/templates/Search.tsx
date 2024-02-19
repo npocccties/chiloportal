@@ -29,9 +29,9 @@ export default function Search({ keyword, wisdomBadgesList }: Props) {
           size="large"
         />
       </header>
-      <ul>
+      <ul className="mb-8">
         {wisdomBadgesList.badges.map((wisdomBadges) => (
-          <li className="mb-8" key={wisdomBadges.badges_id}>
+          <li key={wisdomBadges.badges_id}>
             <WisdomBadgesItem wisdomBadges={wisdomBadges} />
           </li>
         ))}
