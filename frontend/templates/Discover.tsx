@@ -1,4 +1,5 @@
 import { Fragment } from "react";
+import clsx from "clsx";
 import Link from "next/link";
 import { Disclosure } from "@headlessui/react";
 import Breadcrumbs from "components/Breadcrumbs";
@@ -121,24 +122,35 @@ function Framework(props: FrameworkBadges) {
           {props.consumer.name}教員育成指標（PDF・外部リンク）
         </a>
       </header>
-      <ul>
-        {props.stages.map((stage) => (
-          <li key={stage.stage_id}>
-            <Link
-              href={pagesPath.discover.$url({
-                query: {
-                  by: "framework",
-                  consumer_id: String(props.consumer.consumer_id),
-                  framework_id: String(props.framework.framework_id),
-                  stage_id: String(props.stage.stage_id),
-                },
+      <nav className="jumpu-tabs text-sm">
+        {/* TODO: jumpu-tabs が navigation role に対応したら追従して */}
+        <ul role="tablist">
+          {props.stages.map((stage) => (
+            <li
+              role="tab"
+              key={stage.stage_id}
+              aria-selected={stage.stage_id === props.stage.stage_id}
+              className={clsx({
+                ["!text-black !border-black"]:
+                  stage.stage_id === props.stage.stage_id,
               })}
             >
-              {stage.name}
-            </Link>
-          </li>
-        ))}
-      </ul>
+              <Link
+                href={pagesPath.discover.$url({
+                  query: {
+                    by: "framework",
+                    consumer_id: String(props.consumer.consumer_id),
+                    framework_id: String(props.framework.framework_id),
+                    stage_id: String(props.stage.stage_id),
+                  },
+                })}
+              >
+                {stage.name}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
       <div>
         {props.field.field1.map(({ field1_name, field2 }, field1Index) => (
           <Disclosure key={field1Index}>
