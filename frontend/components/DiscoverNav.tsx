@@ -3,7 +3,11 @@ import clsx from "clsx";
 import { Props } from "pages/discover";
 import { pagesPath } from "lib/$path";
 
-export default function DiscoverNav(props: Props) {
+export default function DiscoverNav(
+  props: Props & {
+    onClick?(): void;
+  },
+) {
   return (
     <nav>
       <ul>
@@ -15,7 +19,10 @@ export default function DiscoverNav(props: Props) {
               ],
           )}
         >
-          <Link href={pagesPath.discover.$url({ query: { by: "all" } })}>
+          <Link
+            href={pagesPath.discover.$url({ query: { by: "all" } })}
+            onClick={props.onClick}
+          >
             すべてのバッジ
           </Link>
         </li>
@@ -34,6 +41,7 @@ export default function DiscoverNav(props: Props) {
                 issuer_id: String(props.issuers[0].issuer_id),
               },
             })}
+            onClick={props.onClick}
           >
             発行元
           </Link>
@@ -54,6 +62,7 @@ export default function DiscoverNav(props: Props) {
                       issuer_id: String(issuer.issuer_id),
                     },
                   })}
+                  onClick={props.onClick}
                 >
                   {issuer.name}
                 </Link>
@@ -78,6 +87,7 @@ export default function DiscoverNav(props: Props) {
                 ),
               },
             })}
+            onClick={props.onClick}
           >
             カテゴリ
           </Link>
@@ -101,6 +111,7 @@ export default function DiscoverNav(props: Props) {
                       ),
                     },
                   })}
+                  onClick={props.onClick}
                 >
                   {portalCategory.name}
                 </Link>
@@ -127,6 +138,7 @@ export default function DiscoverNav(props: Props) {
                 ),
               },
             })}
+            onClick={props.onClick}
           >
             教育委員会
           </Link>
@@ -155,6 +167,7 @@ export default function DiscoverNav(props: Props) {
                             framework_id: String(framework.framework_id),
                           },
                         })}
+                        onClick={props.onClick}
                       >
                         {framework.name}
                       </Link>

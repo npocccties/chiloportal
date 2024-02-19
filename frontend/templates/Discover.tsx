@@ -194,13 +194,14 @@ export default function Discover({
         nodes={[{ name: "トップ", href: pagesPath.$url() }]}
         leaf="バッジをさがす"
       />
-      <h1 className="text-3xl font-bold">バッジを探す</h1>
+      <h1 className="text-3xl font-bold hidden md:block">バッジを探す</h1>
       <div
-        className="grid"
+        className="md:grid"
         style={{
           gridTemplate: `
     "aside article"
       `,
+          gridTemplateColumns: "300px 1fr",
         }}
       >
         <aside style={{ gridArea: "aside" }}>{children}</aside>
