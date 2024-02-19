@@ -21,7 +21,10 @@ function Pagination({ className, totalCount, start, end, handleHref }: Props) {
     <ul className={clsx("flex items-center gap-2", className)}>
       <li>
         {prevPage ? (
-          <Link href={handleHref(prevPage)} className="jumpu-icon-button">
+          <Link
+            href={handleHref(prevPage)}
+            className="jumpu-icon-button hover:bg-gray-100 text-black"
+          >
             <Icon icon="fa6-solid:chevron-left" />
           </Link>
         ) : (
@@ -38,10 +41,11 @@ function Pagination({ className, totalCount, start, end, handleHref }: Props) {
           <li key={index}>
             <Link
               href={handleHref(page)}
-              className={clsx("jumpu-icon-button", {
-                ["bg-primary-700 text-white pointer-events-none"]:
-                  page === currentPage,
-              })}
+              className={clsx(
+                "jumpu-icon-button hover:bg-gray-100 text-black",
+                page === currentPage &&
+                  "pointer-events-none border border-gray-100",
+              )}
               aria-current={page === currentPage}
             >
               {page}
@@ -55,7 +59,10 @@ function Pagination({ className, totalCount, start, end, handleHref }: Props) {
       )}
       <li>
         {nextPage ? (
-          <Link href={handleHref(nextPage)} className="jumpu-icon-button">
+          <Link
+            href={handleHref(nextPage)}
+            className="jumpu-icon-button hover:bg-gray-100 text-black"
+          >
             <Icon icon="fa6-solid:chevron-right" />
           </Link>
         ) : (

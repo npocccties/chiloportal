@@ -19,12 +19,11 @@ export default function Top({ issuers }: Props) {
         3つのO 「Open​」「Online」「Opportunity​」
         オゾン層は地球を守る重要な役割を果たしており、これを教育の文脈においては、生徒や教育コミュニティを守り、育て、支えるシンボルとして捉えるこ
       </p>
-      {/* TODO: バッジをさがす画面への動線を用意して */}
       <Link
         className="jumpu-outlined-button inline-flex items-center gap-2 text-black text-base font-bold px-rel16 py-rel4 border-black border-2 mb-6"
         href={pagesPath.discover.$url({ query: {} })}
       >
-        バッジをさがす
+        バッジを探す
         <Icon icon="fa6-solid:arrow-right" />
       </Link>
       <Link
