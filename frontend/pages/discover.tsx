@@ -4,6 +4,7 @@ import Head from "next/head";
 import { client, getErrorProps } from "lib/node-client";
 import Template from "templates/Discover";
 import Nav from "components/DiscoverNav";
+import MobileNav from "components/DiscoverDialog";
 import title from "lib/title";
 import {
   BadgeDetail1,
@@ -234,7 +235,8 @@ export default function Page(props: ErrorProps | Props) {
         <title>{title("バッジを探す")}</title>
       </Head>
       <Template {...props}>
-        <Nav {...props} />
+        <Nav {...props} className="hidden md:block" />
+        <MobileNav {...props} className="md:hidden mb-4" />
       </Template>
     </>
   );

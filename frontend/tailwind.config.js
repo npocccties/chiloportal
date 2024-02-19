@@ -10,6 +10,13 @@ module.exports = {
         ...require("@jumpu-ui/tailwindcss/colors"),
       },
     },
+    container: {
+      center: true,
+      screens: {
+        xl: "1024px",
+        "2xl": "1024px",
+      },
+    },
   },
   plugins: [
     ...require("@jumpu-ui/tailwindcss"),

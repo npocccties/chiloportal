@@ -17,7 +17,7 @@ function WisdomBadgesItem({ wisdomBadges }: Props) {
       href={pagesPath.wisdom_badges
         ._wisdomBadgesId(wisdomBadges.badges_id)
         .$url()}
-      className="p-1.5 pr-2 flex items-center gap-4 hover:bg-primary-50"
+      className="p-1.5 pr-2 flex items-center gap-4 hover:bg-gray-100"
     >
       <Image
         src={`/images/${wisdomBadges.image}`}
