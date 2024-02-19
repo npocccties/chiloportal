@@ -10,10 +10,11 @@ import Framework from "public/framework.svg";
 export default function DiscoverNav(
   props: Props & {
     onClick?(): void;
+    className?: string;
   },
 ) {
   return (
-    <nav>
+    <nav className={props.className}>
       <ul className="flex flex-col gap-2">
         <li>
           <Link

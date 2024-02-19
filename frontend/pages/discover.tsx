@@ -1,7 +1,6 @@
 import { GetServerSidePropsResult } from "next";
 import Error from "next/error";
 import Head from "next/head";
-import { useMedia } from "react-use";
 import { client, getErrorProps } from "lib/node-client";
 import Template from "templates/Discover";
 import Nav from "components/DiscoverNav";
@@ -229,8 +228,6 @@ export async function getServerSideProps({
 }
 
 export default function Page(props: ErrorProps | Props) {
-  const md = "768px";
-  const isTwoColumns = useMedia(`(min-width: ${md})`);
   if ("statusCode" in props) return <Error {...props} />;
   return (
     <>
@@ -238,11 +235,8 @@ export default function Page(props: ErrorProps | Props) {
         <title>{title("バッジを探す")}</title>
       </Head>
       <Template {...props}>
-        {isTwoColumns ? (
-          <Nav {...props} />
-        ) : (
-          <MobileNav {...props} className="mb-4" />
-        )}
+        <Nav {...props} className="hidden md:block" />
+        <MobileNav {...props} className="md:hidden mb-4" />
       </Template>
     </>
   );
