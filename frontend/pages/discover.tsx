@@ -174,7 +174,7 @@ export async function getServerSideProps({
       if (!stage)
         return { props: { title: "Stage Not Found", statusCode: 404 } };
       const field = await client.stage.field.list.$get({
-        query: { stage_id: Number(query.stage_id) },
+        query: { stage_id: Number(stage.stage_id) },
       });
       const badges = await Promise.all(
         field.field1.flatMap(({ field2 }) =>
