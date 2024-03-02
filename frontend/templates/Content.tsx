@@ -24,7 +24,7 @@ const components = {
 
 function Content({ source, matter }: Props) {
   return (
-    <Container>
+    <Container className="max-w-4xl">
       <Breadcrumbs
         className="mb-6"
         nodes={[{ name: "トップ", href: pagesPath.$url() }]}
