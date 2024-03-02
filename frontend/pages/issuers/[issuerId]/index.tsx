@@ -1,7 +1,7 @@
 import { GetStaticPropsResult, GetStaticPathsResult } from "next";
 import Error from "next/error";
 import Head from "next/head";
-import { client } from "lib/node-client";
+import { client } from "lib/client";
 import Template from "templates/Issuer";
 import { readMarkdowns, Markdown } from "lib/markdown";
 import { readConfigs } from "lib/config";

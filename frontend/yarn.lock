@@ -80,16 +80,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aspida/node-fetch@npm:^1.14.0":
-  version: 1.14.0
-  resolution: "@aspida/node-fetch@npm:1.14.0"
-  peerDependencies:
-    aspida: ^1.14.0
-    node-fetch: ""
-  checksum: 7ae27ecf06847087f82b2bd6e9d8f7df444e644e094e02d58b0164c7a54a9528d13670370de5110921a2f9a4b0b8089bc2d7b8956db7140eeb976c60c80a838f
-  languageName: node
-  linkType: hard
-
 "@babel/code-frame@npm:^7.0.0, @babel/code-frame@npm:^7.23.5":
   version: 7.23.5
   resolution: "@babel/code-frame@npm:7.23.5"
@@ -2506,16 +2496,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node-fetch@npm:^2.6.11":
-  version: 2.6.11
-  resolution: "@types/node-fetch@npm:2.6.11"
-  dependencies:
-    "@types/node": "npm:*"
-    form-data: "npm:^4.0.0"
-  checksum: c416df8f182ec3826278ea42557fda08f169a48a05e60722d9c8edd4e5b2076ae281c6b6601ad406035b7201f885b0257983b61c26b3f9eb0f41192a807b5de5
-  languageName: node
-  linkType: hard
-
 "@types/node@npm:*, @types/node@npm:^20.11.16, @types/node@npm:^20.11.24":
   version: 20.11.24
   resolution: "@types/node@npm:20.11.24"
@@ -3683,6 +3663,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cross-fetch@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "cross-fetch@npm:4.0.0"
+  dependencies:
+    node-fetch: "npm:^2.6.12"
+  checksum: e231a71926644ef122d334a3a4e73d9ba3ba4b480a8a277fb9badc434c1ba905b3d60c8034e18b348361a09afbec40ba9371036801ba2b675a7b84588f9f55d8
+  languageName: node
+  linkType: hard
+
 "cross-spawn@npm:^6.0.5":
   version: 6.0.5
   resolution: "cross-spawn@npm:6.0.5"
@@ -4801,7 +4790,6 @@ __metadata:
   resolution: "frontend@workspace:."
   dependencies:
     "@aspida/fetch": "npm:^1.14.0"
-    "@aspida/node-fetch": "npm:^1.14.0"
     "@faker-js/faker": "npm:^8.4.1"
     "@headlessui/react": "npm:^1.7.18"
     "@iconify/react": "npm:^4.1.1"
@@ -4809,7 +4797,6 @@ __metadata:
     "@svgr/webpack": "npm:^8.1.0"
     "@tailwindcss/typography": "npm:^0.5.10"
     "@types/node": "npm:^20.11.24"
-    "@types/node-fetch": "npm:^2.6.11"
     "@types/react": "npm:^18.2.61"
     "@types/react-dom": "npm:^18.2.19"
     "@typescript-eslint/eslint-plugin": "npm:^7.1.0"
@@ -4819,6 +4806,7 @@ __metadata:
     aspida: "npm:^1.14.0"
     autoprefixer: "npm:^10.4.18"
     clsx: "npm:^2.1.0"
+    cross-fetch: "npm:^4.0.0"
     eslint: "npm:^8.57.0"
     eslint-config-next: "npm:^14.1.1"
     eslint-config-prettier: "npm:^9.1.0"
@@ -4831,7 +4819,6 @@ __metadata:
     msw: "npm:^2.2.2"
     next: "npm:^14.1.1"
     next-mdx-remote: "npm:^4.4.1"
-    node-fetch: "npm:^2.7.0"
     npm-run-all: "npm:^4.1.5"
     openapi2aspida: "npm:^0.23.2"
     pathpida: "npm:^0.22.0"
@@ -7447,7 +7434,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-fetch@npm:^2.6.1, node-fetch@npm:^2.7.0":
+"node-fetch@npm:^2.6.1, node-fetch@npm:^2.6.12":
   version: 2.7.0
   resolution: "node-fetch@npm:2.7.0"
   dependencies:

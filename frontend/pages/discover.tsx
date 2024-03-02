@@ -1,7 +1,7 @@
 import { GetServerSidePropsResult } from "next";
 import Error from "next/error";
 import Head from "next/head";
-import { client, getErrorProps } from "lib/node-client";
+import { client, getErrorProps } from "lib/client";
 import Template from "templates/Discover";
 import Nav from "components/DiscoverNav";
 import MobileNav from "components/DiscoverDialog";
