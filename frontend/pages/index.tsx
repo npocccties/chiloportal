@@ -3,7 +3,7 @@ import Error from "next/error";
 import Head from "next/head";
 import Template from "templates/Top";
 import title from "lib/title";
-import { client } from "lib/node-client";
+import { client } from "lib/client";
 import { Issuer } from "api/@types";
 
 type ErrorProps = {

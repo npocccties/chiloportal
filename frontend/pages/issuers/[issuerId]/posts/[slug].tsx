@@ -10,7 +10,7 @@ import { Post } from "schemas";
 import rehypeImageSize from "lib/rehype-image-size";
 import title from "lib/title";
 import { Issuer } from "api/@types";
-import { client } from "lib/node-client";
+import { client } from "lib/client";
 import { NEXT_PUBLIC_API_MOCKING } from "lib/env";
 
 type Context = {
