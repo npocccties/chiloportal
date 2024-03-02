@@ -33,7 +33,7 @@ const components = {
 
 function Post({ issuer, source, matter }: Props) {
   return (
-    <Container>
+    <Container className="max-w-4xl">
       <Breadcrumbs
         className="mb-6"
         nodes={[
@@ -47,10 +47,10 @@ function Post({ issuer, source, matter }: Props) {
         ]}
         leaf={matter.title}
       />
-      <header className="prose mb-6">
+      <header className="prose max-w-none mb-6">
         <h1>{matter.title}</h1>
       </header>
-      <article className="prose">
+      <article className="prose max-w-none">
         <MDXRemote {...source} components={components} />
       </article>
     </Container>
