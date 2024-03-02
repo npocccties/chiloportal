@@ -43,7 +43,7 @@ function Post({ issuer, source, matter }: Props) {
                 name: issuer.name,
                 href: pagesPath.issuers._issuerId(issuer.issuer_id).$url(),
               }
-            : { name: "OKUTEPからのおしらせ", href: pagesPath.posts.$url() },
+            : { name: "お知らせ", href: pagesPath.posts.$url() },
         ]}
         leaf={matter.title}
       />
