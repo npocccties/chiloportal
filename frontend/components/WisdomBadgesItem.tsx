@@ -21,12 +21,15 @@ function WisdomBadgesItem({ wisdomBadges }: Props) {
     >
       <Image
         src={`/images/${wisdomBadges.image}`}
-        width={64}
-        height={64}
+        width={100}
+        height={100}
+        className="size-[92px] md:size-[100px]"
         alt=""
       />
       <div>
-        <h3 className="text-base font-bold mb-1">{wisdomBadges.name}</h3>
+        <h3 className="text-base md:text-lg font-bold mb-1">
+          {wisdomBadges.name}
+        </h3>
         <p className="text-xs text-gray-500 flex gap-x-3 gap-y-1 flex-wrap items-center">
           {"knowledge_badges_list" in wisdomBadges.detail && (
             <span>
