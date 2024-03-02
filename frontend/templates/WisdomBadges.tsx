@@ -29,13 +29,13 @@ export default function WisdomBadges({
 
   return (
     <Container
-      className="max-w-6xl md:grid gap-8 grid-cols-[auto_1fr] px-8"
+      className="md:grid gap-6 grid-cols-[auto_1fr]"
       style={{
         gridTemplateAreas: "'breadcrumbs breadcrumbs' 'aside article'",
       }}
     >
       <Breadcrumbs
-        className="mb-12 md:mb-6 [grid-area:breadcrumbs]"
+        className="mb-10 md:mb-6 [grid-area:breadcrumbs]"
         nodes={[
           { name: "トップ", href: pagesPath.$url() },
           {
@@ -143,7 +143,7 @@ export default function WisdomBadges({
               つの「知識バッジ」をすべて習得してください
             </p>
           </header>
-          <div className="flex pt-6 pb-5 mb-4 mx-6 px-6 rounded-xl bg-gray-800">
+          <div className="flex pt-6 pb-6 mb-4 mx-6 px-6 rounded-xl bg-gray-800">
             <Icon
               icon="mdi:lightbulb-on-10"
               className="text-warning text-3xl -translate-x-1/4 -translate-y-1/4"

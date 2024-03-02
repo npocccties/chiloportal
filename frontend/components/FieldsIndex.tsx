@@ -66,7 +66,7 @@ function FieldsIndex({ className, field }: Props) {
                           field2Index,
                           field3Index,
                         )}
-                        className="text-xs pl-12"
+                        className="text-xs pl-10"
                       />
                     </li>
                   ))}

@@ -38,7 +38,7 @@ function Header({ className }: Props) {
         <Menu open={open} onClose={onClose} />
         <Link
           href={pagesPath.$url()}
-          className="absolute md:static left-1/2 top-1/2 -translate-x-1/2 md:translate-x-0 -translate-y-1/2 md:translate-y-0 md:mr-4 xl:mr-12 shrink-0"
+          className="absolute md:static left-1/2 top-1/2 -translate-x-1/2 md:translate-x-0 -translate-y-1/2 md:translate-y-0 md:mr-4 xl:mr-10 shrink-0"
         >
           <Image
             src="/logo.svg"
