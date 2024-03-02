@@ -12,7 +12,7 @@ function Posts({ posts }: Props) {
         nodes={[{ name: "トップ", href: pagesPath.$url() }]}
         leaf="OKUTEPからのおしらせ"
       />
-      <h1 className="text-2xl text-gray-700 mb-4">OKUTEPからのおしらせ</h1>
+      <h1 className="text-2xl text-gray-700 mb-6">OKUTEPからのおしらせ</h1>
       <ul className="list-disc pl-8 text-gray-700">
         {posts.map((post) => (
           <li key={post.slug}>

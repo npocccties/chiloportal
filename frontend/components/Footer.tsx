@@ -11,9 +11,9 @@ type Props = {
 function Footer({ className }: Props) {
   return (
     <footer
-      className={clsx("bg-gray-800 mt-4 pb-32 lg:pb-12 py-12", className)}
+      className={clsx("bg-gray-800 mt-4 pb-32 lg:pb-10 py-10", className)}
     >
-      <div className="max-w-5xl xl:max-w-7xl mx-auto px-16 xl:px-4 flex flex-col xl:justify-center sm:flex-row flex-wrap gap-x-24 gap-y-8 mb-12 ">
+      <div className="max-w-5xl xl:max-w-7xl mx-auto px-16 xl:px-4 flex flex-col xl:justify-center sm:flex-row flex-wrap gap-x-24 gap-y-8 mb-10 ">
         <div className="w-full xl:w-auto -translate-y-2">
           <Link href={pagesPath.$url()} className="inline-block -translate-x-3">
             <Image

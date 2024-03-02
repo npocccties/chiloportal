@@ -20,7 +20,7 @@ export default function Issuer({
   return (
     <>
       <Breadcrumbs
-        className="max-w-4xl mx-auto my-4 px-4 xl:px-0"
+        className="max-w-4xl mx-auto my-6 px-6 xl:px-0"
         nodes={[{ name: "ホーム", href: pagesPath.$url() }]}
         leaf={issuer.name}
       />

@@ -24,14 +24,14 @@ const components = {
 
 function Content({ source, matter }: Props) {
   return (
-    <Container className="max-w-2xl mb-16">
+    <Container>
       <Breadcrumbs
         className="mb-6"
         nodes={[{ name: "トップ", href: pagesPath.$url() }]}
         leaf={matter.title}
       />
       <header className="prose max-w-none mb-6">
-        <h1 className="mb-4">{matter.title}</h1>
+        <h1>{matter.title}</h1>
       </header>
       <article className="prose max-w-none">
         <MDXRemote {...source} components={components} />

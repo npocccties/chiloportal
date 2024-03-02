@@ -11,11 +11,11 @@ export default function Top({ issuers }: Props) {
       <h1 className="text-3xl font-bold mb-4">
         教員生涯学習プラットフォーム 「オゾン」
       </h1>
-      <p className="font-serif font-bold text-lg mb-12">
+      <p className="font-serif font-bold text-lg mb-10">
         Teachers&apos; Life-Long Education Platform OZONE
       </p>
       {/* TODO: キャッチコピーを確定したものに差し替えて */}
-      <p className="text-sm font-bold mx-auto max-w-xl text-left mb-12">
+      <p className="text-sm font-bold mx-auto max-w-xl text-left mb-10">
         3つのO 「Open​」「Online」「Opportunity​」
         オゾン層は地球を守る重要な役割を果たしており、これを教育の文脈においては、生徒や教育コミュニティを守り、育て、支えるシンボルとして捉えるこ
       </p>
@@ -28,7 +28,7 @@ export default function Top({ issuers }: Props) {
       </Link>
       <Link
         href={pagesPath.posts.$url()}
-        className="block text-sm font-bold text-black underline underline-offset-4 mb-12"
+        className="block text-sm font-bold text-black underline underline-offset-4 mb-10"
       >
         オゾンからのお知らせ
       </Link>

@@ -22,7 +22,7 @@ function All(props: AllBadges) {
   return (
     <>
       <h2 className="text-2xl font-bold mb-8">すべてのバッジ</h2>
-      <ul className="mb-12">
+      <ul className="mb-10">
         {props.badges.badges.map((badge) => (
           <li key={badge.badges_id}>
             <WisdomBadgesItem wisdomBadges={badge} />
@@ -63,7 +63,7 @@ function Issuer(props: IssuerBadges) {
       >
         {props.issuer.name}のページへ
       </Link>
-      <ul className="mb-12">
+      <ul className="mb-10">
         {props.badges.badges.map((badge) => (
           <li key={badge.badges_id}>
             <WisdomBadgesItem wisdomBadges={badge} />
@@ -96,7 +96,7 @@ function Category(props: CategoryBadges) {
         <p className="text-sm mb-2">カテゴリ</p>
         <h2 className="text-2xl font-bold">{props.portalCategory.name}</h2>
       </header>
-      <ul className="mb-12">
+      <ul className="mb-10">
         {props.badges.badges.map((badge) => (
           <li key={badge.badges_id}>
             <WisdomBadgesItem wisdomBadges={badge} />
