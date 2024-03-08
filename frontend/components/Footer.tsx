@@ -13,7 +13,7 @@ function Footer({ className }: Props) {
     <footer
       className={clsx("bg-black mt-4 lg:pb-10 pt-12 pb-32 md:py-8", className)}
     >
-      <div className="container px-4 flex flex-col md:flex-row items-center justify-center gap-10">
+      <div className="container px-6 flex flex-col md:flex-row items-center justify-center gap-10">
         <Link href={pagesPath.$url()} className="flex-shrink-0">
           <Image
             src="/logo.svg"

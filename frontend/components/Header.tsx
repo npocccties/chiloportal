@@ -24,7 +24,7 @@ function Header({ className }: Props) {
   const { data: issuers, error: issuersError } = useIssuers();
   return (
     <header className={clsx("bg-black", className)}>
-      <div className="container flex items-center gap-1 px-4 py-3">
+      <div className="container flex items-center gap-1 px-6 py-3">
         <Link href={pagesPath.$url()} className="md:mr-10 shrink-0">
           <Image
             src="/logo.svg"
@@ -100,7 +100,7 @@ function Header({ className }: Props) {
           ログイン
         </a>
         <button
-          className="jumpu-icon-button group md:hidden ml-2"
+          className="jumpu-icon-button hover:bg-gray-700 group md:hidden ml-2"
           onClick={onOpen}
           aria-describedby={id}
         >
