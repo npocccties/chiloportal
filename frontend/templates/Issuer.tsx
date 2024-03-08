@@ -32,7 +32,7 @@ export default function Issuer({
         />
       </div>
       <Container className="relative">
-        <header className="flex items-end gap-4 -mt-16 md:-mt-[7.5rem] mb-4">
+        <header className="flex items-end gap-4 -mt-16 md:-mt-[7.5rem] mb-6 md:mb-10">
           {/* eslint-disable @next/next/no-img-element */}
           {/*
         NOTE: 事前に許可したホスト以外画像最適化の対象にできない
@@ -47,7 +47,7 @@ export default function Issuer({
               alt=""
             />
           )}
-          <h1 className="text-lg md:text-2xl font-bold pb-1 md:pb-6">
+          <h1 className="text-xl md:text-3xl font-bold pb-0 md:pb-2 md:pl-4">
             {issuer.name}
           </h1>
         </header>
