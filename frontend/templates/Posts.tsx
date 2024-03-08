@@ -13,13 +13,13 @@ function Posts({ posts }: Props) {
         nodes={[{ name: "トップ", href: pagesPath.$url() }]}
         leaf="お知らせ"
       />
-      <h1 className="flex gap-4 items-center text-xl font-bold border-b-4 border-black pb-2">
+      <h1 className="flex gap-4 items-center text-base md:text-xl font-bold border-b-4 border-black pb-2 mb-4">
         <span className="inline-flex bg-black rounded-xl p-3">
           <Icon className="text-white" icon="ion:newspaper-outline" />
         </span>
         お知らせ
       </h1>
-      <ul className="my-4 space-y-4">
+      <ul className="space-y-4">
         {posts.map((post) => (
           <li key={post.slug}>
             <Link
