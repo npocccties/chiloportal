@@ -18,10 +18,10 @@ export default function Search({ keyword, wisdomBadgesList }: Props) {
         nodes={[{ name: "トップ", href: pagesPath.$url() }]}
         leaf="キーワード検索"
       />
-      <header className="mb-10">
+      <header className="mb-6">
         <h1 className="text-2xl text-gray-700 mb-4">キーワード検索</h1>
         {keyword && (
-          <p className="mb-8">
+          <p className="mb-6">
             「{keyword}」に関連する能力バッジが{wisdomBadgesList.total_count}
             件あります
           </p>
