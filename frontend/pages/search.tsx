@@ -21,7 +21,7 @@ export type Props = {
   keyword: string;
   wisdomBadgesList: Awaited<
     ReturnType<typeof client.wisdomBadges.list.keyword.$get>
-  >;
+  > | null;
 };
 
 export async function getServerSideProps({
@@ -29,12 +29,14 @@ export async function getServerSideProps({
 }: Context): Promise<GetServerSidePropsResult<ErrorProps | Props>> {
   try {
     const pageNumber = parsePageQuery(p);
-    const wisdomBadgesList = await client.wisdomBadges.list.keyword.$get({
-      query: {
-        keyword: q,
-        page_number: pageNumber,
-      },
-    });
+    const wisdomBadgesList = q
+      ? await client.wisdomBadges.list.keyword.$get({
+          query: {
+            keyword: q,
+            page_number: pageNumber,
+          },
+        })
+      : null;
 
     return {
       props: { keyword: q, wisdomBadgesList },
