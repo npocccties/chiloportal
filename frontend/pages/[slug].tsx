@@ -46,7 +46,6 @@ export async function getStaticProps({
       // See https://github.com/orgs/rehypejs/discussions/63
       rehypePlugins: [rehypeImageSize],
       remarkPlugins: [remarkGfm],
-      format: "md",
     },
   });
   return {
