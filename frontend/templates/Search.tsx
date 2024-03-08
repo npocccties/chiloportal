@@ -20,7 +20,7 @@ export default function Search({ keyword, wisdomBadgesList }: Props) {
       />
       <header className="mb-6">
         <h1 className="text-2xl text-gray-700 mb-4">キーワード検索</h1>
-        {keyword && (
+        {keyword && wisdomBadgesList && (
           <p className="mb-6">
             「{keyword}」に関連する能力バッジが{wisdomBadgesList.total_count}
             件あります
@@ -32,19 +32,23 @@ export default function Search({ keyword, wisdomBadgesList }: Props) {
           variant="light"
         />
       </header>
-      <ul className="mb-8">
-        {wisdomBadgesList.badges.map((wisdomBadges) => (
-          <li key={wisdomBadges.badges_id}>
-            <WisdomBadgesItem wisdomBadges={wisdomBadges} />
-          </li>
-        ))}
-      </ul>
-      <Pagination
-        totalCount={wisdomBadgesList.total_count}
-        start={wisdomBadgesList.start}
-        end={wisdomBadgesList.end}
-        handleHref={handleHref}
-      />
+      {wisdomBadgesList && (
+        <>
+          <ul className="mb-8">
+            {wisdomBadgesList.badges.map((wisdomBadges) => (
+              <li key={wisdomBadges.badges_id}>
+                <WisdomBadgesItem wisdomBadges={wisdomBadges} />
+              </li>
+            ))}
+          </ul>
+          <Pagination
+            totalCount={wisdomBadgesList.total_count}
+            start={wisdomBadgesList.start}
+            end={wisdomBadgesList.end}
+            handleHref={handleHref}
+          />
+        </>
+      )}
     </Container>
   );
 }
