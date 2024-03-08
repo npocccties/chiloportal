@@ -23,7 +23,7 @@ export default function Top({ issuers }: Props) {
         className="jumpu-outlined-button inline-flex items-center gap-2 text-black text-base font-bold px-rel16 py-rel4 border-black border-2 mb-6"
         href={pagesPath.discover.$url({ query: {} })}
       >
-        バッジを探す
+        学びを探す
         <Icon icon="fa6-solid:arrow-right" />
       </Link>
       <Link

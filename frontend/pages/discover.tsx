@@ -232,7 +232,7 @@ export default function Page(props: ErrorProps | Props) {
   return (
     <>
       <Head>
-        <title>{title("バッジを探す")}</title>
+        <title>{title("学びを探す")}</title>
       </Head>
       <Template {...props}>
         <Nav {...props} className="hidden md:block" />
