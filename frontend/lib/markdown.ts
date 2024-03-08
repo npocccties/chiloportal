@@ -6,13 +6,19 @@ import { VFile } from "vfile";
 import fg from "fast-glob";
 import Ajv from "ajv";
 import addFormats from "ajv-formats";
-import { Frontmatter, Post, Menu, Page } from "schemas";
+import { Frontmatter, Post, Menu, Page, Custom } from "schemas";
 
 export type Markdown<T extends Frontmatter = Frontmatter> = VFile & {
   data: Required<VFile["data"]> & { matter: T };
 };
 export type MarkdownResult<T extends Frontmatter["type"]> = Markdown<
-  T extends "post" ? Post : T extends "menu" ? Menu : Page
+  T extends "post"
+    ? Post
+    : T extends "menu"
+      ? Menu
+      : T extends "custom"
+        ? Custom
+        : Page
 >;
 
 /** おしらせか否か判定する関数 */
@@ -26,6 +32,10 @@ export const isMenu = (markdown: Markdown): markdown is Markdown<Menu> =>
 /** ページか否か判定する関数 */
 export const isPage = (markdown: Markdown): markdown is Markdown<Page> =>
   markdown.data.matter.type === "page";
+
+/** ページか否か判定する関数 */
+export const isCustom = (markdown: Markdown): markdown is Markdown<Custom> =>
+  markdown.data.matter.type === "custom";
 
 /** おしらせをソートする関数 */
 function sortPosts(posts: Markdown<Post>[]): Markdown<Post>[] {
@@ -102,6 +112,10 @@ export async function readMarkdowns<T extends Frontmatter["type"]>({
   if (type === "menu") {
     const menus = issuerMarkdowns.filter(isMenu);
     return (sort ? sortMenus(menus) : menus) as MarkdownResult<T>[];
+  }
+  if (type === "custom") {
+    const customs = issuerMarkdowns.filter(isCustom);
+    return customs as MarkdownResult<T>[];
   }
   return issuerMarkdowns.filter(isPage) as MarkdownResult<T>[];
 }
