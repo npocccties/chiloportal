@@ -88,19 +88,12 @@ export default function WisdomBadges({
           <ul className="flex items-center gap-1 mb-4">
             <li className="text-gray-700 text-sm">
               <span className="mr-2">
-                全{knowledgeBadgesList.length}バッジ
+                能力バッジ取得条件
                 <span className="mx-1" aria-hidden>
-                  ／
+                  :
                 </span>
-                計
-                {
-                  knowledgeBadgesList.flatMap((knowledgeBadges) =>
-                    "length" in knowledgeBadges.detail
-                      ? knowledgeBadges.detail
-                      : [],
-                  ).length
-                }
-                研修
+                {knowledgeBadgesList.length}
+                知識バッジ
               </span>
             </li>
             <li>
@@ -159,7 +152,7 @@ export default function WisdomBadges({
             />
           </svg>
           <header className="px-6 mb-6">
-            <h2 className="ftext-sm text-gray-600">バッジの取得条件</h2>
+            <h2 className="text-sm text-gray-600">能力バッジの取得条件</h2>
             <p className="text-xl mb-2">
               以下の{knowledgeBadgesList.length}
               つの「知識バッジ」をすべて習得してください
