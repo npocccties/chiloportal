@@ -3,3 +3,4 @@ export * from "./frontmatter";
 export * from "./post";
 export * from "./menu";
 export * from "./page";
+export * from "./custom";

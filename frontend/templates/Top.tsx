@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { Props } from "pages";
 import { pagesPath } from "lib/$path";
-import IssuerCard from "components/IssuerCard";
 import { Icon } from "@iconify/react";
+import Markdown from "components/Markdown";
 
-export default function Top({ issuers }: Props) {
+export default function Top({ source }: Props) {
   return (
     <article className="text-center max-w-2l px-2 mx-auto py-32">
       {/* TODO: ロゴを配置して */}
@@ -32,13 +32,7 @@ export default function Top({ issuers }: Props) {
       >
         オゾンからのお知らせ
       </Link>
-      <ul className="flex gap-2 flex-wrap justify-center max-w-5xl mx-auto">
-        {issuers.map((issuer) => (
-          <li key={issuer.issuer_id}>
-            <IssuerCard issuer={issuer} />
-          </li>
-        ))}
-      </ul>
+      {source && <Markdown {...source} />}
     </article>
   );
 }
