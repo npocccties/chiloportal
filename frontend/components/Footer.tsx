@@ -17,7 +17,7 @@ function Footer({ className }: Props) {
         <div className="w-full xl:w-auto -translate-y-2">
           <Link href={pagesPath.$url()} className="inline-block -translate-x-3">
             <Image
-              src="/logo-white.svg"
+              src="/logo.svg"
               width={108}
               height={24}
               alt="トップページに戻る"
