@@ -6,7 +6,7 @@ import Markdown from "components/Markdown";
 
 export default function Top({ source }: Props) {
   return (
-    <article className="text-center max-w-2l px-2 mx-auto py-32">
+    <article className="text-center max-w-2l px-2 mx-auto py-32 min-h-[50vh] md:min-h-[75vh]">
       {/* TODO: ロゴを配置して */}
       <h1 className="text-3xl font-bold mb-4">
         教員生涯学習プラットフォーム 「オゾン」

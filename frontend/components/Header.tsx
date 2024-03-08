@@ -24,7 +24,7 @@ function Header({ className }: Props) {
   const { data: issuers, error: issuersError } = useIssuers();
   return (
     <header className={clsx("bg-black", className)}>
-      <div className="container flex items-center gap-1 p-4">
+      <div className="container flex items-center gap-1 px-4 py-3">
         <Link href={pagesPath.$url()} className="md:mr-10 shrink-0">
           <Image
             src="/logo.svg"

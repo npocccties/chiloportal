@@ -11,7 +11,10 @@ function Container({ className, style, as = "main", children }: Props) {
   const As = as;
   return (
     <As
-      className={clsx("container p-6 pb-10 min-h-[33vh]", className)}
+      className={clsx(
+        "container p-6 pb-10 min-h-[50vh] md:min-h-[75vh]",
+        className,
+      )}
       style={style}
     >
       {children}
