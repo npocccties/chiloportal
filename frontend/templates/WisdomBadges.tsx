@@ -71,7 +71,7 @@ export default function WisdomBadges({
       */}
               {typeof url === "string" && (
                 <img
-                  className="rounded-xl bg-white object-cover p-1"
+                  className="rounded-xl bg-white object-contain p-1"
                   src={url}
                   width={34}
                   height={34}

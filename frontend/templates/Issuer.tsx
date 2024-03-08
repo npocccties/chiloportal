@@ -40,7 +40,7 @@ export default function Issuer({
       */}
           {typeof url === "string" && (
             <img
-              className="rounded-xl bg-white object-cover size-20 p-2 md:size-40 md:p-4"
+              className="rounded-xl bg-white object-contain size-20 p-2 md:size-40 md:p-4"
               src={url}
               width={160}
               height={160}
