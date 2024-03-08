@@ -30,7 +30,6 @@ export default function DiscoverNav(
                 "size-[1.125rem]",
                 props.type === "all" && "stroke-primary-700",
               )}
-              src="/all-badge.svg"
               alt=""
             />
             すべてのバッジ
@@ -47,7 +46,7 @@ export default function DiscoverNav(
             })}
             onClick={props.onClick}
           >
-            <Issuer className="size-[1.125rem]" src="/all-badge.svg" alt="" />
+            <Issuer className="size-[1.125rem]" alt="" />
             発行元
           </Link>
           <ul className="flex flex-col">
@@ -87,7 +86,7 @@ export default function DiscoverNav(
             })}
             onClick={props.onClick}
           >
-            <Category className="size-[1.125rem]" src="/all-badge.svg" alt="" />
+            <Category className="size-[1.125rem]" alt="" />
             カテゴリ
           </Link>
           <ul className="flex flex-col">
@@ -139,11 +138,7 @@ export default function DiscoverNav(
             })}
             onClick={props.onClick}
           >
-            <Framework
-              className="size-[1.125rem]"
-              src="/all-badge.svg"
-              alt=""
-            />
+            <Framework className="size-[1.125rem]" alt="" />
             教育委員会
           </Link>
           <ul className="flex flex-col">
