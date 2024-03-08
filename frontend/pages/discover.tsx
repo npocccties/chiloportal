@@ -233,6 +233,7 @@ export default function Page(props: ErrorProps | Props) {
     <>
       <Head>
         <title>{title("学びを探す")}</title>
+        <meta property="og:title" content={title("学びを探す")} />
       </Head>
       <Template {...props}>
         <Nav {...props} className="hidden md:block" />

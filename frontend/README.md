@@ -28,6 +28,7 @@ corepack yarn install # NPM パッケージのインストール
 cat << EOL > .env.test # テスト用環境変数の用意
 > NEXT_PUBLIC_API_MOCKING=false # モックサーバーを無効化
 > NEXT_PUBLIC_API_BASE_URL=<API のベースとなる URL>
+> NEXT_PUBLIC_BASE_URL=<ベースとなる URL>
 > NEXT_PUBLIC_MOODLE_DASHBOARD_URL=<Moodle ダッシュボードの URL>
 > EOL
 NODE_ENV=test corepack yarn build # テスト環境変数でのアプリケーションのビルド
@@ -44,12 +45,13 @@ docker run --rm -p 3000:3000 frontend # Docker コンテナの起動
 
 ## 環境変数
 
-| 変数名                               | 説明                                        | デフォルト値         |
-| :----------------------------------- | :------------------------------------------ | :------------------- |
-| NEXT_PUBLIC_API_MOCKING              | API モックの使用をするか否か（真偽値[^yn]） | 偽                   |
-| NEXT_PUBLIC_API_BASE_URL             | API のベースとなる URL                      | なし                 |
-| NEXT_PUBLIC_MOODLE_DASHBOARD_URL     | Moodle ダッシュボードの URL                 | なし                 |
-| NEXT_PUBLIC_BADGES_ISSUER_IMAGE_PATH | バッジ発行者の画像のパス                    | `"issuer/image.png"` |
+| 変数名                               | 説明                                        | デフォルト値                  |
+| :----------------------------------- | :------------------------------------------ | :---------------------------- |
+| NEXT_PUBLIC_API_MOCKING              | API モックの使用をするか否か（真偽値[^yn]） | 偽                            |
+| NEXT_PUBLIC_API_BASE_URL             | API のベースとなる URL                      | なし                          |
+| NEXT_PUBLIC_BASE_URL                 | ベースとなる URL                            | "https://portal.example.org/" |
+| NEXT_PUBLIC_MOODLE_DASHBOARD_URL     | Moodle ダッシュボードの URL                 | なし                          |
+| NEXT_PUBLIC_BADGES_ISSUER_IMAGE_PATH | バッジ発行者の画像のパス                    | `"issuer/image.png"`          |
 
 [^yn]: [yn](https://github.com/sindresorhus/yn#readme)によって truly/falsy な値として解釈されます
 
@@ -156,6 +158,7 @@ learningContents:
 ```shell
 cat << EOL > .env # 環境変数の用意
 > NEXT_PUBLIC_API_BASE_URL=<API のベースとなる URL>
+> NEXT_PUBLIC_BASE_URL=<ベースとなる URL>
 > NEXT_PUBLIC_MOODLE_DASHBOARD_URL=<Moodle ダッシュボードの URL>
 > EOL
 corepack yarn install --immutable # NPM パッケージのインストール
@@ -168,6 +171,7 @@ corepack yarn start # 本番サーバーの起動
 ```shell
 cat << EOL > .env # 環境変数の用意
 > NEXT_PUBLIC_API_BASE_URL=<API のベースとなる URL>
+> NEXT_PUBLIC_BASE_URL=<ベースとなる URL>
 > NEXT_PUBLIC_MOODLE_DASHBOARD_URL=<Moodle ダッシュボードの URL>
 > EOL
 docker build -t frontend -f ../Dockerfile.frontend .. # Docker イメージのビルド
