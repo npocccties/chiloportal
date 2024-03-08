@@ -3,6 +3,7 @@ import { MDXRemote } from "next-mdx-remote";
 import { MDXRemoteSerializeResult } from "next-mdx-remote";
 
 type Props = MDXRemoteSerializeResult;
+
 const components = {
   img: (props: Pick<React.ImgHTMLAttributes<HTMLImageElement>, "src">) => {
     /* eslint-disable @next/next/no-img-element */
