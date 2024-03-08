@@ -116,6 +116,10 @@ learningContents:
 
 ### contents/\*\*/\*.md
 
+> [!WARNING]
+>
+> マークダウンファイルは [MDX](https://mdxjs.com/docs/what-is-mdx/) パーサーによって React テンプレートに変換されます。[HTML ブロック](https://spec.commonmark.org/0.31.2/#html-blocks)を使用する際は React JSX テンプレートとして記述する必要があり、一部の HTML 属性（class, etc.）を受け付けないので注意してください。class 属性を使用したい場合は代わりに className プロパティを使用してください。
+
 #### おしらせ
 
 おしらせとして表示するマークダウンファイルを記述します。フロントマターのtypeプロパティに`"post"`を指定します。 `<url origin>/posts/<slug>` の静的なページが生成されます。トップページ、おしらせ一覧ページに配置されたマークダウンファイルへの動線（ハイパーリンク）が一覧されます。一覧は公開日降順でソートされます。公開日が同じ場合 [fast-glob](https://github.com/mrmlnc/fast-glob) で得られる結果に依存した並びになります。公開日は一覧の並び以外に影響しません。
