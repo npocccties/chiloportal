@@ -11,35 +11,29 @@ type Props = {
 function Footer({ className }: Props) {
   return (
     <footer
-      className={clsx("bg-gray-800 mt-4 pb-32 lg:pb-10 py-10", className)}
+      className={clsx("bg-black mt-4 lg:pb-10 pt-12 pb-32 md:py-8", className)}
     >
-      <div className="max-w-5xl xl:max-w-7xl mx-auto px-16 xl:px-4 flex flex-col xl:justify-center sm:flex-row flex-wrap gap-x-24 gap-y-8 mb-10 ">
-        <div className="w-full xl:w-auto -translate-y-2">
-          <Link href={pagesPath.$url()} className="inline-block -translate-x-3">
-            <Image
-              src="/logo.svg"
-              width={108}
-              height={24}
-              alt="トップページに戻る"
-              className="w-40"
-            />
-          </Link>
-        </div>
-        <ul className="text-gray-300 text-xs leading-8 md:leading-6 xl:columns-2 [&>li]:break-inside-avoid">
+      <div className="container px-4 flex flex-col md:flex-row items-center justify-center gap-10">
+        <Link href={pagesPath.$url()} className="flex-shrink-0">
+          <Image
+            src="/logo.svg"
+            width={128}
+            height={32}
+            alt="トップページに戻る"
+          />
+        </Link>
+        <ul className="text-white text-xs flex items-center flex-wrap gap-4">
           {contents.map((content) => (
             <li key={content.slug}>
               <Link
                 href={pagesPath._slug(content.slug).$url()}
-                className="hover:text-white"
+                className="hover:underline"
               >
                 {content.title}
               </Link>
             </li>
           ))}
         </ul>
-      </div>
-      <div className="flex justify-center text-gray-300 text-xs px-2">
-        <p>Copyright &copy; Osaka Kyoiku University. All rights reserved.</p>
       </div>
     </footer>
   );
