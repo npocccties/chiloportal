@@ -32,7 +32,7 @@ export default function Issuer({
         />
       </div>
       <Container className="relative">
-        <header className="flex items-end gap-4 -mt-16 md:-mt-[7.5rem] mb-4">
+        <header className="flex items-end gap-4 -mt-16 md:-mt-[7.5rem] mb-6">
           {/* eslint-disable @next/next/no-img-element */}
           {/*
         NOTE: 事前に許可したホスト以外画像最適化の対象にできない
