@@ -32,7 +32,7 @@ export default function Page(props: ErrorProps | Props) {
   return (
     <>
       <Head>
-        <title>{title("OKUTEPからのおしらせ")}</title>
+        <title>{title("お知らせ")}</title>
       </Head>
       <Template {...props} />
     </>

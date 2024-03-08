@@ -1,7 +1,7 @@
 /** グローバルメニューにおける静的コンテンツの並び */
 export default [
   {
-    title: "OKUTEPについて",
+    title: "OZONE-edu について",
     slug: "concept",
   },
   {
