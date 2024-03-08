@@ -144,7 +144,7 @@ export default function DiscoverNav(
               src="/all-badge.svg"
               alt=""
             />
-            教育委員会
+            教員育成指標
           </Link>
           <ul className="flex flex-col">
             {props.consumers.map((consumer) => (
