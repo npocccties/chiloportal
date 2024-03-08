@@ -119,7 +119,7 @@ function Framework(props: FrameworkBadges) {
     <>
       <header className="mb-2">
         <p className="text-sm mb-2">
-          教育委員会<span aria-hidden>｜</span>
+          教員育成指標<span aria-hidden>｜</span>
           {props.consumer.name}
         </p>
         <h2 className="text-2xl font-bold">{props.framework.name}</h2>
