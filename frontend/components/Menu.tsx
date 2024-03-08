@@ -46,7 +46,7 @@ function Menu({ open, onClose }: Props) {
           leaveFrom="left-0"
           leaveTo="left-full"
         >
-          <div className="fixed inset-0 overflow-y-auto">
+          <div className="fixed inset-0 overflow-x-hidden overflow-y-auto">
             <Dialog.Panel className="w-screen bg-white px-4 pt-6 pb-12 min-h-full relative">
               <div className="mb-8 sticky top-3 flex justify-end pr-6">
                 <button

@@ -7,16 +7,10 @@ type Props = {
   children: React.ReactNode;
 };
 
-function Container({ className, style, as = "main", children }: Props) {
+function Container({ className, style, as = "div", children }: Props) {
   const As = as;
   return (
-    <As
-      className={clsx(
-        "container p-6 pb-10 min-h-[50vh] md:min-h-[75vh]",
-        className,
-      )}
-      style={style}
-    >
+    <As className={clsx("container p-6 pb-10", className)} style={style}>
       {children}
     </As>
   );
