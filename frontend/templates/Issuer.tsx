@@ -32,7 +32,7 @@ export default function Issuer({
         />
       </div>
       <Container className="relative">
-        <header className="flex items-end gap-4 -mt-[7.5rem] mb-4">
+        <header className="flex items-end gap-4 -mt-16 md:-mt-[7.5rem] mb-4">
           {/* eslint-disable @next/next/no-img-element */}
           {/*
         NOTE: 事前に許可したホスト以外画像最適化の対象にできない
@@ -40,17 +40,19 @@ export default function Issuer({
       */}
           {typeof url === "string" && (
             <img
-              className="rounded-xl"
+              className="rounded-xl size-20 md:size-40"
               src={url}
               width={160}
               height={160}
               alt=""
             />
           )}
-          <h1 className="text-2xl font-bold pb-6">{issuer.name}</h1>
+          <h1 className="text-lg md:text-2xl font-bold pb-1 md:pb-6">
+            {issuer.name}
+          </h1>
         </header>
         <div
-          className="grid gap-x-10 gap-y-6"
+          className="md:grid gap-x-10 gap-y-6"
           style={{
             gridTemplate: `
         "posts badges"
@@ -58,14 +60,58 @@ export default function Issuer({
         `,
           }}
         >
-          <section style={{ gridArea: "posts" }}>
-            <h2 className="flex gap-4 items-center text-xl font-bold border-b-4 border-black pb-2">
+          <section style={{ gridArea: "badges" }} className="mb-6 md:mb-0">
+            <h2 className="flex gap-4 items-center text-base md:text-xl font-bold border-b-4 border-black pb-2 mb-4">
+              <span className="inline-flex bg-black rounded-xl p-3">
+                <Image src="/fig-badge.svg" alt="" width={20} height={20} />
+              </span>
+              {issuer.name}の能力バッジ
+            </h2>
+            <div className="jumpu-card px-8 py-6 mb-4">
+              <p className="text-sm mb-6">
+                {issuer.name}は現在、
+                <br />
+                <span className="text-6xl leading-snug font-bold">
+                  {issuerBadgesCount}
+                </span>
+                <br />
+                個の能力バッジを発行しています。
+              </p>
+              <h3 className="flex items-center gap-2 -ml-1 text-base text-gray-900 font-bold mb-3">
+                <Image src="/category.svg" alt="" width={20} height={24} />
+                カテゴリ
+              </h3>
+              <ul className="list-disc pl-1 text-sm text-gray-700 inline-flex flex-wrap gap-2 mb-6">
+                {portalCategories.map((portalCateogry, index) => (
+                  <li key={portalCateogry.portal_category_id} className="ml-3">
+                    {portalCateogry.name}（{portalCategoryBadgesCounts[index]}
+                    個）
+                  </li>
+                ))}
+              </ul>
+              <div className="flex justify-center">
+                <Link
+                  href={pagesPath.discover.$url({
+                    query: {
+                      by: "issuer",
+                      issuer_id: String(issuer.issuer_id),
+                    },
+                  })}
+                  className="jumpu-button font-bold"
+                >
+                  {issuer.name}のバッジ一覧を見る
+                </Link>
+              </div>
+            </div>
+          </section>
+          <section style={{ gridArea: "posts" }} className="mb-6 md:mb-0">
+            <h2 className="flex gap-4 items-center text-base md:text-xl font-bold border-b-4 border-black pb-2 mb-4">
               <span className="inline-flex bg-black rounded-xl p-3">
                 <Icon className="text-white" icon="ion:newspaper-outline" />
               </span>
               {issuer.name}からのおしらせ
             </h2>
-            <ul className="my-4 space-y-4">
+            <ul className="space-y-4">
               {posts.map((post) => (
                 <li key={post.slug}>
                   <Link
@@ -85,13 +131,13 @@ export default function Issuer({
             </ul>
           </section>
           <section style={{ gridArea: "learningContents" }}>
-            <h2 className="flex gap-4 items-center text-xl font-bold border-b-4 border-black pb-2">
+            <h2 className="flex gap-4 items-center text-base md:text-xl font-bold border-b-4 border-black pb-2 mb-4">
               <span className="inline-flex bg-black rounded-xl p-3">
                 <Icon className="text-white" icon="ion:folder-open-outline" />
               </span>
               {issuer.name}のコンテンツ
             </h2>
-            <ul className="my-4 space-y-4">
+            <ul className="space-y-4">
               {learningContents.map((learningContent, index) => (
                 <li key={index}>
                   <Link
@@ -109,38 +155,6 @@ export default function Issuer({
                 </li>
               ))}
             </ul>
-          </section>
-          <section style={{ gridArea: "badges" }}>
-            <h2 className="flex gap-4 items-center text-xl font-bold border-b-4 border-black pb-2 mb-4">
-              <span className="inline-flex bg-black rounded-xl p-3">
-                <Image src="/fig-badge.svg" alt="" width={20} height={20} />
-              </span>
-              {issuer.name}の能力バッジ
-            </h2>
-            <div className="jumpu-card px-8 py-6">
-              <p className="text-sm mb-6">
-                {issuer.name}は現在、
-                <br />
-                <span className="text-6xl leading-snug font-bold">
-                  {issuerBadgesCount}
-                </span>
-                <br />
-                個の能力バッジを発行しています。
-              </p>
-              <h3 className="flex items-center gap-2 -ml-4 text-base text-gray-900 font-bold mb-3">
-                <Image src="/category.svg" alt="" width={20} height={24} />
-                カテゴリ
-              </h3>
-              <ul className="list-disc pl-4 text-sm text-gray-700 inline-flex flex-wrap gap-2">
-                {portalCategories.map((portalCateogry, index) => (
-                  <li key={portalCateogry.portal_category_id} className="ml-3">
-                    {portalCateogry.name}（{portalCategoryBadgesCounts[index]}
-                    個）
-                  </li>
-                ))}
-              </ul>
-              {/* TODO: 大学別に能力バッジを探す画面への動線を実装して */}
-            </div>
           </section>
         </div>
       </Container>
