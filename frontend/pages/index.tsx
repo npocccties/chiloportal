@@ -35,7 +35,6 @@ export async function getStaticProps(): Promise<
       // See https://github.com/orgs/rehypejs/discussions/63
       rehypePlugins: [rehypeImageSize],
       remarkPlugins: [remarkGfm],
-      format: "md",
     },
   });
   return { props: { source } };
