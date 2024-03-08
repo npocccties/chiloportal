@@ -32,7 +32,7 @@ export default function Search({ keyword, wisdomBadgesList }: Props) {
           variant="light"
         />
       </header>
-      <ul className="mb-8">
+      <ul className="mb-10">
         {wisdomBadgesList.badges.map((wisdomBadges) => (
           <li key={wisdomBadges.badges_id}>
             <WisdomBadgesItem wisdomBadges={wisdomBadges} />
@@ -40,6 +40,7 @@ export default function Search({ keyword, wisdomBadgesList }: Props) {
         ))}
       </ul>
       <Pagination
+        className="justify-center"
         totalCount={wisdomBadgesList.total_count}
         start={wisdomBadgesList.start}
         end={wisdomBadgesList.end}
