@@ -33,6 +33,7 @@ export default function Page(props: ErrorProps | Props) {
     <>
       <Head>
         <title>{title("お知らせ")}</title>
+        <meta property="og:title" content={title("お知らせ")} />
       </Head>
       <Template {...props} />
     </>

@@ -123,7 +123,8 @@ export default function Page(props: ErrorProps | Props) {
   return (
     <>
       <Head>
-        <title>{title()}</title>
+        <title>{title(props.issuer.name)}</title>
+        <meta property="og:title" content={title(props.issuer.name)} />
       </Head>
       <Template {...props} />
     </>

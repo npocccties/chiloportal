@@ -59,6 +59,7 @@ export default function Page(props: ErrorProps | Props) {
     <>
       <Head>
         <title>{title(props.wisdomBadges.name)}</title>
+        <meta property="og:title" content={title(props.wisdomBadges.name)} />
       </Head>
       <Template {...props} />
     </>

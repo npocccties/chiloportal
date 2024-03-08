@@ -49,7 +49,13 @@ export default function Page(props: ErrorProps | Props) {
   return (
     <>
       <Head>
-        <title>{title("キーワード検索")}</title>
+        <title>
+          {title(...[props.keyword || [], "キーワード検索"].flat())}
+        </title>
+        <meta
+          property="og:title"
+          content={title(...[props.keyword || [], "キーワード検索"].flat())}
+        />
       </Head>
       <Template {...props} />
     </>
