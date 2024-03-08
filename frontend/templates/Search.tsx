@@ -16,17 +16,20 @@ export default function Search({ keyword, wisdomBadgesList }: Props) {
       <Breadcrumbs
         className="mb-6"
         nodes={[{ name: "トップ", href: pagesPath.$url() }]}
-        leaf="検索結果"
+        leaf="キーワード検索"
       />
-      <header className="mb-10">
-        <h1 className="text-2xl text-gray-700 mb-4">検索結果「{keyword}」</h1>
-        <p className="mb-8">
-          「{keyword}」に関連する能力バッジが{wisdomBadgesList.total_count}
-          件あります
-        </p>
+      <header className="mb-6">
+        <h1 className="text-2xl text-gray-700 mb-4">キーワード検索</h1>
+        {keyword && (
+          <p className="mb-6">
+            「{keyword}」に関連する能力バッジが{wisdomBadgesList.total_count}
+            件あります
+          </p>
+        )}
         <SearchForm
-          className="bg-primary-50 p-4 inline-block min-w-[75%]"
+          className="min-w-full md:min-w-[75%]"
           size="large"
+          variant="light"
         />
       </header>
       <ul className="mb-8">
