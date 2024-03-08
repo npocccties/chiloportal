@@ -33,7 +33,7 @@ export const isMenu = (markdown: Markdown): markdown is Markdown<Menu> =>
 export const isPage = (markdown: Markdown): markdown is Markdown<Page> =>
   markdown.data.matter.type === "page";
 
-/** ページか否か判定する関数 */
+/** カスタムか否か判定する関数 */
 export const isCustom = (markdown: Markdown): markdown is Markdown<Custom> =>
   markdown.data.matter.type === "custom";
 
