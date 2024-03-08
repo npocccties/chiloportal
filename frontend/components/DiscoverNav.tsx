@@ -139,7 +139,7 @@ export default function DiscoverNav(
             onClick={props.onClick}
           >
             <Framework className="size-[1.125rem]" alt="" />
-            教育委員会
+            教員育成指標
           </Link>
           <ul className="flex flex-col">
             {props.consumers.map((consumer) => (

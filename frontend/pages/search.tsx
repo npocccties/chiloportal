@@ -3,7 +3,6 @@ import Error from "next/error";
 import Head from "next/head";
 import { client, getErrorProps } from "lib/client";
 import Template from "templates/Search";
-import { pagesPath } from "lib/$path";
 import title from "lib/title";
 import parsePageQuery from "lib/parse-page-query";
 
@@ -30,10 +29,6 @@ export async function getServerSideProps({
 }: Context): Promise<GetServerSidePropsResult<ErrorProps | Props>> {
   try {
     const pageNumber = parsePageQuery(p);
-    if (q.trim().length === 0)
-      return {
-        redirect: { destination: pagesPath.$url().pathname, permanent: false },
-      };
     const wisdomBadgesList = await client.wisdomBadges.list.keyword.$get({
       query: {
         keyword: q,
@@ -54,7 +49,7 @@ export default function Page(props: ErrorProps | Props) {
   return (
     <>
       <Head>
-        <title>{title(`検索結果「${props.keyword}」`)}</title>
+        <title>{title("キーワード検索")}</title>
       </Head>
       <Template {...props} />
     </>
