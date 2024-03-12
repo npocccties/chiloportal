@@ -26,6 +26,7 @@ export default function Issuer({
       />
       <div className="relative h-72 w-full">
         <Image
+          className="object-cover"
           src={backgroundImage ?? "/issuer-background-image-placeholder.png"}
           alt=""
           fill
