@@ -222,7 +222,9 @@ export default function Discover({
         nodes={[{ name: "トップ", href: pagesPath.$url() }]}
         leaf="学びを探す"
       />
-      <h1 className="text-3xl font-bold hidden md:block mb-8">学びを探す</h1>
+      <h1 className="text-3xl font-bold hidden md:block mb-8 border-b border-gray-300 pb-2">
+        学びを探す
+      </h1>
       <div
         className="md:grid gap-2"
         style={{
