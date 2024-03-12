@@ -2,6 +2,7 @@ import Link, { LinkProps } from "next/link";
 import { Icon } from "@iconify/react";
 import clsx from "clsx";
 import usePagination from "lib/use-pagination";
+import { NEXT_PUBLIC_API_PER_PAGE } from "lib/env";
 
 type Props = {
   className?: string;
@@ -11,12 +12,12 @@ type Props = {
   handleHref: (page: number) => LinkProps["href"];
 };
 
-function Pagination({ className, totalCount, start, end, handleHref }: Props) {
-  const { currentPage, nextPage, prevPage, pages } = usePagination(
+function Pagination({ className, totalCount, end, handleHref }: Props) {
+  const { currentPage, nextPage, prevPage, pages } = usePagination({
     totalCount,
-    start,
+    perPage: NEXT_PUBLIC_API_PER_PAGE,
     end,
-  );
+  });
   return (
     <ul className={clsx("flex items-center gap-2", className)}>
       <li>

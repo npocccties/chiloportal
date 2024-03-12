@@ -1,15 +1,18 @@
-function usePagination(
-  totalCount: number,
-  start: number,
-  end: number,
-): {
+function usePagination({
+  totalCount,
+  perPage,
+  end,
+}: {
+  totalCount: number;
+  perPage: number;
+  end: number;
+}): {
   totalPages: number;
   currentPage: number;
   nextPage: number | null;
   prevPage: number | null;
   pages: (number | string)[];
 } {
-  const perPage = end - start + 1;
   const totalPages = Math.ceil(totalCount / perPage);
   const currentPage = Math.ceil(end / perPage);
   const nextPage = currentPage < totalPages ? currentPage + 1 : null;
