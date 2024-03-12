@@ -91,7 +91,10 @@ function Header({ className }: Props) {
           )}
         </Popover>
         <div className="flex-1" />
-        <SearchForm className="hidden xl:block" size="small" />
+        <SearchForm
+          className="hidden md:w-1/5 md:block xl:w-auto mr-1"
+          size="small"
+        />
         <a
           className="jumpu-outlined-button text-white border-white hover:bg-gray-700 text-sm overflow-hidden whitespace-nowrap text-ellipsis shrink"
           href={NEXT_PUBLIC_MOODLE_DASHBOARD_URL}

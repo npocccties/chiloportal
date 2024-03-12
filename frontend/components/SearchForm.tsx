@@ -23,7 +23,7 @@ function SearchForm({ className, size = "medium", variant = "dark" }: Props) {
   return (
     <form
       className={clsx(
-        "inline-flex gap-1 itemc-center relative",
+        "inline-flex gap-1 item-center relative",
         size === "small" && "text-sm",
         size === "large" && "text-lg",
         className,
@@ -41,7 +41,7 @@ function SearchForm({ className, size = "medium", variant = "dark" }: Props) {
       <input
         required
         className={clsx(
-          "jumpu-input !rounded-full flex-1 !pl-rel10 mr-2",
+          "jumpu-input !rounded-full w-full !pl-rel10 pr-2",
           variant === "dark" && "bg-black !text-white border-white",
         )}
         type="search"
