@@ -83,7 +83,7 @@ function Menu({ open, onClose }: Props) {
                 </li>
                 <li>
                   <p className="text-gray-400 font-bold px-rel5 py-rel3">
-                    大学トップ
+                    発行元
                   </p>
                   <ul className="pl-4 mb-3 space-y-1">
                     <Fallback
