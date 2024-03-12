@@ -152,7 +152,7 @@ function Framework(props: FrameworkBadges) {
                     by: "framework",
                     consumer_id: String(props.consumer.consumer_id),
                     framework_id: String(props.framework.framework_id),
-                    stage_id: String(props.stage.stage_id),
+                    stage_id: String(stage.stage_id),
                   },
                 })}
               >
