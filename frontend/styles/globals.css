@@ -1,3 +1,9 @@
 @tailwind base;
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button {
+  appearance: none;
+}
+
 @tailwind components;
 @tailwind utilities;
