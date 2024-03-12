@@ -1,5 +1,4 @@
 import clsx from "clsx";
-import { Icon } from "@iconify/react";
 import { useState, useId } from "react";
 import { useRouter } from "next/router";
 import { pagesPath } from "lib/$path";
@@ -34,39 +33,27 @@ function SearchForm({ className, size = "medium", variant = "dark" }: Props) {
       <input
         required
         className={clsx(
-          "jumpu-input !rounded-full w-full !pr-rel11",
+          "jumpu-input !rounded-full w-full !pr-rel20",
           variant === "dark" && "bg-black !text-white border-white",
         )}
         type="search"
         name="q"
-        placeholder="学びたいキーワード"
+        placeholder="キーワード"
         onInput={handleInput}
       />
       <button
         type="submit"
         className={clsx(
-          "jumpu-icon-button rounded-full group absolute top-1/2 right-rel1 -translate-y-1/2",
+          "jumpu-outlined-button font-bold text-sm rounded-full absolute top-1/2 right-rel1 -translate-y-1/2 px-rel4 py-rel1",
           size === "small" && "right-rel1",
           size === "medium" && "right-rel2",
           size === "large" && "right-rel3",
-          variant === "dark" && "hover:bg-gray-700",
+          variant === "dark" &&
+            "text-white bg-gray-800 border-gray-600 hover:bg-gray-700",
         )}
         aria-describedby={tooltipId}
       >
-        <Icon
-          className={clsx(
-            variant === "dark" && "text-white",
-            variant === "light" && "text-dark",
-          )}
-          icon="fa-solid:search"
-        />
-        <span
-          id={tooltipId}
-          role="tooltip"
-          className="-translate-x-1/2 !translate-y-[150%] group-hover:-translate-x-1/2 group-hover:translate-y-[150%]"
-        >
-          検索
-        </span>
+        検索
       </button>
     </form>
   );
