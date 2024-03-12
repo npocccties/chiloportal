@@ -45,13 +45,14 @@ docker run --rm -p 3000:3000 frontend # Docker コンテナの起動
 
 ## 環境変数
 
-| 変数名                               | 説明                                        | デフォルト値                  |
-| :----------------------------------- | :------------------------------------------ | :---------------------------- |
-| NEXT_PUBLIC_API_MOCKING              | API モックの使用をするか否か（真偽値[^yn]） | 偽                            |
-| NEXT_PUBLIC_API_BASE_URL             | API のベースとなる URL                      | なし                          |
-| NEXT_PUBLIC_BASE_URL                 | ベースとなる URL                            | "https://portal.example.org/" |
-| NEXT_PUBLIC_MOODLE_DASHBOARD_URL     | Moodle ダッシュボードの URL                 | なし                          |
-| NEXT_PUBLIC_BADGES_ISSUER_IMAGE_PATH | バッジ発行者の画像のパス                    | `"issuer/image.png"`          |
+| 変数名                               | 説明                                           | デフォルト値                  |
+| :----------------------------------- | :--------------------------------------------- | :---------------------------- |
+| NEXT_PUBLIC_API_MOCKING              | API モックの使用をするか否か（真偽値[^yn]）    | 偽                            |
+| NEXT_PUBLIC_API_BASE_URL             | API のベースとなる URL                         | なし                          |
+| NEXT_PUBLIC_API_PER_PAGE             | API におけるページネーションのページあたり件数 | `30`                          |
+| NEXT_PUBLIC_BASE_URL                 | ベースとなる URL                               | "https://portal.example.org/" |
+| NEXT_PUBLIC_MOODLE_DASHBOARD_URL     | Moodle ダッシュボードの URL                    | なし                          |
+| NEXT_PUBLIC_BADGES_ISSUER_IMAGE_PATH | バッジ発行者の画像のパス                       | `"issuer/image.png"`          |
 
 [^yn]: [yn](https://github.com/sindresorhus/yn#readme)によって truly/falsy な値として解釈されます
 

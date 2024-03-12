@@ -22,6 +22,7 @@ jobs:
           SKIP_YARN_COREPACK_CHECK: true
       - run: corepack yarn install --immutable
       - run: corepack yarn lint
+      - run: corepack yarn test
       - id: format
         continue-on-error: true
         run: |
