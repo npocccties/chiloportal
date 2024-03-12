@@ -1,6 +1,5 @@
 import clsx from "clsx";
-import { Icon } from "@iconify/react";
-import { useState } from "react";
+import { useState, useId } from "react";
 import { useRouter } from "next/router";
 import { pagesPath } from "lib/$path";
 
@@ -20,6 +19,7 @@ function SearchForm({ className, size = "medium", variant = "dark" }: Props) {
     event.preventDefault();
     router.push(pagesPath.search.$url({ query: { q: keyword } }));
   };
+  const tooltipId = useId();
   return (
     <form
       className={clsx(
@@ -30,25 +30,31 @@ function SearchForm({ className, size = "medium", variant = "dark" }: Props) {
       )}
       onSubmit={handleSubmit}
     >
-      <Icon
-        className={clsx(
-          "absolute top-1/2 left-rel4 -translate-y-1/2",
-          variant === "dark" && "text-white",
-          variant === "light" && "text-dark",
-        )}
-        icon="fa-solid:search"
-      />
       <input
         required
         className={clsx(
-          "jumpu-input !rounded-full w-full !pl-rel10 pr-2",
+          "jumpu-input !rounded-full w-full !pr-rel20",
           variant === "dark" && "bg-black !text-white border-white",
         )}
         type="search"
         name="q"
-        placeholder="学びたいキーワード"
+        placeholder="キーワード"
         onInput={handleInput}
       />
+      <button
+        type="submit"
+        className={clsx(
+          "jumpu-outlined-button font-bold text-sm rounded-full absolute top-1/2 right-rel1 -translate-y-1/2 px-rel4 py-rel1",
+          size === "small" && "right-rel1",
+          size === "medium" && "right-rel2",
+          size === "large" && "right-rel3",
+          variant === "dark" &&
+            "text-white bg-gray-800 border-gray-600 hover:bg-gray-700",
+        )}
+        aria-describedby={tooltipId}
+      >
+        検索
+      </button>
     </form>
   );
 }
