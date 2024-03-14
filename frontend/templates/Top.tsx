@@ -23,7 +23,7 @@ export default function Top({ source }: Props) {
           src="/logo.svg"
           width={128}
           height={32}
-          alt="OZONE-edu"
+          alt="OZONE-EDU"
         />
       </h1>
       <p className="text-xl md:text-5xl tracking-tight text-white font-bold mb-10">
