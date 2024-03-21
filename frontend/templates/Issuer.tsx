@@ -5,6 +5,8 @@ import { Props } from "pages/issuers/[issuerId]";
 import Container from "components/Container";
 import Breadcrumbs from "components/Breadcrumbs";
 import Image from "next/image";
+import LearningContents from "components/LearningContents";
+import PostLink from "components/PostLink";
 import { getImageUrl } from "lib/issuer";
 
 export default function Issuer({
@@ -115,18 +117,13 @@ export default function Issuer({
             <ul className="space-y-4">
               {posts.map((post) => (
                 <li key={post.slug}>
-                  <Link
-                    className="flex items-center justify-between gap-4 border-l-4 border-gray-100 pl-4 text-sm hover:bg-gray-50 py-1 pr-1 [&>span:first-child]:hover:underline"
+                  <PostLink
+                    post={post}
                     href={pagesPath.issuers
                       ._issuerId(issuer.issuer_id)
                       .posts._slug(post.slug)
                       .$url()}
-                  >
-                    <span>{post.title}</span>
-                    <span className="p-2 text-xs text-primary-950 bg-gray-100 rounded">
-                      {post.datePublished}
-                    </span>
-                  </Link>
+                  />
                 </li>
               ))}
             </ul>
@@ -138,24 +135,7 @@ export default function Issuer({
               </span>
               {issuer.name}のコンテンツ
             </h2>
-            <ul className="space-y-4">
-              {learningContents.map((learningContent, index) => (
-                <li key={index}>
-                  <Link
-                    className="flex flex-col gap-4 border-l-4 border-primary-100 pl-4 text-sm hover:bg-gray-50 py-1 [&>span:first-child]:hover:underline"
-                    href={learningContent.url}
-                    target="_blank"
-                  >
-                    <span className="text-base font-bold text-gray-700">
-                      {learningContent.name}
-                    </span>
-                    <span className="text-gray-800">
-                      {learningContent.description}
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <LearningContents learningContents={learningContents} />
           </section>
         </div>
       </Container>
