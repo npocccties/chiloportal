@@ -55,9 +55,9 @@ export default function Issuer({
           </h1>
         </header>
         <div
-          className="md:grid gap-x-10 gap-y-6"
+          className="md:grid gap-x-10 gap-y-6 grid-cols-2"
           style={{
-            gridTemplate: `
+            gridTemplateAreas: `
         "posts badges"
         "learningContents badges"
         `,

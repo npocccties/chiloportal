@@ -228,7 +228,7 @@ export default function Discover({
       <div
         className="md:grid gap-2"
         style={{
-          gridTemplate: `
+          gridTemplateAreas: `
     "aside article"
       `,
           gridTemplateColumns: "300px minmax(0, 1fr)",
