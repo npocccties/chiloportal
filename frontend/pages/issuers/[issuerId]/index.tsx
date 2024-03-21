@@ -62,7 +62,10 @@ export async function getStaticProps({
     portalCategories.map((portalCategory) =>
       client.badges.list
         .$get({
-          query: { portal_category_id: portalCategory.portal_category_id },
+          query: {
+            issuer_id: Number(issuerId),
+            portal_category_id: portalCategory.portal_category_id,
+          },
         })
         .then(({ total_count }) => total_count)
         .catch(() => 0),
