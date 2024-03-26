@@ -136,7 +136,7 @@ function Chat({ className }: Props) {
             body: (
               <>
                 <p className="mb-4">
-                  「{textarea}」に関する能力バッジが{total_count}
+                  「{keyword}」に関する能力バッジが{total_count}
                   件見つかりました。
                 </p>
                 <ul className="pl-8 list-disc mb-4">
@@ -156,7 +156,7 @@ function Chat({ className }: Props) {
                 {total_count > 3 && (
                   <p>
                     <Link
-                      href={pagesPath.search.$url({ query: { q: textarea } })}
+                      href={pagesPath.search.$url({ query: { q: keyword } })}
                       className="text-primary-700"
                     >
                       …他{total_count - badgesList.slice(0, 3).length}
