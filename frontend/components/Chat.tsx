@@ -99,7 +99,10 @@ function Chat({ className }: Props) {
     setTextarea(event.target.value);
   };
   const handleClickSend = async () => {
-    const keyword = textarea;
+    const keyword = textarea
+      .replace(/\r?\n|\r/g, " ")
+      .trim()
+      .normalize();
     setTextarea("");
     pushChat({ type: "user", body: <p>{keyword}</p> });
     await sleep(1000);
