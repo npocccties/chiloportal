@@ -89,7 +89,7 @@ function Chat({ className }: Props) {
         type: "bot",
         body: (
           <p>
-            例えば「育成」とか「指導　人材」のような単語で聞いてみてください
+            例えば「子ども理解」とか「指導　人材」のような単語で聞いてみてください
           </p>
         ),
       });
@@ -99,7 +99,10 @@ function Chat({ className }: Props) {
     setTextarea(event.target.value);
   };
   const handleClickSend = async () => {
-    const keyword = textarea;
+    const keyword = textarea
+      .replace(/\r?\n|\r/g, " ")
+      .trim()
+      .normalize();
     setTextarea("");
     pushChat({ type: "user", body: <p>{keyword}</p> });
     await sleep(1000);
@@ -115,7 +118,7 @@ function Chat({ className }: Props) {
     try {
       const { badges: badgesList, total_count } =
         await client.wisdomBadges.list.keyword.$get({
-          query: { keyword },
+          query: { keyword, page_number: 1 },
         });
       popChat();
       total_count === 0
@@ -133,7 +136,7 @@ function Chat({ className }: Props) {
             body: (
               <>
                 <p className="mb-4">
-                  「{textarea}」に関する能力バッジが{total_count}
+                  「{keyword}」に関する能力バッジが{total_count}
                   件見つかりました。
                 </p>
                 <ul className="pl-8 list-disc mb-4">
@@ -153,7 +156,7 @@ function Chat({ className }: Props) {
                 {total_count > 3 && (
                   <p>
                     <Link
-                      href={pagesPath.search.$url({ query: { q: textarea } })}
+                      href={pagesPath.search.$url({ query: { q: keyword } })}
                       className="text-primary-700"
                     >
                       …他{total_count - badgesList.slice(0, 3).length}
@@ -177,29 +180,24 @@ function Chat({ className }: Props) {
     }
   };
   return (
-    <div className={clsx("", className)}>
+    <div className={className}>
       <button
-        className="text-white flex gap-x-2 items-center absolute bottom-0 right-0 p-4 rounded-full bg-primary-700 shadow-xl hover:bg-primary-600 mb-8 border-2 border-white"
+        className="text-white flex gap-x-2 items-center absolute bottom-0 right-0 p-4 rounded-full bg-black shadow-xl hover:bg-gray-700 mb-8 border-2 border-white"
         aria-controls={id}
         title="チャットで問い合わせる"
         onClick={handleClickExpand}
       >
         <Icon className="text-2xl shrink-0" icon="fa-regular:comment-dots" />
-        <span className="whitespace-nowrap font-bold">
-          チャットで問い合わせる
-        </span>
       </button>
       <nav
         id={id}
         className={clsx(
           "absolute w-[80vw] sm:w-[24rem] bottom-0 right-0 bg-white rounded-t-xl shadow-xl transition-transform duration-150 ease-in-out",
-          {
-            ["-bottom-full translate-y-full"]: !expand,
-          }
+          expand || "translate-y-full",
         )}
       >
         <button
-          className="w-full flex items-center bg-primary-700 rounded-t-xl p-4 text-white hover:bg-primary-600"
+          className="w-full flex items-center bg-black rounded-t-xl p-4 pr-6 text-white hover:bg-gray-700"
           aria-label="閉じる"
           onClick={handleClose}
         >
@@ -207,7 +205,7 @@ function Chat({ className }: Props) {
             「学び」探しにお困りですか？
           </span>
 
-          <Icon className="text-xl" icon="fa6-solid:chevron-down" />
+          <Icon className="text-xl" icon="fa6-solid:xmark" />
         </button>
         <ul
           className="px-4 pt-4 min-h-[30vh] max-h-[50vh] overflow-y-scroll"
@@ -216,7 +214,7 @@ function Chat({ className }: Props) {
           {chats.map((chat, index) =>
             chat.type === "user" ? (
               <li key={index} className="ml-8 mb-4 flex justify-end">
-                <div className="jumpu-balloon bg-primary-700 text-white">
+                <div className="jumpu-balloon bg-black text-white">
                   {chat.body}
                 </div>
               </li>
@@ -227,7 +225,7 @@ function Chat({ className }: Props) {
               >
                 {chat.body}
               </li>
-            )
+            ),
           )}
         </ul>
         <hr className="border-gray-300 mx-4" />
@@ -243,8 +241,10 @@ function Chat({ className }: Props) {
           <button
             type="button"
             className={clsx(
-              "absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 p-3 rounded-full bg-primary-700 shadow-xl hover:bg-primary-600",
-              textarea.trim().length === 0 && "bg-gray-500 hover:bg-gray-500"
+              "absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 p-3 rounded-full shadow-xl",
+              textarea.trim().length === 0
+                ? "bg-gray-500 hover:bg-gray-500"
+                : "bg-black hover-gray-700",
             )}
             title="メッセージを送る"
             disabled={textarea.trim().length === 0}

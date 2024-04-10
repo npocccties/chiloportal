@@ -2,6 +2,7 @@ on:
   pull_request:
     paths:
       - "frontend/**"
+      - "backend/doc/openapi.yaml"
 defaults:
   run:
     working-directory: frontend
@@ -9,16 +10,19 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref }}
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: "16"
+          node-version: "20"
           cache: "yarn"
           cache-dependency-path: "frontend/yarn.lock"
+        env:
+          SKIP_YARN_COREPACK_CHECK: true
       - run: corepack yarn install --immutable
       - run: corepack yarn lint
+      - run: corepack yarn test
       - id: format
         continue-on-error: true
         run: |
@@ -28,4 +32,5 @@ jobs:
         run: |
           git -c "user.name=github-actions[bot]" -c "user.email=github-actions[bot]@users.noreply.github.com" commit -a -m "bot: format"
           git push origin HEAD
-      - run: corepack yarn build
+      - run: cp .env.development .env
+      - run: docker build -t frontend -f ../Dockerfile.frontend ..

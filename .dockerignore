@@ -1,0 +1,4 @@
+backend/ssl_certs
+frontend/.env.*
+!frontend/.env.production
+frontend/node_modules

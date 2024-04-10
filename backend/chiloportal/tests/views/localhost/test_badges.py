@@ -66,16 +66,19 @@ class BadgesTests(BaseAPIViewTests):
             view,
             self.badges_url,
             {
-                "badges_ids": f"{self.kb2.id},{self.kb3.id}",
+                "badges_ids": f"{self.kb2.id},{self.kb3.id},{self.kb4.id}",
                 "badges_type": BadgeType.KNOWLEDGE.name.lower(),
             },
         )
         array = response.data
-        self.assertEqual(len(array), 2)
+        self.assertEqual(len(array), 3)
         data = array[0]
         self.assert_knowledge_badge(data, self.kb2, [self.ct3])
         data = array[1]
         self.assert_knowledge_badge(data, self.kb3, [self.ct4])
+        data = array[2]
+        # detailにあるcriteriaがsort_key順になっているかをチェック
+        self.assert_knowledge_badge(data, self.kb4, [self.ct6, self.ct5, self.ct7])
 
     def test_badges_400_invalid_badge_id(self):
         factory = APIRequestFactory()

@@ -1,6 +1,6 @@
 type Props<T> = {
   data: T;
-  error: any;
+  error: unknown;
   children(data: NonNullable<T>): React.ReactNode;
   pending: React.ReactNode;
   fallback?: React.ReactNode;

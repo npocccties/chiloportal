@@ -2,19 +2,26 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import Layout from "components/Layout";
-import { NEXT_PUBLIC_API_MOCKING } from "lib/env";
+import { NEXT_PUBLIC_API_MOCKING, NEXT_PUBLIC_BASE_URL } from "lib/env";
+import { useRouter } from "next/router";
 
 if (NEXT_PUBLIC_API_MOCKING) require("../mocks");
 
 function App({ Component, pageProps }: AppProps) {
+  const router = useRouter();
   return (
     <Layout>
       <Head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@900&display=swap"
-          rel="stylesheet"
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:url"
+          content={new URL(router.pathname, NEXT_PUBLIC_BASE_URL).href}
+        />
+        <meta
+          property="og:image"
+          content={new URL("/ogp.png", NEXT_PUBLIC_BASE_URL).href}
         />
       </Head>
       <Component {...pageProps} />

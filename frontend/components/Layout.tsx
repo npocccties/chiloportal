@@ -8,10 +8,10 @@ type Props = {
 
 function Layout({ children }: Props) {
   return (
-    <div>
-      <Header className="sticky z-20 top-0 left-0 w-full" />
-      {children}
-      <Footer />
+    <div className="min-h-screen flex flex-col">
+      <Header className="flex-shrink-0 sticky z-20 top-0 left-0 w-full" />
+      <main className="flex-grow">{children}</main>
+      <Footer className="flex-shrink-0" />
       <Chat className="fixed z-20 bottom-0 right-8" />
     </div>
   );

@@ -3,6 +3,7 @@ import Error from "next/error";
 import Head from "next/head";
 import Template from "templates/Posts";
 import { readMarkdowns, Markdown } from "lib/markdown";
+import { Post } from "schemas";
 import title from "lib/title";
 
 type ErrorProps = {
@@ -11,13 +12,13 @@ type ErrorProps = {
 };
 
 export type Props = {
-  posts: Markdown["data"]["matter"][];
+  posts: Markdown<Post>["data"]["matter"][];
 };
 
 export async function getStaticProps(): Promise<
   GetStaticPropsResult<ErrorProps | Props>
 > {
-  const markdowns = await readMarkdowns("posts", true);
+  const markdowns = await readMarkdowns({ type: "post", sort: true });
   if (markdowns instanceof globalThis.Error)
     return { props: { title: markdowns.message, statusCode: 500 } };
   const matters = markdowns.map((markdown) => markdown.data.matter);
@@ -31,7 +32,8 @@ export default function Page(props: ErrorProps | Props) {
   return (
     <>
       <Head>
-        <title>{title("OKUTEPからのおしらせ")}</title>
+        <title>{title("お知らせ")}</title>
+        <meta property="og:title" content={title("お知らせ")} />
       </Head>
       <Template {...props} />
     </>

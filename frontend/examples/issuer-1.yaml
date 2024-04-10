@@ -1,0 +1,14 @@
+issuerId: 1
+recommendedWisdomBadgesIds:
+  - 1
+  - 2
+  - 3
+learningContents:
+  - name: Issuer 1 Example 1
+    type: public
+    url: https://example.com/
+    description: Issuer 1 Example 1 description
+  - name: Issuer 1 Example 2
+    type: private
+    url: https://example.com/
+    description: Issuer 1 Example 2 description

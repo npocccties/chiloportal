@@ -3,7 +3,7 @@
 ## 動作環境
 
 - OS: Unix 系（Windows では [WSL](https://docs.microsoft.com/ja-jp/windows/wsl/install) 等をお使いください）
-- Node.js: ~~[Active LTS](https://nodejs.org/en/about/releases/)~~ v16.18.0
+- Node.js: [Active LTS](https://nodejs.org/en/about/releases/)
 - Docker (任意)
 
 ## 開発
@@ -28,6 +28,7 @@ corepack yarn install # NPM パッケージのインストール
 cat << EOL > .env.test # テスト用環境変数の用意
 > NEXT_PUBLIC_API_MOCKING=false # モックサーバーを無効化
 > NEXT_PUBLIC_API_BASE_URL=<API のベースとなる URL>
+> NEXT_PUBLIC_BASE_URL=<ベースとなる URL>
 > NEXT_PUBLIC_MOODLE_DASHBOARD_URL=<Moodle ダッシュボードの URL>
 > EOL
 NODE_ENV=test corepack yarn build # テスト環境変数でのアプリケーションのビルド
@@ -38,34 +39,47 @@ corepack yarn start # テストサーバーの起動
 
 ```shell
 cp .env.development .env # 環境変数の用意 (別途 .env.test 作成でも可)
-docker build -t frontend . # Docker イメージのビルド
+docker build -t frontend -f ../Dockerfile.frontend .. # Docker イメージのビルド
 docker run --rm -p 3000:3000 frontend # Docker コンテナの起動
 ```
 
 ## 環境変数
 
-| 変数名                               | 説明                                        | デフォルト値         |
-| :----------------------------------- | :------------------------------------------ | :------------------- |
-| NEXT_PUBLIC_API_MOCKING              | API モックの使用をするか否か（真偽値[^yn]） | 偽                   |
-| NEXT_PUBLIC_API_BASE_URL             | API のベースとなる URL                      | なし                 |
-| NEXT_PUBLIC_MOODLE_DASHBOARD_URL     | Moodle ダッシュボードの URL                 | なし                 |
-| NEXT_PUBLIC_BADGES_ISSUER_IMAGE_PATH | バッジ発行者の画像のパス                    | `"issuer/image.png"` |
+| 変数名                               | 説明                                           | デフォルト値                  |
+| :----------------------------------- | :--------------------------------------------- | :---------------------------- |
+| NEXT_PUBLIC_API_MOCKING              | API モックの使用をするか否か（真偽値[^yn]）    | 偽                            |
+| NEXT_PUBLIC_API_BASE_URL             | API のベースとなる URL                         | なし                          |
+| NEXT_PUBLIC_API_PER_PAGE             | API におけるページネーションのページあたり件数 | `30`                          |
+| NEXT_PUBLIC_BASE_URL                 | ベースとなる URL                               | "https://portal.example.org/" |
+| NEXT_PUBLIC_MOODLE_DASHBOARD_URL     | Moodle ダッシュボードの URL                    | なし                          |
+| NEXT_PUBLIC_BADGES_ISSUER_IMAGE_PATH | バッジ発行者の画像のパス                       | `"issuer/image.png"`          |
 
 [^yn]: [yn](https://github.com/sindresorhus/yn#readme)によって truly/falsy な値として解釈されます
 
 ## 静的コンテンツ
 
-### 上書き
+### サンプル
 
-overrides ディレクトリに静的コンテンツを配置した場合、そちらを参照して表示します。overrides ディレクトリ外の静的コンテンツについては参照しなくなります。
+examples ディレクトリに動作確認用のファイルが配置されています。contents ディレクトリに静的コンテンツを配置した場合、そちらを参照して表示します。contents ディレクトリ外の静的コンテンツについては参照しなくなります。
 
 各静的コンテンツについて以下の条件で参照先を切り替えます。
 
-- config.yaml: overrides/config.yaml が存在するか否か
-- contents/\*.md: overrides/contents ディレクトリが存在するか否か
-- posts/\*.md: overrides/posts ディレクトリが存在するか否か
+- YAML ファイル: contents/\*\*/\*.(yml|yaml) ファイルが存在するか否か
+- マークダウンファイル: contents/\*\*/\*.md ファイルが存在するか否か
 
-### config.yaml あるいは overrides/config.yaml
+### contents/\*\*/\*.(yml|yaml)
+
+#### issuerId
+
+おすすめのバッジやその他のコンテンツといった教育資源の所有者である発行機関の識別子を指定します。指定しない場合、大学連携が所有している教育資源とみなされます。
+
+issuerId が重複した場合、[fast-glob](https://github.com/mrmlnc/fast-glob)がファイルを走査する順に依存した最初のファイルのみ本アプリケーションで使用されます。
+
+#### backgroundImage
+
+大学別ページで使用する背景画像のパスを指定します。指定しない場合、デフォルトの背景画像が使用されます。
+
+背景画像は public フォルダに配置します。パスは public フォルダ直下をルート（`/`）とみなして記載してください。
 
 #### recommendedWisdomBadgesIds
 
@@ -103,23 +117,38 @@ learningContents:
 
 [^type]: あくまで URL 先の学習コンテンツが公開であるか非公開であるか示すものであり、本アプリケーションとしてはいずれの値でも表示します。
 
-### マークダウンファイル
+### contents/\*\*/\*.md
 
-#### contents/\*.md あるいは overrides/contents/\*.md
+> [!WARNING]
+>
+> マークダウンファイルは [MDX](https://mdxjs.com/docs/what-is-mdx/) パーサーによって React テンプレートに変換されます。[HTML ブロック](https://spec.commonmark.org/0.31.2/#html-blocks)を使用する際は React JSX テンプレートとして記述する必要があり、一部の HTML 属性（class, etc.）を受け付けないので注意してください。class 属性を使用したい場合は代わりに className プロパティを使用してください。
 
-静的なページとして表示するマークダウンファイルを記述します。 `<url origin>/<slug>` の静的なページが生成されます。配置されたマークダウンファイルへの動線（ハイパーリンク）は用意されないため、別途動線の実装が必要です。
+#### おしらせ
 
-#### posts/\*.md あるいは overrides/posts/\*.md
+おしらせとして表示するマークダウンファイルを記述します。フロントマターのtypeプロパティに`"post"`を指定します。 `<url origin>/posts/<slug>` の静的なページが生成されます。トップページ、おしらせ一覧ページに配置されたマークダウンファイルへの動線（ハイパーリンク）が一覧されます。一覧は公開日降順でソートされます。公開日が同じ場合 [fast-glob](https://github.com/mrmlnc/fast-glob) で得られる結果に依存した並びになります。公開日は一覧の並び以外に影響しません。
 
-おしらせとして表示するマークダウンファイルを記述します。 `<url origin>/posts/<slug>` の静的なページが生成されます。トップページ、おしらせ一覧ページに配置されたマークダウンファイルへの動線（ハイパーリンク）が一覧されます。一覧は公開日降順でソートされます。公開日が未設定の場合は `"1970-01-01"` とみなします。公開日が同じ場合 [fsPromises.readdir()](https://nodejs.org/api/fs.html#fspromisesreaddirpath-options) で得られる結果に依存した並びになります。公開日は一覧の並び以外に影響しません。
+#### メニュー
 
-#### フロントマッター
+グローバルメニューに動線配置されるマークダウンファイルを記述します。フロントマターのtypeプロパティに`"menu"`を指定します。 `<url origin>/<slug>` の静的なページが生成されます。配置されたマークダウンファイルへの動線（ハイパーリンク）は用意されないため、別途動線の実装が必要です。
 
-| 項目名        | 説明                                |
-| :------------ | :---------------------------------- |
-| title         | 記事のタイトル、必須                |
-| slug          | 記事の URL に含まれる文字列、必須   |
-| datePublished | 公開日（RFC 3339 の日付形式）、任意 |
+#### ページ
+
+汎用的なマークダウンファイルを記述します。フロントマターのtypeプロパティに`"page"`を指定します。 `<url origin>/<slug>` の静的なページが生成されます。配置されたマークダウンファイルへの動線（ハイパーリンク）は用意されないため、別途動線の実装が必要です。
+
+#### カスタム
+
+大学連携が管理するトップページのカスタマイズ可能な領域を記述します（現状は発行機関別のカスタマイズに非対応で無視されます）。フロントマターのtypeプロパティに`"custom"`を指定します。複数カスタムのためのマークダウンファイルが存在した場合は2件目以降無視します。
+
+#### フロントマター
+
+| 項目名        | 説明                                                                                          |
+| :------------ | :-------------------------------------------------------------------------------------------- |
+| title         | タイトル、種類が `"custom"` 以外のとき必須                                                    |
+| type          | マークダウンファイルの種類、`"post"` と `"menu"` と `"page"` と `"custom"` いずれかの値、必須 |
+| issuerId      | 執筆者である発行機関の識別子、任意（ない場合大学連携が執筆したものとみなされます）            |
+| slug          | URL に含まれる文字列、種類が `"custom"` 以外のとき必須                                        |
+| datePublished | 公開日（RFC 3339 の日付形式）、種類が `"post"` のとき必須                                     |
+| order         | 表示順、種類が `"menu"` のとき必須 (現状はorderによるソートに非対応で無視されます)            |
 
 ## デプロイ（セルフホスティング）
 
@@ -130,6 +159,7 @@ learningContents:
 ```shell
 cat << EOL > .env # 環境変数の用意
 > NEXT_PUBLIC_API_BASE_URL=<API のベースとなる URL>
+> NEXT_PUBLIC_BASE_URL=<ベースとなる URL>
 > NEXT_PUBLIC_MOODLE_DASHBOARD_URL=<Moodle ダッシュボードの URL>
 > EOL
 corepack yarn install --immutable # NPM パッケージのインストール
@@ -142,9 +172,10 @@ corepack yarn start # 本番サーバーの起動
 ```shell
 cat << EOL > .env # 環境変数の用意
 > NEXT_PUBLIC_API_BASE_URL=<API のベースとなる URL>
+> NEXT_PUBLIC_BASE_URL=<ベースとなる URL>
 > NEXT_PUBLIC_MOODLE_DASHBOARD_URL=<Moodle ダッシュボードの URL>
 > EOL
-docker build -t frontend . # Docker イメージのビルド
+docker build -t frontend -f ../Dockerfile.frontend .. # Docker イメージのビルド
 docker run --rm -p 3000:3000 frontend # Docker コンテナの起動
 ```
 

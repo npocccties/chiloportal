@@ -2,6 +2,7 @@ import Link, { LinkProps } from "next/link";
 import { Icon } from "@iconify/react";
 import clsx from "clsx";
 import usePagination from "lib/use-pagination";
+import { NEXT_PUBLIC_API_PER_PAGE } from "lib/env";
 
 type Props = {
   className?: string;
@@ -11,17 +12,20 @@ type Props = {
   handleHref: (page: number) => LinkProps["href"];
 };
 
-function Pagination({ className, totalCount, start, end, handleHref }: Props) {
-  const { currentPage, nextPage, prevPage, pages } = usePagination(
+function Pagination({ className, totalCount, end, handleHref }: Props) {
+  const { currentPage, nextPage, prevPage, pages } = usePagination({
     totalCount,
-    start,
-    end
-  );
+    perPage: NEXT_PUBLIC_API_PER_PAGE,
+    end,
+  });
   return (
     <ul className={clsx("flex items-center gap-2", className)}>
       <li>
         {prevPage ? (
-          <Link href={handleHref(prevPage)} className="jumpu-icon-button">
+          <Link
+            href={handleHref(prevPage)}
+            className="jumpu-icon-button hover:bg-gray-100 text-black"
+          >
             <Icon icon="fa6-solid:chevron-left" />
           </Link>
         ) : (
@@ -38,10 +42,11 @@ function Pagination({ className, totalCount, start, end, handleHref }: Props) {
           <li key={index}>
             <Link
               href={handleHref(page)}
-              className={clsx("jumpu-icon-button", {
-                ["bg-primary-700 text-white pointer-events-none"]:
-                  page === currentPage,
-              })}
+              className={clsx(
+                "jumpu-icon-button hover:bg-gray-100 text-black",
+                page === currentPage &&
+                  "pointer-events-none border border-gray-100",
+              )}
               aria-current={page === currentPage}
             >
               {page}
@@ -51,11 +56,14 @@ function Pagination({ className, totalCount, start, end, handleHref }: Props) {
           <li key={index} aria-hidden>
             …
           </li>
-        )
+        ),
       )}
       <li>
         {nextPage ? (
-          <Link href={handleHref(nextPage)} className="jumpu-icon-button">
+          <Link
+            href={handleHref(nextPage)}
+            className="jumpu-icon-button hover:bg-gray-100 text-black"
+          >
             <Icon icon="fa6-solid:chevron-right" />
           </Link>
         ) : (

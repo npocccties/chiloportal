@@ -4,10 +4,12 @@ import { PortalCategory } from "api/@types";
 
 const key = "portalCategory/list" as const;
 
-async function fetcher(_: typeof key) {
+type Key = typeof key;
+
+async function fetcher(_: Key): Promise<PortalCategory[]> {
   return client.portalCategory.list.$get();
 }
 
 export default function usePortalCategories() {
-  return useSWRImmutable<PortalCategory[]>(key, fetcher);
+  return useSWRImmutable(key, fetcher);
 }

@@ -1,5 +1,6 @@
 from .consumer_detail import *
 from .consumer_list import *
+from .issuer_list import *
 from .stage_field_list import *
 from .portal_category_list import *
 from .portal_category_badges_list import *

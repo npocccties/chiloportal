@@ -2,24 +2,30 @@ import useSWRImmutable from "swr/immutable";
 import { client } from "lib/client";
 import { BadgeDetail2 } from "api/@types";
 
-const key = "badges";
+const key = "badges" as const;
 
-async function fetcher(
-  _: typeof key,
-  type: "wisdom" | "knowledge",
-  badgesIds: number[]
-) {
+type Key = {
+  key: typeof key;
+  type: "wisdom" | "knowledge";
+  badgesIds: number[];
+};
+
+async function fetcher({
+  key: _,
+  type,
+  badgesIds,
+}: Key): Promise<BadgeDetail2[]> {
   return client.badges.$get({
     query: { badges_type: type, badges_ids: badgesIds.join(",") },
   });
 }
 
 export default function useBadges(
-  type: "wisdom" | "knowledge",
-  badgesIds: number[]
+  type: Key["type"],
+  badgesIds: Key["badgesIds"],
 ) {
-  return useSWRImmutable<BadgeDetail2[]>(
-    badgesIds.length > 0 ? [key, type, badgesIds] : null,
-    fetcher
+  return useSWRImmutable(
+    badgesIds.length > 0 ? { key, type, badgesIds } : null,
+    fetcher,
   );
 }
