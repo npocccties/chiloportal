@@ -1,13 +1,14 @@
+import fetch from "cross-fetch";
 import aspida, { HTTPError } from "@aspida/fetch";
 import api from "api/$api";
 import { NEXT_PUBLIC_API_BASE_URL } from "lib/env";
 
 export const client = api(
-  aspida(fetch, { baseURL: NEXT_PUBLIC_API_BASE_URL, throwHttpErrors: true })
+  aspida(fetch, { baseURL: NEXT_PUBLIC_API_BASE_URL, throwHttpErrors: true }),
 );
 
 export async function getErrorProps(
-  e: unknown
+  e: unknown,
 ): Promise<{ title: string; statusCode: number }> {
   if (e instanceof HTTPError) {
     if (e.response.headers.get("content-type")?.includes("application/json")) {

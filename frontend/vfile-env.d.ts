@@ -1,11 +1,8 @@
 import "vfile";
+import type { Frontmatter } from "schemas";
 
 declare module "vfile" {
   interface DataMap {
-    matter: {
-      title: string;
-      slug: string;
-      datePublished?: string;
-    };
+    matter: Frontmatter;
   }
 }

@@ -10,12 +10,14 @@ class BaseAPIViewTests(TestCase):
     base_url = "http://localhost:8000"
     consumer_detail_url = urljoin(base_url, "consumer/")
     consumer_list_url = urljoin(base_url, "consumer/list/")
+    issuer_list_url = urljoin(base_url, "issuer/list/")
     stage_field_list_url = urljoin(base_url, "stage/field/list/")
     portal_category_list_url = urljoin(base_url, "portalCategory/list/")
     portal_category_badge_list_url = urljoin(base_url, "portalCategory/badges/list/")
     framework_url = urljoin(base_url, "framework/")
     framework_stage_list_url = urljoin(base_url, "framework/stage/list/")
     badges_url = urljoin(base_url, "badges/")
+    badges_list_url = urljoin(base_url, "badges/list")
     wisdom_badges_list_keyword_url = urljoin(base_url, "wisdomBadges/list/keyword/")
     wisdom_badges_consumer_list_url = urljoin(base_url, "wisdomBadges/consumer/list/")
     consumer_framework_list_url = urljoin(base_url, "consumer/framework/list/")
@@ -312,12 +314,18 @@ class BaseAPIViewTests(TestCase):
             image_url_path="hogep-img-url5",
             sort_key=5,
         )
-        self.iss = Issuer.objects.create(
+        self.iss1 = Issuer.objects.create(
             name="ほげほげだいがく", url="hogehoge.ac.jp", email="hogehoge@ac.jp"
+        )
+        self.iss2 = Issuer.objects.create(
+            name="ふがふがだいがく", url="hugahuga.ac.jp", email="hugahuga@ac.jp"
+        )
+        self.iss3 = Issuer.objects.create(
+            name="ぴよぴよだいがく", url="piyopiyo.ac.jp", email="piyopiyo@ac.jp"
         )
         self.wb1 = WisdomBadges.objects.create(
             portal_category=self.pc1,
-            issuer=self.iss,
+            issuer=self.iss1,
             name="hogebadge1-ねーむ+ほげばっじ1",
             badge_class_id="hogehoge.ac.jp/hoge.php?badge_id=999",
             description="hoge1",
@@ -328,7 +336,7 @@ class BaseAPIViewTests(TestCase):
         )
         self.wb2 = WisdomBadges.objects.create(
             portal_category=self.pc1,
-            issuer=self.iss,
+            issuer=self.iss1,
             name="hogebadge2-ねーむ+ほげばっじ2",
             badge_class_id="hogehoge.ac.jp/hoge.php?badge_id=998",
             description="hoge2",
@@ -339,7 +347,7 @@ class BaseAPIViewTests(TestCase):
         )
         self.wb3 = WisdomBadges.objects.create(
             portal_category=self.pc1,
-            issuer=self.iss,
+            issuer=self.iss1,
             name="hogebadge3-ねーむ+ほげばっじ3",
             badge_class_id="hogehoge.ac.jp/hoge.php?badge_id=997",
             description="hoge3",
@@ -350,7 +358,7 @@ class BaseAPIViewTests(TestCase):
         )
         self.wb4 = WisdomBadges.objects.create(
             portal_category=self.pc1,
-            issuer=self.iss,
+            issuer=self.iss2,
             name="hogebadge4-ねーむ+ほげばっじ4",
             badge_class_id="hogehoge.ac.jp/hoge.php?badge_id=996",
             description="hoge4",
@@ -361,7 +369,7 @@ class BaseAPIViewTests(TestCase):
         )
         self.wb5 = WisdomBadges.objects.create(
             portal_category=self.pc2,
-            issuer=self.iss,
+            issuer=self.iss2,
             name="hogebadge5-ねーむ+ほげばっじ5",
             badge_class_id="hogehoge.ac.jp/hoge.php?badge_id=995",
             description="hoge5",
@@ -372,7 +380,7 @@ class BaseAPIViewTests(TestCase):
         )
         self.wb6 = WisdomBadges.objects.create(
             portal_category=self.pc3,
-            issuer=self.iss,
+            issuer=self.iss2,
             name="hogebadge5-ねーむ+ほげばっじ6",
             badge_class_id="hogehoge.ac.jp/hoge.php?badge_id=994",
             description="hoge6",
@@ -383,7 +391,7 @@ class BaseAPIViewTests(TestCase):
         )
         self.wb7 = WisdomBadges.objects.create(
             portal_category=self.pc3,
-            issuer=self.iss,
+            issuer=self.iss2,
             name="hogebadge5-ねーむ+ほげばっじ7",
             badge_class_id="hogehoge.ac.jp/hoge.php?badge_id=993",
             description="hoge7",
@@ -394,7 +402,7 @@ class BaseAPIViewTests(TestCase):
         )
         self.wb8 = WisdomBadges.objects.create(
             portal_category=self.pc3,
-            issuer=self.iss,
+            issuer=self.iss3,
             name="hogebadge5-ねーむ+ほげばっじ8",
             badge_class_id="hogehoge.ac.jp/hoge.php?badge_id=992",
             description="hoge8",
@@ -405,7 +413,7 @@ class BaseAPIViewTests(TestCase):
         )
         self.wb9 = WisdomBadges.objects.create(
             portal_category=self.pc3,
-            issuer=self.iss,
+            issuer=self.iss3,
             name="hogebadge5-ねーむ+ほげばっじ9",
             badge_class_id="hogehoge.ac.jp/hoge.php?badge_id=991",
             description="hoge9",
@@ -416,7 +424,7 @@ class BaseAPIViewTests(TestCase):
         )
         self.wb10 = WisdomBadges.objects.create(
             portal_category=self.pc3,
-            issuer=self.iss,
+            issuer=self.iss3,
             name="hogebadge5-ねーむ+ほげばっじ_10",
             badge_class_id="hogehoge.ac.jp/hoge.php?badge_id=990",
             description="hoge_10",
@@ -427,7 +435,7 @@ class BaseAPIViewTests(TestCase):
         )
         self.wb11 = WisdomBadges.objects.create(
             portal_category=self.pc4,
-            issuer=self.iss,
+            issuer=self.iss3,
             name="hogebadge5-ねーむ+ほげばっじ_11",
             badge_class_id="hogehoge.ac.jp/hoge.php?badge_id=989",
             description="hoge_11",
@@ -438,7 +446,7 @@ class BaseAPIViewTests(TestCase):
         )
         self.wb12 = WisdomBadges.objects.create(
             portal_category=self.pc4,
-            issuer=self.iss,
+            issuer=self.iss3,
             name="hogebadge5-ねーむ+ほげばっじ_12",
             badge_class_id="hogehoge.ac.jp/hoge.php?badge_id=988",
             description="hoge_12",
@@ -449,7 +457,7 @@ class BaseAPIViewTests(TestCase):
         )
         self.wb13 = WisdomBadges.objects.create(
             portal_category=self.pc4,
-            issuer=self.iss,
+            issuer=self.iss3,
             name="hogebadge5-ねーむ+ほげばっじ_13",
             badge_class_id="hogehoge.ac.jp/hoge.php?badge_id=987",
             description="hoge_13",
@@ -460,7 +468,7 @@ class BaseAPIViewTests(TestCase):
         )
         self.wb14 = WisdomBadges.objects.create(
             portal_category=self.pc5,
-            issuer=self.iss,
+            issuer=self.iss3,
             name="hogebadge5-ねーむ+ほげばっじ_14",
             badge_class_id="hogehoge.ac.jp/hoge.php?badge_id=986",
             description="hoge_14",
@@ -471,7 +479,7 @@ class BaseAPIViewTests(TestCase):
         )
         self.wb15 = WisdomBadges.objects.create(
             portal_category=self.pc5,
-            issuer=self.iss,
+            issuer=self.iss3,
             name="hogebadge5-ねーむ+ほげばっじ_15",
             badge_class_id="hogehoge.ac.jp/hoge.php?badge_id=985",
             description="hoge_15",
@@ -482,7 +490,7 @@ class BaseAPIViewTests(TestCase):
         )
         self.wb16 = WisdomBadges.objects.create(
             portal_category=self.pc5,
-            issuer=self.iss,
+            issuer=self.iss3,
             name="hogebadge5-ねーむ+ほげばっじ_16",
             badge_class_id="hogehoge.ac.jp/hoge.php?badge_id=984",
             description="hoge_16",
@@ -608,6 +616,15 @@ class BaseAPIViewTests(TestCase):
         self.ct4 = Criteria.objects.create(
             knowledge_badges=self.kb3, type="ほげ", name="ほげコースD", sort_key=4
         )
+        self.ct5 = Criteria.objects.create(
+            knowledge_badges=self.kb4, type="ほげ", name="ほげコースE2", sort_key=2
+        )
+        self.ct6 = Criteria.objects.create(
+            knowledge_badges=self.kb4, type="ほげ", name="ほげコースE1", sort_key=1
+        )
+        self.ct7 = Criteria.objects.create(
+            knowledge_badges=self.kb4, type="ほげ", name="ほげコースE3", sort_key=3
+        )
 
     def assert_consumers(self, array, expect_array):
         self.assertEqual(len(array), len(expect_array))
@@ -622,6 +639,20 @@ class BaseAPIViewTests(TestCase):
         self.assertEqual(data["name"], consumer.name)
         self.assertEqual(data["url"], consumer.url)
         self.assertEqual(data["email"], consumer.email)
+
+    def assert_issuers(self, array, expect_array):
+        self.assertEqual(len(array), len(expect_array))
+        i = 0
+        for issuer in expect_array:
+            data = array[i]
+            self.assert_issuer(data, issuer)
+            i += 1
+
+    def assert_issuer(self, data, issuer):
+        self.assertEqual(data["issuer_id"], issuer.id)
+        self.assertEqual(data["name"], issuer.name)
+        self.assertEqual(data["url"], issuer.url)
+        self.assertEqual(data["email"], issuer.email)
 
     def assert_field(
         self, field1, field2, field3, expect_field, expect_wisdom_badge_id_list=None
@@ -739,11 +770,10 @@ class BaseAPIViewTests(TestCase):
         self.assertEqual(data["digital_badge_class_id"], knowledge_badge.badge_class_id)
         list = data.get("detail")
         self.assertEqual(len(list), len(criteria_list))
-        for criteria in list:
-            for expect_criteria in criteria_list:
-                self.assertEqual(criteria["criteria_id"], expect_criteria.id)
-                self.assertEqual(criteria["type"], expect_criteria.type)
-                self.assertEqual(criteria["name"], expect_criteria.name)
+        for i, criteria in enumerate(list):
+            self.assertEqual(criteria["criteria_id"], criteria_list[i].id)
+            self.assertEqual(criteria["type"], criteria_list[i].type)
+            self.assertEqual(criteria["name"], criteria_list[i].name)
 
     def assert_criteria(self, data, criteria):
         self.assertEqual(data["criteria_id"], criteria.id)

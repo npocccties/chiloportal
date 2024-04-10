@@ -1,5 +1,6 @@
 from rest_framework.response import Response
 from rest_framework.exceptions import NotFound
+from django.db.models import Prefetch
 from ..models import *
 from ..swagger import *
 from ..responses import *
@@ -44,11 +45,12 @@ class BadgesDetail(BaseAPIView):
                 queryset, output_portal_category=True, output_alignments=True
             )
         elif type == BadgeType.KNOWLEDGE.name.lower():
+            criteria_queryset = Criteria.objects.order_by('sort_key')
             queryset = (
                 KnowledgeBadges.objects.filter(pk__in=id_array)
                 .order_by("pk")
                 .distinct()
-                .prefetch_related("criteria_knowledge_badges")
+                .prefetch_related(Prefetch("criteria_knowledge_badges", queryset=criteria_queryset))
                 .select_related("issuer")
             )
             if queryset.exists() == False:

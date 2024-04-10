@@ -1,11 +1,13 @@
 import { GetStaticPropsResult } from "next";
 import Error from "next/error";
 import Head from "next/head";
+import { MDXRemoteSerializeResult } from "next-mdx-remote";
+import { serialize } from "next-mdx-remote/serialize";
+import remarkGfm from "remark-gfm";
 import Template from "templates/Top";
-import { readMarkdowns, Markdown } from "lib/markdown";
-import { readConfig } from "lib/config";
-import { Config } from "schemas/config";
 import title from "lib/title";
+import { readMarkdowns } from "lib/markdown";
+import rehypeImageSize from "lib/rehype-image-size";
 
 type ErrorProps = {
   title: string;
@@ -13,29 +15,29 @@ type ErrorProps = {
 };
 
 export type Props = {
-  posts: Markdown["data"]["matter"][];
-  recommendedWisdomBadgesIds: NonNullable<Config["recommendedWisdomBadgesIds"]>;
-  learningContents: NonNullable<Config["learningContents"]>;
+  source: MDXRemoteSerializeResult | null;
 };
 
 export async function getStaticProps(): Promise<
   GetStaticPropsResult<ErrorProps | Props>
 > {
-  const markdowns = await readMarkdowns("posts", true);
-  if (markdowns instanceof globalThis.Error)
-    return { props: { title: markdowns.message, statusCode: 500 } };
-  const posts = markdowns.map((markdown) => markdown.data.matter);
-  const config = await readConfig();
-  if (config instanceof globalThis.Error)
-    return { props: { title: config.message, statusCode: 500 } };
-  const { recommendedWisdomBadgesIds = [], learningContents = [] } = config;
-  return {
-    props: {
-      posts,
-      recommendedWisdomBadgesIds,
-      learningContents,
+  const customs = await readMarkdowns({ type: "custom", sort: false });
+  if (customs instanceof globalThis.Error) {
+    return { props: { title: customs.message, statusCode: 500 } };
+  }
+  const [custom] = customs;
+  if (!custom) {
+    return { props: { source: null } };
+  }
+  const source = await serialize(custom.value.toString(), {
+    mdxOptions: {
+      // @ts-expect-error Pluggable型がJSDocとTSで不一致
+      // See https://github.com/orgs/rehypejs/discussions/63
+      rehypePlugins: [rehypeImageSize],
+      remarkPlugins: [remarkGfm],
     },
-  };
+  });
+  return { props: { source } };
 }
 
 export default function Page(props: ErrorProps | Props) {
@@ -43,7 +45,11 @@ export default function Page(props: ErrorProps | Props) {
   return (
     <>
       <Head>
-        <title>{title()}</title>
+        <title>{title("自ら学びつづけるすべての人々へ")}</title>
+        <meta
+          property="og:title"
+          content={title("自ら学びつづけるすべての人々へ")}
+        />
       </Head>
       <Template {...props} />
     </>

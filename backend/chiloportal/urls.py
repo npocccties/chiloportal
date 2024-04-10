@@ -5,6 +5,7 @@ from rest_framework import permissions
 
 from chiloportal.views.consumer_badges_list import ConsumerBadgesList
 from chiloportal.views.consumer_goal_list import ConsumerGoalList
+from chiloportal.views.badges_list import BadgesList
 from .views import *
 from drf_yasg.generators import OpenAPISchemaGenerator
 
@@ -20,7 +21,6 @@ class BothHttpAndHttpsSchemaGenerator(OpenAPISchemaGenerator):
         else:
             schema.schemes = ["https"]
         return schema
- 
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -35,6 +35,7 @@ schema_view = get_schema_view(
 urlpatterns = [
     path("consumer/", ConsumerDetail.as_view(), name="consumer-detail"),
     path("consumer/list/", ConsumerList.as_view(), name="consumer-list"),
+    path("issuer/list/", IssuerList.as_view(), name="issuer-list"),
     path("stage/field/list/", StageFieldList.as_view(), name="stage-field-list"),
     path(
         "portalCategory/list/", PortalCategoryList.as_view(), name="portalCategory-list"
@@ -51,6 +52,7 @@ urlpatterns = [
         name="framework-stage-list",
     ),
     path("badges/", BadgesDetail.as_view(), name="badges-detail"),
+    path("badges/list/", BadgesList.as_view(), name="badges-list"),
     path(
         "wisdomBadges/list/keyword/",
         WisdomBadgesListKeyword.as_view(),

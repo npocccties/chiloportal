@@ -10,6 +10,8 @@ tags:
     description: コンシューマ情報取得
   - name: consumer list
     description: コンシューマ情報一覧
+  - name: issuer list
+    description: 発行機関一覧
   - name: stage field list
     description: 成長段階に関連する指標項目一覧
   - name: portal category list
@@ -22,6 +24,8 @@ tags:
     description: 育成指標に関連する成長段階一覧
   - name: badges
     description: バッジ情報取得
+  - name: badges list
+    description: バッジ一覧取得
   - name: keyword search
     description: キーワードバッジ検索
   - name: badges consumer list
@@ -70,6 +74,21 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Consumer'
+  /issuer/list:
+    get:
+      tags:
+        - issuer list
+      description: 登録されている発行機関を一覧で返却します
+      operationId: findIssuerList
+      responses:
+        '200':
+          description: successful opperation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Issuer'
   /stage/field/list:
     get:
       tags:
@@ -236,6 +255,66 @@ paths:
                   oneOf:
                     - $ref: '#/components/schemas/BadgeDetail1'
                     - $ref: '#/components/schemas/BadgeDetail2'
+        '400':
+          description: Invalid parameters supplied
+  /badges/list:
+    get:
+      tags:
+        - badges list
+      description: 能力バッジ一覧を返却します
+      operationId: findBadgesList
+      parameters:
+        - name: issuer_id
+          in: query
+          description: issuer id
+          required: false
+          schema:
+            type: integer
+            format: int64
+        - name: portal_category_id
+          in: query
+          description: portal category id
+          required: false
+          schema:
+            type: integer
+            format: int64
+        - name: page_number
+          in: query
+          description: page number
+          required: false
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  badges:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/BadgeDetail2'
+                  total_count:
+                    type: integer
+                    format: int64
+                    example: 101
+                  start:
+                    type: integer
+                    format: int64
+                    example: 1
+                  end:
+                    type: integer
+                    format: int64
+                    example: 30
+                additionalProperties: false
+                required:
+                  - badges
+                  - total_count
+                  - start
+                  - end
         '400':
           description: Invalid parameters supplied
   /wisdomBadges/list/keyword:
@@ -419,6 +498,28 @@ components:
       additionalProperties: false
       required:
         - consumer_id
+        - name
+        - url
+        - email
+    Issuer:
+      type: object
+      properties:
+        issuer_id:
+          type: integer
+          format: int64
+          example: 101
+        name:
+          type: string
+          example: issuer101
+        url:
+          type: string
+          example: https://example.com/issuer101/
+        email:
+          type: string
+          example: issuer101@example.com
+      additionalProperties: false
+      required:
+        - issuer_id
         - name
         - url
         - email

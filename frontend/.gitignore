@@ -40,7 +40,7 @@ next-env.d.ts
 
 # yarn v2
 .yarn/*
-!.yarn/plugins
+!.yarn/.keep
 
 # aspida
 api
@@ -56,6 +56,6 @@ public/images/*
 !public/images/mock*
 !public/images/hero/
 
-# overrides
-overrides/*
-!overrides/.keep
+# contents
+contents/*
+!contents/.keep

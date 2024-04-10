@@ -1,14 +1,23 @@
 extends:
   - "next/core-web-vitals"
+  - "plugin:@typescript-eslint/recommended"
   - "prettier"
 plugins:
+  - "@typescript-eslint"
   - canonical
 rules:
-  canonical/filename-match-exported: [error, kebab]
+  canonical/filename-match-exported:
+    - error
+    - transforms: kebab
+  "@typescript-eslint/no-unused-vars":
+    - error
+    - argsIgnorePattern: "_"
 overrides:
   - files: "{components,templates}/**/*.tsx"
     rules:
-      canonical/filename-match-exported: [error, pascal]
+      canonical/filename-match-exported:
+        - error
+        - transforms: pascal
   - files: "pages/**/*.tsx"
     rules:
       canonical/filename-match-exported: "off"

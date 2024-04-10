@@ -14,7 +14,7 @@ function FieldLink({
   const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
     const element = document.querySelector(
-      `#${CSS.escape(decodeURIComponent(id))}`
+      `#${CSS.escape(decodeURIComponent(id))}`,
     );
     element?.scrollIntoView({ behavior: "smooth" });
   };
@@ -24,7 +24,7 @@ function FieldLink({
       onClick={handleClick}
       className={clsx(
         "py-1 block hover:bg-gray-100 text-gray-500 hover:text-black",
-        className
+        className,
       )}
     >
       {name}
@@ -64,9 +64,9 @@ function FieldsIndex({ className, field }: Props) {
                           field3_name,
                           field1Index,
                           field2Index,
-                          field3Index
+                          field3Index,
                         )}
-                        className="text-xs pl-12"
+                        className="text-xs pl-10"
                       />
                     </li>
                   ))}

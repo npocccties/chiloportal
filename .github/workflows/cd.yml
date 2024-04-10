@@ -31,4 +31,3 @@ jobs:
             sudo chmod 755 deploy.sh
             ./deploy.sh
             sudo chmod 755 deploy.sh
-

@@ -1,55 +1,54 @@
 import Link from "next/link";
 import Image from "next/image";
-import { BadgeDetail2 } from "api/@types";
+import { BadgeDetail1, BadgeDetail2 } from "api/@types";
 import { pagesPath } from "lib/$path";
-import { getImageUrl } from "lib/issuer";
 
 type Props = {
-  wisdomBadges: BadgeDetail2;
+  wisdomBadges: BadgeDetail1 | BadgeDetail2;
 };
 
+const isBadgeDetail1 = (
+  wisdomBadges: BadgeDetail1 | BadgeDetail2,
+): wisdomBadges is BadgeDetail1 => "portal_category_name" in wisdomBadges;
+
 function WisdomBadgesItem({ wisdomBadges }: Props) {
-  const url = getImageUrl(wisdomBadges.issuer_url);
   return (
     <Link
       href={pagesPath.wisdom_badges
         ._wisdomBadgesId(wisdomBadges.badges_id)
         .$url()}
-      className="jumpu-card rounded-xl p-4 md:p-6 lg:p-8 h-full flex items-center gap-4 shadow-2xl transition hover:ring-2 ring-primary-400"
+      className="p-1.5 pr-2 flex items-center gap-4 text-gray-700 hover:text-black"
     >
-      <div className="flex-shrink-0 flex flex-col items-center gap-1">
-        <Image
-          src={`/images/${wisdomBadges.image}`}
-          width={80}
-          height={80}
-          alt=""
-          className="w-24 md:w-32"
-        />
-        <div className="text-xs text-gray-700 mt-2">能力バッジ</div>
-      </div>
+      <Image
+        src={`/images/${wisdomBadges.image}`}
+        width={100}
+        height={100}
+        className="size-[92px] md:size-[100px]"
+        alt=""
+      />
       <div>
-        <h3 className="text-xl font-bold mb-2">{wisdomBadges.name}</h3>
-        <p className="text-sm flex gap-2 items-center mb-2">
-          {/* eslint-disable @next/next/no-img-element */}
-          {/*
-            NOTE: 事前に許可したホスト以外画像最適化の対象にできない
-            See Also: https://nextjs.org/docs/messages/next-image-unconfigured-host
-          */}
-          {typeof url === "string" && (
-            <img className="h-fit" src={url} width={20} height={20} alt="" />
+        <h3 className="text-base md:text-lg font-bold mb-1">
+          {wisdomBadges.name}
+        </h3>
+        <p className="text-xs text-gray-500 flex gap-x-3 gap-y-1 flex-wrap items-center">
+          {"knowledge_badges_list" in wisdomBadges.detail && (
+            <span>
+              知識バッジ{wisdomBadges.detail.knowledge_badges_list.length}
+            </span>
           )}
-          <span className="font-bold mr-1">{wisdomBadges.issuer_name}</span>
-          <span className="text-gray-500 flex-shrink-0 text-xs">発行</span>
+          <span className="inline-flex items-center gap-1">
+            <Image src="/issuer.svg" alt="" width={8} height={8} />
+            {wisdomBadges.issuer_name}
+          </span>
+          {isBadgeDetail1(wisdomBadges) && (
+            <>
+              <span className="inline-flex items-center gap-1">
+                <Image src="/category.svg" alt="" width={8} height={8} />
+                {wisdomBadges?.portal_category_name}
+              </span>
+            </>
+          )}
         </p>
-        <p className="text-sm text-gray-600 mb-2 line-clamp-3">
-          {wisdomBadges.description}
-        </p>
-        {"knowledge_badges_list" in wisdomBadges.detail && (
-          <div className="jumpu-tag bg-gray-50 text-gray-700 border-gray-300">
-            知識バッジ{wisdomBadges.detail.knowledge_badges_list.length}
-            つで獲得
-          </div>
-        )}
       </div>
     </Link>
   );
