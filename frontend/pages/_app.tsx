@@ -2,8 +2,13 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import Layout from "components/Layout";
-import { NEXT_PUBLIC_API_MOCKING, NEXT_PUBLIC_BASE_URL } from "lib/env";
+import {
+  NEXT_PUBLIC_API_MOCKING,
+  NEXT_PUBLIC_BASE_URL,
+  NEXT_PUBLIC_GOOGLE_TAG_ID,
+} from "lib/env";
 import { useRouter } from "next/router";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 if (NEXT_PUBLIC_API_MOCKING) require("../mocks");
 
@@ -24,6 +29,7 @@ function App({ Component, pageProps }: AppProps) {
           content={new URL("/ogp.png", NEXT_PUBLIC_BASE_URL).href}
         />
       </Head>
+      <GoogleAnalytics gaId={NEXT_PUBLIC_GOOGLE_TAG_ID} />
       <Component {...pageProps} />
       <style jsx global>
         {`
