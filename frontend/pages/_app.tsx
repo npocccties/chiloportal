@@ -29,7 +29,9 @@ function App({ Component, pageProps }: AppProps) {
           content={new URL("/ogp.png", NEXT_PUBLIC_BASE_URL).href}
         />
       </Head>
-      <GoogleAnalytics gaId={NEXT_PUBLIC_GOOGLE_TAG_ID} />
+      {NEXT_PUBLIC_GOOGLE_TAG_ID && (
+        <GoogleAnalytics gaId={NEXT_PUBLIC_GOOGLE_TAG_ID} />
+      )}
       <Component {...pageProps} />
       <style jsx global>
         {`

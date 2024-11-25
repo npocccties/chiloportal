@@ -17,7 +17,5 @@ export const NEXT_PUBLIC_MOODLE_DASHBOARD_URL: string =
   process.env.NEXT_PUBLIC_MOODLE_DASHBOARD_URL ?? "";
 export const NEXT_PUBLIC_BADGES_ISSUER_IMAGE_PATH =
   process.env.NEXT_PUBLIC_BADGES_ISSUER_IMAGE_PATH ?? "issuer/image.png";
-// NOTE: 有効な Google タグ ID を初期値にしたくなければ変更して
-// See https://github.com/npocccties/chiloportal/issues/858
 export const NEXT_PUBLIC_GOOGLE_TAG_ID =
-  process.env.NEXT_PUBLIC_GOOGLE_TAG_ID ?? "G-BL39M953V6";
+  process.env.NEXT_PUBLIC_GOOGLE_TAG_ID ?? "";
