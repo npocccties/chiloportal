@@ -151,11 +151,11 @@ class BadgesTests(BaseAPIViewTests):
             factory, view, self.badges_url, {"badges_ids": 1}, "parameters"
         )
 
-    def test_badges_400_not_found_wisdome(self):
+    def test_badges_200_not_found_wisdome(self):
         factory = APIRequestFactory()
         view = BadgesDetail.as_view()
         self.create_test_relation_data()
-        self.request_invalid_value(
+        response = self.request_normal(
             factory,
             view,
             self.badges_url,
@@ -163,14 +163,15 @@ class BadgesTests(BaseAPIViewTests):
                 "badges_ids": self.not_found_id,
                 "badges_type": BadgeType.WISDOM.name.lower(),
             },
-            "parameters"
         )
+        array = response.data
+        self.assertEqual(len(array), 0)
 
-    def test_badges_400_not_found_knowledge(self):
+    def test_badges_200_not_found_knowledge(self):
         factory = APIRequestFactory()
         view = BadgesDetail.as_view()
         self.create_test_relation_data()
-        self.request_invalid_value(
+        response = self.request_normal(
             factory,
             view,
             self.badges_url,
@@ -178,5 +179,6 @@ class BadgesTests(BaseAPIViewTests):
                 "badges_ids": self.not_found_id,
                 "badges_type": BadgeType.KNOWLEDGE.name.lower(),
             },
-            "parameters"
         )
+        array = response.data
+        self.assertEqual(len(array), 0)

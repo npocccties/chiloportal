@@ -86,30 +86,32 @@ class BadgesListTest(BaseAPIViewTests):
         data = array[4]
         self.assert_wisdom_badge(data, self.wb5, [self.kb5.id, self.kb6.id])
 
-    def test_badges_list_400_no_data_issuer_id(self):
+    def test_badges_list_200_no_data_issuer_id(self):
         factory = APIRequestFactory()
         view = BadgesList.as_view()
         self.create_test_relation_data()
-        self.request_invalid_value(
+        response = self.request_normal(
             factory,
             view,
             self.badges_list_url,
             { "issuer_id": 999 },
-            message="parameters"
         )
+        array = response.data
+        self.assertEqual(len(array), 0)
 
-    def test_badges_list_400_no_data_portal_category_id(self):
+    def test_badges_list_200_no_data_portal_category_id(self):
         factory = APIRequestFactory()
         view = BadgesList.as_view()
         self.create_test_relation_data()
-        self.request_invalid_value(
+        response = self.request_normal(
             factory,
             view,
             self.badges_list_url,
             { "portal_category_id": 999 },
-            message="parameters"
         )
-        
+        array = response.data
+        self.assertEqual(len(array), 0)
+       
     def test_badges_list_400_no_data_page_number(self):
         factory = APIRequestFactory()
         view = BadgesList.as_view()

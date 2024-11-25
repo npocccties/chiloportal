@@ -22,6 +22,6 @@ class StageFieldList(BaseAPIView):
             .distinct()
         )
         if queryset.exists() == False:
-            self.logger.error(f"Not found categorised_badges. stage_id: {id}")
-            raise ParseError("Invalid ID supplied")
+            self.logger.warning(f"Not found categorised_badges. stage_id: {id}")
+            return Response([])
         return Response(to_fields_detail(queryset))

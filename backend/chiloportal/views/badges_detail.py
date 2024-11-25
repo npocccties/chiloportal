@@ -39,8 +39,8 @@ class BadgesDetail(BaseAPIView):
                 .select_related("issuer", "portal_category")
             )
             if queryset.exists() == False:
-                self.logger.error(f"Not found wisdom_badges. badges_ids: {id_str}")
-                raise ParseError("Invalid parameters supplied")
+                self.logger.warning(f"Not found wisdom_badges. badges_ids: {id_str}")
+                return Response([])
             result = to_wisdom_badges(
                 queryset, output_portal_category=True, output_alignments=True
             )
@@ -54,8 +54,8 @@ class BadgesDetail(BaseAPIView):
                 .select_related("issuer")
             )
             if queryset.exists() == False:
-                self.logger.error(f"Not found knowledge_badges. badges_ids: {id_str}")
-                raise ParseError("Invalid parameters supplied")
+                self.logger.warning(f"Not found knowledge_badges. badges_ids: {id_str}")
+                return Response([])
             result = to_knowledge_badges(queryset)
         else:
             self.logger.error(f"Unknown badges_type: {type}")
