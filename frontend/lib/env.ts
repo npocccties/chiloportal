@@ -17,3 +17,5 @@ export const NEXT_PUBLIC_MOODLE_DASHBOARD_URL: string =
   process.env.NEXT_PUBLIC_MOODLE_DASHBOARD_URL ?? "";
 export const NEXT_PUBLIC_BADGES_ISSUER_IMAGE_PATH =
   process.env.NEXT_PUBLIC_BADGES_ISSUER_IMAGE_PATH ?? "issuer/image.png";
+export const NEXT_PUBLIC_GOOGLE_TAG_ID =
+  process.env.NEXT_PUBLIC_GOOGLE_TAG_ID ?? "";

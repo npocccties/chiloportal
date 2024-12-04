@@ -53,6 +53,7 @@ docker run --rm -p 3000:3000 frontend # Docker コンテナの起動
 | NEXT_PUBLIC_BASE_URL                 | ベースとなる URL                               | "https://portal.example.org/" |
 | NEXT_PUBLIC_MOODLE_DASHBOARD_URL     | Moodle ダッシュボードの URL                    | なし                          |
 | NEXT_PUBLIC_BADGES_ISSUER_IMAGE_PATH | バッジ発行者の画像のパス                       | `"issuer/image.png"`          |
+| NEXT_PUBLIC_GOOGLE_TAG_ID            | Google Analytics に使用する Google タグ ID     | なし                          |
 
 [^yn]: [yn](https://github.com/sindresorhus/yn#readme)によって truly/falsy な値として解釈されます
 
