@@ -23,6 +23,6 @@ class FrameworkStageList(BaseAPIView):
             .distinct()
         )
         if queryset.exists() == False:
-            self.logger.warning(f"Not found stage. framework_id: {id}")
-            return Response([])
+            self.logger.error(f"Not found stage. framework_id: {id}")
+            raise ParseError("Invalid ID supplied")
         return Response(to_stages(queryset))

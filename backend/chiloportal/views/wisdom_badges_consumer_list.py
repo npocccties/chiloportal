@@ -23,6 +23,6 @@ class WisdomBadgesConsumerList(BaseAPIView):
             .distinct()
         )
         if queryset.exists() == False:
-            self.logger.warning(f"Not found consumer. badges_id: {id}")
-            return Response([])
+            self.logger.error(f"Not found consumer. badges_id: {id}")
+            raise ParseError("Invalid ID supplied")
         return Response(to_consumers(queryset))

@@ -47,8 +47,8 @@ class BadgesList(BaseAPIView):
         )
 
         if queryset.exists() == False:
-            self.logger.warning(f"Not found wisdom_badges: issuer_id: {issuer_id} portal_category_id: {portal_category_id}")
-            return Response([])
+            self.logger.error(f"Not found wisdom_badges: issuer_id: {issuer_id} portal_category_id: {portal_category_id}")
+            raise ParseError("Invalid parameters supplied")
             
         output_portal_category = portal_category_id == None
         if page_number != None:
