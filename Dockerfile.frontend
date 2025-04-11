@@ -5,8 +5,8 @@ COPY frontend/.yarn/ ./.yarn
 
 FROM base as build
 RUN yarn install --immutable
-COPY frontend/.env* frontend/.eslintrc.yaml frontend/.gitignore \
-  frontend/next.config.js frontend/postcss.config.js \
+COPY frontend/.env* frontend/.gitignore \
+  frontend/eslint.config.js frontend/next.config.js frontend/postcss.config.js \
   frontend/tsconfig.json frontend/vfile-env.d.ts \
   ./
 COPY frontend/components/ ./components
