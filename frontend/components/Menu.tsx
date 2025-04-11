@@ -82,7 +82,7 @@ function Menu({ open, onClose }: Props) {
                   </Link>
                 </li>
                 <li>
-                  <p className="text-gray-400 font-bold px-rel5 py-rel3">
+                  <p className="text-gray-400 font-bold px-[1.25em] py-[0.75em]">
                     発行元
                   </p>
                   <ul className="pl-4 mb-3 space-y-1">
@@ -92,7 +92,7 @@ function Menu({ open, onClose }: Props) {
                       pending={[...Array(5)].map((_, index) => (
                         <li
                           key={index}
-                          className="animate-pulse rounded bg-gray-100 h-8 mb-1"
+                          className="animate-pulse rounded-sm bg-gray-100 h-8 mb-1"
                           aria-hidden
                         ></li>
                       ))}

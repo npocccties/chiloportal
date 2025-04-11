@@ -47,7 +47,7 @@ function WisdomBadgesDialog({ wisdomBadges, open, onClose }: Props) {
           beforeEnter={handleEnter}
           afterLeave={handleLeave}
         >
-          <div className="fixed inset-0 bg-black bg-opacity-25" />
+          <div className="fixed inset-0 bg-black/25" />
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-y-auto">

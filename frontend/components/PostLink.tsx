@@ -17,7 +17,7 @@ export default function PostLink({ className, post, ...props }: Props) {
       {...props}
     >
       <span>{post.title}</span>
-      <span className="flex-shrink-0 p-2 text-xs text-primary-950 bg-gray-100 rounded">
+      <span className="shrink-0 p-2 text-xs text-primary-950 bg-gray-100 rounded-sm">
         {post.datePublished}
       </span>
     </Link>

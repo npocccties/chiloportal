@@ -12,7 +12,7 @@ function KnowledgeBadgesItem({ className, knowledgeBadges }: Props) {
   return (
     <section className={clsx("flex items-center gap-4", className)}>
       <Image
-        className="flex-shrink-0"
+        className="shrink-0"
         src={`/images/${knowledgeBadges.image}`}
         width={80}
         height={80}

@@ -79,7 +79,7 @@ function Header({ className }: Props) {
                         href={pagesPath.issuers
                           ._issuerId(issuer.issuer_id)
                           .$url()}
-                        className="block w-max min-w-full px-4 py-3 rounded hover:bg-gray-700"
+                        className="block w-max min-w-full px-4 py-3 rounded-sm hover:bg-gray-700"
                       >
                         {issuer.name}
                       </Link>
