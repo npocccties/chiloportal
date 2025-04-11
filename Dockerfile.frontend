@@ -4,6 +4,7 @@ COPY frontend/.yarnrc.yml frontend/yarn.lock frontend/package.json ./
 COPY frontend/.yarn/ ./.yarn
 
 FROM base as build
+RUN corepack enable
 RUN yarn install --immutable
 COPY frontend/.env* frontend/.gitignore \
   frontend/eslint.config.js frontend/next.config.js frontend/postcss.config.js \
@@ -24,6 +25,7 @@ RUN echo "a5bbfd27826c0c1a71ac4d21761b77d7  ../backend/doc/openapi.yaml" > md5su
 RUN yarn build
 
 FROM base as install
+RUN corepack enable
 RUN yarn workspaces focus --all --production
 
 FROM gcr.io/distroless/nodejs22-debian12
