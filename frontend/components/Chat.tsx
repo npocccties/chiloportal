@@ -89,6 +89,7 @@ function Chat({ className }: Props) {
         type: "bot",
         body: (
           <p>
+            {/* eslint-disable-next-line no-irregular-whitespace */}
             例えば「子ども理解」とか「指導　人材」のような単語で聞いてみてください
           </p>
         ),
@@ -121,6 +122,7 @@ function Chat({ className }: Props) {
           query: { keyword, page_number: 1 },
         });
       popChat();
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       total_count === 0
         ? pushChat({
             type: "bot",
@@ -167,7 +169,7 @@ function Chat({ className }: Props) {
               </>
             ),
           });
-    } catch (_) {
+    } catch {
       popChat();
       pushChat({
         type: "bot",
