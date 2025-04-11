@@ -17,22 +17,23 @@
 モックサーバーを有効化し、フロントエンドの開発サーバーを起動する場合は、以下の手順を実施してください。
 
 ```shell
-corepack yarn install # NPM パッケージのインストール
-corepack yarn dev # 開発サーバーの起動
+npm i -g corepack # パッケージマネージャーをバージョン管理するツールのインストール https://yarnpkg.com/corepack
+yarn install # NPM パッケージのインストール
+yarn dev # 開発サーバーの起動
 ```
 
 モックサーバーを無効化し、バックエンドの開発サーバーを使用しつつ静的サイト生成の動作確認をする場合は、以下の手順を実施してください。
 
 ```shell
-corepack yarn install # NPM パッケージのインストール
+yarn install # NPM パッケージのインストール
 cat << EOL > .env.test # テスト用環境変数の用意
 > NEXT_PUBLIC_API_MOCKING=false # モックサーバーを無効化
 > NEXT_PUBLIC_API_BASE_URL=<API のベースとなる URL>
 > NEXT_PUBLIC_BASE_URL=<ベースとなる URL>
 > NEXT_PUBLIC_MOODLE_DASHBOARD_URL=<Moodle ダッシュボードの URL>
 > EOL
-NODE_ENV=test corepack yarn build # テスト環境変数でのアプリケーションのビルド
-corepack yarn start # テストサーバーの起動
+NODE_ENV=test yarn build # テスト環境変数でのアプリケーションのビルド
+yarn start # テストサーバーの起動
 ```
 
 ### Docker 環境
@@ -163,9 +164,9 @@ cat << EOL > .env # 環境変数の用意
 > NEXT_PUBLIC_BASE_URL=<ベースとなる URL>
 > NEXT_PUBLIC_MOODLE_DASHBOARD_URL=<Moodle ダッシュボードの URL>
 > EOL
-corepack yarn install --immutable # NPM パッケージのインストール
-corepack yarn build # アプリケーションのビルド
-corepack yarn start # 本番サーバーの起動
+yarn install --immutable # NPM パッケージのインストール
+yarn build # アプリケーションのビルド
+yarn start # 本番サーバーの起動
 ```
 
 ### Docker 環境
@@ -186,22 +187,22 @@ docker run --rm -p 3000:3000 frontend # Docker コンテナの起動
 
 Yarn が提供するサブコマンドについては [Yarn の公式ドキュメント](https://yarnpkg.com/cli)を参照してください。
 
-### `corepack yarn build`
+### `yarn build`
 
 アプリケーションをビルドします。
 
-### `corepack yarn dev`
+### `yarn dev`
 
 開発サーバーを起動します。
 
-### `corepack yarn format`
+### `yarn format`
 
 テキストファイルを整形します。
 
-### `corepack yarn lint`
+### `yarn lint`
 
 静的コード解析します。
 
-### `corepack yarn start`
+### `yarn start`
 
 本番サーバーを起動します。
