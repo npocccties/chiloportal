@@ -1,5 +1,11 @@
 import { useState, Fragment } from "react";
-import { Dialog, Transition } from "@headlessui/react";
+import {
+  Dialog,
+  DialogPanel,
+  DialogTitle,
+  Transition,
+  TransitionChild,
+} from "@headlessui/react";
 import { Icon } from "@iconify/react";
 import clsx from "clsx";
 import { Props } from "pages/discover";
@@ -42,7 +48,7 @@ export default function DiscoverDialog(props: Props & { className?: string }) {
       </button>
       <Transition appear show={open} as={Fragment}>
         <Dialog as="div" className="relative z-20" onClose={onClose}>
-          <Transition.Child
+          <TransitionChild
             as={Fragment}
             enter="ease-out duration-300"
             enterFrom="opacity-0"
@@ -52,11 +58,11 @@ export default function DiscoverDialog(props: Props & { className?: string }) {
             leaveTo="opacity-0"
           >
             <div className="fixed inset-0 bg-black/25" />
-          </Transition.Child>
+          </TransitionChild>
 
           <div className="fixed inset-0 overflow-y-auto">
             <div className="flex min-h-full items-center justify-center p-4">
-              <Transition.Child
+              <TransitionChild
                 as={Fragment}
                 enter="ease-out duration-300"
                 enterFrom="opacity-0 scale-95"
@@ -65,14 +71,14 @@ export default function DiscoverDialog(props: Props & { className?: string }) {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="jumpu-card w-full max-w-xl rounded-xl bg-white mt-44 p-6 shadow-xl">
-                  <Dialog.Title className="text-sm font-bold text-gray-500 mb-4">
+                <DialogPanel className="jumpu-card w-full max-w-xl rounded-xl bg-white mt-44 p-6 shadow-xl">
+                  <DialogTitle className="text-sm font-bold text-gray-500 mb-4">
                     以下のメニューからバッジを取り込んで探すことができます。
-                  </Dialog.Title>
+                  </DialogTitle>
                   <hr className="border-gray-300 mb-4" />
                   <DiscoverNav {...props} onClick={onClose} />
-                </Dialog.Panel>
-              </Transition.Child>
+                </DialogPanel>
+              </TransitionChild>
             </div>
           </div>
         </Dialog>
