@@ -15,7 +15,7 @@ const components = {
         See Also: https://nextjs.org/docs/messages/next-image-unconfigured-host
       */
       return <img alt="" {...props} />;
-    } catch (_) {
+    } catch {
       return <Image alt="" {...props} src={props.src} />;
     }
   },

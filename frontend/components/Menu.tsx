@@ -1,6 +1,11 @@
 import { useEffect, Fragment, useId } from "react";
 import { useRouter } from "next/router";
-import { Dialog, Transition } from "@headlessui/react";
+import {
+  Dialog,
+  DialogPanel,
+  Transition,
+  TransitionChild,
+} from "@headlessui/react";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
 import { pagesPath } from "lib/$path";
@@ -26,7 +31,7 @@ function Menu({ open, onClose }: Props) {
   return (
     <Transition appear show={open} as={Fragment}>
       <Dialog as="div" className="relative z-20" onClose={onClose}>
-        <Transition.Child
+        <TransitionChild
           as={Fragment}
           enter="ease-out duration-300"
           enterFrom="bg-transparent"
@@ -36,8 +41,8 @@ function Menu({ open, onClose }: Props) {
           leaveTo="bg-transparent"
         >
           <div className="fixed inset-0" />
-        </Transition.Child>
-        <Transition.Child
+        </TransitionChild>
+        <TransitionChild
           as={Fragment}
           enter="ease-out duration-300"
           enterFrom="left-full"
@@ -47,7 +52,7 @@ function Menu({ open, onClose }: Props) {
           leaveTo="left-full"
         >
           <div className="fixed inset-0 overflow-x-hidden overflow-y-auto">
-            <Dialog.Panel className="w-screen bg-white px-4 pt-6 pb-12 min-h-full relative">
+            <DialogPanel className="w-screen bg-white px-4 pt-6 pb-12 min-h-full relative">
               <div className="mb-8 sticky top-3 flex justify-end pr-6">
                 <button
                   className="text-right jumpu-icon-button group mb-8 sticky top-6"
@@ -82,7 +87,7 @@ function Menu({ open, onClose }: Props) {
                   </Link>
                 </li>
                 <li>
-                  <p className="text-gray-400 font-bold px-rel5 py-rel3">
+                  <p className="text-gray-400 font-bold px-[1.25em] py-[0.75em]">
                     発行元
                   </p>
                   <ul className="pl-4 mb-3 space-y-1">
@@ -92,7 +97,7 @@ function Menu({ open, onClose }: Props) {
                       pending={[...Array(5)].map((_, index) => (
                         <li
                           key={index}
-                          className="animate-pulse rounded bg-gray-100 h-8 mb-1"
+                          className="animate-pulse rounded-sm bg-gray-100 h-8 mb-1"
                           aria-hidden
                         ></li>
                       ))}
@@ -144,9 +149,9 @@ function Menu({ open, onClose }: Props) {
                   </li>
                 ))}
               </ul>
-            </Dialog.Panel>
+            </DialogPanel>
           </div>
-        </Transition.Child>
+        </TransitionChild>
       </Dialog>
     </Transition>
   );

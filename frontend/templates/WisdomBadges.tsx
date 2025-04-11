@@ -48,9 +48,9 @@ export default function WisdomBadges({
         ]}
         leaf={wisdomBadges.name}
       />
-      <aside className="flex-shrink-0 flex flex-col items-center [grid-area:aside] mb-6 md:mb-0 lg:mr-4">
+      <aside className="shrink-0 flex flex-col items-center [grid-area:aside] mb-6 md:mb-0 lg:mr-4">
         <Image
-          className="flex-shrink-0 w-7/12 max-w-[260px] md:w-[40vw] md:max-w-[280px] lg:max-w-[320px]"
+          className="shrink-0 w-7/12 max-w-[260px] md:w-[40vw] md:max-w-[280px] lg:max-w-[320px]"
           src={`/images/${wisdomBadges.image}`}
           width={320}
           height={320}

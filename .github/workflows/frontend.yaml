@@ -15,18 +15,19 @@ jobs:
           ref: ${{ github.head_ref }}
       - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version-file: "frontend/package.json"
           cache: "yarn"
           cache-dependency-path: "frontend/yarn.lock"
         env:
           SKIP_YARN_COREPACK_CHECK: true
-      - run: corepack yarn install --immutable
-      - run: corepack yarn lint
-      - run: corepack yarn test
+      - run: corepack enable
+      - run: yarn install --immutable
+      - run: yarn lint
+      - run: yarn test
       - id: format
         continue-on-error: true
         run: |
-          corepack yarn format
+          yarn format
           echo "status=$(git status --porcelain)" >> $GITHUB_OUTPUT
       - if: steps.format.outputs.status != ''
         run: |

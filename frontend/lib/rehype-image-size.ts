@@ -1,4 +1,4 @@
-import sizeOf from "image-size";
+import { imageSizeFromFile } from "image-size/fromFile";
 import { visit } from "unist-util-visit";
 import { Pluggable } from "unified";
 
@@ -10,9 +10,12 @@ const rehypeImageSize: Pluggable = () => {
   return (tree) => {
     visit(tree, "element", (node) => {
       if (node.tagName === "img" && node.properties.src.startsWith("/")) {
-        const { width, height } = sizeOf("public" + node.properties.src);
-        node.properties.width = width;
-        node.properties.height = height;
+        imageSizeFromFile("public" + node.properties.src).then(
+          ({ width, height }) => {
+            node.properties.width = width;
+            node.properties.height = height;
+          },
+        );
       }
     });
   };

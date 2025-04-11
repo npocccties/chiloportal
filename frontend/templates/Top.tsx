@@ -30,7 +30,7 @@ export default function Top({ source }: Props) {
         自ら学びつづけるすべての人々へ
       </p>
       <Link
-        className="jumpu-button bg-white text-black text-base md:text-xl font-bold px-rel20 py-rel4 border-2 mb-10 relative"
+        className="jumpu-button bg-white text-black text-base md:text-xl font-bold px-[5em] py-[1em] border-2 mb-10 relative"
         href={pagesPath.discover.$url({ query: {} })}
       >
         学びを探す
