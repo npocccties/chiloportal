@@ -20,6 +20,7 @@ jobs:
           cache-dependency-path: "frontend/yarn.lock"
         env:
           SKIP_YARN_COREPACK_CHECK: true
+      - run: corepack enable
       - run: yarn install --immutable
       - run: yarn lint
       - run: yarn test
