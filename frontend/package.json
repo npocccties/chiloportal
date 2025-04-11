@@ -94,5 +94,6 @@
     "start": "next start",
     "test": "vitest",
     "update": "yarn up '*' && yarn up --recursive '*' && yarn dedupe"
-  }
+  },
+  "type": "module"
 }
