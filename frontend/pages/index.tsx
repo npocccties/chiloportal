@@ -31,8 +31,6 @@ export async function getStaticProps(): Promise<
   }
   const source = await serialize(custom.value.toString(), {
     mdxOptions: {
-      // @ts-expect-error Pluggable型がJSDocとTSで不一致
-      // See https://github.com/orgs/rehypejs/discussions/63
       rehypePlugins: [rehypeImageSize],
       remarkPlugins: [remarkGfm],
     },
