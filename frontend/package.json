@@ -96,5 +96,10 @@
     "test": "vitest",
     "update": "yarn up '*' && yarn up --recursive '*' && yarn dedupe"
   },
-  "type": "module"
+  "type": "module",
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
+  }
 }
