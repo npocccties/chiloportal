@@ -70,6 +70,11 @@
     "Open Badge"
   ],
   "main": "",
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
+  },
   "packageManager": "yarn@4.0.2",
   "private": true,
   "repository": {
@@ -96,10 +101,5 @@
     "test": "vitest",
     "update": "yarn up '*' && yarn up --recursive '*' && yarn dedupe"
   },
-  "type": "module",
-  "msw": {
-    "workerDirectory": [
-      "public"
-    ]
-  }
+  "type": "module"
 }
