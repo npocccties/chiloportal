@@ -34,14 +34,24 @@ function Header({ className }: Props) {
           />
         </Link>
         <Link
-          href={pagesPath.discover.$url({ query: {} })}
+          href={pagesPath.dashboard.$url({ query: {} })}
           className="hidden md:inline-flex jumpu-text-button text-white text-sm hover:bg-gray-700 items-center gap-2 whitespace-nowrap"
+        >
+          <Icon
+            className="text-xl text-white size=[1.125rem]"
+            icon="mdi:compass-outline"
+          />
+          ダッシュボード
+        </Link>
+        <Link
+          href={pagesPath.discover.$url({ query: {} })}
+          className="hidden lg:inline-flex jumpu-text-button text-white text-sm hover:bg-gray-700 items-center gap-2 whitespace-nowrap"
         >
           <AllBadge className="stroke-white size-[1.125rem]" alt="" />
           学びを探す
         </Link>
         <Popover
-          className="hidden md:block"
+          className="hidden lg:block"
           title={
             <>
               <Issuer className="fill-white size-[1.125rem]" alt="" />
@@ -92,7 +102,7 @@ function Header({ className }: Props) {
         </Popover>
         <div className="flex-1" />
         <SearchForm
-          className="hidden md:w-1/5 md:block xl:w-auto mr-1"
+          className="hidden lg:w-1/5 lg:block xl:w-auto mr-1"
           size="small"
         />
         <a
@@ -103,7 +113,7 @@ function Header({ className }: Props) {
           ログイン
         </a>
         <button
-          className="jumpu-icon-button hover:bg-gray-700 group md:hidden ml-2"
+          className="jumpu-icon-button hover:bg-gray-700 group lg:hidden ml-2"
           onClick={onOpen}
           aria-describedby={id}
         >

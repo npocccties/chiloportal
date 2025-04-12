@@ -81,6 +81,14 @@ function Menu({ open, onClose }: Props) {
                 <li>
                   <Link
                     className="jumpu-text-button font-bold w-full text-gray-700 hover:bg-gray-100"
+                    href={pagesPath.dashboard.$url({ query: {} })}
+                  >
+                    ダッシュボード
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    className="jumpu-text-button font-bold w-full text-gray-700 hover:bg-gray-100"
                     href={pagesPath.discover.$url({ query: {} })}
                   >
                     学びを探す
