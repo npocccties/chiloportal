@@ -2,7 +2,11 @@ import { Fragment } from "react";
 import clsx from "clsx";
 import Link from "next/link";
 import { Icon } from "@iconify/react";
-import { Disclosure } from "@headlessui/react";
+import {
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+} from "@headlessui/react";
 import Breadcrumbs from "components/Breadcrumbs";
 import Container from "components/Container";
 import {
@@ -167,7 +171,7 @@ function Framework(props: FrameworkBadges) {
           <Disclosure key={field1Index}>
             {({ open }) => (
               <>
-                <Disclosure.Button
+                <DisclosureButton
                   className={clsx(
                     "flex justify-between items-center w-full hover:bg-gray-100 p-4 border-gray-300",
                     !open && "border-b",
@@ -178,8 +182,8 @@ function Framework(props: FrameworkBadges) {
                     className={clsx("transition", open && "rotate-180")}
                     icon="fa6-solid:chevron-down"
                   />
-                </Disclosure.Button>
-                <Disclosure.Panel className="pb-4 border-b border-gray-300">
+                </DisclosureButton>
+                <DisclosurePanel className="pb-4 border-b border-gray-300">
                   {field2.map(({ field2_name, field3 }, field2Index) => (
                     <Fragment key={field2Index}>
                       <h3 className="text-sm mx-4 pt-4 pb-2 mb-4 border-b border-dashed border-gray-300">
@@ -201,7 +205,7 @@ function Framework(props: FrameworkBadges) {
                       ))}
                     </Fragment>
                   ))}
-                </Disclosure.Panel>
+                </DisclosurePanel>
               </>
             )}
           </Disclosure>
