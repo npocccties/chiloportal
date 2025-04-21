@@ -75,7 +75,7 @@
       "public"
     ]
   },
-  "packageManager": "yarn@4.0.2",
+  "packageManager": "yarn@4.9.1",
   "private": true,
   "repository": {
     "type": "git",
