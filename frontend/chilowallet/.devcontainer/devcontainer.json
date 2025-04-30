@@ -1,0 +1,58 @@
+{
+  "name": "${localWorkspaceFolderBasename}",
+  "dockerComposeFile": ["../docker-compose.dev-local.yml"],
+  "service": "app",
+  "workspaceFolder": "/app",
+  "remoteEnv": {
+    "LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}",
+    "CONTAINER_WORKSPACE_FOLDER": "${containerWorkspaceFolder}",
+    "COMPOSE_FORCE_WINDOWS_HOST": "true",
+    "COMPOSE_PROJECT_NAME": "${localWorkspaceFolderBasename}"
+  },
+  // Set *default* container specific settings.json values on container create.
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dsznajder.es7-react-js-snippets",
+        "mhutchie.git-graph",
+        "esbenp.prettier-vscode",
+        "Prisma.prisma",
+        "dbaeumer.vscode-eslint"
+      ]
+    },
+    "settings": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
+      "extensions.ignoreRecommendations": true,
+      "editor.tabSize": 2,
+      "editor.formatOnSave": true,
+      "editor.autoIndent": "full",
+      "editor.detectIndentation": true,
+      "editor.formatOnSaveMode": "modificationsIfAvailable",
+      "files.insertFinalNewline": false,
+      "files.trimTrailingWhitespace": false,
+      "git-graph.dialog.rebase.launchInteractiveRebase": true,
+      "terminal.integrated.profiles.linux": {
+        "bash": {
+          "path": "/bin/bash",
+          "icon": "terminal-bash"
+        }
+      }
+    }
+  }
+  // "extensions": [
+  // 	"ms-python.python"
+  // ]
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  // "forwardPorts": [],
+  // Uncomment the next line if you want start specific services in your Docker Compose config.
+  // "runServices": [],
+  // Uncomment the next line if you want to keep your containers running after VS Code shuts down.
+  // "shutdownAction": "none",
+  // Uncomment the next line to run commands after the container is created - for example installing curl.
+  // "postCreateCommand": "bash -i /usr/local/bin/devcontainer-postcreate.sh",
+  // Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
+  // "remoteUser": "developer",
+  // "updateRemoteUserUID": false,
+  // "initializeCommand": "bash .devcontainer/devcontainer-initialize.sh",
+  // "postStartCommand": "bash -i /usr/local/bin/devcontainer-poststart.sh"
+}

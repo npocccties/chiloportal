@@ -1,0 +1,47 @@
+# NOTE: ref https://github.com/vercel/next.js/tree/canary/examples/with-docker-multi-env
+
+# base stage
+FROM node:20-alpine3.18 AS base
+
+# deps stage
+FROM base AS deps
+RUN apk add --no-cache libc6-compat
+RUN apk add g++ make py3-pip
+
+WORKDIR /app
+
+COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
+RUN \
+  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
+  elif [ -f package-lock.json ]; then npm ci; \
+  elif [ -f pnpm-lock.yaml ]; then yarn global add pnpm && pnpm i --frozen-lockfile; \
+  else echo "Lockfile not found." && exit 1; \
+  fi
+
+# builder stage
+FROM base AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+COPY .env.production .env.production
+
+RUN npx prisma generate
+RUN NODE_OPTIONS=--max_old_space_size=3072 yarn build
+
+# runner stage
+FROM base AS runner
+WORKDIR /app
+
+ENV NODE_ENV=production
+
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+COPY --from=builder /app/public ./public
+COPY --from=deps /app/node_modules ./node_modules
+COPY --from=builder /app/.env.production ./
+COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+CMD ["yarn", "cmd:start:dev"]

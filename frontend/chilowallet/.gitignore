@@ -1,0 +1,15 @@
+### 証明書 ###
+ssl_certs/
+
+node_modules/
+db/
+
+.next
+.env
+.env.local
+.env.development
+.env.production
+.vscode/*
+!.vscode/launch.json
+
+key.txt
