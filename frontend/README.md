@@ -30,7 +30,7 @@ cat << EOL > .env.test # テスト用環境変数の用意
 > NEXT_PUBLIC_API_MOCKING=false # モックサーバーを無効化
 > NEXT_PUBLIC_API_BASE_URL=<API のベースとなる URL>
 > NEXT_PUBLIC_BASE_URL=<ベースとなる URL>
-> NEXT_PUBLIC_MOODLE_DASHBOARD_URL=<Moodle ダッシュボードの URL>
+> NEXT_PUBLIC_SHIBBOLETH_SP_LOGIN_URL=<Shibboleth SP ログイン URL>
 > EOL
 NODE_ENV=test yarn build # テスト環境変数でのアプリケーションのビルド
 yarn start # テストサーバーの起動
@@ -46,15 +46,19 @@ docker run --rm -p 3000:3000 frontend # Docker コンテナの起動
 
 ## 環境変数
 
-| 変数名                               | 説明                                           | デフォルト値                  |
-| :----------------------------------- | :--------------------------------------------- | :---------------------------- |
-| NEXT_PUBLIC_API_MOCKING              | API モックの使用をするか否か（真偽値[^yn]）    | 偽                            |
-| NEXT_PUBLIC_API_BASE_URL             | API のベースとなる URL                         | なし                          |
-| NEXT_PUBLIC_API_PER_PAGE             | API におけるページネーションのページあたり件数 | `30`                          |
-| NEXT_PUBLIC_BASE_URL                 | ベースとなる URL                               | "https://portal.example.org/" |
-| NEXT_PUBLIC_MOODLE_DASHBOARD_URL     | Moodle ダッシュボードの URL                    | なし                          |
-| NEXT_PUBLIC_BADGES_ISSUER_IMAGE_PATH | バッジ発行者の画像のパス                       | `"issuer/image.png"`          |
-| NEXT_PUBLIC_GOOGLE_TAG_ID            | Google Analytics に使用する Google タグ ID     | なし                          |
+| 変数名                               | 説明                                           | デフォルト値                               |
+| :----------------------------------- | :--------------------------------------------- | :----------------------------------------- |
+| JWT_VERIFICATION_KEY                 | JWT 署名検証鍵（PEM 形式）                     | なし                                       |
+| NEXT_PUBLIC_API_BASE_URL             | API のベースとなる URL                         | なし                                       |
+| NEXT_PUBLIC_API_MOCKING              | API モックの使用をするか否か（真偽値[^yn]）    | 偽                                         |
+| NEXT_PUBLIC_API_PER_PAGE             | API におけるページネーションのページあたり件数 | `30`                                       |
+| NEXT_PUBLIC_BADGES_ISSUER_IMAGE_PATH | バッジ発行者の画像のパス                       | `"issuer/image.png"`                       |
+| NEXT_PUBLIC_BASE_URL                 | ベースとなる URL                               | "https://portal.example.org/"              |
+| NEXT_PUBLIC_CHILOWALLET_API_BASE_URL | バッジウォレット API のベースとなる URL        | "https://chilowallet.example.org/api/v1/"  |
+| NEXT_PUBLIC_CHILOWALLET_BASE_URL     | バッジウォレットのベースとなる URL             | "https://chilowallet.example.org/"         |
+| NEXT_PUBLIC_GOOGLE_TAG_ID            | Google Analytics に使用する Google タグ ID     | なし                                       |
+| NEXT_PUBLIC_SHIBBOLETH_SP_LOGIN_URL  | Shibboleth SP ログイン URL                     | "https://shibboleth-sp.example.org/login"  |
+| NEXT_PUBLIC_SHIBBOLETH_SP_LOGOUT_URL | Shibboleth SP ログアウト URL                   | "https://shibboleth-sp.example.org/logout" |
 
 [^yn]: [yn](https://github.com/sindresorhus/yn#readme)によって truly/falsy な値として解釈されます
 
@@ -162,7 +166,7 @@ learningContents:
 cat << EOL > .env # 環境変数の用意
 > NEXT_PUBLIC_API_BASE_URL=<API のベースとなる URL>
 > NEXT_PUBLIC_BASE_URL=<ベースとなる URL>
-> NEXT_PUBLIC_MOODLE_DASHBOARD_URL=<Moodle ダッシュボードの URL>
+> NEXT_PUBLIC_SHIBBOLETH_SP_LOGIN_URL=<Shibboleth SP ログイン URL>
 > EOL
 yarn install --immutable # NPM パッケージのインストール
 yarn build # アプリケーションのビルド
@@ -175,7 +179,7 @@ yarn start # 本番サーバーの起動
 cat << EOL > .env # 環境変数の用意
 > NEXT_PUBLIC_API_BASE_URL=<API のベースとなる URL>
 > NEXT_PUBLIC_BASE_URL=<ベースとなる URL>
-> NEXT_PUBLIC_MOODLE_DASHBOARD_URL=<Moodle ダッシュボードの URL>
+> NEXT_PUBLIC_SHIBBOLETH_SP_LOGIN_URL=<Shibboleth SP ログイン URL>
 > EOL
 docker build -t frontend -f ../Dockerfile.frontend .. # Docker イメージのビルド
 docker run --rm -p 3000:3000 frontend # Docker コンテナの起動
