@@ -1,0 +1,73 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model BadgeVc {
+  badgeVcId        Int          @id @default(autoincrement()) @map("badge_vc_id")
+  walletId         Int          @map("wallet_id")
+  lmsId            Int          @map("lms_id")
+  lmsName          String       @map("lms_name") @db.VarChar(256)
+  badgeUniquehash  String       @map("badge_uniquehash")
+  badgeName        String       @map("badge_name") @db.VarChar(256)
+  badgeEarnerEmail String       @map("badge_earner_email") @db.VarChar(256)
+  badgeClassId     String       @map("badge_class_id")
+  badgeIssuerName  String       @map("badge_issuer_name") @db.VarChar(256)
+  badgeIssuedon    DateTime     @map("badge_issuedon") @db.Timestamp(6)
+  badgeExpires     DateTime?    @map("badge_expires") @db.Timestamp(6)
+  vcDataHeader     String       @map("vc_data_header")
+  vcDataPayload    String       @map("vc_data_payload")
+  vcDataSignature  String       @map("vc_data_signature")
+  createdAt        DateTime     @map("created_at") @db.Timestamp(6) @default(now())
+  wallets          Wallet       @relation(fields: [walletId], references: [walletId], onDelete: NoAction, onUpdate: NoAction)
+  submissions      Submission[]
+
+  @@index([walletId])
+  @@map("badge_vcs")
+}
+
+model Submission {
+  badgeVcId       Int      @map("badge_vc_id")
+  walletId        Int      @map("wallet_id")
+  submitedAt      DateTime @map("submited_at") @db.Timestamp(6)
+  submissionEmail String   @map("submission_email") @db.VarChar(256)
+  consumerId      Int      @map("consumer_id")
+  consumerName    String   @map("consumer_name") @db.VarChar(256)
+  wallets         BadgeVc  @relation(fields: [badgeVcId], references: [badgeVcId], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([badgeVcId, submitedAt])
+  @@index([walletId])
+  @@map("submissions")
+}
+
+model LmsList {
+  lmsId          Int     @id @default(autoincrement()) @map("lms_id")
+  lmsName        String  @map("lms_name") @db.VarChar(256)
+  lmsUrl         String  @map("lms_url")
+  ssoEnabled     Boolean @map("sso_enabled")
+  lmsAccessToken String  @map("lms_access_token")
+  lmsService     String  @map("lms_service")
+
+  @@map("lms_list")
+}
+
+model BadgeConsumer {
+  consumerId   Int    @id @default(autoincrement()) @map("consumer_id")
+  consumerName String @map("consumer_name") @db.VarChar(256)
+  cabinetUrl   String @map("cabinet_url")
+
+  @@map("badge_consumers")
+}
+
+model Wallet {
+  walletId  Int       @id @default(autoincrement()) @map("wallet_id")
+  orthrosId String    @unique(map: "wallets_orthros_id_idx") @map("orthros_id")
+  createdAt DateTime  @map("created_at") @db.Timestamp(6)
+  badge_vcs BadgeVc[]
+
+  @@map("wallets")
+}

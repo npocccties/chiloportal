@@ -1,0 +1,60 @@
+version: "3.9"
+
+services:
+  https-portal:
+    image: steveltn/https-portal:1
+    restart: always
+    volumes:
+      - ${SSL_CERTS_DIR}:/var/lib/https-portal
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - app_network
+    environment:
+      # FORCE_RENEW: 'true'
+      STAGE: production
+      DOMAINS: "${ALLOWED_HOSTS} -> http://web:8080/"
+    depends_on:
+      - web
+
+  web:
+    image: nginx:1.23.1
+    expose:
+      - 8080
+    networks:
+      - app_network
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./static:/workspace/static
+      - ./50x.html:/usr/share/nginx/html/50x.html
+    restart: always
+    depends_on:
+      - app
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev-server
+    ports:
+      - "3001:3000"
+    networks:
+      - app_network
+      - db_network
+    container_name: chilowallet
+    restart: "no"
+    environment:
+      - LOG_LEVEL=$LOG_LEVEL
+    logging:
+      driver: json-file
+      options:
+        max-size: ${LOG_MAX_SIZE}
+        max-file: ${LOG_MAX_FILE}
+
+networks:
+  app_network:
+    driver: bridge
+    external: true
+  db_network:
+    driver: bridge
+    external: true
