@@ -1,6 +1,6 @@
 .next
 .pnp.*
 .yarn
-api
+/api
 lib/$path.ts
 public/mockServiceWorker.js

@@ -44,7 +44,7 @@ const eslintConfig = defineConfig([
     },
   },
   {
-    files: ["pages/**/*.tsx"],
+    files: ["pages/**/*.{ts,tsx}"],
     rules: {
       "canonical/filename-match-exported": "off",
     },

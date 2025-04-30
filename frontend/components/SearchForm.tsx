@@ -23,9 +23,10 @@ function SearchForm({ className, size = "medium", variant = "dark" }: Props) {
   return (
     <form
       className={clsx(
-        "inline-flex gap-1 item-center relative",
+        "gap-1 item-center relative",
         size === "small" && "text-sm",
         size === "large" && "text-lg",
+        className?.includes("hidden") || "inline-flex",
         className,
       )}
       onSubmit={handleSubmit}
