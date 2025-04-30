@@ -7,12 +7,12 @@ import SearchForm from "components/SearchForm";
 import useDialog from "lib/use-dialog";
 import clsx from "clsx";
 import { pagesPath } from "lib/$path";
-import { NEXT_PUBLIC_MOODLE_DASHBOARD_URL } from "lib/env";
 import Menu from "components/Menu";
 import useIssuers from "lib/use-issuers";
 import Fallback from "components/Fallback";
 import Issuer from "public/issuer.svg";
 import AllBadge from "public/all-badge.svg";
+import UserPopover from "components/UserPopover";
 
 type Props = {
   className?: string;
@@ -45,13 +45,13 @@ function Header({ className }: Props) {
         </Link>
         <Link
           href={pagesPath.discover.$url({ query: {} })}
-          className="hidden lg:inline-flex jumpu-text-button text-white text-sm hover:bg-gray-700 items-center gap-2 whitespace-nowrap"
+          className="hidden md:inline-flex jumpu-text-button text-white text-sm hover:bg-gray-700 items-center gap-2 whitespace-nowrap"
         >
           <AllBadge className="stroke-white size-[1.125rem]" alt="" />
           学びを探す
         </Link>
         <Popover
-          className="hidden lg:block"
+          className="hidden md:block"
           title={
             <>
               <Issuer className="fill-white size-[1.125rem]" alt="" />
@@ -102,16 +102,10 @@ function Header({ className }: Props) {
         </Popover>
         <div className="flex-1" />
         <SearchForm
-          className="hidden lg:w-1/5 lg:block xl:w-auto mr-1"
+          className="hidden lg:w-1/5 lg:inline-flex xl:w-auto"
           size="small"
         />
-        <a
-          className="jumpu-outlined-button text-white border-white hover:bg-gray-700 text-sm overflow-hidden whitespace-nowrap text-ellipsis shrink"
-          href={NEXT_PUBLIC_MOODLE_DASHBOARD_URL}
-          rel="noopener noreferrer"
-        >
-          ログイン
-        </a>
+        <UserPopover />
         <button
           className="jumpu-icon-button hover:bg-gray-700 group lg:hidden ml-2"
           onClick={onOpen}

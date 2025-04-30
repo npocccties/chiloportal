@@ -12,7 +12,6 @@ import { pagesPath } from "lib/$path";
 import contents from "lib/contents";
 import Fallback from "components/Fallback";
 import useIssuers from "lib/use-issuers";
-import { NEXT_PUBLIC_MOODLE_DASHBOARD_URL } from "lib/env";
 
 type Props = {
   open: boolean;
@@ -134,15 +133,6 @@ function Menu({ open, onClose }: Props) {
                   >
                     キーワード検索
                   </Link>
-                </li>
-                <li>
-                  <a
-                    className="jumpu-text-button font-bold w-full text-gray-700 hover:bg-gray-100"
-                    href={NEXT_PUBLIC_MOODLE_DASHBOARD_URL}
-                    rel="noopener noreferrer"
-                  >
-                    ログイン
-                  </a>
                 </li>
               </ul>
               <ul className="space-y-1">
