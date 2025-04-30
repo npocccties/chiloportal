@@ -1,5 +1,6 @@
 import yn from "yn";
 
+export const JWT_DEBUG_VALUE: string = process.env.JWT_DEBUG_VALUE ?? "";
 export const JWT_VERIFICATION_KEY: string =
   process.env.JWT_VERIFICATION_KEY ?? "";
 export const NEXT_PUBLIC_API_BASE_URL: string =

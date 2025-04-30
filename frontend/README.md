@@ -48,6 +48,7 @@ docker run --rm -p 3000:3000 frontend # Docker コンテナの起動
 
 | 変数名                               | 説明                                           | デフォルト値                               |
 | :----------------------------------- | :--------------------------------------------- | :----------------------------------------- |
+| JWT_DEBUG_VALUE                      | デバッグ用 JWT                                 | なし                                       |
 | JWT_VERIFICATION_KEY                 | JWT 署名検証鍵（PEM 形式）                     | なし                                       |
 | NEXT_PUBLIC_API_BASE_URL             | API のベースとなる URL                         | なし                                       |
 | NEXT_PUBLIC_API_MOCKING              | API モックの使用をするか否か（真偽値[^yn]）    | 偽                                         |

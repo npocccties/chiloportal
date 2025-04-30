@@ -5809,6 +5809,7 @@ __metadata:
     fast-glob: "npm:^3.3.3"
     fixpack: "npm:^4.0.0"
     image-size: "npm:^2.0.2"
+    jose: "npm:^6.0.10"
     jotai: "npm:^2.12.2"
     json-schema-to-ts: "npm:^3.1.1"
     msw: "npm:^2.7.3"
@@ -6730,6 +6731,13 @@ __metadata:
   bin:
     jiti: lib/jiti-cli.mjs
   checksum: 10/e2b07eb2e3fbb245e29ad288dddecab31804967fc84d5e01d39858997d2743b5e248946defcecf99272275a00284ecaf7ec88b8c841331324f0c946d8274414b
+  languageName: node
+  linkType: hard
+
+"jose@npm:^6.0.10":
+  version: 6.0.10
+  resolution: "jose@npm:6.0.10"
+  checksum: 10/8ba0d1aca94bdf780247c737328114fab3e394e1531e881dfe3fdd1d4a293b08cf7c0242769e72c8c8eee15c95761b542cf10730c3dfbb108084762df7d25cec
   languageName: node
   linkType: hard
 
