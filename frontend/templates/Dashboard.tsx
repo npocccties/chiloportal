@@ -5,6 +5,7 @@ import CurrentCourse from "components/CurrentCourse";
 import EarnedBadge from "components/EarnedBadge";
 import { pagesPath } from "lib/$path";
 import {
+  NEXT_PUBLIC_SHIBBOLETH_SP_LOGIN_URL,
   NEXT_PUBLIC_BADGE_ANALYSIS_URL,
   NEXT_PUBLIC_BASE_URL,
   NEXT_PUBLIC_CHILOWALLET_BASE_URL,
@@ -36,8 +37,31 @@ const errorCodeLabel: { [errorCode: string]: string } = {
     "バッジウォレットのサーバーで予期しないエラーが発生しました。OZONE-EDU 管理者にお問い合わせください。（エラーコード：E29999）",
 };
 
+function EmptyCard() {
+  return (
+    <p className="jumpu-card pl-4 pr-6 py-3 bg-primary-50 mb-2 flex gap-3 items-center">
+      <Icon className="inline text-2xl" icon="mdi:information-outline" />{" "}
+      <span className="flex-1">
+        ダッシュボードでは、受講中のコースと獲得したバッジが確認できます。表示名がゲストになっている方は、
+        <a className="underline" href={NEXT_PUBLIC_SHIBBOLETH_SP_LOGIN_URL}>
+          ログイン
+        </a>
+        してください。コースを受講していない方は、
+        <Link
+          className="underline"
+          href={pagesPath.discover.$url({ query: {} })}
+        >
+          学びを探す
+        </Link>
+        から受講したいコースを探しましょう。
+      </span>
+    </p>
+  );
+}
+
 function CurrentCourses(props: Pick<Props, "currentCourses">) {
   const [selected, setSelected] = useState<Set<number>>(new Set());
+  if (props.currentCourses.length === 0) return <EmptyCard />;
   const backUrl = new URL("/dashboard?tab=course", NEXT_PUBLIC_BASE_URL).href;
   const importUrl = new URL(
     `/badge/import?back_url=${encodeURIComponent(backUrl)}`,
@@ -91,6 +115,7 @@ function CurrentCourses(props: Pick<Props, "currentCourses">) {
 
 function EarnedBadges(props: Pick<Props, "earnedBadges">) {
   const [selected, setSelected] = useState<Set<number>>(new Set());
+  if (props.earnedBadges.length === 0) return <EmptyCard />;
   const backUrl = new URL("/dashboard?tab=course", NEXT_PUBLIC_BASE_URL).href;
   const submitUrl = new URL(
     `/badge/submission?back_url=${encodeURIComponent(backUrl)}`,
