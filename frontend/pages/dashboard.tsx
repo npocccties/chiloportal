@@ -37,7 +37,7 @@ export async function getServerSideProps({
     const badgeStatusList = await chilowalletClient.badge.status.list.$get({
       config: {
         headers: {
-          Cookie: `session_cookie=${req.cookies["session_cookie"] ?? JWT_DEBUG_VALUE}`,
+          Cookie: `session_cookie=${req.cookies.session_cookie ?? JWT_DEBUG_VALUE}`,
         },
       },
     });
