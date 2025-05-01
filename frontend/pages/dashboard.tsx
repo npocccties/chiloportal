@@ -43,7 +43,7 @@ export type Props = {
   tab: "course" | "badge";
   currentCourses: BadgeStatusList;
   earnedBadges: BadgeStatusList;
-  errorCode: ErrorCode;
+  errorCode?: ErrorCode;
   posts: Markdown<Post>["data"]["matter"][];
 };
 
@@ -52,10 +52,24 @@ export async function getServerSideProps({
   query: { tab = "course" },
 }: Context): Promise<GetServerSidePropsResult<ErrorProps | Props>> {
   try {
+    const markdowns = await readMarkdowns({ type: "post", sort: true });
+    if (markdowns instanceof globalThis.Error)
+      return { props: { title: markdowns.message, statusCode: 500 } };
+    const matters = markdowns.map((markdown) => markdown.data.matter);
+    const cookie = req.cookies.session_cookie ?? JWT_DEBUG_VALUE;
+    if (!cookie)
+      return {
+        props: {
+          tab,
+          currentCourses: [],
+          earnedBadges: [],
+          posts: matters,
+        },
+      };
     const response = await chilowalletClient.badge.status.list.$get({
       config: {
         headers: {
-          Cookie: `session_cookie=${req.cookies.session_cookie ?? JWT_DEBUG_VALUE}`,
+          Cookie: `session_cookie=${cookie}`,
         },
       },
     });
@@ -72,10 +86,6 @@ export async function getServerSideProps({
     const earnedBadges = badgeStatusList
       .filter(isEarnedBadge)
       .toSorted(sortByDescendingImportDateTime);
-    const markdowns = await readMarkdowns({ type: "post", sort: true });
-    if (markdowns instanceof globalThis.Error)
-      return { props: { title: markdowns.message, statusCode: 500 } };
-    const matters = markdowns.map((markdown) => markdown.data.matter);
     return {
       props: {
         tab,
