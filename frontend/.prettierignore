@@ -2,5 +2,7 @@
 .pnp.*
 .yarn
 /api
+/chilowallet
+/chilowallet-api
 lib/$path.ts
 public/mockServiceWorker.js

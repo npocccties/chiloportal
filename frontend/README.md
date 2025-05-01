@@ -211,3 +211,31 @@ Yarn が提供するサブコマンドについては [Yarn の公式ドキュ�
 ### `yarn start`
 
 本番サーバーを起動します。
+
+## バッジウォレット API 仕様の更新
+
+OpenAPI 形式の API 仕様を chilowallet リポジトリから git subtree で取得しています。
+
+<details>
+
+<summary>初回のコマンド</summary>
+
+実行済みなので参考情報として参照してください（実行不要です）。
+
+```shell
+$ git remote add chilowallet git@github.com:npocccties/chilowallet.git # chilowallet リモートリポジトリを追加
+$ pushd .. # トップレベルで実施が必要
+$ git subtree add --prefix frontend/chilowallet --squash chilowallet main # git subtree 追加
+$ popd
+```
+
+</details>
+
+更新するには、次のコマンドを実行してください。
+
+```shell
+$ git remote add chilowallet git@github.com:npocccties/chilowallet.git # chilowallet リモートリポジトリを追加（追加していなかった場合）
+$ pushd .. # トップレベルで実施が必要
+$ git subtree pull --prefix frontend/chilowallet --squash chilowallet main # git subtree 更新
+$ popd
+```
