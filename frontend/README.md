@@ -49,7 +49,7 @@ docker run --rm -p 3000:3000 frontend # Docker コンテナの起動
 | 変数名                               | 説明                                           | デフォルト値                               |
 | :----------------------------------- | :--------------------------------------------- | :----------------------------------------- |
 | JWT_DEBUG_VALUE                      | デバッグ用 JWT                                 | なし                                       |
-| JWT_VERIFICATION_KEY                 | JWT 署名検証鍵（PEM 形式）                     | なし                                       |
+| JWT_VERIFICATION_KEY_BASE64          | JWT 署名検証鍵（PEM 形式）の Base64 エンコード | なし                                       |
 | NEXT_PUBLIC_API_BASE_URL             | API のベースとなる URL                         | なし                                       |
 | NEXT_PUBLIC_API_MOCKING              | API モックの使用をするか否か（真偽値[^yn]）    | 偽                                         |
 | NEXT_PUBLIC_API_PER_PAGE             | API におけるページネーションのページあたり件数 | `30`                                       |
@@ -62,6 +62,14 @@ docker run --rm -p 3000:3000 frontend # Docker コンテナの起動
 | NEXT_PUBLIC_SHIBBOLETH_SP_LOGOUT_URL | Shibboleth SP ログアウト URL                   | "https://shibboleth-sp.example.org/logout" |
 
 [^yn]: [yn](https://github.com/sindresorhus/yn#readme)によって truly/falsy な値として解釈されます
+
+> [!NOTE]
+>
+> NEXT_PUBLIC\_\* に始まる環境変数はビルド時に参照され、アプリケーションのコードに埋め込まれますが、JWT_VERIFICATION_KEY_BASE64 環境変数は実行時（`yarn start` あるいは `docker run`）に環境変数の指定が必要です。
+
+> [!INFO]
+>
+> JWT_VERIFICATION_KEY_BASE64 環境変数の値は Base64 エンコードする必要があります。`cat key.pub.pem | base64` のようなコマンドによって Base64 エンコードした鍵の値が得られます。
 
 ## 静的コンテンツ
 
@@ -171,7 +179,7 @@ cat << EOL > .env # 環境変数の用意
 > EOL
 yarn install --immutable # NPM パッケージのインストール
 yarn build # アプリケーションのビルド
-yarn start # 本番サーバーの起動
+JWT_VERIFICATION_KEY_BASE64=xxx yarn start # 本番サーバーの起動
 ```
 
 ### Docker 環境
@@ -183,7 +191,7 @@ cat << EOL > .env # 環境変数の用意
 > NEXT_PUBLIC_SHIBBOLETH_SP_LOGIN_URL=<Shibboleth SP ログイン URL>
 > EOL
 docker build -t frontend -f ../Dockerfile.frontend .. # Docker イメージのビルド
-docker run --rm -p 3000:3000 frontend # Docker コンテナの起動
+docker run --env JWT_VERIFICATION_KEY_BASE64=xxx --rm -p 3000:3000 frontend # Docker コンテナの起動
 ```
 
 詳細は [Next.js の公式ドキュメント](https://nextjs.org/docs/deployment#self-hosting)を参照してください。
