@@ -54,6 +54,7 @@ docker run --rm -p 3000:3000 frontend # Docker コンテナの起動
 | NEXT_PUBLIC_API_MOCKING              | API モックの使用をするか否か（真偽値[^yn]）    | 偽                                         |
 | NEXT_PUBLIC_API_PER_PAGE             | API におけるページネーションのページあたり件数 | `30`                                       |
 | NEXT_PUBLIC_BADGES_ISSUER_IMAGE_PATH | バッジ発行者の画像のパス                       | `"issuer/image.png"`                       |
+| NEXT_PUBLIC_BADGE_ANALYSIS_URL       | バッジ分析の URL                               | "https://badge-analysis.example.org/"      |
 | NEXT_PUBLIC_BASE_URL                 | ベースとなる URL                               | "https://portal.example.org/"              |
 | NEXT_PUBLIC_CHILOWALLET_API_BASE_URL | バッジウォレット API のベースとなる URL        | "https://chilowallet.example.org/api/v1/"  |
 | NEXT_PUBLIC_CHILOWALLET_BASE_URL     | バッジウォレットのベースとなる URL             | "https://chilowallet.example.org/"         |

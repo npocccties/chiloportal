@@ -9,6 +9,7 @@ import { useState } from "react";
 import {
   NEXT_PUBLIC_BASE_URL,
   NEXT_PUBLIC_CHILOWALLET_BASE_URL,
+  NEXT_PUBLIC_BADGE_ANALYSIS_URL,
 } from "lib/env";
 
 function CurrentCourses(props: Pick<Props, "currentCourses">) {
@@ -122,18 +123,29 @@ function Dashboard({
   currentCourses,
   earnedBadges,
   errorCode: _errorCode,
+  posts,
 }: Props) {
   return (
-    <Container>
+    <Container
+      className="md:grid gap-x-10"
+      style={{
+        gridTemplateAreas: `
+        "breadcrumbs breadcrumbs"
+        "h1 h1"
+        "nav aside"
+        "article aside"
+    `,
+      }}
+    >
       <Breadcrumbs
-        className="mb-6"
+        className="mb-6 [grid-area:breadcrumbs]"
         nodes={[{ name: "トップ", href: pagesPath.$url() }]}
         leaf="ダッシュボード"
       />
-      <h1 className="text-3xl font-bold mb-8 border-b border-gray-300 pb-2">
+      <h1 className="[grid-area:h1] text-3xl font-bold mb-8 border-b border-gray-300 pb-2">
         ダッシュボード
       </h1>
-      <nav className="jumpu-boxed-tabs mb-4">
+      <nav className="[grid-area:nav] jumpu-boxed-tabs mb-4">
         {/* TODO: jumpu-boxed-tabs が navigation role に対応したら追従して */}
         <ul role="tablist">
           <li role="tab" aria-selected={tab === "course"}>
@@ -160,10 +172,53 @@ function Dashboard({
           </li>
         </ul>
       </nav>
-      <article className="h-[66svh] overflow-y-auto py-1">
+      <article className="[grid-area:article] max-h-[60svh] overflow-y-auto py-1 mb-6 md:mb-0">
         {tab === "course" && <CurrentCourses currentCourses={currentCourses} />}
         {tab === "badge" && <EarnedBadges earnedBadges={earnedBadges} />}
       </article>
+      <aside className="[grid-area:aside] space-y-6 md:w-[33svw] md:max-w-100">
+        <section>
+          <h2 className="text-xl font-bold hover:underline underline-offset-4 mb-1">
+            <Link href={pagesPath.posts.$url()}>お知らせ</Link>
+          </h2>
+          <div className="overflow-y-auto max-h-28">
+            <ul className="list-disc ml-8 space-y-1 text-gray-700 underline">
+              {posts.map((post) => (
+                <li key={post.slug}>
+                  <Link
+                    href={pagesPath.posts._slug(post.slug).$url()}
+                    className="line-clamp-2"
+                  >
+                    {post.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+        <section>
+          <h2 className="text-xl font-bold mb-1">マニュアル</h2>
+          <ul className="list-disc ml-8 space-y-1 text-gray-700 underline">
+            <li>
+              <a href="https://help.o3edu.jp/lllp" target="_blank">
+                OZONE_EDUマニュアル
+              </a>
+            </li>
+            <li>
+              <a href="https://help.o3edu.jp/wallet" target="_blank">
+                バッジウォレットマニュアル
+              </a>
+            </li>
+          </ul>
+        </section>
+        <a
+          href={NEXT_PUBLIC_BADGE_ANALYSIS_URL}
+          target="_blank"
+          className="text-xl font-bold mb-1 hover:underline underline-offset-4"
+        >
+          バッジ分析
+        </a>
+      </aside>
     </Container>
   );
 }

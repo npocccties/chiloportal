@@ -12,6 +12,8 @@ import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
 import Error from "next/error";
 import Head from "next/head";
 import Template from "templates/Dashboard";
+import { readMarkdowns, Markdown } from "lib/markdown";
+import { Post } from "schemas";
 
 export type Query = { tab?: "course" | "badge" };
 
@@ -42,6 +44,7 @@ export type Props = {
   currentCourses: BadgeStatusList;
   earnedBadges: BadgeStatusList;
   errorCode: ErrorCode;
+  posts: Markdown<Post>["data"]["matter"][];
 };
 
 export async function getServerSideProps({
@@ -69,6 +72,10 @@ export async function getServerSideProps({
     const earnedBadges = badgeStatusList
       .filter(isEarnedBadge)
       .toSorted(sortByDescendingImportDateTime);
+    const markdowns = await readMarkdowns({ type: "post", sort: true });
+    if (markdowns instanceof globalThis.Error)
+      return { props: { title: markdowns.message, statusCode: 500 } };
+    const matters = markdowns.map((markdown) => markdown.data.matter);
     return {
       props: {
         tab,
@@ -78,6 +85,7 @@ export async function getServerSideProps({
         ],
         earnedBadges,
         errorCode,
+        posts: matters,
       },
     };
   } catch (e) {
