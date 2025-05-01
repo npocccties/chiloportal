@@ -67,7 +67,7 @@ docker run --rm -p 3000:3000 frontend # Docker コンテナの起動
 >
 > NEXT_PUBLIC\_\* に始まる環境変数はビルド時に参照され、アプリケーションのコードに埋め込まれますが、JWT_VERIFICATION_KEY_BASE64 環境変数は実行時（`yarn start` あるいは `docker run`）に環境変数の指定が必要です。
 
-> [!INFO]
+> [!TIP]
 >
 > JWT_VERIFICATION_KEY_BASE64 環境変数の値は Base64 エンコードする必要があります。`cat key.pub.pem | base64` のようなコマンドによって Base64 エンコードした鍵の値が得られます。
 
