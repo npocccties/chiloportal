@@ -16,7 +16,7 @@ export default async function handler(
 ) {
   const key = await importSPKI(atob(JWT_VERIFICATION_KEY_BASE64), "RS256");
   const verified = await jwtVerify<UserAttributes>(
-    req.cookies["session_cookie"] ?? JWT_DEBUG_VALUE,
+    req.cookies.session_cookie ?? JWT_DEBUG_VALUE,
     key,
   );
   res.status(200).json(verified.payload);

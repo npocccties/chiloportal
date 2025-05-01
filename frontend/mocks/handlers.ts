@@ -1,5 +1,5 @@
-import { http, HttpResponse } from "msw";
-import { client } from "lib/client";
+import { http, HttpResponse, passthrough } from "msw";
+import { client, chilowalletClient } from "lib/client";
 import {
   consumer,
   issuer,
@@ -69,4 +69,5 @@ export const handlers = [
   http.get(client.consumer.badges.list.$path(), () =>
     HttpResponse.json([...Array(3)].map(consumerBadge)),
   ),
+  http.get(chilowalletClient.badge.status.list.$path(), () => passthrough()),
 ];
