@@ -37,10 +37,13 @@ function EarnedBadge(props: Props) {
   };
   const ref = useRef<HTMLInputElement>(null);
   const handleClick = () => ref.current?.click();
+  const isExpired = props.badge_expired_at
+    ? Date.parse(props.badge_expired_at) < Date.now()
+    : false;
   return (
     <div
       className={
-        "jumpu-card pl-4 pr-6 py-4 flex items-center gap-4 has-checked:bg-primary-50"
+        "jumpu-card pl-4 pr-6 py-4 flex items-center gap-4 has-checked:bg-primary-50 relative"
       }
       onClick={handleClick}
     >
@@ -59,11 +62,12 @@ function EarnedBadge(props: Props) {
         onClick={(e) => {
           e.stopPropagation();
         }}
+        disabled={isExpired}
       />
       {/* eslint-disable @next/next/no-img-element */}
       <img className="size-24" alt="" src={badge.image.id} />
-      <section className="h-31">
-        <h3 className="text-lg font-semibold line-clamp-2 mb-2">
+      <section className="h-31 space-y-1">
+        <h3 className="text-lg font-semibold line-clamp-2">
           <a
             className="hover:underline underline-offset-4"
             href={
@@ -79,10 +83,18 @@ function EarnedBadge(props: Props) {
             {badge.name}
           </a>
         </h3>
-        <p className="prose text-sm max-w-none line-clamp-3">
+        <p className="prose prose-sm max-w-none line-clamp-2">
           {badge.description}
         </p>
       </section>
+      <div className="flex gap-1 h-6.5 absolute bottom-1 right-1">
+        {isExpired && (
+          <p className="jumpu-filled-tag bg-danger text-white">有効期限切れ</p>
+        )}
+        {props.submitted && (
+          <p className="jumpu-filled-tag bg-success text-white">提出済み</p>
+        )}
+      </div>
     </div>
   );
 }
