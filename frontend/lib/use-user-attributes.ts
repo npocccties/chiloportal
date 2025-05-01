@@ -15,5 +15,5 @@ async function fetcher(): Promise<UserAttributes> {
 }
 
 export default function useUserAttributes() {
-  return useSWRImmutable(key, fetcher);
+  return useSWRImmutable(key, fetcher, { shouldRetryOnError: false });
 }
