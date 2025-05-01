@@ -20,6 +20,7 @@
     "image-size": "^2.0.2",
     "jose": "^6.0.10",
     "jotai": "^2.12.2",
+    "just-group-by": "^2.2.0",
     "msw": "^2.7.3",
     "next": "^15.3.0",
     "next-mdx-remote": "^5.0.0",

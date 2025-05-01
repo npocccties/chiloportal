@@ -1,10 +1,17 @@
-import { GetServerSidePropsResult, GetServerSidePropsContext } from "next";
+import {
+  groupByEarnable,
+  isCurrentCourse,
+  isEarnedBadge,
+  sortByDescendingAccessDateTime,
+  sortByDescendingImportDateTime,
+} from "lib/badge-status-list";
+import { chilowalletClient, getErrorProps } from "lib/client";
+import { JWT_DEBUG_VALUE } from "lib/env";
+import title from "lib/title";
+import { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
 import Error from "next/error";
 import Head from "next/head";
-import { chilowalletClient, getErrorProps } from "lib/client";
 import Template from "templates/Dashboard";
-import title from "lib/title";
-import { JWT_DEBUG_VALUE } from "lib/env";
 
 export type Query = { tab?: "course" | "badge" };
 
@@ -12,12 +19,18 @@ export type Context = GetServerSidePropsContext & {
   query: Query;
 };
 
-export type BadgeStatusList = Exclude<
+export type BadgeStatus = Exclude<
   Awaited<
     ReturnType<typeof chilowalletClient.badge.status.list.$get>
   >["lms_badge_list"],
   undefined
->;
+>[number];
+
+export type BadgeStatusList = BadgeStatus[];
+
+export type ErrorCode = Awaited<
+  ReturnType<typeof chilowalletClient.badge.status.list.$get>
+>["error_code"];
 
 type ErrorProps = {
   title: string;
@@ -26,7 +39,9 @@ type ErrorProps = {
 
 export type Props = {
   tab: "course" | "badge";
-  badgeStatusList: BadgeStatusList;
+  currentCourses: BadgeStatusList;
+  earnedBadges: BadgeStatusList;
+  errorCode: ErrorCode;
 };
 
 export async function getServerSideProps({
@@ -34,19 +49,35 @@ export async function getServerSideProps({
   query: { tab = "course" },
 }: Context): Promise<GetServerSidePropsResult<ErrorProps | Props>> {
   try {
-    const badgeStatusList = await chilowalletClient.badge.status.list.$get({
+    const response = await chilowalletClient.badge.status.list.$get({
       config: {
         headers: {
           Cookie: `session_cookie=${req.cookies.session_cookie ?? JWT_DEBUG_VALUE}`,
         },
       },
     });
+    const badgeStatusList: BadgeStatusList =
+      // @ts-expect-error https://github.com/npocccties/chilowallet/issues/92
+      response.user_badgestatuslist.lms_badge_list ?? [];
+    // @ts-expect-error https://github.com/npocccties/chilowallet/issues/92
+    const errorCode: ErrorCode = response.user_badgestatuslist.error_code;
+    const currentCourses = groupByEarnable(
+      badgeStatusList
+        .filter(isCurrentCourse)
+        .toSorted(sortByDescendingAccessDateTime),
+    );
+    const earnedBadges = badgeStatusList
+      .filter(isEarnedBadge)
+      .toSorted(sortByDescendingImportDateTime);
     return {
       props: {
         tab,
-        badgeStatusList:
-          // @ts-expect-error https://github.com/npocccties/chilowallet/issues/92
-          badgeStatusList.user_badgestatuslist.lms_badge_list ?? [],
+        currentCourses: [
+          ...(currentCourses.earnable ?? []),
+          ...(currentCourses.unearnable ?? []),
+        ],
+        earnedBadges,
+        errorCode,
       },
     };
   } catch (e) {
