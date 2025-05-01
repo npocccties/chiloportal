@@ -41,7 +41,6 @@ export async function getServerSideProps({
         },
       },
     });
-    console.log(badgeStatusList);
     return {
       props: {
         tab,
