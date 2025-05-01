@@ -10,6 +10,7 @@ COPY frontend/.env* frontend/.gitignore \
   frontend/eslint.config.js frontend/next.config.js frontend/postcss.config.js \
   frontend/tsconfig.json frontend/vfile-env.d.ts \
   ./
+COPY frontend/chilowallet/ ./chilowallet
 COPY frontend/components/ ./components
 COPY frontend/contents/ ./contents
 COPY frontend/examples/ ./examples

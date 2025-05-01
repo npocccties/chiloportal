@@ -85,8 +85,10 @@
   },
   "scripts": {
     "api": "run-s api:clean api:build",
-    "api:build": "openapi2aspida -i ../backend/doc/openapi.yaml",
-    "api:clean": "rimraf api",
+    "api:build": "run-s api:build:\\*",
+    "api:build:chiloportal": "openapi2aspida -i ../backend/doc/openapi.yaml",
+    "api:build:chilowallet": "openapi2aspida -i ./chilowallet/doc/openapi.yaml -o ./chilowallet-api",
+    "api:clean": "rimraf api chilowallet-api",
     "build": "run-s api build:clean build:path build:app",
     "build:app": "next build",
     "build:clean": "rimraf public/mockServiceWorker.js",
