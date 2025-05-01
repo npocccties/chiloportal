@@ -35,9 +35,9 @@ function CurrentCourse(props: Props) {
         }}
       />
       <section>
-        <h3 className="text-lg font-semibold mb-2 truncate">
+        <h3 className="text-lg font-semibold mb-2 line-clamp-1">
           <a
-            className="hover:underline underline-offset-4 cursor-pointer"
+            className="hover:underline underline-offset-4"
             href={
               new URL(`/course/view.php?id=${props.course_id}`, props.lms_url)
                 .href

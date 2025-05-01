@@ -65,7 +65,7 @@ function EarnedBadge(props: Props) {
       <section className="h-31">
         <h3 className="text-lg font-semibold line-clamp-2 mb-2">
           <a
-            className="hover:underline underline-offset-4 cursor-pointer"
+            className="hover:underline underline-offset-4"
             href={
               new URL(
                 `/credential/detail/${props.badge_vc_id}`,

@@ -16,6 +16,9 @@ export const NEXT_PUBLIC_API_PER_PAGE: number = Number(
 );
 export const NEXT_PUBLIC_BADGES_ISSUER_IMAGE_PATH =
   process.env.NEXT_PUBLIC_BADGES_ISSUER_IMAGE_PATH ?? "issuer/image.png";
+export const NEXT_PUBLIC_BADGE_ANALYSIS_URL =
+  process.env.NEXT_PUBLIC_BADGE_ANALYSIS_URL ??
+  "https://badge-analysis.example.org/";
 export const NEXT_PUBLIC_BASE_URL: string =
   process.env.NEXT_PUBLIC_BASE_URL ?? "https://portal.example.org/";
 export const NEXT_PUBLIC_CHILOWALLET_API_BASE_URL: string =
