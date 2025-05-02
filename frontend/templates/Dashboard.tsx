@@ -14,33 +14,10 @@ import Link from "next/link";
 import { Props } from "pages/dashboard";
 import { useState } from "react";
 
-const errorCodeLabel: { [errorCode: string]: string } = {
-  E10000:
-    "一部あるいはすべての LMS からユーザー情報が取得できませんでした。しばらくして再度お試しください。（エラーコード：E10000）",
-  E10001:
-    "一部あるいはすべての LMS からコース一覧が取得できませんでした。しばらくして再度お試しください。（エラーコード：E10001）",
-  E10002:
-    "一部あるいはすべての LMS からバッジ一覧が取得できませんでした。しばらくして再度お試しください。（エラーコード：E10002）",
-  E10003:
-    "一部あるいはすべての LMS からバッジのメタデータが取得できませんでした。OZONE-EDU 管理者にお問い合わせください。（エラーコード：E10003）",
-  E10004:
-    "一部あるいはすべての LMS のバッジクラス ID からデータが取得できませんでした。OZONE-EDU 管理者にお問い合わせください。（エラーコード：E10004）",
-  E10005:
-    "一部あるいはすべての LMS のバッジクラス ID のデータのうち alignment.targetUrl の書式が不正です。OZONE-EDU 管理者にお問い合わせください。（エラーコード：E10005）",
-  E10006:
-    "一部あるいはすべての LMS のバッジクラス ID のデータのうち alignment.targetUrl に含まれるコースが存在しません。OZONE-EDU 管理者にお問い合わせください。（エラーコード：E10006）",
-  E20000:
-    "バッジウォレットのデータベースから LMS 一覧が取得できませんでした。OZONE-EDU 管理者にお問い合わせください。（エラーコード：E20000）",
-  E20001:
-    "バッジウォレットのデータベースからお使いのウォレットが取得できませんでした。OZONE-EDU 管理者にお問い合わせください。（エラーコード：E20001）",
-  E29999:
-    "バッジウォレットのサーバーで予期しないエラーが発生しました。OZONE-EDU 管理者にお問い合わせください。（エラーコード：E29999）",
-};
-
 function EmptyCard() {
   return (
     <p className="jumpu-card pl-4 pr-6 py-3 bg-primary-50 mb-2 flex gap-3 items-center">
-      <Icon className="inline text-2xl" icon="mdi:information-outline" />{" "}
+      <Icon className="inline text-2xl" icon="mdi:information-outline" />
       <span className="flex-1">
         ダッシュボードでは、受講中のコースと獲得したバッジが確認できます。表示名がゲストになっている方は、
         <a className="underline" href={NEXT_PUBLIC_SHIBBOLETH_SP_LOGIN_URL}>
@@ -223,10 +200,10 @@ function Dashboard({
       </nav>
       <article className="[grid-area:article] max-h-[60svh] overflow-y-auto py-1 mb-6 md:mb-0">
         {errorCode && (
-          <p className="jumpu-card pl-4 pr-6 py-3 bg-warning mb-2 flex gap-3 items-center">
-            <Icon className="inline text-2xl" icon="mdi:warning" />{" "}
+          <p className="jumpu-card pl-4 pr-6 py-3 bg-primary-50 mb-2 flex gap-3 items-center">
+            <Icon className="inline text-2xl" icon="mdi:information-outline" />
             <span className="flex-1">
-              {errorCodeLabel[errorCode] ?? errorCodeLabel.E29999}
+              {`一部のデータが取得できませんでした。（エラーコード：${errorCode}）`}
             </span>
           </p>
         )}
