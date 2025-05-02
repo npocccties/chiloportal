@@ -10,36 +10,40 @@ type Props = BadgeStatus & {
 
 function EarnedBadge(props: Props) {
   const badge = JSON.parse(props.badge_json ?? "{}") as {
-    "@context": "https://w3id.org/openbadges/v2";
-    "@language": string;
-    alignments: Array<{ targetName: string; targetUrl: string }>;
-    criteria: {
-      id: string;
-      narrative: string;
+    "@context"?: "https://w3id.org/openbadges/v2";
+    "@language"?: string;
+    alignments?: Array<{ targetName: string; targetUrl: string }>;
+    criteria?: {
+      id?: string;
+      narrative?: string;
     };
-    description: string;
-    id: string;
-    image: {
-      author: string;
-      id: string;
+    description?: string;
+    id?: string;
+    image?:
+      | string
+      | {
+          author?: string;
+          id?: string;
+        };
+    issuer?: {
+      "@context"?: "https://w3id.org/openbadges/v2";
+      email?: string;
+      id?: string;
+      name?: string;
+      type?: "Issuer";
+      url?: string;
     };
-    issuer: {
-      "@context": "https://w3id.org/openbadges/v2";
-      email: string;
-      id: string;
-      name: string;
-      type: "Issuer";
-      url: string;
-    };
-    name: string;
-    type: "BadgeClass";
-    version: "1.0-wisdom";
+    name?: string;
+    type?: "BadgeClass";
+    version?: "1.0-wisdom";
   };
   const ref = useRef<HTMLInputElement>(null);
   const handleClick = () => ref.current?.click();
   const isExpired = props.badge_expired_at
     ? Date.parse(props.badge_expired_at) < Date.now()
     : false;
+  const imageUrl: string | undefined =
+    typeof badge.image === "string" ? badge.image : badge.image?.id;
   return (
     <div
       className={
@@ -65,7 +69,7 @@ function EarnedBadge(props: Props) {
         disabled={isExpired}
       />
       {/* eslint-disable @next/next/no-img-element */}
-      <img className="size-24" alt="" src={badge.image.id} />
+      <img className="size-24" alt="" src={imageUrl} />
       <section className="h-31 space-y-1">
         <h3 className="text-lg font-semibold line-clamp-2">
           <a
