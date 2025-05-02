@@ -32,6 +32,7 @@ RUN yarn workspaces focus --all --production
 FROM gcr.io/distroless/nodejs22-debian12
 WORKDIR /app
 ENV NODE_ENV=production
+COPY frontend/contents/ ./contents
 COPY frontend/public/ ./public
 COPY --from=build /app/.next ./.next
 COPY --from=install /app/node_modules ./node_modules
