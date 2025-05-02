@@ -1,5 +1,6 @@
 import { JSONSchema } from "json-schema-to-ts";
 import { join } from "node:path";
+import { findUp } from "find-up";
 import { read } from "to-vfile";
 import { matter } from "vfile-matter";
 import { VFile } from "vfile";
@@ -84,9 +85,10 @@ export async function readMarkdowns<T extends Frontmatter["type"]>({
   issuerId?: number;
   allIssuer?: boolean;
 }): Promise<Error | MarkdownResult<T>[]> {
-  const dirname = "contents";
-  const contents = await fg.async(join(dirname, "**", "*.md"));
-  const dirPath = contents.length > 0 ? dirname : "examples";
+  const contentsPath =
+    (await findUp("contents", { type: "directory" })) ?? "./contents";
+  const contents = await fg.async(join(contentsPath, "**", "*.md"));
+  const dirPath = contents.length > 0 ? contentsPath : "examples";
   const filePaths = await fg.async(join(dirPath, "**", "*.md"));
   if (filePaths.length === 0) return [];
   const markdowns = await Promise.all(
