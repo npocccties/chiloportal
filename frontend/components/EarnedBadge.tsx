@@ -44,6 +44,7 @@ function EarnedBadge(props: Props) {
     : false;
   const imageUrl: string | undefined =
     typeof badge.image === "string" ? badge.image : badge.image?.id;
+  const submissionDenied = isExpired || !props.badge_json;
   return (
     <div
       className={
@@ -66,10 +67,14 @@ function EarnedBadge(props: Props) {
         onClick={(e) => {
           e.stopPropagation();
         }}
-        disabled={isExpired}
+        disabled={submissionDenied}
       />
       {/* eslint-disable @next/next/no-img-element */}
-      <img className="size-24" alt="" src={imageUrl} />
+      <img
+        className="size-24"
+        alt=""
+        src={imageUrl ?? "/badge-placeholder.svg"}
+      />
       <section className="h-31 space-y-1">
         <h3 className="text-lg font-semibold line-clamp-2">
           <a
@@ -84,7 +89,7 @@ function EarnedBadge(props: Props) {
               e.stopPropagation();
             }}
           >
-            {badge.name}
+            {badge.name ?? props.badge_name}
           </a>
         </h3>
         <p className="prose prose-sm max-w-none line-clamp-2">
