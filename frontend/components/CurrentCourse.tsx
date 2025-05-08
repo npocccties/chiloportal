@@ -14,6 +14,7 @@ function CurrentCourse(props: Props) {
   const isExpired = props.badge_expired_at
     ? Date.parse(props.badge_expired_at) < Date.now()
     : false;
+  const earnable = !isExpired || props.issued;
   return (
     <div
       className={
@@ -36,7 +37,7 @@ function CurrentCourse(props: Props) {
         onClick={(e) => {
           e.stopPropagation();
         }}
-        disabled={isExpired}
+        disabled={!earnable}
       />
       <section className="space-y-1">
         <h3 className="text-lg font-semibold line-clamp-1">
