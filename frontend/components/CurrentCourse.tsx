@@ -14,7 +14,7 @@ function CurrentCourse(props: Props) {
   const isExpired = props.badge_expired_at
     ? Date.parse(props.badge_expired_at) < Date.now()
     : false;
-  const earnable = !isExpired || props.issued;
+  const earnable = !isExpired && props.issued;
   return (
     <div
       className={
@@ -64,6 +64,9 @@ function CurrentCourse(props: Props) {
       <div className="flex gap-1 h-6.5 absolute bottom-1 right-1">
         {isExpired && (
           <p className="jumpu-filled-tag bg-danger text-white">有効期限切れ</p>
+        )}
+        {earnable && (
+          <p className="jumpu-filled-tag bg-success text-white">獲得可能</p>
         )}
       </div>
     </div>
