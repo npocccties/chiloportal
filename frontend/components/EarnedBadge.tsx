@@ -15,35 +15,55 @@ const messages = {
     "バッジのデータが不足しているため、バッジを提出することはできません。",
 } as const;
 
-function EarnedBadge(props: Props) {
-  const badge = JSON.parse(props.badge_json ?? "{}") as {
-    "@context"?: "https://w3id.org/openbadges/v2";
-    "@language"?: string;
-    alignments?: Array<{ targetName: string; targetUrl: string }>;
-    criteria?: {
-      id?: string;
-      narrative?: string;
-    };
-    description?: string;
+type BadgeJson = {
+  "@context"?: "https://w3id.org/openbadges/v2";
+  "@language"?: string;
+  alignments?: Array<{ targetName: string; targetUrl: string }>;
+  criteria?: {
     id?: string;
-    image?:
-      | string
-      | {
-          author?: string;
-          id?: string;
-        };
-    issuer?: {
-      "@context"?: "https://w3id.org/openbadges/v2";
-      email?: string;
-      id?: string;
-      name?: string;
-      type?: "Issuer";
-      url?: string;
-    };
-    name?: string;
-    type?: "BadgeClass";
-    version?: "1.0-wisdom";
+    narrative?: string;
   };
+  description?: string;
+  id?: string;
+  image?:
+    | string
+    | {
+        author?: string;
+        id?: string;
+      };
+  issuer?: {
+    "@context"?: "https://w3id.org/openbadges/v2";
+    email?: string;
+    id?: string;
+    name?: string;
+    type?: "Issuer";
+    url?: string;
+  };
+  name?: string;
+  type?: "BadgeClass";
+  version?: "1.0-wisdom";
+};
+
+type BadgeErrorJson = {
+  error: string;
+  errorcode: string;
+  stacktrace: unknown;
+  debuginfo: unknown;
+  reproductionlink: unknown;
+};
+
+function parseBadgeJson(badge_json?: string): BadgeJson {
+  const badge = JSON.parse(badge_json ?? "null") as
+    | BadgeJson
+    | BadgeErrorJson
+    | null;
+  if (badge === null) return {};
+  if ("error" in badge) return {};
+  return badge;
+}
+
+function EarnedBadge(props: Props) {
+  const badge = parseBadgeJson(props.badge_json);
   const imageUrl: string | undefined =
     typeof badge.image === "string" ? badge.image : badge.image?.id;
   const isExpired = props.badge_expired_at
