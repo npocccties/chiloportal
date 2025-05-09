@@ -52,30 +52,44 @@ type BadgeErrorJson = {
   reproductionlink: unknown;
 };
 
-function parseBadgeJson(badge_json?: string): BadgeJson {
-  const badge = JSON.parse(badge_json ?? "null") as
-    | BadgeJson
-    | BadgeErrorJson
-    | null;
-  if (badge === null) return {};
-  if ("error" in badge) return {};
+type ParsedBadgeJson = BadgeJson | BadgeErrorJson | null;
+
+/** badge_json プロパティ値のパース */
+const parseBadgeJson = (badge_json?: string): ParsedBadgeJson =>
+  JSON.parse(badge_json ?? "null") as ParsedBadgeJson;
+
+/** badge_json プロパティをパースした値のバリデーション */
+function validateBadgeJson(badge: ParsedBadgeJson): badge is BadgeJson {
+  if (badge === null) return false;
+  if ("error" in badge) return false;
+  return true;
+}
+
+/** badge_json プロパティをパースした値の正規化 */
+function normalizeBadgeJson(
+  badge: BadgeJson | BadgeErrorJson | null,
+): BadgeJson {
+  const valid = validateBadgeJson(badge);
+  if (!valid) return {};
   return badge;
 }
 
 function EarnedBadge(props: Props) {
-  const badge = parseBadgeJson(props.badge_json);
-  const imageUrl: string | undefined =
-    typeof badge.image === "string" ? badge.image : badge.image?.id;
+  const parsedBadgeJson = parseBadgeJson(props.badge_json);
+  const isValidBadgeJson = validateBadgeJson(parsedBadgeJson);
   const isExpired = props.badge_expired_at
     ? Date.parse(props.badge_expired_at) < Date.now()
     : false;
-  const submissionDenied = isExpired || !props.badge_json;
+  const submittable = !isExpired && isValidBadgeJson;
+  const badge = normalizeBadgeJson(parsedBadgeJson);
+  const imageUrl: string | undefined =
+    typeof badge.image === "string" ? badge.image : badge.image?.id;
   const ref = useRef<HTMLInputElement>(null);
   const showInvalidity = () => {
     if (!ref.current || ref.current?.ariaDisabled === "false") return;
     const message =
       (isExpired && messages.expired) ||
-      (!props.badge_json && messages.unbadged) ||
+      (!isValidBadgeJson && messages.unbadged) ||
       "";
     ref.current.setCustomValidity(message);
     ref.current.reportValidity();
@@ -100,7 +114,7 @@ function EarnedBadge(props: Props) {
         type="checkbox"
         value={props.index}
         className="jumpu-input aria-disabled:bg-gray-200 aria-disabled:ring-0 aria-disabled:outline-none"
-        tabIndex={submissionDenied ? -1 : 0}
+        tabIndex={submittable ? 0 : -1}
         ref={ref}
         onChange={(e) => {
           if (e.currentTarget.checked) {
@@ -113,7 +127,7 @@ function EarnedBadge(props: Props) {
           e.stopPropagation();
           showInvalidity();
         }}
-        aria-disabled={submissionDenied}
+        aria-disabled={!submittable}
       />
       {/* eslint-disable @next/next/no-img-element */}
       <img
