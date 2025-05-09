@@ -8,6 +8,13 @@ type Props = BadgeStatus & {
   onUnchecked?(index: number): void;
 };
 
+const messages = {
+  expired:
+    "コースで発行されたバッジの有効期限を過ぎているため、バッジを提出することはできません。",
+  unbadged:
+    "バッジのデータが不足しているため、バッジを提出することはできません。",
+} as const;
+
 function EarnedBadge(props: Props) {
   const badge = JSON.parse(props.badge_json ?? "{}") as {
     "@context"?: "https://w3id.org/openbadges/v2";
@@ -37,25 +44,43 @@ function EarnedBadge(props: Props) {
     type?: "BadgeClass";
     version?: "1.0-wisdom";
   };
-  const ref = useRef<HTMLInputElement>(null);
-  const handleClick = () => ref.current?.click();
+  const imageUrl: string | undefined =
+    typeof badge.image === "string" ? badge.image : badge.image?.id;
   const isExpired = props.badge_expired_at
     ? Date.parse(props.badge_expired_at) < Date.now()
     : false;
-  const imageUrl: string | undefined =
-    typeof badge.image === "string" ? badge.image : badge.image?.id;
   const submissionDenied = isExpired || !props.badge_json;
+  const ref = useRef<HTMLInputElement>(null);
+  const showInvalidity = () => {
+    if (!ref.current || ref.current?.ariaDisabled === "false") return;
+    const message =
+      (isExpired && messages.expired) ||
+      (!props.badge_json && messages.unbadged) ||
+      "";
+    ref.current.setCustomValidity(message);
+    ref.current.reportValidity();
+    ref.current.checked = false;
+  };
+  const handleClick = () => {
+    ref.current?.click();
+    showInvalidity();
+  };
+  const handleBlur = () => {
+    ref.current?.setCustomValidity("");
+  };
   return (
     <div
       className={
         "jumpu-card pl-4 pr-6 py-4 flex items-center gap-4 has-checked:bg-primary-50 relative"
       }
       onClick={handleClick}
+      onBlur={handleBlur}
     >
       <input
         type="checkbox"
         value={props.index}
-        className="jumpu-input disabled:bg-gray-200"
+        className="jumpu-input aria-disabled:bg-gray-200 aria-disabled:ring-0 aria-disabled:outline-none"
+        tabIndex={submissionDenied ? -1 : 0}
         ref={ref}
         onChange={(e) => {
           if (e.currentTarget.checked) {
@@ -66,8 +91,9 @@ function EarnedBadge(props: Props) {
         }}
         onClick={(e) => {
           e.stopPropagation();
+          showInvalidity();
         }}
-        disabled={submissionDenied}
+        aria-disabled={submissionDenied}
       />
       {/* eslint-disable @next/next/no-img-element */}
       <img
