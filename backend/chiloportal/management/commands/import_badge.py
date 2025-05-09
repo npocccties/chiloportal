@@ -54,7 +54,7 @@ class Command(BaseCommand):
         if badge_class == BadgeType.NONE:
             raise AppException("バッジ種別が判断できないので処理を中断します。")
         elif badge_class == BadgeType.KNOWLEDGE:
-            raise AppException("知識バッジのため処理継続できません。能力バッジを指定してください。")
+            raise AppException("スタンプのため処理継続できません。能力バッジを指定してください。")
         elif badge_class == BadgeType.WISDOM:
             with transaction.atomic():
                 self.update_wisdom_badge(json, portal_category)
@@ -173,7 +173,7 @@ class Command(BaseCommand):
         if wisdom_badge_set.exists():
             logger.debug("--- update ---")
             wisdom_badge = wisdom_badge_set.first()
-            # 洗い替えが可能な知識バッジとコースはDELETE/INSERTとする
+            # 洗い替えが可能なスタンプとコースはDELETE/INSERTとする
             knowledge_badge_set = KnowledgeBadges.objects.filter(
                 wisdom_badges=wisdom_badge
             )

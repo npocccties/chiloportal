@@ -53,10 +53,10 @@ create table knowledge_badges (
 	version		text		null,		-- OBバージョン
 	issuer_id	int		null		REFERENCES issuer,	-- 発行者のID
 	primary key (id)
-); -- '知識バッジ'
+); -- 'スタンプ'
 create table criteria (
 	id		serial		not null,	-- 研修内容ID
-	knowledge_badges_id	int	not null	REFERENCES knowledge_badges,	-- 知識バッジのID
+	knowledge_badges_id	int	not null	REFERENCES knowledge_badges,	-- スタンプのID
 	type		varchar(32)	not null,	-- 種類
 	name		varchar(256)	not null,	-- 名称
 	sort_key	int		not null,	-- 表示順

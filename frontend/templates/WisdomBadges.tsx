@@ -93,7 +93,7 @@ export default function WisdomBadges({
                   :
                 </span>
                 {knowledgeBadgesList.length}
-                知識バッジ
+                スタンプ
               </span>
             </li>
             <li>
@@ -155,7 +155,7 @@ export default function WisdomBadges({
             <h2 className="text-sm text-gray-600">能力バッジの取得条件</h2>
             <p className="text-xl mb-2">
               以下の{knowledgeBadgesList.length}
-              つの「知識バッジ」をすべて習得してください
+              つの「スタンプ」をすべて習得してください
             </p>
           </header>
           <div className="flex pt-6 pb-6 mb-2 mx-6 px-6 rounded-xl bg-gray-100">
@@ -165,7 +165,7 @@ export default function WisdomBadges({
             />
             <div className="flex-1">
               <p className="text-sm mb-2">
-                知識バッジを取得するため以下のような種類のコンテンツがあります。
+                スタンプを取得するため以下のような種類のコンテンツがあります。
               </p>
               <ul className="text-xs flex flex-wrap gap-x-6 gap-y-2">
                 <li className="inline-flex items-center gap-x-1">
