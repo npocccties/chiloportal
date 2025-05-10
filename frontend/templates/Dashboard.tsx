@@ -79,7 +79,7 @@ function CurrentCourses(props: Pick<Props, "currentCourses">) {
       />
       <div className="sticky bottom-0 p-2">
         <button
-          className="jumpu-button text-lg font-bold w-full"
+          className="jumpu-button text-lg font-bold w-full not-disabled:cursor-pointer"
           type="submit"
           disabled={selected.size === 0}
         >
@@ -133,7 +133,7 @@ function EarnedBadges(props: Pick<Props, "earnedBadges">) {
       />
       <div className="sticky bottom-0 p-2">
         <button
-          className="jumpu-button text-lg font-bold w-full"
+          className="jumpu-button text-lg font-bold w-full not-disabled:cursor-pointer"
           type="submit"
           disabled={selected.size === 0}
         >
