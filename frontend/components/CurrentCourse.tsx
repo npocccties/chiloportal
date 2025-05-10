@@ -1,4 +1,3 @@
-import DOMPurify from "isomorphic-dompurify";
 import { BadgeStatus } from "pages/dashboard";
 import { useRef } from "react";
 
@@ -65,8 +64,8 @@ function CurrentCourse(props: Props) {
         }}
         aria-disabled={!earnable}
       />
-      <section className="space-y-1">
-        <h3 className="text-lg font-semibold line-clamp-1">
+      <section className="h-20 space-y-1">
+        <h3 className="text-lg font-semibold line-clamp-2">
           <a
             className="hover:underline underline-offset-4"
             href={
@@ -80,12 +79,9 @@ function CurrentCourse(props: Props) {
             {props.course_name}
           </a>
         </h3>
-        <div
-          className="prose prose-sm text-sm max-w-none [&>p]:first:line-clamp-3 h-30"
-          dangerouslySetInnerHTML={{
-            __html: DOMPurify.sanitize(props.course_description ?? ""),
-          }}
-        />
+        <p className="prose propse-sm text-sm max-w-none line-clamp-1">
+          （{props.lms_name}）
+        </p>
       </section>
       <div className="flex gap-1 h-6.5 absolute bottom-1 right-1">
         {isExpired && (
