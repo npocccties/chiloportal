@@ -135,7 +135,7 @@ function EarnedBadge(props: Props) {
         alt=""
         src={imageUrl ?? "/badge-placeholder.svg"}
       />
-      <section className="h-31 space-y-1">
+      <section className="h-20 space-y-1">
         <h3 className="text-lg font-semibold line-clamp-2">
           <a
             className="hover:underline underline-offset-4"
@@ -152,8 +152,8 @@ function EarnedBadge(props: Props) {
             {badge.name ?? props.badge_name}
           </a>
         </h3>
-        <p className="prose prose-sm max-w-none line-clamp-2">
-          {badge.description}
+        <p className="prose propse-sm text-sm max-w-none line-clamp-1">
+          （{props.lms_name}）
         </p>
       </section>
       <div className="flex gap-1 h-6.5 absolute bottom-1 right-1">
