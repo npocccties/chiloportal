@@ -158,8 +158,7 @@ function Dashboard({
         gridTemplateAreas: `
         "breadcrumbs breadcrumbs"
         "h1 h1"
-        "nav aside"
-        "article aside"
+        "content side"
     `,
       }}
     >
@@ -171,46 +170,53 @@ function Dashboard({
       <h1 className="[grid-area:h1] text-3xl font-bold mb-8 border-b border-gray-300 pb-2">
         ダッシュボード
       </h1>
-      <nav className="[grid-area:nav] jumpu-boxed-tabs mb-4">
-        {/* TODO: jumpu-boxed-tabs が navigation role に対応したら追従して */}
-        <ul role="tablist">
-          <li role="tab" aria-selected={tab === "course"}>
-            <Link
-              href={pagesPath.dashboard.$url({
-                query: {
-                  tab: "course",
-                },
-              })}
-            >
-              受講中のコース
-            </Link>
-          </li>
-          <li role="tab" aria-selected={tab === "badge"}>
-            <Link
-              href={pagesPath.dashboard.$url({
-                query: {
-                  tab: "badge",
-                },
-              })}
-            >
-              獲得したバッジ
-            </Link>
-          </li>
-        </ul>
-      </nav>
-      <article className="[grid-area:article] max-h-[60svh] overflow-y-auto py-1 mb-6 md:mb-0">
-        {errorCode && (
-          <p className="jumpu-card pl-4 pr-6 py-3 bg-primary-50 mb-2 flex gap-3 items-center">
-            <Icon className="inline text-2xl" icon="mdi:information-outline" />
-            <span className="flex-1">
-              {`一部のデータが取得できませんでした。（エラーコード：${errorCode}）`}
-            </span>
-          </p>
-        )}
-        {tab === "course" && <CurrentCourses currentCourses={currentCourses} />}
-        {tab === "badge" && <EarnedBadges earnedBadges={earnedBadges} />}
-      </article>
-      <aside className="[grid-area:aside] space-y-6 md:w-[33svw] md:max-w-100">
+      <div className="[grid-area:content]">
+        <nav className="jumpu-boxed-tabs mb-4">
+          {/* TODO: jumpu-boxed-tabs が navigation role に対応したら追従して */}
+          <ul role="tablist">
+            <li role="tab" aria-selected={tab === "course"}>
+              <Link
+                href={pagesPath.dashboard.$url({
+                  query: {
+                    tab: "course",
+                  },
+                })}
+              >
+                受講中のコース
+              </Link>
+            </li>
+            <li role="tab" aria-selected={tab === "badge"}>
+              <Link
+                href={pagesPath.dashboard.$url({
+                  query: {
+                    tab: "badge",
+                  },
+                })}
+              >
+                獲得したバッジ
+              </Link>
+            </li>
+          </ul>
+        </nav>
+        <article className="max-h-[60svh] overflow-y-auto py-1 mb-6 md:mb-0">
+          {errorCode && (
+            <p className="jumpu-card pl-4 pr-6 py-3 bg-primary-50 mb-2 flex gap-3 items-center">
+              <Icon
+                className="inline text-2xl"
+                icon="mdi:information-outline"
+              />
+              <span className="flex-1">
+                {`一部のデータが取得できませんでした。（エラーコード：${errorCode}）`}
+              </span>
+            </p>
+          )}
+          {tab === "course" && (
+            <CurrentCourses currentCourses={currentCourses} />
+          )}
+          {tab === "badge" && <EarnedBadges earnedBadges={earnedBadges} />}
+        </article>
+      </div>
+      <aside className="[grid-area:side] space-y-6 md:w-[33svw] md:max-w-100">
         <section>
           <h2 className="text-xl font-bold hover:underline underline-offset-4 mb-1">
             <Link href={pagesPath.posts.$url()}>お知らせ</Link>
