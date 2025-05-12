@@ -85,7 +85,10 @@ function EarnedBadge(props: Props) {
   const imageUrl: string | undefined =
     typeof badge.image === "string" ? badge.image : badge.image?.id;
   const ref = useRef<HTMLInputElement>(null);
-  const showInvalidity = () => {
+  const clearValidity = () => {
+    ref.current?.setCustomValidity("");
+  };
+  const showValidity = () => {
     if (!ref.current || ref.current?.ariaDisabled === "false") return;
     const message =
       (isExpired && messages.expired) ||
@@ -94,13 +97,11 @@ function EarnedBadge(props: Props) {
     ref.current.setCustomValidity(message);
     ref.current.reportValidity();
     ref.current.checked = false;
+    setTimeout(clearValidity, 3_000);
   };
   const handleClick = () => {
     ref.current?.click();
-    showInvalidity();
-  };
-  const handleBlur = () => {
-    ref.current?.setCustomValidity("");
+    showValidity();
   };
   return (
     <div
@@ -108,7 +109,7 @@ function EarnedBadge(props: Props) {
         "jumpu-card pl-4 pr-6 py-4 flex items-center gap-4 has-checked:bg-primary-50 relative"
       }
       onClick={handleClick}
-      onBlur={handleBlur}
+      onBlur={clearValidity}
     >
       <input
         type="checkbox"
@@ -125,7 +126,7 @@ function EarnedBadge(props: Props) {
         }}
         onClick={(e) => {
           e.stopPropagation();
-          showInvalidity();
+          showValidity();
         }}
         aria-disabled={!submittable}
       />
