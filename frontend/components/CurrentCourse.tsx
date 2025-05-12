@@ -64,7 +64,7 @@ function CurrentCourse(props: Props) {
         }}
         aria-disabled={!earnable}
       />
-      <section className="h-20 space-y-1">
+      <section className="h-20 my-2 space-y-1">
         <h3 className="text-lg font-semibold line-clamp-2">
           <a
             className="hover:underline underline-offset-4"
@@ -79,18 +79,20 @@ function CurrentCourse(props: Props) {
             {props.course_name}
           </a>
         </h3>
-        <p className="prose propse-sm text-sm max-w-none line-clamp-1">
-          （{props.lms_name}）
+        <div className="flex gap-1 h-6.5">
+          {isExpired && (
+            <p className="jumpu-filled-tag bg-danger text-white">
+              有効期限切れ
+            </p>
+          )}
+          {earnable && (
+            <p className="jumpu-filled-tag bg-success text-white">獲得可能</p>
+          )}
+        </div>
+        <p className="prose propse-sm text-sm max-w-none line-clamp-1 absolute top-1 left-12">
+          {props.lms_name}
         </p>
       </section>
-      <div className="flex gap-1 h-6.5 absolute bottom-1 right-1">
-        {isExpired && (
-          <p className="jumpu-filled-tag bg-danger text-white">有効期限切れ</p>
-        )}
-        {earnable && (
-          <p className="jumpu-filled-tag bg-success text-white">獲得可能</p>
-        )}
-      </div>
     </div>
   );
 }
