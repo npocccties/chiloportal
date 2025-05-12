@@ -135,7 +135,7 @@ function EarnedBadge(props: Props) {
         alt=""
         src={imageUrl ?? "/badge-placeholder.svg"}
       />
-      <section className="h-20 space-y-1">
+      <section className="h-20 my-2 space-y-1">
         <h3 className="text-lg font-semibold line-clamp-2">
           <a
             className="hover:underline underline-offset-4"
@@ -152,18 +152,20 @@ function EarnedBadge(props: Props) {
             {badge.name ?? props.badge_name}
           </a>
         </h3>
-        <p className="prose propse-sm text-sm max-w-none line-clamp-1">
-          （{props.lms_name}）
-        </p>
+        <div className="flex gap-1 h-6.5">
+          {isExpired && (
+            <p className="jumpu-filled-tag bg-danger text-white">
+              有効期限切れ
+            </p>
+          )}
+          {props.submitted && (
+            <p className="jumpu-filled-tag bg-success text-white">提出済み</p>
+          )}
+        </div>
       </section>
-      <div className="flex gap-1 h-6.5 absolute bottom-1 right-1">
-        {isExpired && (
-          <p className="jumpu-filled-tag bg-danger text-white">有効期限切れ</p>
-        )}
-        {props.submitted && (
-          <p className="jumpu-filled-tag bg-success text-white">提出済み</p>
-        )}
-      </div>
+      <p className="prose propse-sm text-sm max-w-none line-clamp-1 absolute top-1 left-40">
+        {props.lms_name}
+      </p>
     </div>
   );
 }
