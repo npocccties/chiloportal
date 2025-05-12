@@ -95,7 +95,7 @@ function EarnedBadges(props: Pick<Props, "earnedBadges">) {
   if (props.earnedBadges.length === 0) return <EmptyCard />;
   const backUrl = new URL("/dashboard?tab=course", NEXT_PUBLIC_BASE_URL).href;
   const submitUrl = new URL(
-    `/badge/submission?back_url=${encodeURIComponent(backUrl)}`,
+    `/submission?back_url=${encodeURIComponent(backUrl)}`,
     NEXT_PUBLIC_CHILOWALLET_BASE_URL,
   ).href;
   const badgeStatusList = [];
