@@ -93,7 +93,7 @@ function CurrentCourses(props: Pick<Props, "currentCourses">) {
 function EarnedBadges(props: Pick<Props, "earnedBadges">) {
   const [selected, setSelected] = useState<Set<number>>(new Set());
   if (props.earnedBadges.length === 0) return <EmptyCard />;
-  const backUrl = new URL("/dashboard?tab=course", NEXT_PUBLIC_BASE_URL).href;
+  const backUrl = new URL("/dashboard?tab=badge", NEXT_PUBLIC_BASE_URL).href;
   const submitUrl = new URL(
     `/submission?back_url=${encodeURIComponent(backUrl)}`,
     NEXT_PUBLIC_CHILOWALLET_BASE_URL,
