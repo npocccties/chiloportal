@@ -20,6 +20,7 @@ function CurrentCourse(props: Props) {
     : false;
   const earnable = !isExpired && props.issued;
   const ref = useRef<HTMLInputElement>(null);
+  const timeoutIdRef = useRef<ReturnType<typeof setTimeout>>(null);
   const clearValidity = () => {
     ref.current?.setCustomValidity("");
   };
@@ -32,7 +33,8 @@ function CurrentCourse(props: Props) {
     ref.current.setCustomValidity(message);
     ref.current.reportValidity();
     ref.current.checked = false;
-    setTimeout(clearValidity, 3_000);
+    clearTimeout(Number(timeoutIdRef.current));
+    timeoutIdRef.current = setTimeout(clearValidity, 3_000);
   };
   const handleClick = () => {
     ref.current?.click();
