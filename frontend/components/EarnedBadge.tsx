@@ -1,6 +1,7 @@
 import { BadgeStatus } from "pages/dashboard";
 import { useRef } from "react";
 import { NEXT_PUBLIC_CHILOWALLET_BASE_URL } from "lib/env";
+import { useDebouncedCallback } from "use-debounce";
 
 type Props = BadgeStatus & {
   index: number;
@@ -85,10 +86,9 @@ function EarnedBadge(props: Props) {
   const imageUrl: string | undefined =
     typeof badge.image === "string" ? badge.image : badge.image?.id;
   const ref = useRef<HTMLInputElement>(null);
-  const timeoutIdRef = useRef<ReturnType<typeof setTimeout>>(null);
-  const clearValidity = () => {
+  const clearValidity = useDebouncedCallback(() => {
     ref.current?.setCustomValidity("");
-  };
+  }, 3_000);
   const showValidity = () => {
     if (!ref.current || ref.current?.ariaDisabled === "false") return;
     const message =
@@ -98,8 +98,7 @@ function EarnedBadge(props: Props) {
     ref.current.setCustomValidity(message);
     ref.current.reportValidity();
     ref.current.checked = false;
-    clearTimeout(Number(timeoutIdRef.current));
-    timeoutIdRef.current = setTimeout(clearValidity, 3_000);
+    clearValidity();
   };
   const handleClick = () => {
     ref.current?.click();
