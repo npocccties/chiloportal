@@ -65,7 +65,7 @@ function CurrentCourse(props: Props) {
         }}
         aria-disabled={!earnable}
       />
-      <section className="h-20 my-2 space-y-1">
+      <section className="h-20 my-2 space-y-1 max-w-124">
         <h3 className="text-lg font-semibold line-clamp-2">
           <a
             className="hover:underline underline-offset-4"

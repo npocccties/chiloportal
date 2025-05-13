@@ -136,7 +136,7 @@ function EarnedBadge(props: Props) {
         alt=""
         src={imageUrl ?? "/badge-placeholder.svg"}
       />
-      <section className="h-20 my-2 space-y-1">
+      <section className="h-20 my-2 space-y-1 max-w-96">
         <h3 className="text-lg font-semibold line-clamp-2">
           <a
             className="hover:underline underline-offset-4"
