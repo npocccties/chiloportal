@@ -5,11 +5,12 @@ import CurrentCourse from "components/CurrentCourse";
 import EarnedBadge from "components/EarnedBadge";
 import { pagesPath } from "lib/$path";
 import {
-  NEXT_PUBLIC_SHIBBOLETH_SP_LOGIN_URL,
   NEXT_PUBLIC_BADGE_ANALYSIS_URL,
   NEXT_PUBLIC_BASE_URL,
   NEXT_PUBLIC_CHILOWALLET_BASE_URL,
+  NEXT_PUBLIC_SHIBBOLETH_SP_LOGIN_URL,
 } from "lib/env";
+import useUserAttributes from "lib/use-user-attributes";
 import Link from "next/link";
 import { Props } from "pages/dashboard";
 import { useState } from "react";
@@ -151,6 +152,7 @@ function Dashboard({
   errorCode,
   posts,
 }: Props) {
+  const { data } = useUserAttributes();
   return (
     <Container
       className="md:grid gap-x-10"
@@ -168,7 +170,7 @@ function Dashboard({
         leaf="ダッシュボード"
       />
       <h1 className="[grid-area:h1] text-3xl font-bold mb-8 border-b border-gray-300 pb-2">
-        ダッシュボード
+        {data && `${data.displayName} さんの`}ダッシュボード
       </h1>
       <div className="[grid-area:content]">
         <nav className="jumpu-boxed-tabs mb-4">
