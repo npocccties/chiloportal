@@ -170,7 +170,7 @@ function Dashboard({
         leaf="ダッシュボード"
       />
       <h1 className="[grid-area:h1] text-3xl font-bold mb-8 border-b border-gray-300 pb-2">
-        {data && `${data.displayName} さんの`}ダッシュボード
+        {data ? data.displayName : "ゲスト"} さんのダッシュボード
       </h1>
       <div className="[grid-area:content]">
         <nav className="jumpu-boxed-tabs mb-4">
