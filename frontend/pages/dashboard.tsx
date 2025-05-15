@@ -5,6 +5,7 @@ import {
   sortByDescendingAccessDateTime,
   sortByDescendingImportDateTime,
 } from "lib/badge-status-list";
+import { NEXT_PUBLIC_SHIBBOLETH_SP_LOGIN_URL } from "lib/env";
 import { chilowalletClient, getErrorProps } from "lib/client";
 import { JWT_DEBUG_VALUE } from "lib/env";
 import title from "lib/title";
@@ -59,11 +60,9 @@ export async function getServerSideProps({
     const cookie = req.cookies.session_cookie ?? JWT_DEBUG_VALUE;
     if (!cookie)
       return {
-        props: {
-          tab,
-          currentCourses: [],
-          earnedBadges: [],
-          posts: matters,
+        redirect: {
+          destination: NEXT_PUBLIC_SHIBBOLETH_SP_LOGIN_URL,
+          permanent: false,
         },
       };
     const response = await chilowalletClient.badge.status.list.$get({
