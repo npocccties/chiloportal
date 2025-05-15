@@ -8,13 +8,14 @@ import {
   NEXT_PUBLIC_BADGE_ANALYSIS_URL,
   NEXT_PUBLIC_BASE_URL,
   NEXT_PUBLIC_CHILOWALLET_BASE_URL,
+  NEXT_PUBLIC_SHIBBOLETH_SP_LOGIN_URL,
 } from "lib/env";
 import useUserAttributes from "lib/use-user-attributes";
 import Link from "next/link";
 import { Props } from "pages/dashboard";
 import { useState } from "react";
 
-function EmptyCard() {
+function Empty() {
   return (
     <p className="jumpu-card pl-4 pr-6 py-3 bg-primary-50 mb-2 flex gap-3 items-center">
       <Icon className="inline text-2xl" icon="mdi:information-outline" />
@@ -34,7 +35,7 @@ function EmptyCard() {
 
 function CurrentCourses(props: Pick<Props, "currentCourses">) {
   const [selected, setSelected] = useState<Set<number>>(new Set());
-  if (props.currentCourses.length === 0) return <EmptyCard />;
+  if (props.currentCourses.length === 0) return <Empty />;
   const backUrl = new URL("/dashboard?tab=course", NEXT_PUBLIC_BASE_URL).href;
   const importUrl = new URL(
     `/badge/import?back_url=${encodeURIComponent(backUrl)}`,
@@ -88,7 +89,7 @@ function CurrentCourses(props: Pick<Props, "currentCourses">) {
 
 function EarnedBadges(props: Pick<Props, "earnedBadges">) {
   const [selected, setSelected] = useState<Set<number>>(new Set());
-  if (props.earnedBadges.length === 0) return <EmptyCard />;
+  if (props.earnedBadges.length === 0) return <Empty />;
   const backUrl = new URL("/dashboard?tab=badge", NEXT_PUBLIC_BASE_URL).href;
   const submitUrl = new URL(
     `/submission?back_url=${encodeURIComponent(backUrl)}`,
@@ -138,6 +139,30 @@ function EarnedBadges(props: Pick<Props, "earnedBadges">) {
       </div>
     </form>
   );
+}
+
+function Content({
+  tab,
+  currentCourses,
+  earnedBadges,
+}: Omit<Props, "errorCode" | "posts">) {
+  const { data, isLoading } = useUserAttributes();
+  if (!data && !isLoading)
+    return (
+      <p className="jumpu-card pl-4 pr-6 py-3 bg-primary-50 mb-2 flex gap-3 items-center">
+        <Icon className="inline text-2xl" icon="mdi:information-outline" />
+        <span className="flex-1">
+          ダッシュボードでは、受講中のコースと獲得したバッジが確認できます。確認するには、
+          <a className="underline" href={NEXT_PUBLIC_SHIBBOLETH_SP_LOGIN_URL}>
+            ログイン
+          </a>
+          してください。
+        </span>
+      </p>
+    );
+  if (tab === "course")
+    return <CurrentCourses currentCourses={currentCourses} />;
+  return <EarnedBadges earnedBadges={earnedBadges} />;
 }
 
 function Dashboard({
@@ -207,10 +232,11 @@ function Dashboard({
               </span>
             </p>
           )}
-          {tab === "course" && (
-            <CurrentCourses currentCourses={currentCourses} />
-          )}
-          {tab === "badge" && <EarnedBadges earnedBadges={earnedBadges} />}
+          <Content
+            tab={tab}
+            currentCourses={currentCourses}
+            earnedBadges={earnedBadges}
+          />
         </article>
       </div>
       <aside className="[grid-area:side] space-y-6 md:w-[33svw] md:max-w-100">
