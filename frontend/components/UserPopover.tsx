@@ -1,37 +1,11 @@
-import useUserAttributes from "lib/use-user-attributes";
+import { Icon } from "@iconify/react";
 import Popover from "components/Popover";
 import {
   NEXT_PUBLIC_SHIBBOLETH_SP_LOGIN_URL,
   NEXT_PUBLIC_SHIBBOLETH_SP_LOGOUT_URL,
 } from "lib/env";
-import { Icon } from "@iconify/react";
+import useUserAttributes from "lib/use-user-attributes";
 import { useId } from "react";
-
-function LoggedIn() {
-  return (
-    <li role="menuitem">
-      <a
-        className="block w-max min-w-full px-4 py-3 rounded-sm hover:bg-gray-700"
-        href={NEXT_PUBLIC_SHIBBOLETH_SP_LOGOUT_URL}
-      >
-        ログアウト
-      </a>
-    </li>
-  );
-}
-
-function NotLoggedIn() {
-  return (
-    <li role="menuitem">
-      <a
-        className="block w-max min-w-full px-4 py-3 rounded-sm hover:bg-gray-700"
-        href={NEXT_PUBLIC_SHIBBOLETH_SP_LOGIN_URL}
-      >
-        ログイン
-      </a>
-    </li>
-  );
-}
 
 type Props = {
   className?: string;
@@ -40,6 +14,16 @@ type Props = {
 function UserPopover({ className }: Props) {
   const { data } = useUserAttributes();
   const id = useId();
+
+  if (!data)
+    return (
+      <a
+        className="jumpu-text-button text-sm text-white hover:bg-gray-700"
+        href={NEXT_PUBLIC_SHIBBOLETH_SP_LOGIN_URL}
+      >
+        ログイン
+      </a>
+    );
 
   return (
     <Popover
@@ -55,7 +39,7 @@ function UserPopover({ className }: Props) {
             id={id}
             className="hidden lg:inline overflow-hidden max-w-[6rem] whitespace-nowrap text-ellipsis"
           >
-            {data ? data.displayName : "ゲスト"}
+            {data.displayName}
           </span>
         </>
       }
@@ -66,7 +50,14 @@ function UserPopover({ className }: Props) {
           role="menu"
           onClick={() => close()}
         >
-          {data ? <LoggedIn /> : <NotLoggedIn />}
+          <li role="menuitem">
+            <a
+              className="block w-max min-w-full px-4 py-3 rounded-sm hover:bg-gray-700"
+              href={NEXT_PUBLIC_SHIBBOLETH_SP_LOGOUT_URL}
+            >
+              ログアウト
+            </a>
+          </li>
         </ul>
       )}
     </Popover>

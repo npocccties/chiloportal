@@ -1,5 +1,3 @@
-import { useEffect, Fragment, useId } from "react";
-import { useRouter } from "next/router";
 import {
   Dialog,
   DialogPanel,
@@ -7,11 +5,13 @@ import {
   TransitionChild,
 } from "@headlessui/react";
 import { Icon } from "@iconify/react";
-import Link from "next/link";
+import Fallback from "components/Fallback";
 import { pagesPath } from "lib/$path";
 import contents from "lib/contents";
-import Fallback from "components/Fallback";
 import useIssuers from "lib/use-issuers";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { Fragment, useEffect, useId } from "react";
 
 type Props = {
   open: boolean;

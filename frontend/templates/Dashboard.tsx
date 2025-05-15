@@ -8,7 +8,6 @@ import {
   NEXT_PUBLIC_BADGE_ANALYSIS_URL,
   NEXT_PUBLIC_BASE_URL,
   NEXT_PUBLIC_CHILOWALLET_BASE_URL,
-  NEXT_PUBLIC_SHIBBOLETH_SP_LOGIN_URL,
 } from "lib/env";
 import useUserAttributes from "lib/use-user-attributes";
 import Link from "next/link";
@@ -20,11 +19,7 @@ function EmptyCard() {
     <p className="jumpu-card pl-4 pr-6 py-3 bg-primary-50 mb-2 flex gap-3 items-center">
       <Icon className="inline text-2xl" icon="mdi:information-outline" />
       <span className="flex-1">
-        ダッシュボードでは、受講中のコースと獲得したバッジが確認できます。表示名がゲストになっている方は、
-        <a className="underline" href={NEXT_PUBLIC_SHIBBOLETH_SP_LOGIN_URL}>
-          ログイン
-        </a>
-        してください。コースを受講していない方は、
+        ダッシュボードでは、受講中のコースと獲得したバッジが確認できます。コースを受講していない方は、
         <Link
           className="underline"
           href={pagesPath.discover.$url({ query: {} })}
