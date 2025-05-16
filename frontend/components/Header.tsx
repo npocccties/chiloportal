@@ -55,7 +55,7 @@ function Header({ className }: Props) {
           title={
             <>
               <Issuer className="fill-white size-[1.125rem]" alt="" />
-              <span>発行元</span>
+              <span>コース提供者</span>
             </>
           }
         >

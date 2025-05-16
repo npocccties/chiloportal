@@ -56,7 +56,7 @@ function Issuer(props: IssuerBadges) {
   return (
     <>
       <header className="mb-2">
-        <p className="text-sm mb-2">発行元</p>
+        <p className="text-sm mb-2">コース提供者</p>
         <h2 className="text-2xl font-bold">{props.issuer.name}</h2>
       </header>
       <Link

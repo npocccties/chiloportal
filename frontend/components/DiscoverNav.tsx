@@ -47,7 +47,7 @@ export default function DiscoverNav(
             onClick={props.onClick}
           >
             <Issuer className="size-[1.125rem]" alt="" />
-            発行元
+            コース提供者
           </Link>
           <ul className="flex flex-col">
             {props.issuers.map((issuer) => (
