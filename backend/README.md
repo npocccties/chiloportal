@@ -23,7 +23,7 @@
 
 ### インポートコマンド
 1. 実行とデバッグで「Import command」を選択し、デバッグの開始を押下  
-   * 能力バッジを取得するURLは `.vscode/launch.json` にて定義しているので、適宜変更してください
+   * バッジを取得するURLは `.vscode/launch.json` にて定義しているので、適宜変更してください
 
 ## テスト方法
 1. 実行とデバッグで「Unit Test」を選択し、デバッグの開始を押下し、エラーがないことを確認  
@@ -97,12 +97,12 @@
    ./server_start.sh
    ```
    * 権限付与後の `server_start.sh` は何度でも実行可能です
-1. 能力バッジのインポート
+1. バッジのインポート
    ```
    ./import_badge.sh {CSVファイルパス ※以降、インポートCSV}
    ```
    * 使用例： `./import.sh test.csv`
-   * インポートCSV書式：能力バッジの取得URL,ポータル独自カテゴリの主キー
+   * インポートCSV書式：バッジの取得URL,ポータル独自カテゴリの主キー
    * インポートCSVヘッダー：無し
    * インポートCSVファイル凡例：  
      ```
@@ -110,7 +110,7 @@
      https://lms.example.org/badges/badge_json.php?id=20,101
      ```
    * インポートの結果は `chiloportal/backend/import_result.csv` に出力されます
-   * インポート結果CSVファイル書式：OK/NG,ポータル独自カテゴリの主キー,インポート済み能力バッジのID
+   * インポート結果CSVファイル書式：OK/NG,ポータル独自カテゴリの主キー,インポート済みバッジのID
    * インポート後は　`chiloportal/frontend/build.sh` を実行してください（バッジの画像をフロントエンドに取り込むため）
    * インポートとフロントエンドのビルドを併せて行いたい場合は `chiloportal/import.sh` を実行してください
 
@@ -177,15 +177,15 @@
 ### インポートコマンド
 1. インポート実行  
    ```
-   docker compose exec app python /workspace/manage.py import_badge --url={能力バッジの取得URL (*1)} --pcid={ポータル独自カテゴリの主キー}
+   docker compose exec app python /workspace/manage.py import_badge --url={バッジの取得URL (*1)} --pcid={ポータル独自カテゴリの主キー}
    ```
    例
    ```
    docker compose exec app python /workspace/manage.py import_badge --url=https://lms.example.org/badges/badge_json.php?id=41 --pcid=1
    ```
-   * (*1) 能力バッジの取得URL: `Moodle` にあらかじめ登録している能力バッジのJSONを取得するためのURLです
-1. 能力バッジIDの確認  
-   インポート実行するとコンソールに処理経過が出力され、最後に「wisdom_badge.id: {能力バッジID}」と出力されるので、その能力バッジIDをもとに関連データを作成してください。   
+   * (*1) バッジの取得URL: `Moodle` にあらかじめ登録しているバッジのJSONを取得するためのURLです
+1. バッジIDの確認  
+   インポート実行するとコンソールに処理経過が出力され、最後に「wisdom_badge.id: {バッジID}」と出力されるので、そのバッジIDをもとに関連データを作成してください。   
    出力例：
    ```
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -206,7 +206,7 @@
 |ALLOWED_HOSTS|公開ホスト名|本番リリースする際は本番サーバーのホスト名を設定してください|
 |LOGGER_LEVEL|ロガーレベル|ログファイルの出力基準で以下を指定可能<br>`DEBUG`/`INFO`/`WARNING`/`ERROR`/`CRITICAL`|
 |IMAGE_DIR|画像ファイルの公開ディレクトリ（相対パス指定）|-|
-|JUDGE_BADGE|バッジ判定方法|`version`:<br>JSONのversionフィールド値の末尾がwisdomならば能力バッジとみなす<br>※本番リリース用<br><br>`alignments`:<br>JSONにalignmentsがあれば能力バッジとみなす<br>※動作確認用|
+|JUDGE_BADGE|バッジ判定方法|`version`:<br>JSONのversionフィールド値の末尾がwisdomならばバッジとみなす<br>※本番リリース用<br><br>`alignments`:<br>JSONにalignmentsがあればバッジとみなす<br>※動作確認用|
 |PER_PAGE|1ページあたりのデータ数|APIのクエリパラメータとしてページ番号(page_number)が指定可能な場合、同APIの1ページあたりのデータ数|
 |SSL_CERTS_DIR|サーバー証明書の配置ディレクトリ|・ディレクトリの末尾には `/` は付与しないこと<br>・本番環境では下記の命名でファイルを配置しておくこと<br>　`signed.crt`: サーバー証明書<br>　`domain.key`: サーバー証明書の秘密鍵|
 |LETS_ENCRYPT|無料のSSL証明書の要否|無料のSSL証明書を使用するか否か<br>`true`: 使用する ※動作確認用<br>`false`: 使用しない ※本番リリース用|

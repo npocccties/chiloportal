@@ -441,7 +441,7 @@ components:
                 description: バッジ有効期限
               badge_vc_id:
                 type: integer
-                description: 'バッジVCID（能力バッジの詳細ページのパスに指定する番号）'
+                description: 'バッジVCID（バッジの詳細ページのパスに指定する番号）'
               lms_id:
                 type: integer
                 description: 'LMSのID'

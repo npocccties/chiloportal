@@ -22,7 +22,7 @@ export default function Search({ keyword, wisdomBadgesList }: Props) {
         <h1 className="text-2xl text-gray-700 mb-4">キーワード検索</h1>
         {keyword && wisdomBadgesList && (
           <p className="mb-6">
-            「{keyword}」に関連する能力バッジが{wisdomBadgesList.total_count}
+            「{keyword}」に関連するバッジが{wisdomBadgesList.total_count}
             件あります
           </p>
         )}

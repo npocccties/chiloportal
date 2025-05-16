@@ -13,13 +13,13 @@ logger = logging.getLogger(__name__)
 
 
 class Command(BaseCommand):
-    help = "Moodleの能力バッジのインポートコマンド"
+    help = "Moodleのバッジのインポートコマンド"
     wisdom_badge_id = 0
     judge_badge = os.getenv("JUDGE_BADGE", JudgeBadge.ALIGNMENTS.name.lower())
 
     def add_arguments(self, parser):
         parser.add_argument(
-            "--url", nargs="?", default="", type=str, help="能力バッジの取得URL"
+            "--url", nargs="?", default="", type=str, help="バッジの取得URL"
         )
         parser.add_argument(
             "--pcid", nargs="?", default=0, type=int, help="ポータル独自カテゴリの主キー"
@@ -54,7 +54,7 @@ class Command(BaseCommand):
         if badge_class == BadgeType.NONE:
             raise AppException("バッジ種別が判断できないので処理を中断します。")
         elif badge_class == BadgeType.KNOWLEDGE:
-            raise AppException("スタンプのため処理継続できません。能力バッジを指定してください。")
+            raise AppException("スタンプのため処理継続できません。バッジを指定してください。")
         elif badge_class == BadgeType.WISDOM:
             with transaction.atomic():
                 self.update_wisdom_badge(json, portal_category)

@@ -41,21 +41,21 @@ function Header({ className }: Props) {
             className="text-xl text-white size=[1.125rem]"
             icon="mdi:compass-outline"
           />
-          ダッシュボード
+          あなたのダッシュボード
         </Link>
         <Link
           href={pagesPath.discover.$url({ query: {} })}
           className="hidden md:inline-flex jumpu-text-button text-white text-sm hover:bg-gray-700 items-center gap-2 whitespace-nowrap"
         >
           <AllBadge className="stroke-white size-[1.125rem]" alt="" />
-          学びを探す
+          コースを探す
         </Link>
         <Popover
           className="hidden md:block"
           title={
             <>
               <Issuer className="fill-white size-[1.125rem]" alt="" />
-              <span>発行元</span>
+              <span>コース提供者</span>
             </>
           }
         >

@@ -42,7 +42,7 @@ export default function WisdomBadges({
         nodes={[
           { name: "トップ", href: pagesPath.$url() },
           {
-            name: "学びを探す",
+            name: "コースを探す",
             href: pagesPath.discover.$url({ query: {} }),
           },
         ]}
@@ -88,7 +88,7 @@ export default function WisdomBadges({
           <ul className="flex items-center gap-1 mb-4">
             <li className="text-gray-700 text-sm">
               <span className="mr-2">
-                能力バッジ取得条件
+                バッジ取得条件
                 <span className="mx-1" aria-hidden>
                   :
                 </span>
@@ -152,10 +152,10 @@ export default function WisdomBadges({
             />
           </svg>
           <header className="px-6 mb-6">
-            <h2 className="text-sm text-gray-600">能力バッジの取得条件</h2>
+            <h2 className="text-sm text-gray-600">バッジの取得条件</h2>
             <p className="text-xl mb-2">
               以下の{knowledgeBadgesList.length}
-              つの「スタンプ」をすべて習得してください
+              つの「スタンプ」をすべて取得してください
             </p>
           </header>
           <div className="flex pt-6 pb-6 mb-2 mx-6 px-6 rounded-xl bg-gray-100">

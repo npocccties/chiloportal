@@ -20,12 +20,13 @@ function Empty() {
     <p className="jumpu-card pl-4 pr-6 py-3 bg-primary-50 mb-2 flex gap-3 items-center">
       <Icon className="inline text-2xl" icon="mdi:information-outline" />
       <span className="flex-1">
-        ダッシュボードでは、受講中のコースと獲得したバッジが確認できます。コースを受講していない方は、
+        あなたのダッシュボードでは、受講中のコースと取得したバッジが確認できます。
+        <br />
         <Link
           className="underline"
           href={pagesPath.discover.$url({ query: {} })}
         >
-          学びを探す
+          コースを探す
         </Link>
         から受講したいコースを探しましょう。
       </span>
@@ -80,7 +81,7 @@ function CurrentCourses(props: Pick<Props, "currentCourses">) {
           type="submit"
           disabled={selected.size === 0}
         >
-          {selected.size > 1 && `${selected.size} 件の`}バッジを獲得
+          {selected.size > 1 && `${selected.size} 件の`}バッジを取得
         </button>
       </div>
     </form>
@@ -152,7 +153,8 @@ function Content({
       <p className="jumpu-card pl-4 pr-6 py-3 bg-primary-50 mb-2 flex gap-3 items-center">
         <Icon className="inline text-2xl" icon="mdi:information-outline" />
         <span className="flex-1">
-          ダッシュボードでは、受講中のコースと獲得したバッジが確認できます。確認するには、
+          あなたのダッシュボードでは、受講中のコースと取得したバッジが確認できます。
+          <br />
           <a className="underline" href={NEXT_PUBLIC_SHIBBOLETH_SP_LOGIN_URL}>
             ログイン
           </a>
@@ -187,7 +189,7 @@ function Dashboard({
       <Breadcrumbs
         className="mb-6 [grid-area:breadcrumbs]"
         nodes={[{ name: "トップ", href: pagesPath.$url() }]}
-        leaf="ダッシュボード"
+        leaf="あなたのダッシュボード"
       />
       <h1 className="[grid-area:h1] text-3xl font-bold mb-8 border-b border-gray-300 pb-2">
         {data && `${data.displayName} さんの`}ダッシュボード
@@ -215,7 +217,7 @@ function Dashboard({
                   },
                 })}
               >
-                獲得したバッジ
+                取得したバッジ
               </Link>
             </li>
           </ul>

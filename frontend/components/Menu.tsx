@@ -82,7 +82,7 @@ function Menu({ open, onClose }: Props) {
                     className="jumpu-text-button font-bold w-full text-gray-700 hover:bg-gray-100"
                     href={pagesPath.dashboard.$url({ query: {} })}
                   >
-                    ダッシュボード
+                    あなたのダッシュボード
                   </Link>
                 </li>
                 <li>
@@ -90,12 +90,12 @@ function Menu({ open, onClose }: Props) {
                     className="jumpu-text-button font-bold w-full text-gray-700 hover:bg-gray-100"
                     href={pagesPath.discover.$url({ query: {} })}
                   >
-                    学びを探す
+                    コースを探す
                   </Link>
                 </li>
                 <li>
                   <p className="text-gray-400 font-bold px-[1.25em] py-[0.75em]">
-                    発行元
+                    コース提供者
                   </p>
                   <ul className="pl-4 mb-3 space-y-1">
                     <Fallback

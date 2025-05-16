@@ -4,7 +4,7 @@ if [ $# != 1 ]; then
     echo "第1引数：CSVファイルのパス（絶対/相対）"
     echo ""
     echo "CSVファイル書式："
-    echo "能力バッジの取得URL,ポータル独自カテゴリID"
+    echo "バッジの取得URL,ポータル独自カテゴリID"
     echo ""
     echo "CSVファイル凡例"
     echo "https://lms.example.org/badges/badge_json.php?id=19,101"

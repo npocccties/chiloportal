@@ -42,7 +42,7 @@ describe("受講中のコースの判定", () => {
   });
 });
 
-describe("獲得済みのバッジの判定", () => {
+describe("取得済みのバッジの判定", () => {
   test("受講中かつ未インポートのとき該当", () => {
     const status: BadgeStatus = {
       ...base,
@@ -58,7 +58,7 @@ describe("獲得済みのバッジの判定", () => {
   });
 });
 
-describe("獲得可能なバッジの判定", () => {
+describe("取得可能なバッジの判定", () => {
   test("発行済みかつ未インポートのとき該当", () => {
     const status: BadgeStatus = {
       ...base,

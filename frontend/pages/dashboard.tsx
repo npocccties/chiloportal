@@ -108,8 +108,8 @@ export default function Page(props: ErrorProps | Props) {
   return (
     <>
       <Head>
-        <title>{title("ダッシュボード")}</title>
-        <meta property="og:title" content={title("ダッシュボード")} />
+        <title>{title("あなたのダッシュボード")}</title>
+        <meta property="og:title" content={title("あなたのダッシュボード")} />
       </Head>
       <Template {...props} />
     </>

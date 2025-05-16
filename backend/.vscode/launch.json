@@ -105,7 +105,7 @@
         {
             "id": "badge_id",
             "type": "promptString",
-            "description": "能力バッジIDを指定",
+            "description": "バッジIDを指定",
             "default": "41"
         },
         {

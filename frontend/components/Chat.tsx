@@ -129,7 +129,7 @@ function Chat({ className }: Props) {
             body: (
               <p>
                 すみません、「{keyword}」
-                に関する能力バッジがみつかりませんでした。。
+                に関するバッジがみつかりませんでした。。
               </p>
             ),
           })
@@ -138,7 +138,7 @@ function Chat({ className }: Props) {
             body: (
               <>
                 <p className="mb-4">
-                  「{keyword}」に関する能力バッジが{total_count}
+                  「{keyword}」に関するバッジが{total_count}
                   件見つかりました。
                 </p>
                 <ul className="pl-8 list-disc mb-4">

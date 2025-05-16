@@ -5,7 +5,7 @@ if [ $# -eq 0 ]; then
     echo "第2引数：フロントエンドのビルドを行うか否かで省略可（--build: ビルドする ※デフォルト, --no-build 未指定時: ビルドしない）"
     echo ""
     echo "CSVファイル書式："
-    echo "能力バッジの取得URL,ポータル独自カテゴリID"
+    echo "バッジの取得URL,ポータル独自カテゴリID"
     echo ""
     echo "CSVファイル凡例"
     echo "https://lms.example.org/badges/badge_json.php?id=19,101"
