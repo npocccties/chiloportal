@@ -82,7 +82,7 @@ function Menu({ open, onClose }: Props) {
                     className="jumpu-text-button font-bold w-full text-gray-700 hover:bg-gray-100"
                     href={pagesPath.dashboard.$url({ query: {} })}
                   >
-                    ダッシュボード
+                    あなたのダッシュボード
                   </Link>
                 </li>
                 <li>

@@ -41,7 +41,7 @@ function Header({ className }: Props) {
             className="text-xl text-white size=[1.125rem]"
             icon="mdi:compass-outline"
           />
-          ダッシュボード
+          あなたのダッシュボード
         </Link>
         <Link
           href={pagesPath.discover.$url({ query: {} })}
