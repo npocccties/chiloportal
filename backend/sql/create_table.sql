@@ -39,10 +39,10 @@ create table wisdom_badges (
 	alignments_targetname	text	not null,		-- targetName
 	alignments_targeturl	text	not null,		-- targetUrl
 	primary key (id)
-); -- '能力バッジ'
+); -- 'バッジ'
 create table knowledge_badges (
 	id		serial		not null,	-- バッジID
-	wisdom_badges_id	int	not null	REFERENCES wisdom_badges,	-- 能力バッジのID
+	wisdom_badges_id	int	not null	REFERENCES wisdom_badges,	-- バッジのID
 	badge_class_id	text		not null,	-- BadgeClass ID
 	name		varchar(512)	not null,	-- バッジ名称
 	description	text		null,		-- 説明
@@ -111,7 +111,7 @@ create table goal (
 -- ----------------------------------------------------------------------------------------------------
 create table categorised_badges (
 	id			serial	not null,	-- カテゴライズID
-	wisdom_badges_id	int	not null	REFERENCES wisdom_badges,	-- 能力バッジのID
+	wisdom_badges_id	int	not null	REFERENCES wisdom_badges,	-- バッジのID
 	goal_id			int	not null	REFERENCES goal,	-- 目標ID
 	description		text	null,	-- 説明
 	primary key (id)

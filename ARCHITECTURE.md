@@ -86,7 +86,7 @@ Reactコンポーネント。
 
 #### frontend/public ([code](https://github.com/npocccties/chiloportal/tree/main/frontend/public))
 
-画像など静的ファイルの提供。バッジ、コンシューマー、ポータルカテゴリーの画像を追加するには[能力バッジのインポート](https://github.com/npocccties/chiloportal/blob/main/INSTALL.md#%E8%83%BD%E5%8A%9B%E3%83%90%E3%83%83%E3%82%B8%E3%81%AE%E3%82%A4%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%88%E6%99%82)をおこなってください。
+画像など静的ファイルの提供。バッジ、コンシューマー、ポータルカテゴリーの画像を追加するには[バッジのインポート](https://github.com/npocccties/chiloportal/blob/main/INSTALL.md#%E3%83%90%E3%83%83%E3%82%B8%E3%81%AE%E3%82%A4%E3%83%B3%E3%83%9D%E3%83%BC%E3%83%88%E6%99%82)をおこなってください。
 
 #### frontend/schemas ([code](https://github.com/npocccties/chiloportal/tree/main/frontend/schemas))
 
@@ -121,7 +121,7 @@ Reactコンポーネント。
 
 #### backend/chiloportal/management/commands/import_badge.py ([code](https://github.com/npocccties/chiloportal/tree/main/backend/chiloportal/management/commands/import_badge.py))
 
-能力バッジのインポートコマンドを定義。
+バッジのインポートコマンドを定義。
 
 #### backend/chiloportal/models.py ([code](https://github.com/npocccties/chiloportal/tree/main/backend/chiloportal/models.py))
 

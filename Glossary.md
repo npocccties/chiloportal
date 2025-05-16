@@ -11,7 +11,7 @@
       - 指標項目の成長段階毎の目標 / Goal
 
 ### バッジの構造
-- 能力バッジ / Wisdom Badge
+- バッジ / Wisdom Badge
   - スタンプ / Knowledge Badge
     - クライテリア (スタンプ取得要件) / Criteria
 
@@ -22,7 +22,7 @@
 - アンケート： アンケートアイコン
 
 ### バッジとコース
-能力バッジは LMS 上でのコースと 1:1 対応しており、コースの履修結果として能力バッジが付与される形となっている。
+バッジは LMS 上でのコースと 1:1 対応しており、コースの履修結果としてバッジが付与される形となっている。
 なお、コースの中で複数のスタンプ習得があるが、コースに含まれる教材全てがスタンプを取得できるものとは限らない。
 
 ## 用語
@@ -62,7 +62,7 @@
 
 Data / Information / Knowledge / Wisdom / Competency という構造があり、Knowledge にあたる。
 
-### 能力バッジ / Wisdom Badge
+### バッジ / Wisdom Badge
 
 Data / Information / Knowledge / Wisdom / Competency という構造があり、Wisdom にあたる。
 

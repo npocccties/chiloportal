@@ -99,7 +99,7 @@ issuerId が重複した場合、[fast-glob](https://github.com/mrmlnc/fast-glob
 
 #### recommendedWisdomBadgesIds
 
-おすすめのバッジとして表示する能力バッジの id を指定します。指定可能な id の件数に上限はありません。
+おすすめのバッジとして表示するバッジの id を指定します。指定可能な id の件数に上限はありません。
 
 ```yaml
 recommendedWisdomBadgesIds:
