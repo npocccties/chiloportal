@@ -155,7 +155,7 @@ export default function WisdomBadges({
             <h2 className="text-sm text-gray-600">バッジの取得条件</h2>
             <p className="text-xl mb-2">
               以下の{knowledgeBadgesList.length}
-              つの「スタンプ」をすべて習得してください
+              つの「スタンプ」をすべて取得してください
             </p>
           </header>
           <div className="flex pt-6 pb-6 mb-2 mx-6 px-6 rounded-xl bg-gray-100">

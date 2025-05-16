@@ -10,25 +10,25 @@ export function isCurrentCourse(status: BadgeStatus): boolean {
 }
 
 /**
- * 獲得済みのバッジの判定
+ * 取得済みのバッジの判定
  *
- * インポート済みを獲得済みのバッジとみなします
+ * インポート済みを取得済みのバッジとみなします
  **/
 export function isEarnedBadge(status: BadgeStatus): boolean {
   return status.imported;
 }
 
 /**
- * 獲得可能なバッジの判定
+ * 取得可能なバッジの判定
  *
- * バッジ発行済みかつ未インポートを獲得可能なバッジとみなします
+ * バッジ発行済みかつ未インポートを取得可能なバッジとみなします
  **/
 export function isEarnableBadge(status: BadgeStatus): boolean {
   return status.issued && !status.imported;
 }
 
 /**
- * 獲得可能か否かによるグループ化
+ * 取得可能か否かによるグループ化
  */
 export function groupByEarnable(statusList: BadgeStatusList): {
   earnable?: BadgeStatusList;

@@ -10,9 +10,9 @@ type Props = BadgeStatus & {
 
 const messages = {
   expired:
-    "コースで発行されたバッジの有効期限を過ぎているため、バッジを獲得することはできません。",
+    "コースで発行されたバッジの有効期限を過ぎているため、バッジを取得することはできません。",
   unissued:
-    "コースでバッジが発行されていないため、バッジを獲得することはできません。",
+    "コースでバッジが発行されていないため、バッジを取得することはできません。",
 } as const;
 
 function CurrentCourse(props: Props) {
@@ -88,7 +88,7 @@ function CurrentCourse(props: Props) {
             </p>
           )}
           {earnable && (
-            <p className="jumpu-filled-tag bg-success text-white">獲得可能</p>
+            <p className="jumpu-filled-tag bg-success text-white">発行されたバッジを取得してください</p>
           )}
         </div>
         <p className="prose propse-sm text-sm max-w-none line-clamp-1 absolute top-1 left-12">

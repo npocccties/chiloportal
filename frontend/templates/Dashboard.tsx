@@ -20,7 +20,7 @@ function Empty() {
     <p className="jumpu-card pl-4 pr-6 py-3 bg-primary-50 mb-2 flex gap-3 items-center">
       <Icon className="inline text-2xl" icon="mdi:information-outline" />
       <span className="flex-1">
-        あなたのダッシュボードでは、受講中のコースと獲得したバッジが確認できます。
+        あなたのダッシュボードでは、受講中のコースと取得したバッジが確認できます。
         <br />
         <Link
           className="underline"
@@ -81,7 +81,7 @@ function CurrentCourses(props: Pick<Props, "currentCourses">) {
           type="submit"
           disabled={selected.size === 0}
         >
-          {selected.size > 1 && `${selected.size} 件の`}バッジを獲得
+          {selected.size > 1 && `${selected.size} 件の`}バッジを取得
         </button>
       </div>
     </form>
@@ -153,7 +153,7 @@ function Content({
       <p className="jumpu-card pl-4 pr-6 py-3 bg-primary-50 mb-2 flex gap-3 items-center">
         <Icon className="inline text-2xl" icon="mdi:information-outline" />
         <span className="flex-1">
-          あなたのダッシュボードでは、受講中のコースと獲得したバッジが確認できます。
+          あなたのダッシュボードでは、受講中のコースと取得したバッジが確認できます。
           <br />
           <a className="underline" href={NEXT_PUBLIC_SHIBBOLETH_SP_LOGIN_URL}>
             ログイン
@@ -217,7 +217,7 @@ function Dashboard({
                   },
                 })}
               >
-                獲得したバッジ
+                取得したバッジ
               </Link>
             </li>
           </ul>
