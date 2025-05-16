@@ -84,7 +84,7 @@ function CurrentCourse(props: Props) {
         <div className="flex gap-1 h-6.5">
           {isExpired && (
             <p className="jumpu-filled-tag bg-danger text-white">
-              有効期限切れ
+              バッジ有効期限切れ
             </p>
           )}
           {earnable && (
