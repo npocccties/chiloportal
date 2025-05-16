@@ -224,10 +224,10 @@ export default function Discover({
       <Breadcrumbs
         className="mb-6"
         nodes={[{ name: "トップ", href: pagesPath.$url() }]}
-        leaf="学びを探す"
+        leaf="コースを探す"
       />
       <h1 className="text-3xl font-bold mb-8 border-b border-gray-300 pb-2">
-        学びを探す
+        コースを探す
       </h1>
       <div
         className="md:grid gap-2"

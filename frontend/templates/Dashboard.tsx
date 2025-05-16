@@ -25,7 +25,7 @@ function Empty() {
           className="underline"
           href={pagesPath.discover.$url({ query: {} })}
         >
-          学びを探す
+          コースを探す
         </Link>
         から受講したいコースを探しましょう。
       </span>

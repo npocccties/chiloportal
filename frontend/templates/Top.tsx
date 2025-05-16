@@ -33,7 +33,7 @@ export default function Top({ source }: Props) {
         className="jumpu-button bg-white text-black text-base md:text-xl font-bold px-[5em] py-[1em] border-2 mb-10 relative"
         href={pagesPath.discover.$url({ query: {} })}
       >
-        学びを探す
+        コースを探す
         <Icon
           icon="fa6-solid:chevron-right"
           className="text-base text-gray-500 absolute right-4 top-1/2 -translate-y-1/2"

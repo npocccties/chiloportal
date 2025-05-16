@@ -42,7 +42,7 @@ export default function WisdomBadges({
         nodes={[
           { name: "トップ", href: pagesPath.$url() },
           {
-            name: "学びを探す",
+            name: "コースを探す",
             href: pagesPath.discover.$url({ query: {} }),
           },
         ]}
