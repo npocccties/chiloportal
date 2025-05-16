@@ -88,7 +88,9 @@ function CurrentCourse(props: Props) {
             </p>
           )}
           {earnable && (
-            <p className="jumpu-filled-tag bg-success text-white">発行されたバッジを取得してください</p>
+            <p className="jumpu-filled-tag bg-success text-white">
+              発行されたバッジを取得してください
+            </p>
           )}
         </div>
         <p className="prose propse-sm text-sm max-w-none line-clamp-1 absolute top-1 left-12">
