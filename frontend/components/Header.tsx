@@ -35,7 +35,7 @@ function Header({ className }: Props) {
         </Link>
         <Link
           href={pagesPath.dashboard.$url({ query: {} })}
-          className="hidden md:inline-flex jumpu-text-button text-white text-sm hover:bg-gray-700 items-center gap-2 whitespace-nowrap"
+          className="hidden lg:inline-flex jumpu-text-button text-white text-sm hover:bg-gray-700 items-center gap-2 whitespace-nowrap"
         >
           <Icon
             className="text-xl text-white size=[1.125rem]"
@@ -45,13 +45,13 @@ function Header({ className }: Props) {
         </Link>
         <Link
           href={pagesPath.discover.$url({ query: {} })}
-          className="hidden md:inline-flex jumpu-text-button text-white text-sm hover:bg-gray-700 items-center gap-2 whitespace-nowrap"
+          className="hidden lg:inline-flex jumpu-text-button text-white text-sm hover:bg-gray-700 items-center gap-2 whitespace-nowrap"
         >
           <AllBadge className="stroke-white size-[1.125rem]" alt="" />
           コースを探す
         </Link>
         <Popover
-          className="hidden md:block"
+          className="hidden lg:block"
           title={
             <>
               <Issuer className="fill-white size-[1.125rem]" alt="" />
