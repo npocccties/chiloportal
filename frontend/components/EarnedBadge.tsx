@@ -1,6 +1,9 @@
 import { BadgeStatus } from "pages/dashboard";
 import { useRef } from "react";
-import { NEXT_PUBLIC_CHILOWALLET_BASE_URL, NEXT_PUBLIC_BASE_URL } from "lib/env";
+import {
+  NEXT_PUBLIC_CHILOWALLET_BASE_URL,
+  NEXT_PUBLIC_BASE_URL,
+} from "lib/env";
 import { useDebouncedCallback } from "use-debounce";
 
 type Props = BadgeStatus & {
