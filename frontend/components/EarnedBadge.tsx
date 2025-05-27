@@ -1,6 +1,6 @@
 import { BadgeStatus } from "pages/dashboard";
 import { useRef } from "react";
-import { NEXT_PUBLIC_CHILOWALLET_BASE_URL } from "lib/env";
+import { NEXT_PUBLIC_CHILOWALLET_BASE_URL, NEXT_PUBLIC_BASE_URL } from "lib/env";
 import { useDebouncedCallback } from "use-debounce";
 
 type Props = BadgeStatus & {
@@ -86,6 +86,7 @@ function EarnedBadge(props: Props) {
   const imageUrl: string | undefined =
     typeof badge.image === "string" ? badge.image : badge.image?.id;
   const ref = useRef<HTMLInputElement>(null);
+  const backUrl = new URL("/dashboard?tab=badge", NEXT_PUBLIC_BASE_URL).href;
   const clearValidity = useDebouncedCallback(() => {
     ref.current?.setCustomValidity("");
   }, 3_000);
@@ -143,7 +144,7 @@ function EarnedBadge(props: Props) {
             className="hover:underline underline-offset-4"
             href={
               new URL(
-                `/credential/detail/${props.badge_vc_id}`,
+                `/credential/detail/${props.badge_vc_id}?back_url=${encodeURIComponent(backUrl)}`,
                 NEXT_PUBLIC_CHILOWALLET_BASE_URL,
               ).href
             }
