@@ -39,12 +39,6 @@ export default function Top({ source }: Props) {
           className="text-base text-gray-500 absolute right-4 top-1/2 -translate-y-1/2"
         />
       </Link>
-      <Link
-        href={pagesPath.posts.$url()}
-        className="block text-sm text-white underline underline-offset-4 mb-24"
-      >
-        オゾンからのお知らせ
-      </Link>
       {source && <Markdown {...source} />}
     </article>
   );
