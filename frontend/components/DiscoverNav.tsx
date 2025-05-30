@@ -15,12 +15,14 @@ export default function DiscoverNav(
   },
 ) {
   const [isFrameworkExpanded, setIsFrameworkExpanded] = useState(false);
-  const [expandedConsumers, setExpandedConsumers] = useState<Record<string, boolean>>({});
-  
+  const [expandedConsumers, setExpandedConsumers] = useState<
+    Record<string, boolean>
+  >({});
+
   const toggleConsumer = (consumerId: string) => {
-    setExpandedConsumers(prev => ({
+    setExpandedConsumers((prev) => ({
       ...prev,
-      [consumerId]: !prev[consumerId]
+      [consumerId]: !prev[consumerId],
     }));
   };
 
@@ -140,7 +142,7 @@ export default function DiscoverNav(
             onClick={() => setIsFrameworkExpanded(!isFrameworkExpanded)}
           >
             <span className="text-xs mr-1">
-              {isFrameworkExpanded ? '▼' : '▶'}
+              {isFrameworkExpanded ? "▼" : "▶"}
             </span>
             <Framework className="size-[1.125rem]" alt="" />
             教員育成指標
@@ -154,37 +156,39 @@ export default function DiscoverNav(
                     onClick={() => toggleConsumer(String(consumer.consumer_id))}
                   >
                     <span className="mr-2 text-xs">
-                      {expandedConsumers[consumer.consumer_id] ? '▼' : '▶'}
+                      {expandedConsumers[consumer.consumer_id] ? "▼" : "▶"}
                     </span>
                     {consumer.name}
                   </div>
                   {expandedConsumers[consumer.consumer_id] && (
                     <ul className="mb-2">
-                      {props.frameworks[consumer.consumer_id].map((framework) => (
-                        <li key={framework.framework_id}>
-                          <Link
-                            className={clsx(
-                              "inline-flex text-sm text-gray-700 ml-4 pl-3 pr-5 py-1.5 rounded-full hover:bg-gray-100",
-                              props.type === "framework" &&
-                                props.consumer.consumer_id ===
-                                  consumer.consumer_id &&
-                                props.framework.framework_id ===
-                                  framework.framework_id &&
-                                "text-primary-700 font-bold",
-                            )}
-                            href={pagesPath.discover.$url({
-                              query: {
-                                by: "framework",
-                                consumer_id: String(consumer.consumer_id),
-                                framework_id: String(framework.framework_id),
-                              },
-                            })}
-                            onClick={props.onClick}
-                          >
-                            {framework.name}
-                          </Link>
-                        </li>
-                      ))}
+                      {props.frameworks[consumer.consumer_id].map(
+                        (framework) => (
+                          <li key={framework.framework_id}>
+                            <Link
+                              className={clsx(
+                                "inline-flex text-sm text-gray-700 ml-4 pl-3 pr-5 py-1.5 rounded-full hover:bg-gray-100",
+                                props.type === "framework" &&
+                                  props.consumer.consumer_id ===
+                                    consumer.consumer_id &&
+                                  props.framework.framework_id ===
+                                    framework.framework_id &&
+                                  "text-primary-700 font-bold",
+                              )}
+                              href={pagesPath.discover.$url({
+                                query: {
+                                  by: "framework",
+                                  consumer_id: String(consumer.consumer_id),
+                                  framework_id: String(framework.framework_id),
+                                },
+                              })}
+                              onClick={props.onClick}
+                            >
+                              {framework.name}
+                            </Link>
+                          </li>
+                        ),
+                      )}
                     </ul>
                   )}
                 </li>
