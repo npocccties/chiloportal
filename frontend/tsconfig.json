@@ -9,12 +9,13 @@
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "downlevelIteration": true
   },
   "include": ["next-env.d.ts", "vfile-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]

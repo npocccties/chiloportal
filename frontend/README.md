@@ -17,22 +17,23 @@
 モックサーバーを有効化し、フロントエンドの開発サーバーを起動する場合は、以下の手順を実施してください。
 
 ```shell
-corepack yarn install # NPM パッケージのインストール
-corepack yarn dev # 開発サーバーの起動
+npm i -g corepack # パッケージマネージャーをバージョン管理するツールのインストール https://yarnpkg.com/corepack
+yarn install # NPM パッケージのインストール
+yarn dev # 開発サーバーの起動
 ```
 
 モックサーバーを無効化し、バックエンドの開発サーバーを使用しつつ静的サイト生成の動作確認をする場合は、以下の手順を実施してください。
 
 ```shell
-corepack yarn install # NPM パッケージのインストール
+yarn install # NPM パッケージのインストール
 cat << EOL > .env.test # テスト用環境変数の用意
 > NEXT_PUBLIC_API_MOCKING=false # モックサーバーを無効化
 > NEXT_PUBLIC_API_BASE_URL=<API のベースとなる URL>
 > NEXT_PUBLIC_BASE_URL=<ベースとなる URL>
-> NEXT_PUBLIC_MOODLE_DASHBOARD_URL=<Moodle ダッシュボードの URL>
+> NEXT_PUBLIC_SHIBBOLETH_SP_LOGIN_URL=<Shibboleth SP ログイン URL>
 > EOL
-NODE_ENV=test corepack yarn build # テスト環境変数でのアプリケーションのビルド
-corepack yarn start # テストサーバーの起動
+NODE_ENV=test yarn build # テスト環境変数でのアプリケーションのビルド
+yarn start # テストサーバーの起動
 ```
 
 ### Docker 環境
@@ -45,17 +46,31 @@ docker run --rm -p 3000:3000 frontend # Docker コンテナの起動
 
 ## 環境変数
 
-| 変数名                               | 説明                                           | デフォルト値                  |
-| :----------------------------------- | :--------------------------------------------- | :---------------------------- |
-| NEXT_PUBLIC_API_MOCKING              | API モックの使用をするか否か（真偽値[^yn]）    | 偽                            |
-| NEXT_PUBLIC_API_BASE_URL             | API のベースとなる URL                         | なし                          |
-| NEXT_PUBLIC_API_PER_PAGE             | API におけるページネーションのページあたり件数 | `30`                          |
-| NEXT_PUBLIC_BASE_URL                 | ベースとなる URL                               | "https://portal.example.org/" |
-| NEXT_PUBLIC_MOODLE_DASHBOARD_URL     | Moodle ダッシュボードの URL                    | なし                          |
-| NEXT_PUBLIC_BADGES_ISSUER_IMAGE_PATH | バッジ発行者の画像のパス                       | `"issuer/image.png"`          |
-| NEXT_PUBLIC_GOOGLE_TAG_ID            | Google Analytics に使用する Google タグ ID     | なし                          |
+| 変数名                               | 説明                                           | デフォルト値                               |
+| :----------------------------------- | :--------------------------------------------- | :----------------------------------------- |
+| JWT_DEBUG_VALUE                      | デバッグ用 JWT                                 | なし                                       |
+| JWT_VERIFICATION_KEY_BASE64          | JWT 署名検証鍵（PEM 形式）の Base64 エンコード | なし                                       |
+| NEXT_PUBLIC_API_BASE_URL             | API のベースとなる URL                         | なし                                       |
+| NEXT_PUBLIC_API_MOCKING              | API モックの使用をするか否か（真偽値[^yn]）    | 偽                                         |
+| NEXT_PUBLIC_API_PER_PAGE             | API におけるページネーションのページあたり件数 | `30`                                       |
+| NEXT_PUBLIC_BADGES_ISSUER_IMAGE_PATH | バッジ発行者の画像のパス                       | `"issuer/image.png"`                       |
+| NEXT_PUBLIC_BADGE_ANALYSIS_URL       | バッジ分析の URL                               | "https://badge-analysis.example.org/"      |
+| NEXT_PUBLIC_BASE_URL                 | ベースとなる URL                               | "https://portal.example.org/"              |
+| NEXT_PUBLIC_CHILOWALLET_API_BASE_URL | バッジウォレット API のベースとなる URL        | "https://chilowallet.example.org/api/v1/"  |
+| NEXT_PUBLIC_CHILOWALLET_BASE_URL     | バッジウォレットのベースとなる URL             | "https://chilowallet.example.org/"         |
+| NEXT_PUBLIC_GOOGLE_TAG_ID            | Google Analytics に使用する Google タグ ID     | なし                                       |
+| NEXT_PUBLIC_SHIBBOLETH_SP_LOGIN_URL  | Shibboleth SP ログイン URL                     | "https://shibboleth-sp.example.org/login"  |
+| NEXT_PUBLIC_SHIBBOLETH_SP_LOGOUT_URL | Shibboleth SP ログアウト URL                   | "https://shibboleth-sp.example.org/logout" |
 
 [^yn]: [yn](https://github.com/sindresorhus/yn#readme)によって truly/falsy な値として解釈されます
+
+> [!NOTE]
+>
+> NEXT_PUBLIC\_\* に始まる環境変数はビルド時に参照され、アプリケーションのコードに埋め込まれますが、JWT_VERIFICATION_KEY_BASE64 環境変数は実行時（`yarn start` あるいは `docker run`）に環境変数の指定が必要です。
+
+> [!TIP]
+>
+> JWT_VERIFICATION_KEY_BASE64 環境変数の値は Base64 エンコードする必要があります。`cat key.pub.pem | base64` のようなコマンドによって Base64 エンコードした鍵の値が得られます。
 
 ## 静的コンテンツ
 
@@ -84,7 +99,7 @@ issuerId が重複した場合、[fast-glob](https://github.com/mrmlnc/fast-glob
 
 #### recommendedWisdomBadgesIds
 
-おすすめのバッジとして表示する能力バッジの id を指定します。指定可能な id の件数に上限はありません。
+おすすめのバッジとして表示するバッジの id を指定します。指定可能な id の件数に上限はありません。
 
 ```yaml
 recommendedWisdomBadgesIds:
@@ -161,11 +176,11 @@ learningContents:
 cat << EOL > .env # 環境変数の用意
 > NEXT_PUBLIC_API_BASE_URL=<API のベースとなる URL>
 > NEXT_PUBLIC_BASE_URL=<ベースとなる URL>
-> NEXT_PUBLIC_MOODLE_DASHBOARD_URL=<Moodle ダッシュボードの URL>
+> NEXT_PUBLIC_SHIBBOLETH_SP_LOGIN_URL=<Shibboleth SP ログイン URL>
 > EOL
-corepack yarn install --immutable # NPM パッケージのインストール
-corepack yarn build # アプリケーションのビルド
-corepack yarn start # 本番サーバーの起動
+yarn install --immutable # NPM パッケージのインストール
+yarn build # アプリケーションのビルド
+JWT_VERIFICATION_KEY_BASE64=xxx yarn start # 本番サーバーの起動
 ```
 
 ### Docker 環境
@@ -174,10 +189,10 @@ corepack yarn start # 本番サーバーの起動
 cat << EOL > .env # 環境変数の用意
 > NEXT_PUBLIC_API_BASE_URL=<API のベースとなる URL>
 > NEXT_PUBLIC_BASE_URL=<ベースとなる URL>
-> NEXT_PUBLIC_MOODLE_DASHBOARD_URL=<Moodle ダッシュボードの URL>
+> NEXT_PUBLIC_SHIBBOLETH_SP_LOGIN_URL=<Shibboleth SP ログイン URL>
 > EOL
 docker build -t frontend -f ../Dockerfile.frontend .. # Docker イメージのビルド
-docker run --rm -p 3000:3000 frontend # Docker コンテナの起動
+docker run --env JWT_VERIFICATION_KEY_BASE64=xxx --rm -p 3000:3000 frontend # Docker コンテナの起動
 ```
 
 詳細は [Next.js の公式ドキュメント](https://nextjs.org/docs/deployment#self-hosting)を参照してください。
@@ -186,22 +201,50 @@ docker run --rm -p 3000:3000 frontend # Docker コンテナの起動
 
 Yarn が提供するサブコマンドについては [Yarn の公式ドキュメント](https://yarnpkg.com/cli)を参照してください。
 
-### `corepack yarn build`
+### `yarn build`
 
 アプリケーションをビルドします。
 
-### `corepack yarn dev`
+### `yarn dev`
 
 開発サーバーを起動します。
 
-### `corepack yarn format`
+### `yarn format`
 
 テキストファイルを整形します。
 
-### `corepack yarn lint`
+### `yarn lint`
 
 静的コード解析します。
 
-### `corepack yarn start`
+### `yarn start`
 
 本番サーバーを起動します。
+
+## バッジウォレット API 仕様の更新
+
+OpenAPI 形式の API 仕様を chilowallet リポジトリから git subtree で取得しています。
+
+<details>
+
+<summary>初回のコマンド</summary>
+
+実行済みなので参考情報として参照してください（実行不要です）。
+
+```shell
+$ git remote add chilowallet git@github.com:npocccties/chilowallet.git # chilowallet リモートリポジトリを追加
+$ pushd .. # トップレベルで実施が必要
+$ git subtree add --prefix frontend/chilowallet --squash chilowallet main # git subtree 追加
+$ popd
+```
+
+</details>
+
+更新するには、次のコマンドを実行してください。
+
+```shell
+$ git remote add chilowallet git@github.com:npocccties/chilowallet.git # chilowallet リモートリポジトリを追加（追加していなかった場合）
+$ pushd .. # トップレベルで実施が必要
+$ git subtree pull --prefix frontend/chilowallet --squash chilowallet main # git subtree 更新
+$ popd
+```

@@ -1,0 +1,664 @@
+openapi: 3.0.3
+
+info:
+  title: OpenBadgeVC Walglet Server API
+  description: OpenBadgeVCウォレットサーバAPI
+  version: 0.1.0
+
+servers:
+  - url: http://localhost:3000/api/v1
+
+tags:
+  - name: user_badgelist
+    description: バッジリスト取得
+  - name: entry
+    description: ウォレット作成
+  - name: credential list
+    description: VC一覧
+  - name: credential delete
+    description: VC削除
+  - name: badge list
+    description: バッジデータ取得
+  - name: badge convert
+    description: バッジをVCに変換しDBに保存
+  - name: badge metadata
+    description: バッジのmetadataを取得
+  - name: submission sendmail
+    description: 確認コードを入力されたemailアドレスに送信
+  - name: submission vc
+    description: バッジデータの提出
+  - name: logout
+    description: 不正なログイン情報でログインした際の、ログイン画面遷移処理
+  - name: badge status list
+    description: 全てのLMSにおけるユーザのバッジ取得状況の一覧取得
+
+paths:
+  /user_badgelist:
+    post:
+      tags:
+        - user_badgelist
+      description: 対象ユーザのの保持バッジリストを返す
+      parameters:
+        - name: session_cookie
+          in: cookie
+          description: jwt base64 string
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/user_badgelist"
+        "400":
+          description: Bad request
+        "500":
+          description: Internal Server Error
+  /entry:
+    post:
+      tags:
+        - entry
+      description: ログイン情報をもとにウォレットを登録します
+      parameters:
+        - name: session_cookie
+          in: cookie
+          description: jwt base64 string
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: Bad request
+        "401":
+          description: Un Authrized Error
+        "500":
+          description: Internal Server Error
+  /credential/list:
+    get:
+      tags:
+        - credential list
+      description: ログインユーザーが保有するバッジのリストを返却します
+      parameters:
+        - name: session_cookie
+          in: cookie
+          description: jwt base64 string
+          required: true
+          schema:
+            type: string
+        - name: badgeName
+          in: query
+          description: serch form in badge name
+          schema:
+            type: string
+        - name: issuedFrom
+          in: query
+          description: serch form in issued from
+          schema:
+            type: string
+        - name: issuedTo
+          in: query
+          description: serch form in issued to
+          schema:
+            type: string
+        - name: sortOrder
+          in: query
+          description: serch form in sort order
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/vcList"
+        "400":
+          description: Bad request
+        "401":
+          description: Un Authrized Error
+        "500":
+          description: Internal Server Error
+  /credential/delete/{id}:
+    post:
+      tags:
+        - credential delete
+      description: 選択したVCをDBから削除します
+      parameters:
+        - name: session_cookie
+          in: cookie
+          description: jwt base64 string
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: delete from badge vc id
+          required: true
+          schema:
+            type: number
+      responses:
+        "204":
+          description: Successful operation
+        "400":
+          description: Bad request
+        "401":
+          description: Un Authrized Error
+        "500":
+          description: Internal Server Error
+  /badge/list:
+    post:
+      tags:
+        - badge list
+      description: 選択された発行者のMoodleにあるバッジのリストを取得します
+      parameters:
+        - name: session_cookie
+          in: cookie
+          description: jwt base64 string
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+                lmsId:
+                  type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/badgeList"
+        "400":
+          description: Bad request
+        "500":
+          description: Internal Server Error
+  /badge/convert:
+    post:
+      tags:
+        - badge convert
+      description: 選択したバッジをVCに変換し、DBに保存します
+      parameters:
+        - name: session_cookie
+          in: cookie
+          description: jwt base64 string
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                uniqueHash:
+                  type: string
+                email:
+                  type: string
+                badgeMetaData:
+                  type: string
+                lmsId:
+                  type: string
+                lmsName:
+                  type: string
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: Bad request
+        "500":
+          description: server error
+  /badge/metadata:
+    get:
+      tags:
+        - badge metadata
+      description: 一覧で選択されたバッジのメタデータを返却します
+      parameters:
+        - name: session_cookie
+          in: cookie
+          description: jwt base64 string
+          required: true
+          schema:
+            type: string
+        - name: uniquehash
+          in: query
+          description: select badge uniquehash
+          required: true
+          schema:
+            type: string
+        - name: lmsUrl
+          in: query
+          description: select lms url
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/badgeMetaData"
+        "400":
+          description: Bad request
+        "500":
+          description: Internal Server Error
+  /submission/sendmail:
+    post:
+      tags:
+        - submission sendmail
+      description: 確認コードを入力されたemailアドレスに送信します
+      parameters:
+        - name: session_cookie
+          in: cookie
+          description: jwt base64 string
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  hashConfirmCode:
+                    type: string
+        "400":
+          description: Bad request
+        "500":
+          description: Internal Server Error
+  /submission/vc:
+    post:
+      tags:
+        - submission vc
+      description: バッジを提出します
+      parameters:
+        - name: session_cookie
+          in: cookie
+          description: jwt base64 string
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                consumerId:
+                  type: string
+                email:
+                  type: string
+                badgeVcId:
+                  type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+        "400":
+          description: Bad request
+        "500":
+          description: Internal Server Error
+  /logout:
+    post:
+      tags:
+        - logout
+      description: 不正なログイン情報でログインした際の、ログイン画面遷移処理
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          description: Bad request
+        "500":
+          description: Internal Server Error
+  /badge/status/list:
+    get:
+      tags:
+        - badge status list
+      description: 全てのLMSにおけるユーザのバッジ取得状況の一覧を取得します
+      parameters:
+        - name: session_cookie
+          in: cookie
+          description: jwt base64 string
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/user_badgestatuslist"
+        "400":
+          description: Bad request
+        "401":
+          description: Un Authrized Error
+        "500":
+          description: Internal Server Error
+
+components:
+  schemas:
+    user_badgelist:
+      type: object
+      properties:
+        badge_list:
+          type: array
+          items:
+            type: object
+            properties:
+              badge_class:
+                type: string
+              badge_name:
+                type: string
+            additionalProperties: false
+            required:
+              - badge_class
+              - badge_name
+      additionalProperties: false
+      required:
+        - badge_list
+
+    user_badgestatuslist:
+      type: object
+      properties:
+        lms_badge_count:
+          type: integer
+          description: 'バッジ数'
+        lms_badge_list:
+          type: array
+          description: 'LMS別のバッジ取得状況リスト'
+          items:
+            type: object
+            description: 'LMS別のバッジ取得状況'
+            properties:
+              enrolled:
+                type: boolean
+                description: 受講フラグ (コースがLMSにある状態) 
+              issued:
+                type: boolean
+                description: 発行フラグ (ウォレットのDBにバッジがない状態) 
+              imported:
+                type: boolean
+                description: 受領フラグ (ウォレットのDBにバッジがある状態)
+              submitted:
+                type: boolean
+                description: 提出フラグ (キャビネットにバッジ提出済みの状態)
+              accessed_at:
+                type: string
+                format: date-time
+                description: コースへの最終アクセス日時
+              course_start_date:
+                type: string
+                format: date-time
+                description: コースの開始日
+              course_end_date:
+                type: string
+                format: date-time
+                description: コースの終了日
+              issued_at:
+                type: string
+                format: date-time
+                description: 発行日
+              imported_at:
+                type: string
+                format: date-time
+                description: 受領日
+              badge_expired_at:
+                type: string
+                format: date-time
+                description: バッジ有効期限
+              badge_vc_id:
+                type: integer
+                description: 'バッジVCID（バッジの詳細ページのパスに指定する番号）'
+              lms_id:
+                type: integer
+                description: 'LMSのID'
+              lms_name:
+                type: string
+                description: 'LMSの名前'
+              lms_url:
+                type: string
+                description: 'LMSのURL'
+              course_id:
+                type: integer
+                description: 'コースのID'
+              course_name:
+                type: string
+                description: 'コースの名前'
+              course_description:
+                type: string
+                description: 'コースの説明'
+              badge_class_id:
+                type: string
+                description: 'バッジクラスID'
+              badge_json:
+                type: string
+                description: 'バッジクラスIDのURLのレスポンスのJSON'
+              badge_name:
+                type: string
+                description: 'バッジ名'
+              badge_issuer_name:
+                type: string
+                description: 'バッジ発行者'
+            required:
+              - enrolled
+              - issued
+              - imported
+              - submitted
+              - lms_id
+              - lms_name
+        badge_detail_base_url:
+          type: string
+          description: 'バッジ詳細ページのベースURL（パスの部分にはbadge_vc_idの番号を指定する ex. https://dev-wallet.xxx.org/credential/detail/252）'
+        error_code:
+          type: string
+          description: |
+            エラーコード
+            E10000: LMSからユーザ情報が取得できない
+            E10001: LMSからコース一覧が取得できない
+            E10002: LMSからバッジ一覧が取得できない
+            E10003: LMSにバッジのメタデータがない
+            E10004: LMSのバッジクラスIDにデータがない
+            E10005: LMSのバッジクラスIDのデータの中のalignment.targetUrlの書式不正
+            E10006: LMSのバッジクラスIDのデータの中のalignment.targetUrlの中にあるコースIDに該当するコースがない
+            E20000: ウォレットDBにLMS一覧が存在しない
+            E20001: ウォレットDBにウォレットが存在しない
+            E29999: ウォレットサーバにて予期せぬ例外が発生
+            空: 正常
+      required:
+        - lms_badge_count
+
+    vcList:
+      type: object
+      properties:
+        badgeVc:
+          type: array
+          items:
+            properties:
+              badgeVcId:
+                type: integer
+              badgeName:
+                type: string
+              badgeIssuerName:
+                type: string
+              badgeIssuedon:
+                type: string
+              vcDataPayload:
+                type: string
+              submissions:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    customerName:
+                      type: string
+                    submitedAt:
+                      type: string
+            required:
+              - badgeVcId
+              - walletId
+              - badgeName
+        submissionsAll:
+          $ref: "#/components/schemas/submissions"
+        totalBadgeCount:
+          type: number
+      required:
+        - badgeVc
+
+    submissions:
+      type: object
+      properties:
+        totalSubmission:
+          type: integer
+        detailSubmissions:
+          type: array
+          items:
+            type: object
+            properties:
+              cabinetToSubmit:
+                type: string
+              submitCount:
+                type: integer
+            required:
+              - cabinetToSubmit
+              - submitCount
+
+    badgeList:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: number
+          name:
+            type: string
+          description:
+            type: string
+          timecreated:
+            type: integer
+          issuername:
+            type: string
+          issuerurl:
+            type: string
+          expireddate:
+            type: integer
+          message:
+            type: string
+          uniquehash:
+            type: string
+          dateissued:
+            type: integer
+          email:
+            type: string
+          badgeurl:
+            type: string
+          vcConverted?:
+            type: boolean
+
+    badgeMetaData:
+      type: object
+      properties:
+        "@context":
+          type: string
+        id:
+          type: string
+        type:
+          type: string
+        recipient:
+          $ref: "#/components/schemas/recipient"
+        issuedOn:
+          type: string
+          format: date-time
+        expires:
+          type: string
+          format: date-time
+        badge:
+          $ref: "#/components/schemas/badge"
+        verify:
+          $ref: "#/components/schemas/verify"
+
+    badge:
+      type: object
+      properties:
+        type:
+          type: string
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        image:
+          type: string
+        criteria:
+          $ref: "#/components/schemas/criteria"
+        issuer:
+          $ref: "#/components/schemas/issuer"
+
+    criteria:
+      type: object
+      properties:
+        narrative:
+          type: string
+
+    issuer:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        name:
+          type: string
+        url:
+          type: string
+        email:
+          type: string
+
+    recipient:
+      type: object
+      properties:
+        type:
+          type: string
+        identity:
+          type: string
+
+    verify:
+      type: object
+      properties:
+        type:
+          type: string
+        url:
+          type: string

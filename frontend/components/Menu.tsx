@@ -1,13 +1,17 @@
-import { useEffect, Fragment, useId } from "react";
-import { useRouter } from "next/router";
-import { Dialog, Transition } from "@headlessui/react";
+import {
+  Dialog,
+  DialogPanel,
+  Transition,
+  TransitionChild,
+} from "@headlessui/react";
 import { Icon } from "@iconify/react";
-import Link from "next/link";
+import Fallback from "components/Fallback";
 import { pagesPath } from "lib/$path";
 import contents from "lib/contents";
-import Fallback from "components/Fallback";
 import useIssuers from "lib/use-issuers";
-import { NEXT_PUBLIC_MOODLE_DASHBOARD_URL } from "lib/env";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { Fragment, useEffect, useId } from "react";
 
 type Props = {
   open: boolean;
@@ -26,7 +30,7 @@ function Menu({ open, onClose }: Props) {
   return (
     <Transition appear show={open} as={Fragment}>
       <Dialog as="div" className="relative z-20" onClose={onClose}>
-        <Transition.Child
+        <TransitionChild
           as={Fragment}
           enter="ease-out duration-300"
           enterFrom="bg-transparent"
@@ -36,8 +40,8 @@ function Menu({ open, onClose }: Props) {
           leaveTo="bg-transparent"
         >
           <div className="fixed inset-0" />
-        </Transition.Child>
-        <Transition.Child
+        </TransitionChild>
+        <TransitionChild
           as={Fragment}
           enter="ease-out duration-300"
           enterFrom="left-full"
@@ -47,7 +51,7 @@ function Menu({ open, onClose }: Props) {
           leaveTo="left-full"
         >
           <div className="fixed inset-0 overflow-x-hidden overflow-y-auto">
-            <Dialog.Panel className="w-screen bg-white px-4 pt-6 pb-12 min-h-full relative">
+            <DialogPanel className="w-screen bg-white px-4 pt-6 pb-12 min-h-full relative">
               <div className="mb-8 sticky top-3 flex justify-end pr-6">
                 <button
                   className="text-right jumpu-icon-button group mb-8 sticky top-6"
@@ -76,14 +80,22 @@ function Menu({ open, onClose }: Props) {
                 <li>
                   <Link
                     className="jumpu-text-button font-bold w-full text-gray-700 hover:bg-gray-100"
-                    href={pagesPath.discover.$url({ query: {} })}
+                    href={pagesPath.dashboard.$url({ query: {} })}
                   >
-                    学びを探す
+                    あなたのダッシュボード
                   </Link>
                 </li>
                 <li>
-                  <p className="text-gray-400 font-bold px-rel5 py-rel3">
-                    発行元
+                  <Link
+                    className="jumpu-text-button font-bold w-full text-gray-700 hover:bg-gray-100"
+                    href={pagesPath.discover.$url({ query: {} })}
+                  >
+                    コースを探す
+                  </Link>
+                </li>
+                <li>
+                  <p className="text-gray-400 font-bold px-[1.25em] py-[0.75em]">
+                    コース提供者
                   </p>
                   <ul className="pl-4 mb-3 space-y-1">
                     <Fallback
@@ -92,7 +104,7 @@ function Menu({ open, onClose }: Props) {
                       pending={[...Array(5)].map((_, index) => (
                         <li
                           key={index}
-                          className="animate-pulse rounded bg-gray-100 h-8 mb-1"
+                          className="animate-pulse rounded-sm bg-gray-100 h-8 mb-1"
                           aria-hidden
                         ></li>
                       ))}
@@ -122,15 +134,6 @@ function Menu({ open, onClose }: Props) {
                     キーワード検索
                   </Link>
                 </li>
-                <li>
-                  <a
-                    className="jumpu-text-button font-bold w-full text-gray-700 hover:bg-gray-100"
-                    href={NEXT_PUBLIC_MOODLE_DASHBOARD_URL}
-                    rel="noopener noreferrer"
-                  >
-                    ログイン
-                  </a>
-                </li>
               </ul>
               <ul className="space-y-1">
                 {contents.map((content) => (
@@ -144,9 +147,9 @@ function Menu({ open, onClose }: Props) {
                   </li>
                 ))}
               </ul>
-            </Dialog.Panel>
+            </DialogPanel>
           </div>
-        </Transition.Child>
+        </TransitionChild>
       </Dialog>
     </Transition>
   );

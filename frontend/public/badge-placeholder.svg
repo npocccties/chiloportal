@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="notfound" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.5 512.5">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+        stroke: #b3b3b3;
+        stroke-miterlimit: 10;
+        stroke-width: 30px;
+      }
+
+      .cls-2 {
+        fill: #b3b3b3;
+        font-family: NotoSansJP-Black-83pv-RKSJ-H, 'Noto Sans JP';
+        font-size: 70px;
+        font-weight: 800;
+      }
+    </style>
+  </defs>
+  <circle id="circle" class="cls-1" cx="256.25" cy="256.51" r="203.19"/>
+  <text id="not-found" class="cls-2" transform="translate(80.24 283.09) rotate(.06)"><tspan x="0" y="0">NO IMAGE</tspan></text>
+</svg>

@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { Fragment } from "react";
-import { Dialog, Transition } from "@headlessui/react";
+import {
+  Dialog,
+  DialogPanel,
+  DialogTitle,
+  Transition,
+  TransitionChild,
+} from "@headlessui/react";
 import { Consumer, BadgeDetail2 } from "api/@types";
 import useWisdomBadgesConsumers from "lib/use-wisdom-badges-consumers";
 import Fallback from "components/Fallback";
@@ -36,7 +42,7 @@ function WisdomBadgesDialog({ wisdomBadges, open, onClose }: Props) {
   return (
     <Transition appear show={open} as={Fragment}>
       <Dialog as="div" className="relative z-20" onClose={onClose}>
-        <Transition.Child
+        <TransitionChild
           as={Fragment}
           enter="ease-out duration-300"
           enterFrom="opacity-0"
@@ -47,12 +53,12 @@ function WisdomBadgesDialog({ wisdomBadges, open, onClose }: Props) {
           beforeEnter={handleEnter}
           afterLeave={handleLeave}
         >
-          <div className="fixed inset-0 bg-black bg-opacity-25" />
-        </Transition.Child>
+          <div className="fixed inset-0 bg-black/25" />
+        </TransitionChild>
 
         <div className="fixed inset-0 overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4">
-            <Transition.Child
+            <TransitionChild
               as={Fragment}
               enter="ease-out duration-300"
               enterFrom="opacity-0 scale-95"
@@ -61,10 +67,10 @@ function WisdomBadgesDialog({ wisdomBadges, open, onClose }: Props) {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="jumpu-card w-full max-w-xl rounded-xl bg-white p-6 shadow-xl">
-                <Dialog.Title className="text-lg font-bold text-gray-500 mb-6">
+              <DialogPanel className="jumpu-card w-full max-w-xl rounded-xl bg-white p-6 shadow-xl">
+                <DialogTitle className="text-lg font-bold text-gray-500 mb-6">
                   このバッジは以下の教育委員会に認定されています
-                </Dialog.Title>
+                </DialogTitle>
                 <Fallback
                   data={consumers}
                   error={consumersError}
@@ -88,8 +94,8 @@ function WisdomBadgesDialog({ wisdomBadges, open, onClose }: Props) {
                 >
                   {(data) => <Consumers consumers={data} />}
                 </Fallback>
-              </Dialog.Panel>
-            </Transition.Child>
+              </DialogPanel>
+            </TransitionChild>
           </div>
         </div>
       </Dialog>

@@ -68,7 +68,7 @@ export default function Issuer({
               <span className="inline-flex bg-black rounded-xl p-3">
                 <Image src="/fig-badge.svg" alt="" width={20} height={20} />
               </span>
-              {issuer.name}の能力バッジ
+              {issuer.name}のバッジ
             </h2>
             <div className="jumpu-card px-8 py-6 mb-4">
               <p className="text-sm mb-6">
@@ -78,7 +78,7 @@ export default function Issuer({
                   {issuerBadgesCount}
                 </span>
                 <br />
-                個の能力バッジを発行しています。
+                個のバッジを発行しています。
               </p>
               <h3 className="flex items-center gap-2 -ml-1 text-base text-gray-900 font-bold mb-3">
                 <Image src="/category.svg" alt="" width={20} height={24} />

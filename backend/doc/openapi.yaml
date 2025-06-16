@@ -130,7 +130,7 @@ paths:
     get:
       tags:
         - portal category badges list
-      description: 能力バッジ一覧を返却します
+      description: バッジ一覧を返却します
       operationId: findPortalCategoryBadgesList
       parameters:
         - name: portal_category_id
@@ -261,7 +261,7 @@ paths:
     get:
       tags:
         - badges list
-      description: 能力バッジ一覧を返却します
+      description: バッジ一覧を返却します
       operationId: findBadgesList
       parameters:
         - name: issuer_id
@@ -321,7 +321,7 @@ paths:
     get:
       tags:
         - keyword search
-      description: 指定されたキーワードに関連する能力バッジ一覧を返却します
+      description: 指定されたキーワードに関連するバッジ一覧を返却します
       operationId: findBadgesListKeyword
       parameters:
         - name: keyword

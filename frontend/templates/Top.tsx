@@ -30,20 +30,14 @@ export default function Top({ source }: Props) {
         自ら学びつづけるすべての人々へ
       </p>
       <Link
-        className="jumpu-button bg-white text-black text-base md:text-xl font-bold px-rel20 py-rel4 border-2 mb-10 relative"
+        className="jumpu-button bg-white text-black text-base md:text-xl font-bold px-[5em] py-[1em] border-2 mb-10 relative"
         href={pagesPath.discover.$url({ query: {} })}
       >
-        学びを探す
+        コースを探す
         <Icon
           icon="fa6-solid:chevron-right"
           className="text-base text-gray-500 absolute right-4 top-1/2 -translate-y-1/2"
         />
-      </Link>
-      <Link
-        href={pagesPath.posts.$url()}
-        className="block text-sm text-white underline underline-offset-4 mb-24"
-      >
-        オゾンからのお知らせ
       </Link>
       {source && <Markdown {...source} />}
     </article>

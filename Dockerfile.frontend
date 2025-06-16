@@ -1,14 +1,16 @@
-FROM node:20.9.0-slim as base
+FROM node:22.14.0-slim as base
 WORKDIR /app
 COPY frontend/.yarnrc.yml frontend/yarn.lock frontend/package.json ./
 COPY frontend/.yarn/ ./.yarn
 
 FROM base as build
-RUN corepack yarn install --immutable
-COPY frontend/.env* frontend/.eslintrc.yaml frontend/.gitignore \
-  frontend/next.config.js frontend/postcss.config.js \
-  frontend/tailwind.config.js frontend/tsconfig.json frontend/vfile-env.d.ts \
+RUN corepack enable
+RUN yarn install --immutable
+COPY frontend/.env* frontend/.gitignore \
+  frontend/eslint.config.js frontend/next.config.js frontend/postcss.config.js \
+  frontend/tsconfig.json frontend/vfile-env.d.ts \
   ./
+COPY frontend/chilowallet/ ./chilowallet
 COPY frontend/components/ ./components
 COPY frontend/contents/ ./contents
 COPY frontend/examples/ ./examples
@@ -20,15 +22,17 @@ COPY frontend/schemas/ ./schemas
 COPY frontend/styles/ ./styles
 COPY frontend/templates/ ./templates
 COPY backend/doc/openapi.yaml /backend/doc/openapi.yaml
-RUN echo "a5bbfd27826c0c1a71ac4d21761b77d7  ../backend/doc/openapi.yaml" > md5sum.txt && md5sum -c md5sum.txt
-RUN corepack yarn build
+RUN echo "a80ce7b73fcc75f1852956769dc10e73  ../backend/doc/openapi.yaml" > md5sum.txt && md5sum -c md5sum.txt
+RUN yarn build
 
 FROM base as install
-RUN corepack yarn workspaces focus --all --production
+RUN corepack enable
+RUN yarn workspaces focus --all --production
 
-FROM gcr.io/distroless/nodejs20-debian12
+FROM gcr.io/distroless/nodejs22-debian12
 WORKDIR /app
 ENV NODE_ENV=production
+COPY frontend/contents/ ./contents
 COPY frontend/public/ ./public
 COPY --from=build /app/.next ./.next
 COPY --from=install /app/node_modules ./node_modules

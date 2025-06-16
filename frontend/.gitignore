@@ -43,7 +43,8 @@ next-env.d.ts
 !.yarn/.keep
 
 # aspida
-api
+/api
+/chilowallet-api
 
 # msw
 public/mockServiceWorker.js

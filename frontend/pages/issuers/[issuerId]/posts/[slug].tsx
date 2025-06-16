@@ -45,8 +45,6 @@ export async function getStaticProps({
   if (!markdown) return { props: { title: "Post Not Found", statusCode: 404 } };
   const source = await serialize(markdown.value.toString(), {
     mdxOptions: {
-      // @ts-expect-error Pluggable型がJSDocとTSで不一致
-      // See https://github.com/orgs/rehypejs/discussions/63
       rehypePlugins: [rehypeImageSize],
       remarkPlugins: [remarkGfm],
     },

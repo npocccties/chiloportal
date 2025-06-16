@@ -33,7 +33,7 @@ function WisdomBadgesItem({ wisdomBadges }: Props) {
         <p className="text-xs text-gray-500 flex gap-x-3 gap-y-1 flex-wrap items-center">
           {"knowledge_badges_list" in wisdomBadges.detail && (
             <span>
-              知識バッジ{wisdomBadges.detail.knowledge_badges_list.length}
+              スタンプ{wisdomBadges.detail.knowledge_badges_list.length}
             </span>
           )}
           <span className="inline-flex items-center gap-1">

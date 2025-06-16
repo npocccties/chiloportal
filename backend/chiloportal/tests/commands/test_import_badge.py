@@ -100,7 +100,7 @@ class ImportBadgeCommandTests(TestCase):
         json = cmd.request_get_json(self.knowledge_badge_url)
         with self.assertRaises(AppException) as e:
             cmd.do_import(json, self.portal_category.id)
-        self.assertEqual(e.exception.args[0], "知識バッジのため処理継続できません。能力バッジを指定してください。")
+        self.assertEqual(e.exception.args[0], "スタンプのため処理継続できません。バッジを指定してください。")
 
     def test_judge_wisdom_badge_version_wisdom(self):
         cmd = import_badge.Command()
@@ -293,7 +293,7 @@ class ImportBadgeCommandTests(TestCase):
             wisdom_badge.badge_class_id,
             "https://opedu.lib.osaka-kyoiku.ac.jp/badges/badge_json.php?id=41",
         )
-        self.assertEqual(wisdom_badge.name, '能力バッジ "子どもの変化と教職について省察する"')
+        self.assertEqual(wisdom_badge.name, 'バッジ "子どもの変化と教職について省察する"')
         self.assertEqual(
             wisdom_badge.description,
             "各種答申に示された教育改革の方向性、2017年改訂学習指導要領の実現を支える実践的知見、「日本型学校教育」の海外展開について知ることで、教育現場の内部から教育活動を改善し教師が学び続けることの重要性を認識する。",
@@ -330,7 +330,7 @@ class ImportBadgeCommandTests(TestCase):
             knowledge_badge1.badge_class_id,
             "https://opedu.lib.osaka-kyoiku.ac.jp/badges/badge_json.php?id=36",
         )
-        self.assertEqual(knowledge_badge1.name, '知識バッジ "日本の教育政策動向"')
+        self.assertEqual(knowledge_badge1.name, 'スタンプ "日本の教育政策動向"')
         self.assertEqual(
             knowledge_badge1.description, "令和の日本型教育の方向性を知り、教員の働き方を省察できるようなる。"
         )
@@ -361,7 +361,7 @@ class ImportBadgeCommandTests(TestCase):
             knowledge_badge4.badge_class_id,
             "https://opedu.lib.osaka-kyoiku.ac.jp/badges/badge_json.php?id=39",
         )
-        self.assertEqual(knowledge_badge4.name, '知識バッジ "世界の教育改革の中の「日本型学校教育」－授業研究の可能性ー"')
+        self.assertEqual(knowledge_badge4.name, 'スタンプ "世界の教育改革の中の「日本型学校教育」－授業研究の可能性ー"')
         self.assertEqual(knowledge_badge4.description, "授業研究の可能性を理解する。")
         self.assertEqual(
             knowledge_badge4.criteria_narrative,
@@ -443,19 +443,19 @@ class ImportBadgeCommandTests(TestCase):
                 "targetUrl": "https://opedu.lib.osaka-kyoiku.ac.jp/course/view.php?id=52",
             },
             {
-                "targetName": '知識バッジ "日本の教育政策動向"',
+                "targetName": 'スタンプ "日本の教育政策動向"',
                 "targetUrl": "https://opedu.lib.osaka-kyoiku.ac.jp/badges/badge_json.php?id=36",
             },
             {
-                "targetName": '知識バッジ "教育実践の課題"',
+                "targetName": 'スタンプ "教育実践の課題"',
                 "targetUrl": "https://opedu.lib.osaka-kyoiku.ac.jp/badges/badge_json.php?id=37",
             },
             {
-                "targetName": '知識バッジ "世界の教育改革の中の「日本型学校教育」－特別活動の可能性ー"',
+                "targetName": 'スタンプ "世界の教育改革の中の「日本型学校教育」－特別活動の可能性ー"',
                 "targetUrl": "https://opedu.lib.osaka-kyoiku.ac.jp/badges/badge_json.php?id=38",
             },
             {
-                "targetName": '知識バッジ "世界の教育改革の中の「日本型学校教育」－授業研究の可能性ー"',
+                "targetName": 'スタンプ "世界の教育改革の中の「日本型学校教育」－授業研究の可能性ー"',
                 "targetUrl": "https://opedu.lib.osaka-kyoiku.ac.jp/badges/badge_json.php?id=39",
             },
         ]

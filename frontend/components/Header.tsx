@@ -1,18 +1,18 @@
-import { useId } from "react";
-import Link from "next/link";
-import Image from "next/image";
 import { Icon } from "@iconify/react";
+import clsx from "clsx";
+import Fallback from "components/Fallback";
+import Menu from "components/Menu";
 import Popover from "components/Popover";
 import SearchForm from "components/SearchForm";
-import useDialog from "lib/use-dialog";
-import clsx from "clsx";
+import UserPopover from "components/UserPopover";
 import { pagesPath } from "lib/$path";
-import { NEXT_PUBLIC_MOODLE_DASHBOARD_URL } from "lib/env";
-import Menu from "components/Menu";
+import useDialog from "lib/use-dialog";
 import useIssuers from "lib/use-issuers";
-import Fallback from "components/Fallback";
-import Issuer from "public/issuer.svg";
+import Image from "next/image";
+import Link from "next/link";
 import AllBadge from "public/all-badge.svg";
+import Issuer from "public/issuer.svg";
+import { useId } from "react";
 
 type Props = {
   className?: string;
@@ -24,7 +24,7 @@ function Header({ className }: Props) {
   const { data: issuers, error: issuersError } = useIssuers();
   return (
     <header className={clsx("bg-black", className)}>
-      <div className="container flex items-center gap-1 px-6 py-3">
+      <div className="flex items-center gap-1 px-6 py-3">
         <Link href={pagesPath.$url()} className="md:mr-10 shrink-0">
           <Image
             src="/logo.svg"
@@ -34,18 +34,28 @@ function Header({ className }: Props) {
           />
         </Link>
         <Link
+          href={pagesPath.dashboard.$url({ query: {} })}
+          className="hidden lg:inline-flex jumpu-text-button text-white text-sm hover:bg-gray-700 items-center gap-2 whitespace-nowrap"
+        >
+          <Icon
+            className="text-xl text-white size=[1.125rem]"
+            icon="mdi:compass-outline"
+          />
+          あなたのダッシュボード
+        </Link>
+        <Link
           href={pagesPath.discover.$url({ query: {} })}
-          className="hidden md:inline-flex jumpu-text-button text-white text-sm hover:bg-gray-700 items-center gap-2 whitespace-nowrap"
+          className="hidden lg:inline-flex jumpu-text-button text-white text-sm hover:bg-gray-700 items-center gap-2 whitespace-nowrap"
         >
           <AllBadge className="stroke-white size-[1.125rem]" alt="" />
-          学びを探す
+          コースを探す
         </Link>
         <Popover
-          className="hidden md:block"
+          className="hidden lg:block"
           title={
             <>
               <Issuer className="fill-white size-[1.125rem]" alt="" />
-              <span>発行元</span>
+              <span>コース提供者</span>
             </>
           }
         >
@@ -79,7 +89,7 @@ function Header({ className }: Props) {
                         href={pagesPath.issuers
                           ._issuerId(issuer.issuer_id)
                           .$url()}
-                        className="block w-max min-w-full px-4 py-3 rounded hover:bg-gray-700"
+                        className="block w-max min-w-full px-4 py-3 rounded-sm hover:bg-gray-700"
                       >
                         {issuer.name}
                       </Link>
@@ -92,18 +102,12 @@ function Header({ className }: Props) {
         </Popover>
         <div className="flex-1" />
         <SearchForm
-          className="hidden md:w-1/5 md:block xl:w-auto mr-1"
+          className="hidden lg:w-1/5 lg:inline-flex xl:w-auto"
           size="small"
         />
-        <a
-          className="jumpu-outlined-button text-white border-white hover:bg-gray-700 text-sm overflow-hidden whitespace-nowrap text-ellipsis shrink"
-          href={NEXT_PUBLIC_MOODLE_DASHBOARD_URL}
-          rel="noopener noreferrer"
-        >
-          ログイン
-        </a>
+        <UserPopover />
         <button
-          className="jumpu-icon-button hover:bg-gray-700 group md:hidden ml-2"
+          className="jumpu-icon-button hover:bg-gray-700 group lg:hidden ml-2"
           onClick={onOpen}
           aria-describedby={id}
         >

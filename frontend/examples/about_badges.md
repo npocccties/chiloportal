@@ -1,5 +1,5 @@
 ---
-title: 能力バッジとは？
+title: バッジとは？
 type: page
 slug: about_badges
 ---

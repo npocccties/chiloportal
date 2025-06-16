@@ -23,9 +23,10 @@ function SearchForm({ className, size = "medium", variant = "dark" }: Props) {
   return (
     <form
       className={clsx(
-        "inline-flex gap-1 item-center relative",
+        "gap-1 item-center relative",
         size === "small" && "text-sm",
         size === "large" && "text-lg",
+        className?.includes("hidden") || "inline-flex",
         className,
       )}
       onSubmit={handleSubmit}
@@ -33,7 +34,7 @@ function SearchForm({ className, size = "medium", variant = "dark" }: Props) {
       <input
         required
         className={clsx(
-          "jumpu-input !rounded-full w-full !pr-rel20",
+          "jumpu-input !rounded-full w-full !pr-[5em]",
           variant === "dark" && "bg-black !text-white border-white",
         )}
         type="search"
@@ -44,10 +45,10 @@ function SearchForm({ className, size = "medium", variant = "dark" }: Props) {
       <button
         type="submit"
         className={clsx(
-          "jumpu-outlined-button font-bold text-sm rounded-full absolute top-1/2 right-rel1 -translate-y-1/2 px-rel4 py-rel1",
-          size === "small" && "right-rel1",
-          size === "medium" && "right-rel2",
-          size === "large" && "right-rel3",
+          "jumpu-outlined-button font-bold text-sm rounded-full absolute top-1/2 right-[0.25em] -translate-y-1/2 px-[1em] py-[0.25em]",
+          size === "small" && "right-[0.25em]",
+          size === "medium" && "right-[0.5em]",
+          size === "large" && "right-[0.75em]",
           variant === "dark" &&
             "text-white bg-gray-800 border-gray-600 hover:bg-gray-700",
         )}

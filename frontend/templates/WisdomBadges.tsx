@@ -42,15 +42,15 @@ export default function WisdomBadges({
         nodes={[
           { name: "トップ", href: pagesPath.$url() },
           {
-            name: "学びを探す",
+            name: "コースを探す",
             href: pagesPath.discover.$url({ query: {} }),
           },
         ]}
         leaf={wisdomBadges.name}
       />
-      <aside className="flex-shrink-0 flex flex-col items-center [grid-area:aside] mb-6 md:mb-0 lg:mr-4">
+      <aside className="shrink-0 flex flex-col items-center [grid-area:aside] mb-6 md:mb-0 lg:mr-4">
         <Image
-          className="flex-shrink-0 w-7/12 max-w-[260px] md:w-[40vw] md:max-w-[280px] lg:max-w-[320px]"
+          className="shrink-0 w-7/12 max-w-[260px] md:w-[40vw] md:max-w-[280px] lg:max-w-[320px]"
           src={`/images/${wisdomBadges.image}`}
           width={320}
           height={320}
@@ -88,12 +88,12 @@ export default function WisdomBadges({
           <ul className="flex items-center gap-1 mb-4">
             <li className="text-gray-700 text-sm">
               <span className="mr-2">
-                能力バッジ取得条件
+                バッジ取得条件
                 <span className="mx-1" aria-hidden>
                   :
                 </span>
                 {knowledgeBadgesList.length}
-                知識バッジ
+                スタンプ
               </span>
             </li>
             <li>
@@ -152,10 +152,10 @@ export default function WisdomBadges({
             />
           </svg>
           <header className="px-6 mb-6">
-            <h2 className="text-sm text-gray-600">能力バッジの取得条件</h2>
+            <h2 className="text-sm text-gray-600">バッジの取得条件</h2>
             <p className="text-xl mb-2">
               以下の{knowledgeBadgesList.length}
-              つの「知識バッジ」をすべて習得してください
+              つの「スタンプ」をすべて取得してください
             </p>
           </header>
           <div className="flex pt-6 pb-6 mb-2 mx-6 px-6 rounded-xl bg-gray-100">
@@ -165,7 +165,7 @@ export default function WisdomBadges({
             />
             <div className="flex-1">
               <p className="text-sm mb-2">
-                知識バッジを取得するため以下のような種類のコンテンツがあります。
+                スタンプを取得するため以下のような種類のコンテンツがあります。
               </p>
               <ul className="text-xs flex flex-wrap gap-x-6 gap-y-2">
                 <li className="inline-flex items-center gap-x-1">

@@ -1,6 +1,8 @@
 .next
 .pnp.*
 .yarn
-api
+/api
+/chilowallet
+/chilowallet-api
 lib/$path.ts
 public/mockServiceWorker.js
