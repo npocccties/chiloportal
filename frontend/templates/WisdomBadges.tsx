@@ -135,7 +135,7 @@ export default function WisdomBadges({
             href={wisdomBadges.alignments_targeturl}
             rel="noreferrer noopener"
           >
-            この科目を受講してバッジを取得する
+            このコースを受講してバッジを取得する
           </a>
         </div>
         <section className="relative py-6 border-2 border-gray-200">
