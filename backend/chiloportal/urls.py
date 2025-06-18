@@ -22,7 +22,6 @@ class BothHttpAndHttpsSchemaGenerator(OpenAPISchemaGenerator):
             schema.schemes = ["https"]
         return schema
 
-
 schema_view = get_schema_view(
     openapi.Info(
         title="Chiloportal backend API",
