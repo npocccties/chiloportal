@@ -25,7 +25,7 @@ function All(props: AllBadges) {
     pagesPath.discover.$url({ query: { by: "all", p: String(page) } });
   return (
     <>
-      <h2 className="text-2xl font-bold mb-8">すべてのバッジ</h2>
+      <h2 className="text-2xl font-bold mb-8">すべてのコース</h2>
       <ul className="mb-10">
         {props.badges.badges.map((badge) => (
           <li key={badge.badges_id}>

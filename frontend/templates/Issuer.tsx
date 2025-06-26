@@ -68,7 +68,7 @@ export default function Issuer({
               <span className="inline-flex bg-black rounded-xl p-3">
                 <Image src="/fig-badge.svg" alt="" width={20} height={20} />
               </span>
-              {issuer.name}のバッジ
+              {issuer.name}のコース
             </h2>
             <div className="jumpu-card px-8 py-6 mb-4">
               <p className="text-sm mb-6">
@@ -102,7 +102,7 @@ export default function Issuer({
                   })}
                   className="jumpu-button font-bold"
                 >
-                  {issuer.name}のバッジ一覧を見る
+                  {issuer.name}のコース一覧を見る
                 </Link>
               </div>
             </div>

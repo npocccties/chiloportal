@@ -45,7 +45,7 @@ export default function DiscoverNav(
               )}
               alt=""
             />
-            すべてのバッジ
+            すべてのコース
           </Link>
         </li>
         <li>
