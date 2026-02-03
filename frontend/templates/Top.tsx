@@ -30,13 +30,13 @@ export default function Top({ source }: Props) {
         自ら学びつづけるすべての人々へ
       </p>
       <Link
-        className="jumpu-button bg-white text-black text-base md:text-xl font-bold px-[5em] py-[1em] border-2 mb-10 relative"
         href={pagesPath.discover.$url({ query: {} })}
+        className="jumpu-button bg-[#343d5e] text-white text-base md:text-xl font-bold w-80 md:w-96 py-[1em] rounded-full border-[3px] border-white mb-6 relative inline-flex items-center justify-center"
       >
-        コースを探す
+        研修コースを探す
         <Icon
           icon="fa6-solid:chevron-right"
-          className="text-base text-gray-500 absolute right-4 top-1/2 -translate-y-1/2"
+          className="text-base text-white absolute right-4 top-1/2 -translate-y-1/2"
         />
       </Link>
       {source && <Markdown {...source} />}

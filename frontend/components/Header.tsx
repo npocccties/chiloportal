@@ -48,7 +48,7 @@ function Header({ className }: Props) {
           className="hidden lg:inline-flex jumpu-text-button text-white text-sm hover:bg-gray-700 items-center gap-2 whitespace-nowrap"
         >
           <AllBadge className="stroke-white size-[1.125rem]" alt="" />
-          コースを探す
+          研修コースを探す
         </Link>
         <Popover
           className="hidden lg:block"
