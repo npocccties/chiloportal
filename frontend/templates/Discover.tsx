@@ -25,7 +25,7 @@ function All(props: AllBadges) {
     pagesPath.discover.$url({ query: { by: "all", p: String(page) } });
   return (
     <>
-      <h2 className="text-2xl font-bold mb-8">すべてのバッジ</h2>
+      <h2 className="text-2xl font-bold mb-8">すべてのコース</h2>
       <ul className="mb-10">
         {props.badges.badges.map((badge) => (
           <li key={badge.badges_id}>
@@ -224,10 +224,10 @@ export default function Discover({
       <Breadcrumbs
         className="mb-6"
         nodes={[{ name: "トップ", href: pagesPath.$url() }]}
-        leaf="コースを探す"
+        leaf="研修コースを探す"
       />
       <h1 className="text-3xl font-bold mb-8 border-b border-gray-300 pb-2">
-        コースを探す
+        研修コースを探す
       </h1>
       <div
         className="md:grid gap-2"

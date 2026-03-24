@@ -14,7 +14,7 @@ import DiscoverNav from "./DiscoverNav";
 function toLabel(props: Props): string {
   switch (props.type) {
     case "all":
-      return "すべてのバッジ";
+      return "すべてのコース";
     case "issuer":
       return props.issuer.name;
     case "category":

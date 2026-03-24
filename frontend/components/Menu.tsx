@@ -90,7 +90,7 @@ function Menu({ open, onClose }: Props) {
                     className="jumpu-text-button font-bold w-full text-gray-700 hover:bg-gray-100"
                     href={pagesPath.discover.$url({ query: {} })}
                   >
-                    コースを探す
+                    研修コースを探す
                   </Link>
                 </li>
                 <li>
