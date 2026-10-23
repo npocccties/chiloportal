@@ -19,6 +19,8 @@ jobs:
           cp .env.localhost .env
           cp docker-compose.localhost.yml docker-compose.yml
           docker compose up -d
+          # DB の初期化とマイグレーションが終わるまで待つ
+          docker compose wait migration
       - name: Run tests
         run: |
           docker compose ps
