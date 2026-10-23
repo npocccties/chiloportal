@@ -32,25 +32,17 @@ def make_response(url, content, content_type):
 
 
 class ImportBadgeCommandTests(TestCase):
-    wisdom_badge_url = (
-        "https://opedu.lib.osaka-kyoiku.ac.jp/badges/badge_json.php?id=41"
-    )
-    knowledge_badge_url = (
-        "https://opedu.lib.osaka-kyoiku.ac.jp/badges/badge_json.php?id=36"
-    )
-    not_exist_badge_url = (
-        "https://opedu.lib.osaka-kyoiku.ac.jp/badges/badge_json.php?id=9999"
-    )
-    ng_url = "https://fugafuga.opedu.lib.osaka-kyoiku.hogehoge.ac.jp/badges/badge_json.php?id=41"
-    not_json_url = "https://opedu.lib.osaka-kyoiku.ac.jp/course/view.php?id=52"
-    image_url = (
-        "https://opedu.lib.osaka-kyoiku.ac.jp/pluginfile.php/1/badges/badgeimage/41/f1"
-    )
+    wisdom_badge_url = "https://moodle.example.org/badges/badge_json.php?id=41"
+    knowledge_badge_url = "https://moodle.example.org/badges/badge_json.php?id=36"
+    not_exist_badge_url = "https://moodle.example.org/badges/badge_json.php?id=9999"
+    ng_url = "https://nonexistent.example.invalid/badges/badge_json.php?id=41"
+    not_json_url = "https://moodle.example.org/course/view.php?id=52"
+    image_url = "https://moodle.example.org/pluginfile.php/1/badges/badgeimage/41/f1"
     image_dir = "/tmp/hoge/"
     downloaded_file = os.path.join(
-        image_dir, "opedu.lib.osaka-kyoiku.ac.jp.pluginfile.php.1.badges.badgeimage.41.f1.png"
+        image_dir, "moodle.example.org.pluginfile.php.1.badges.badgeimage.41.f1.png"
     )
-    issuer_url = "https://opedu.lib.osaka-kyoiku.ac.jp/badges/issuer_json.php?id=41"
+    issuer_url = "https://moodle.example.org/badges/issuer_json.php?id=41"
 
     def setUp(self):
         self.portal_category = PortalCategory.objects.create(name="hoge", sort_key=1)
@@ -66,12 +58,12 @@ class ImportBadgeCommandTests(TestCase):
         self.assertEqual(self.unexpected_urls, [], "想定外の URL にアクセスしました")
 
     def fake_requests_get(self, url):
-        if url.startswith("https://fugafuga."):
+        if url == self.ng_url:
             raise requests.exceptions.ConnectionError(
                 f"Name or service not known: {url}"
             )
         match = re.fullmatch(
-            r"https://opedu\.lib\.osaka-kyoiku\.ac\.jp/badges/badge_json\.php\?id=(\d+)",
+            r"https://moodle\.example\.org/badges/badge_json\.php\?id=(\d+)",
             url,
         )
         if match:
@@ -86,7 +78,7 @@ class ImportBadgeCommandTests(TestCase):
                 "text/html; charset=utf-8",
             )
         if re.fullmatch(
-            r"https://opedu\.lib\.osaka-kyoiku\.ac\.jp/pluginfile\.php/\d+/badges/badgeimage/\d+/f1",
+            r"https://moodle\.example\.org/pluginfile\.php/\d+/badges/badgeimage/\d+/f1",
             url,
         ):
             return make_response(url, PNG_BYTES, "image/png")
@@ -348,59 +340,59 @@ class ImportBadgeCommandTests(TestCase):
         wisdom_badge = WisdomBadges.objects.all().first()
         self.assertEqual(
             wisdom_badge.badge_class_id,
-            "https://opedu.lib.osaka-kyoiku.ac.jp/badges/badge_json.php?id=41",
+            "https://moodle.example.org/badges/badge_json.php?id=41",
         )
-        self.assertEqual(wisdom_badge.name, 'バッジ "子どもの変化と教職について省察する"')
+        self.assertEqual(wisdom_badge.name, 'バッジ "テスト用能力バッジ"')
         self.assertEqual(
             wisdom_badge.description,
-            "各種答申に示された教育改革の方向性、2017年改訂学習指導要領の実現を支える実践的知見、「日本型学校教育」の海外展開について知ることで、教育現場の内部から教育活動を改善し教師が学び続けることの重要性を認識する。",
+            "テスト用の能力バッジです。「全角括弧」や、読点を含む説明文。",
         )
         self.assertEqual(
-            wisdom_badge.image_id, "opedu.lib.osaka-kyoiku.ac.jp.pluginfile.php.1.badges.badgeimage.41.f1.png"
+            wisdom_badge.image_id,
+            "moodle.example.org.pluginfile.php.1.badges.badgeimage.41.f1.png",
         )
         self.assertEqual(
             wisdom_badge.image_author,
-            "https://opedu.lib.osaka-kyoiku.ac.jp/badges/image_author_json.php?id=41",
+            "https://moodle.example.org/badges/image_author_json.php?id=41",
         )
         self.assertEqual(wisdom_badge.version, "https://w3id.org/openbadges/v2")
-        self.assertEqual(wisdom_badge.alignments_targetname, "子どもの変化と教職について省察する")
+        self.assertEqual(wisdom_badge.alignments_targetname, "テスト用コース")
         self.assertEqual(
             wisdom_badge.alignments_targeturl,
-            "https://opedu.lib.osaka-kyoiku.ac.jp/course/view.php?id=52",
+            "https://moodle.example.org/course/view.php?id=52",
         )
         self.assert_issuer(wisdom_badge)
         self.assert_knowledge_badge(wisdom_badge)
 
     def assert_issuer(self, wisdom_badge):
         issuer = wisdom_badge.issuer
-        self.assertEqual(issuer.name, "大阪教育大学")
-        self.assertEqual(issuer.url, "https://opedu.lib.osaka-kyoiku.ac.jp/")
+        self.assertEqual(issuer.name, "テスト大学")
+        self.assertEqual(issuer.url, "https://moodle.example.org/")
         self.assertEqual(issuer.email, "")
 
     def assert_knowledge_badge(self, wisdom_badge):
         knowledge_badge_set = KnowledgeBadges.objects.filter(wisdom_badges=wisdom_badge)
         self.assertEqual(knowledge_badge_set.count(), 4)
         knowledge_badge1 = knowledge_badge_set.get(
-            badge_class_id="https://opedu.lib.osaka-kyoiku.ac.jp/badges/badge_json.php?id=36"
+            badge_class_id="https://moodle.example.org/badges/badge_json.php?id=36"
         )
         self.assertEqual(
             knowledge_badge1.badge_class_id,
-            "https://opedu.lib.osaka-kyoiku.ac.jp/badges/badge_json.php?id=36",
+            "https://moodle.example.org/badges/badge_json.php?id=36",
         )
-        self.assertEqual(knowledge_badge1.name, 'スタンプ "日本の教育政策動向"')
-        self.assertEqual(
-            knowledge_badge1.description, "令和の日本型教育の方向性を知り、教員の働き方を省察できるようなる。"
-        )
+        self.assertEqual(knowledge_badge1.name, 'スタンプ "テスト用スタンプ1"')
+        self.assertEqual(knowledge_badge1.description, "テスト用スタンプ1の説明です。")
         self.assertEqual(
             knowledge_badge1.criteria_narrative,
-            '次の必要条件を完了した場合、ユーザにこのバッジが授与されます:\n* 「 すべて 」の次の活動が完了しました:\n"ビデオ - 1.はじめに"\n"ビデオ - 2.日本の教育課題を知る"\n"ビデオ - 3.教師の働き方を省察する"\n"ビデオ - 4.まとめ"\n"レッスン - 5.振り返り"\n\n',
+            '次の必要条件を完了した場合、ユーザにこのバッジが授与されます:\n* 「 すべて 」の次の活動が完了しました:\n"ビデオ - 1.はじめに"\n"ビデオ - 2.テスト用の動画2"\n"ビデオ - 3.テスト用の動画3"\n"ビデオ - 4.まとめ"\n"レッスン - 5.振り返り"\n\n',
         )
         self.assertEqual(
-            knowledge_badge1.image_id, "opedu.lib.osaka-kyoiku.ac.jp.pluginfile.php.2395.badges.badgeimage.36.f1.png"
+            knowledge_badge1.image_id,
+            "moodle.example.org.pluginfile.php.2395.badges.badgeimage.36.f1.png",
         )
         self.assertEqual(
             knowledge_badge1.image_author,
-            "https://opedu.lib.osaka-kyoiku.ac.jp/badges/image_author_json.php?id=36",
+            "https://moodle.example.org/badges/image_author_json.php?id=36",
         )
         self.assertEqual(knowledge_badge1.version, "https://w3id.org/openbadges/v2")
         criteria_set = Criteria.objects.filter(knowledge_badges=knowledge_badge1)
@@ -412,38 +404,35 @@ class ImportBadgeCommandTests(TestCase):
         self.assertEqual(criteria5.type, "レッスン")
         self.assertEqual(criteria5.name, "5.振り返り")
         knowledge_badge4 = knowledge_badge_set.get(
-            badge_class_id="https://opedu.lib.osaka-kyoiku.ac.jp/badges/badge_json.php?id=39"
+            badge_class_id="https://moodle.example.org/badges/badge_json.php?id=39"
         )
         self.assertEqual(
             knowledge_badge4.badge_class_id,
-            "https://opedu.lib.osaka-kyoiku.ac.jp/badges/badge_json.php?id=39",
+            "https://moodle.example.org/badges/badge_json.php?id=39",
         )
-        self.assertEqual(knowledge_badge4.name, 'スタンプ "世界の教育改革の中の「日本型学校教育」－授業研究の可能性ー"')
-        self.assertEqual(knowledge_badge4.description, "授業研究の可能性を理解する。")
+        self.assertEqual(knowledge_badge4.name, 'スタンプ "テスト用スタンプ4「全角括弧」－全角記号ー"')
+        self.assertEqual(knowledge_badge4.description, "テスト用スタンプ4の説明です。")
         self.assertEqual(
             knowledge_badge4.criteria_narrative,
-            '次の必要条件を完了した場合、ユーザにこのバッジが授与されます:\n* 「 すべて 」の次の活動が完了しました:\n"ビデオ - 1.はじめに"\n"ビデオ - 2.誰がどのような文脈で、諸外国における授業研究を推進してきたのか？"\n"ビデオ - 3.なぜ日本型学校教育の重要な内容として、授業研究が注目されたのか？"\n"ビデオ - 4.学び続ける教師を支える、よりよい授業研究のあり方は？"\n"レッスン - 5.振り返り"\n\n',
+            '次の必要条件を完了した場合、ユーザにこのバッジが授与されます:\n* 「 すべて 」の次の活動が完了しました:\n"ビデオ - 1.はじめに"\n"ビデオ - 2.テスト用の動画、その2は？"\n"ビデオ - 3.テスト用の動画、その3は？"\n"ビデオ - 4.テスト用の動画、その4は？"\n"レッスン - 5.振り返り"\n\n',
         )
         self.assertEqual(
-            knowledge_badge4.image_id, "opedu.lib.osaka-kyoiku.ac.jp.pluginfile.php.2395.badges.badgeimage.39.f1.png"
+            knowledge_badge4.image_id,
+            "moodle.example.org.pluginfile.php.2395.badges.badgeimage.39.f1.png",
         )
         self.assertEqual(
             knowledge_badge4.image_author,
-            "https://opedu.lib.osaka-kyoiku.ac.jp/badges/image_author_json.php?id=39",
+            "https://moodle.example.org/badges/image_author_json.php?id=39",
         )
         self.assertEqual(knowledge_badge4.version, "https://w3id.org/openbadges/v2")
         criteria_set = Criteria.objects.filter(knowledge_badges=knowledge_badge4)
         self.assertEqual(criteria_set.count(), 5)
-        criteria2 = criteria_set.get(
-            Q(type="ビデオ") & Q(name="2.誰がどのような文脈で、諸外国における授業研究を推進してきたのか？")
-        )
+        criteria2 = criteria_set.get(Q(type="ビデオ") & Q(name="2.テスト用の動画、その2は？"))
         self.assertEqual(criteria2.type, "ビデオ")
-        self.assertEqual(criteria2.name, "2.誰がどのような文脈で、諸外国における授業研究を推進してきたのか？")
-        criteria4 = criteria_set.get(
-            Q(type="ビデオ") & Q(name="4.学び続ける教師を支える、よりよい授業研究のあり方は？")
-        )
+        self.assertEqual(criteria2.name, "2.テスト用の動画、その2は？")
+        criteria4 = criteria_set.get(Q(type="ビデオ") & Q(name="4.テスト用の動画、その4は？"))
         self.assertEqual(criteria4.type, "ビデオ")
-        self.assertEqual(criteria4.name, "4.学び続ける教師を支える、よりよい授業研究のあり方は？")
+        self.assertEqual(criteria4.name, "4.テスト用の動画、その4は？")
 
     def test_update_wisdom_badge_update(self):
         cmd = import_badge.Command()
@@ -496,24 +485,24 @@ class ImportBadgeCommandTests(TestCase):
         )
         alignments = [
             {
-                "targetName": "子どもの変化と教職について省察する",
-                "targetUrl": "https://opedu.lib.osaka-kyoiku.ac.jp/course/view.php?id=52",
+                "targetName": "テスト用コース",
+                "targetUrl": "https://moodle.example.org/course/view.php?id=52",
             },
             {
-                "targetName": 'スタンプ "日本の教育政策動向"',
-                "targetUrl": "https://opedu.lib.osaka-kyoiku.ac.jp/badges/badge_json.php?id=36",
+                "targetName": 'スタンプ "テスト用スタンプ1"',
+                "targetUrl": "https://moodle.example.org/badges/badge_json.php?id=36",
             },
             {
-                "targetName": 'スタンプ "教育実践の課題"',
-                "targetUrl": "https://opedu.lib.osaka-kyoiku.ac.jp/badges/badge_json.php?id=37",
+                "targetName": 'スタンプ "テスト用スタンプ2"',
+                "targetUrl": "https://moodle.example.org/badges/badge_json.php?id=37",
             },
             {
-                "targetName": 'スタンプ "世界の教育改革の中の「日本型学校教育」－特別活動の可能性ー"',
-                "targetUrl": "https://opedu.lib.osaka-kyoiku.ac.jp/badges/badge_json.php?id=38",
+                "targetName": 'スタンプ "テスト用スタンプ3「全角括弧」－全角記号ー"',
+                "targetUrl": "https://moodle.example.org/badges/badge_json.php?id=38",
             },
             {
-                "targetName": 'スタンプ "世界の教育改革の中の「日本型学校教育」－授業研究の可能性ー"',
-                "targetUrl": "https://opedu.lib.osaka-kyoiku.ac.jp/badges/badge_json.php?id=39",
+                "targetName": 'スタンプ "テスト用スタンプ4「全角括弧」－全角記号ー"',
+                "targetUrl": "https://moodle.example.org/badges/badge_json.php?id=39",
             },
         ]
         cmd.create_knowledge_badges(alignments, wisdom_badge)
