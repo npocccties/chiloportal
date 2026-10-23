@@ -1,0 +1,47 @@
+{
+    "name": "バッジ \"テスト用能力バッジ\"",
+    "description": "テスト用の能力バッジです。「全角括弧」や、読点を含む説明文。",
+    "image": {
+        "id": "https://moodle.example.org/pluginfile.php/1/badges/badgeimage/41/f1",
+        "author": "https://moodle.example.org/badges/image_author_json.php?id=41"
+    },
+    "criteria": {
+        "id": "https://moodle.example.org/badges/badgeclass.php?id=41",
+        "narrative": "次の必要条件を完了した場合、ユーザにこのバッジが授与されます:\n* 「 すべて 」の次のバッジが授与されました:\n\"テスト用スタンプ1\"\n\"テスト用スタンプ2\"\n\"テスト用スタンプ3「全角括弧」－全角記号ー\"\n\"テスト用スタンプ4「全角括弧」－全角記号ー\"\n\n"
+    },
+    "issuer": {
+        "name": "テスト大学",
+        "url": "https://moodle.example.org/",
+        "email": "",
+        "@context": "https://w3id.org/openbadges/v2",
+        "id": "https://moodle.example.org/badges/issuer_json.php?id=41",
+        "type": "Issuer"
+    },
+    "@context": "https://w3id.org/openbadges/v2",
+    "id": "https://moodle.example.org/badges/badge_json.php?id=41",
+    "type": "BadgeClass",
+    "version": "1.0-wisdom",
+    "@language": "ja",
+    "alignments": [
+        {
+            "targetName": "テスト用コース",
+            "targetUrl": "https://moodle.example.org/course/view.php?id=52"
+        },
+        {
+            "targetName": "スタンプ \"テスト用スタンプ1\"",
+            "targetUrl": "https://moodle.example.org/badges/badge_json.php?id=36"
+        },
+        {
+            "targetName": "スタンプ \"テスト用スタンプ2\"",
+            "targetUrl": "https://moodle.example.org/badges/badge_json.php?id=37"
+        },
+        {
+            "targetName": "スタンプ \"テスト用スタンプ3「全角括弧」－全角記号ー\"",
+            "targetUrl": "https://moodle.example.org/badges/badge_json.php?id=38"
+        },
+        {
+            "targetName": "スタンプ \"テスト用スタンプ4「全角括弧」－全角記号ー\"",
+            "targetUrl": "https://moodle.example.org/badges/badge_json.php?id=39"
+        }
+    ]
+}

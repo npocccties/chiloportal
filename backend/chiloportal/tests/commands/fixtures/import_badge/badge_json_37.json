@@ -1,0 +1,25 @@
+{
+    "name": "スタンプ \"テスト用スタンプ2\"",
+    "description": "テスト用スタンプ2の説明です。",
+    "image": {
+        "id": "https://moodle.example.org/pluginfile.php/2395/badges/badgeimage/37/f1",
+        "author": "https://moodle.example.org/badges/image_author_json.php?id=37"
+    },
+    "criteria": {
+        "id": "https://moodle.example.org/badges/badgeclass.php?id=37",
+        "narrative": "次の必要条件を完了した場合、ユーザにこのバッジが授与されます:\n* 「 すべて 」の次の活動が完了しました:\n\"ビデオ - 1.はじめに\"\n\"ビデオ - 2.テスト用の動画2\"\n\"ビデオ - 3.テスト用の動画3\"\n\"ビデオ - 4.まとめ\"\n\"レッスン - 5.振り返り\"\n\n"
+    },
+    "issuer": {
+        "name": "テスト大学",
+        "url": "https://moodle.example.org/",
+        "email": "",
+        "@context": "https://w3id.org/openbadges/v2",
+        "id": "https://moodle.example.org/badges/issuer_json.php?id=37",
+        "type": "Issuer"
+    },
+    "@context": "https://w3id.org/openbadges/v2",
+    "id": "https://moodle.example.org/badges/badge_json.php?id=37",
+    "type": "BadgeClass",
+    "version": "1.0-knowledge",
+    "@language": "ja"
+}
