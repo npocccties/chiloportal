@@ -1,0 +1,25 @@
+{
+    "name": "スタンプ \"テスト用スタンプ3「全角括弧」－全角記号ー\"",
+    "description": "テスト用スタンプ3の説明です。",
+    "image": {
+        "id": "https://moodle.example.org/pluginfile.php/2395/badges/badgeimage/38/f1",
+        "author": "https://moodle.example.org/badges/image_author_json.php?id=38"
+    },
+    "criteria": {
+        "id": "https://moodle.example.org/badges/badgeclass.php?id=38",
+        "narrative": "次の必要条件を完了した場合、ユーザにこのバッジが授与されます:\n* 「 すべて 」の次の活動が完了しました:\n\"ビデオ - 1.はじめに\"\n\"ビデオ - 2.テスト用の動画2\"\n\"ビデオ - 3.テスト用の動画3\"\n\"ビデオ - 4.まとめ\"\n\"レッスン - 5.振り返り\"\n\n"
+    },
+    "issuer": {
+        "name": "テスト大学",
+        "url": "https://moodle.example.org/",
+        "email": "",
+        "@context": "https://w3id.org/openbadges/v2",
+        "id": "https://moodle.example.org/badges/issuer_json.php?id=38",
+        "type": "Issuer"
+    },
+    "@context": "https://w3id.org/openbadges/v2",
+    "id": "https://moodle.example.org/badges/badge_json.php?id=38",
+    "type": "BadgeClass",
+    "version": "1.0-knowledge",
+    "@language": "ja"
+}

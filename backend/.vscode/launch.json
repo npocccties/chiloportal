@@ -24,7 +24,7 @@
             "program": "${workspaceFolder}/manage.py",
             "args": [
                 "import_badge",
-                "--url=https://opedu.lib.osaka-kyoiku.ac.jp/badges/badge_json.php?id=${input:badge_id}",
+                "--url=https://moodle.example.org/badges/badge_json.php?id=${input:badge_id}",
                 "--pcid=${input:portal_category_id}",
             ],
             "django": true
