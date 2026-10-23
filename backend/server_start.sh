@@ -15,5 +15,4 @@ docker compose exec -T app pip install bcrypt
 docker compose exec -T app python /workspace/manage.py makemigrations
 docker compose exec -T app python /workspace/manage.py migrate
 docker compose exec -d app python /workspace/manage.py collectstatic --no-input --clear
-docker compose exec -d app gunicorn project.wsgi:application --bind 0.0.0.0:8000
 # コンテナ作成直後だとDB接続できないことがあるので、とりあえず遅らせてみる
