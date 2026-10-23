@@ -1,0 +1,47 @@
+{
+    "name": "バッジ \"子どもの変化と教職について省察する\"",
+    "description": "各種答申に示された教育改革の方向性、2017年改訂学習指導要領の実現を支える実践的知見、「日本型学校教育」の海外展開について知ることで、教育現場の内部から教育活動を改善し教師が学び続けることの重要性を認識する。",
+    "image": {
+        "id": "https://opedu.lib.osaka-kyoiku.ac.jp/pluginfile.php/1/badges/badgeimage/41/f1",
+        "author": "https://opedu.lib.osaka-kyoiku.ac.jp/badges/image_author_json.php?id=41"
+    },
+    "criteria": {
+        "id": "https://opedu.lib.osaka-kyoiku.ac.jp/badges/badgeclass.php?id=41",
+        "narrative": "次の必要条件を完了した場合、ユーザにこのバッジが授与されます:\n* 「 すべて 」の次のバッジが授与されました:\n\"日本の教育政策動向\"\n\"教育実践の課題\"\n\"世界の教育改革の中の「日本型学校教育」－特別活動の可能性ー\"\n\"世界の教育改革の中の「日本型学校教育」－授業研究の可能性ー\"\n\n"
+    },
+    "issuer": {
+        "name": "大阪教育大学",
+        "url": "https://opedu.lib.osaka-kyoiku.ac.jp/",
+        "email": "",
+        "@context": "https://w3id.org/openbadges/v2",
+        "id": "https://opedu.lib.osaka-kyoiku.ac.jp/badges/issuer_json.php?id=41",
+        "type": "Issuer"
+    },
+    "@context": "https://w3id.org/openbadges/v2",
+    "id": "https://opedu.lib.osaka-kyoiku.ac.jp/badges/badge_json.php?id=41",
+    "type": "BadgeClass",
+    "version": "1.0-wisdom",
+    "@language": "ja",
+    "alignments": [
+        {
+            "targetName": "子どもの変化と教職について省察する",
+            "targetUrl": "https://opedu.lib.osaka-kyoiku.ac.jp/course/view.php?id=52"
+        },
+        {
+            "targetName": "スタンプ \"日本の教育政策動向\"",
+            "targetUrl": "https://opedu.lib.osaka-kyoiku.ac.jp/badges/badge_json.php?id=36"
+        },
+        {
+            "targetName": "スタンプ \"教育実践の課題\"",
+            "targetUrl": "https://opedu.lib.osaka-kyoiku.ac.jp/badges/badge_json.php?id=37"
+        },
+        {
+            "targetName": "スタンプ \"世界の教育改革の中の「日本型学校教育」－特別活動の可能性ー\"",
+            "targetUrl": "https://opedu.lib.osaka-kyoiku.ac.jp/badges/badge_json.php?id=38"
+        },
+        {
+            "targetName": "スタンプ \"世界の教育改革の中の「日本型学校教育」－授業研究の可能性ー\"",
+            "targetUrl": "https://opedu.lib.osaka-kyoiku.ac.jp/badges/badge_json.php?id=39"
+        }
+    ]
+}

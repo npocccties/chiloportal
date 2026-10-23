@@ -7,8 +7,28 @@ from ...management.commands import import_badge
 from ...enums import *
 from ...exceptions import *
 from ...models import *
+from unittest import mock
+import base64
 import os
+import re
+import requests
 import shutil
+
+FIXTURE_DIR = os.path.join(os.path.dirname(__file__), "fixtures", "import_badge")
+# 1x1 の PNG 画像
+PNG_BYTES = base64.b64decode(
+    "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=="
+)
+
+
+def make_response(url, content, content_type):
+    response = requests.Response()
+    response.status_code = 200
+    response.url = url
+    response.encoding = "utf-8"
+    response.headers["Content-Type"] = content_type
+    response._content = content
+    return response
 
 
 class ImportBadgeCommandTests(TestCase):
@@ -32,9 +52,46 @@ class ImportBadgeCommandTests(TestCase):
     )
     issuer_url = "https://opedu.lib.osaka-kyoiku.ac.jp/badges/issuer_json.php?id=41"
 
-    @classmethod
     def setUp(self):
         self.portal_category = PortalCategory.objects.create(name="hoge", sort_key=1)
+        # 外部の Moodle へアクセスせず、fixtures の応答を返す
+        self.unexpected_urls = []
+        patcher = mock.patch.object(
+            import_badge.requests, "get", side_effect=self.fake_requests_get
+        )
+        patcher.start()
+        self.addCleanup(patcher.stop)
+
+    def tearDown(self):
+        self.assertEqual(self.unexpected_urls, [], "想定外の URL にアクセスしました")
+
+    def fake_requests_get(self, url):
+        if url.startswith("https://fugafuga."):
+            raise requests.exceptions.ConnectionError(
+                f"Name or service not known: {url}"
+            )
+        match = re.fullmatch(
+            r"https://opedu\.lib\.osaka-kyoiku\.ac\.jp/badges/badge_json\.php\?id=(\d+)",
+            url,
+        )
+        if match:
+            path = os.path.join(FIXTURE_DIR, f"badge_json_{match.group(1)}.json")
+            if os.path.exists(path):
+                with open(path, "rb") as f:
+                    return make_response(url, f.read(), "application/json")
+        if url == self.not_json_url:
+            return make_response(
+                url,
+                "<html><body>course</body></html>".encode(),
+                "text/html; charset=utf-8",
+            )
+        if re.fullmatch(
+            r"https://opedu\.lib\.osaka-kyoiku\.ac\.jp/pluginfile\.php/\d+/badges/badgeimage/\d+/f1",
+            url,
+        ):
+            return make_response(url, PNG_BYTES, "image/png")
+        self.unexpected_urls.append(url)
+        raise requests.exceptions.ConnectionError(f"unexpected url: {url}")
 
     def test_run_ok(self):
         stdout = StringIO()

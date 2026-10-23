@@ -1,0 +1,25 @@
+{
+    "name": "スタンプ \"世界の教育改革の中の「日本型学校教育」－特別活動の可能性ー\"",
+    "description": "特別活動の可能性を理解する。",
+    "image": {
+        "id": "https://opedu.lib.osaka-kyoiku.ac.jp/pluginfile.php/2395/badges/badgeimage/38/f1",
+        "author": "https://opedu.lib.osaka-kyoiku.ac.jp/badges/image_author_json.php?id=38"
+    },
+    "criteria": {
+        "id": "https://opedu.lib.osaka-kyoiku.ac.jp/badges/badgeclass.php?id=38",
+        "narrative": "次の必要条件を完了した場合、ユーザにこのバッジが授与されます:\n* 「 すべて 」の次の活動が完了しました:\n\"ビデオ - 1.はじめに\"\n\"ビデオ - 2.特別活動とは何か\"\n\"ビデオ - 3.諸外国における特別活動\"\n\"ビデオ - 4.まとめ\"\n\"レッスン - 5.振り返り\"\n\n"
+    },
+    "issuer": {
+        "name": "大阪教育大学",
+        "url": "https://opedu.lib.osaka-kyoiku.ac.jp/",
+        "email": "",
+        "@context": "https://w3id.org/openbadges/v2",
+        "id": "https://opedu.lib.osaka-kyoiku.ac.jp/badges/issuer_json.php?id=38",
+        "type": "Issuer"
+    },
+    "@context": "https://w3id.org/openbadges/v2",
+    "id": "https://opedu.lib.osaka-kyoiku.ac.jp/badges/badge_json.php?id=38",
+    "type": "BadgeClass",
+    "version": "1.0-knowledge",
+    "@language": "ja"
+}
