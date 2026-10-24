@@ -67,6 +67,8 @@ docker run --rm -p 3000:3000 frontend # Docker コンテナの起動
 > [!NOTE]
 >
 > NEXT_PUBLIC\_\* に始まる環境変数はビルド時に参照され、アプリケーションのコードに埋め込まれますが、JWT_VERIFICATION_KEY_BASE64 環境変数は実行時（`yarn start` あるいは `docker run`）に環境変数の指定が必要です。
+>
+> `frontend_build.sh`（`deploy.sh` から呼ばれます）でコンテナを起動する場合は、実行時の環境変数を `frontend/.env.runtime` に `KEY=VALUE` の形式で 1 行ずつ書いてください。このファイルがあれば `docker run --env-file` で渡されます。Git の管理対象外で、Docker イメージにも含まれません。値を引用符で囲まないでください（`docker run --env-file` は引用符を外しません）。
 
 > [!TIP]
 >
