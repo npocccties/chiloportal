@@ -10,6 +10,7 @@
 2. chiloportal/backend/.env 用意 (本番用)
 3. chiloportal/backend/nginx.conf 用意 (本番用)
 4. chiloportal/frontend/.env や 静的コンテンツを用意 (本番用)
+   * 実行時に必要な環境変数（JWT_VERIFICATION_KEY_BASE64）は chiloportal/frontend/.env.runtime に用意 (本番用)
 5. sudo chmod 755 chiloportal/deploy.sh
 6. chiloportal/deploy.sh ( ← フロントエンドのdocker ビルドも実行）
 ※ 各 env  や 静的コンテンツがない場合は，停止 or デフォルト設定で実行
