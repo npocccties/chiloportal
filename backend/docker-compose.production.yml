@@ -1,5 +1,3 @@
-version: '3.9'
-
 services:
   web:
     image: nginx:1.23.1
@@ -68,7 +66,8 @@ services:
       - db
 
   db:
-    image: postgres:13
+    # PostgreSQL は 19 系。パッチ版はデプロイ時の pull で取り込む
+    image: postgres:19
     networks:
       - app_network
     environment:
@@ -76,11 +75,12 @@ services:
       - POSTGRES_DB=$DB_NAME
       - POSTGRES_USER=$DB_USER
       - POSTGRES_PASSWORD=$DB_PASS
-      - PGDATA=/var/lib/postgresql/data/pgdata
     ports:
       - 5433:5432
     volumes:
-      - db_data:/var/lib/postgresql/data
+      # PostgreSQL 18 以降のイメージの置き場所（/var/lib/postgresql/<版>/docker）に合わせる。
+      # 13 のデータ（db_data）は切り戻し用に残し、19 は新しいボリュームに置く
+      - db_data_pg19:/var/lib/postgresql
     restart: always
 
 networks:
@@ -89,3 +89,4 @@ networks:
     external: true
 volumes:
   db_data:
+  db_data_pg19:
