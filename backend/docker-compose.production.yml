@@ -1,6 +1,7 @@
 services:
   web:
-    image: nginx:1.23.1
+    # nginx は stable 系（1.30）。パッチ版はデプロイ時の pull で取り込み、毎年4月に次の stable 系へ上げる
+    image: nginx:1.30
     ports:
       - '80:80'
       - '443:443'

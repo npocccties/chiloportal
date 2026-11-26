@@ -6,6 +6,8 @@ PostgreSQL はメジャー版が変わるとデータファイルに互換性が
 - 13 のデータ（本番は `db_data` ボリューム、開発・検証環境は `backend/postgresql/data`）は消さずに残し、切り戻しに使います。
 - 19 のデータは、本番は `db_data_pg19` ボリューム、開発・検証環境は `backend/postgresql/pg19` に置きます。
 - 本番の前に、検証環境で同じ手順を通してください。
+- この更新では `deploy.sh`・`server_restart.sh` を使わず、この手順で進めてください。そのまま実行すると、空の PostgreSQL 19 にマイグレーションで表が作られ、ダンプの流し込みとぶつかります。
+- nginx も 1.30 に上がります。`ssl on;` は廃止されたので、`nginx.production.conf` は `listen 443 ssl;` に書き換えてあります。本番の compose はサーバー上の `nginx.conf` を読むので、手順 2 でそちらも直します。
 
 ## 1. 事前の準備
 
@@ -31,6 +33,12 @@ PostgreSQL はメジャー版が変わるとデータファイルに互換性が
    git pull
    sudo cp docker-compose.production.yml docker-compose.yml   # 検証環境は docker-compose.dev-server.yml
    ```
+1. 本番は、サーバー上の `nginx.conf` に `ssl on;` が残っていないかを確かめる。残っていれば行を消し、`listen 443;` を `listen 443 ssl;` にする。直したら、nginx 1.30 で設定が通るかを確かめる。
+   ```
+   grep -n "ssl on\|listen 443" nginx.conf
+   docker run --rm -v "$PWD/nginx.conf:/etc/nginx/conf.d/default.conf:ro" -v "$SSL_CERTS_DIR/signed.crt:/etc/nginx/conf.d/signed.crt:ro" -v "$SSL_CERTS_DIR/domain.key:/etc/nginx/conf.d/domain.key:ro" nginx:1.30 nginx -t
+   ```
+   `SSL_CERTS_DIR` は `.env` に書いてある証明書の場所。
 
 ## 3. PostgreSQL 19 にデータを流し込む
 
