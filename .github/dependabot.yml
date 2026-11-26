@@ -1,0 +1,21 @@
+# 依存パッケージは版を固定し、Dependabot からは脆弱性の修正だけを受け取る（2026-11-26 決定）。
+# open-pull-requests-limit: 0 で通常の版上げの PR を止める。脆弱性の修正の PR（security updates）は
+# この設定とは別に届くので、リポジトリの Settings → Code security で「Dependabot security updates」を有効にする。
+# Docker のベースイメージは、デプロイ時の pull でパッチ版を取り込むのでここでは扱わない。
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /frontend
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 0
+  - package-ecosystem: pip
+    directory: /backend
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 0
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 0
