@@ -16,11 +16,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: "frontend/package.json"
-          cache: "yarn"
-          cache-dependency-path: "frontend/yarn.lock"
-        env:
-          SKIP_YARN_COREPACK_CHECK: true
-      - run: corepack enable
+      # Node 25 以降は corepack が同梱されないので入れる。
+      # setup-node の yarn のキャッシュは corepack より先に yarn を呼ぶため使わない
+      - run: npm install -g corepack@0.36 && corepack enable
       - run: yarn install --immutable
       - run: yarn lint
       - run: yarn test

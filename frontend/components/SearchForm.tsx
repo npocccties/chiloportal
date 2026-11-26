@@ -12,8 +12,8 @@ type Props = {
 function SearchForm({ className, size = "medium", variant = "dark" }: Props) {
   const [keyword, setKeyword] = useState("");
   const router = useRouter();
-  const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setKeyword(event.target.value);
+  const handleInput = (event: React.InputEvent<HTMLInputElement>) => {
+    setKeyword(event.currentTarget.value);
   };
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();

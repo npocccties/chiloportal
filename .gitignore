@@ -1,2 +1,6 @@
 /node_modules
 /yarn.lock
+
+# デプロイ時に使ったイメージの版の記録
+image-versions.log
+backend/image-versions.log

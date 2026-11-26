@@ -7,7 +7,9 @@ type Props = MDXRemoteSerializeResult;
 const components = {
   img: (props: Pick<React.ImgHTMLAttributes<HTMLImageElement>, "src">) => {
     /* eslint-disable @next/next/no-img-element */
-    if (!props.src) return <img alt="" src="" />;
+    // Markdown の画像の src は常に文字列（React 19 の型では Blob も許されるため除外する）
+    if (typeof props.src !== "string" || !props.src)
+      return <img alt="" src="" />;
     try {
       new URL(props.src);
       /*
