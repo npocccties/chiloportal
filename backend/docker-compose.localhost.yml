@@ -39,7 +39,7 @@ services:
       args:
         # テストを実行するので開発用の依存も入れる
         REQUIREMENTS: requirements-dev.txt
-    command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; python /workspace/manage.py makemigrations; python /workspace/manage.py migrate'
+    command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; python /workspace/manage.py migrate --fake-initial'
     networks:
       - app_network
     volumes:
@@ -70,7 +70,6 @@ services:
       - 5433:5432
     volumes:
       - ./postgresql/data:/var/lib/postgresql
-      - ./sql:/docker-entrypoint-initdb.d
 
 networks:
   app_network:

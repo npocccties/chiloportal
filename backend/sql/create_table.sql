@@ -1,3 +1,5 @@
+-- 参考用：マイグレーション導入前（2026-11 まで）に表を作っていた SQL。
+-- 今は表をマイグレーション（backend/chiloportal/migrations/）で作るので、このファイルは使わない。
 drop table if exists portal_category cascade;
 drop table if exists issuer cascade;
 drop table if exists wisdom_badges cascade;

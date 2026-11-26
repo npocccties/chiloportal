@@ -8,7 +8,7 @@ cd $DIR
 docker compose pull --ignore-buildable
 docker compose build --pull
 docker compose up -d
-docker compose exec -T app python /workspace/manage.py makemigrations
-docker compose exec -T app python /workspace/manage.py migrate
+# 表はマイグレーション（chiloportal/migrations/）で作る。既存の DB では最初のマイグレーションを適用済みとして記録する（--fake-initial）
+docker compose exec -T app python /workspace/manage.py migrate --fake-initial
 docker compose exec -d app python /workspace/manage.py collectstatic --no-input --clear
 # コンテナ作成直後だとDB接続できないことがあるので、とりあえず遅らせてみる
