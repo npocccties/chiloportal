@@ -2,7 +2,11 @@ version: '3.9'
 
 services:
   app:
-    build: .
+    build:
+      context: .
+      args:
+        # テストを実行するので開発用の依存も入れる
+        REQUIREMENTS: requirements-dev.txt
     tty: true
     ports:
       - 80:8000
@@ -30,7 +34,11 @@ services:
       - migration
 
   migration:
-    build: .
+    build:
+      context: .
+      args:
+        # テストを実行するので開発用の依存も入れる
+        REQUIREMENTS: requirements-dev.txt
     command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; python /workspace/manage.py makemigrations; python /workspace/manage.py migrate'
     networks:
       - app_network

@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
-from distutils.util import strtobool
+from chiloportal.utils import str_to_bool
 from pathlib import Path
 import os
 import sys
@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 debug = os.environ.get("DEBUG", "False")
-DEBUG = strtobool(debug)
+DEBUG = str_to_bool(debug)
 
 logger_level = os.environ.get("LOGGER_LEVEL", "INFO")
 
@@ -70,6 +70,9 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+# drf-yasg: /swagger.json などの format を「.」なしで扱う（URL は urls.py の正規表現で今と同じに保つ）
+SWAGGER_USE_COMPAT_RENDERERS = False
 allowed_url = ""
 if host in "localhost":
     allowed_url = "http://" + host

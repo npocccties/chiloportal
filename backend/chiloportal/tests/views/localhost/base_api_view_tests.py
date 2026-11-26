@@ -795,9 +795,10 @@ class BaseAPIViewTests(TestCase):
         self.assertEqual(data["url"], framework.url)
 
     def assert_swagger_param(self, field, param):
-        self.assertEqual(field.name, param.name)
-        self.assertEqual(field.required, param.required)
-        self.assertEqual(field.schema, param.schema)
+        self.assertEqual(field["name"], param.name)
+        self.assertEqual(field["required"], param.required)
+        self.assertEqual(field["schema"], {"type": param.schema})
+        self.assertEqual(field["in"], "query")
 
     def create_test_consumer_data(self, data_count):
         consumers = []

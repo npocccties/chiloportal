@@ -8,6 +8,7 @@ class SwaggerTests(BaseAPIViewTests):
     def test_swager_query_param_filter(self):
         view = BadgesDetail()
         filter = SwaggerQueryParamFilter()
-        fields = filter.get_schema_fields(view)
+        fields = filter.get_schema_operation_parameters(view)
+        self.assertEqual(len(fields), len(view.swagger_query_params))
         self.assert_swagger_param(fields[0], view.swagger_query_params[0])
         self.assert_swagger_param(fields[1], view.swagger_query_params[1])

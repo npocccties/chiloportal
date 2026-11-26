@@ -11,8 +11,8 @@ from .. import utils
 
 class BadgesDetail(BaseAPIView):
     swagger_query_params = [
-        SwaggerQueryParam("badges_ids", True, schema=coreschema.String()),
-        SwaggerQueryParam("badges_type", True, schema=coreschema.String()),
+        SwaggerQueryParam("badges_ids", True, schema="string"),
+        SwaggerQueryParam("badges_type", True, schema="string"),
     ]
     filter_backends = (SwaggerQueryParamFilter,)
 

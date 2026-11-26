@@ -1,0 +1,12 @@
+# 本番で直接使うパッケージ。requirements.txt はここから作る（backend/README.md の「依存パッケージの更新」）
+Django==5.2.19
+djangorestframework==3.18.3
+djangorestframework-api-key==3.1.0
+drf-yasg==1.21.18
+django-cors-headers==4.9.0
+django-ipware==8.0.0
+django-axes==9.1.0
+gunicorn==27.0.1
+psycopg2-binary==2.9.13
+requests==2.34.2
+bcrypt==4.3.0
