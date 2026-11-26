@@ -28,6 +28,10 @@ PostgreSQL はメジャー版が変わるとデータファイルに互換性が
    ```
    ./server_stop.sh
    ```
+1. Git 管理外のマイグレーションのファイルがないことを確かめる。何か出たら、別の場所に退避してから進める（`git pull` がぶつかるのを防ぐ）。
+   ```
+   git status --short chiloportal/migrations
+   ```
 1. コードを更新し、使う compose ファイルを置き換える。
    ```
    git pull
@@ -68,7 +72,7 @@ DB だけを先に起動してから流し込みます。アプリを先に起�
    ```
    ./server_start.sh
    ```
-1. マイグレーションの状態を確認する。すべて `[X]` になっていればよい。
+1. マイグレーションの状態を確認する。すべて `[X]` になっていて、`chiloportal` は `0001_initial` だけであればよい。
    ```
    docker compose exec -T app python manage.py showmigrations
    ```
@@ -87,4 +91,4 @@ sudo cp docker-compose.production.yml docker-compose.yml
 
 ## 6. 後片付け
 
-しばらく運用して問題がなければ、13 のデータを消す（本番は `docker volume rm <プロジェクト名>_db_data`、開発・検証環境は `backend/postgresql/data`）。消す前に、`/var/chiloportal-pg13.dump` を別の場所に保管しておく。
+しばらく運用して問題がなければ、13 のデータを消す（本番は `docker volume rm <プロジェクト名>_db_data`、開発・検証環境は `backend/postgresql/data/data`。`backend/postgresql/data` の直下には `server_db_backup.sh` のダンプも出力されるので、フォルダごとは消さない）。消す前に、`/var/chiloportal-pg13.dump` を別の場所に保管しておく。
