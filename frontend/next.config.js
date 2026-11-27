@@ -1,16 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  eslint: {
-    dirs: ["pages", "templates", "components", "lib"],
-  },
-  webpack(config) {
-    config.module.rules.push({
-      test: /\.svg$/i,
-      issuer: /\.[jt]sx?$/,
-      use: [{ loader: "@svgr/webpack", options: { icon: true } }],
-    });
-    return config;
+  turbopack: {
+    rules: {
+      // SVG を React コンポーネントとして import する（例: import Logo from "public/logo.svg"）
+      "*.svg": {
+        loaders: [{ loader: "@svgr/webpack", options: { icon: true } }],
+        as: "*.js",
+      },
+    },
   },
 };
 

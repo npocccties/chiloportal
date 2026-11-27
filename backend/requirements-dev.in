@@ -1,0 +1,10 @@
+# 開発・テストで直接使うパッケージ。requirements-dev.txt はここから作る
+pytest==9.2.0
+pytest-django==4.14.0
+pytest-cov==7.1.0
+pytest-xdist==3.8.0
+coverage==7.17.5
+django-coverage-plugin==3.2.2
+black==26.10.1
+mypy==2.4.1
+types-requests==2.33.0.20261030

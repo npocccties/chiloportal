@@ -1,8 +1,10 @@
-version: '3.9'
-
 services:
   app:
-    build: .
+    build:
+      context: .
+      args:
+        # テストを実行するので開発用の依存も入れる
+        REQUIREMENTS: requirements-dev.txt
     tty: true
     ports:
       - 80:8000
@@ -30,8 +32,12 @@ services:
       - migration
 
   migration:
-    build: .
-    command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; python /workspace/manage.py makemigrations; python /workspace/manage.py migrate'
+    build:
+      context: .
+      args:
+        # テストを実行するので開発用の依存も入れる
+        REQUIREMENTS: requirements-dev.txt
+    command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; python /workspace/manage.py migrate --fake-initial'
     networks:
       - app_network
     volumes:
@@ -49,7 +55,8 @@ services:
       - db
 
   db:
-    image: postgres:13
+    # PostgreSQL は 19 系。パッチ版はデプロイ時の pull で取り込む
+    image: postgres:19
     networks:
       - app_network
     environment:
@@ -57,12 +64,10 @@ services:
       - POSTGRES_DB=$DB_NAME
       - POSTGRES_USER=$DB_USER
       - POSTGRES_PASSWORD=$DB_PASS
-      - PGDATA=/var/lib/postgresql/data/pgdata
     ports:
       - 5433:5432
     volumes:
-      - ./postgresql/data:/var/lib/postgresql
-      - ./sql:/docker-entrypoint-initdb.d
+      - ./postgresql/pg19:/var/lib/postgresql
 
 networks:
   app_network:

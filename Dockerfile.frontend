@@ -1,10 +1,12 @@
-FROM node:22.14.0-slim as base
+# Node は 26 系（LTS）の最新のパッチ版を使う。ビルドのたびに --pull で取り込む
+FROM node:26-slim AS base
 WORKDIR /app
 COPY frontend/.yarnrc.yml frontend/yarn.lock frontend/package.json ./
 COPY frontend/.yarn/ ./.yarn
 
-FROM base as build
-RUN corepack enable
+FROM base AS build
+# Node 25 以降は corepack が同梱されないので入れる
+RUN npm install -g corepack@0.36 && corepack enable
 RUN yarn install --immutable
 COPY frontend/.env* frontend/.gitignore \
   frontend/eslint.config.js frontend/next.config.js frontend/postcss.config.js \
@@ -25,11 +27,11 @@ COPY backend/doc/openapi.yaml /backend/doc/openapi.yaml
 RUN echo "a80ce7b73fcc75f1852956769dc10e73  ../backend/doc/openapi.yaml" > md5sum.txt && md5sum -c md5sum.txt
 RUN yarn build
 
-FROM base as install
-RUN corepack enable
+FROM base AS install
+RUN npm install -g corepack@0.36 && corepack enable
 RUN yarn workspaces focus --all --production
 
-FROM gcr.io/distroless/nodejs22-debian12
+FROM gcr.io/distroless/nodejs26-debian13
 WORKDIR /app
 ENV NODE_ENV=production
 COPY frontend/contents/ ./contents

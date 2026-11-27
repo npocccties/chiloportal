@@ -1,6 +1,8 @@
 #
-# DBの内容からModelを生成するときは下記コマンドを実行し、models.py.txtの内容から不要なテーブル(djangoが生成する)を除外し、chiloportal/models.pyに転記してください。
-#   python manage.py inspectdb > chiloportal/models.py.txt
+# テーブルの定義はマイグレーション（chiloportal/migrations/）で管理する。
+# モデルを変えたら python manage.py makemigrations chiloportal でマイグレーションを作り、一緒にコミットしてください。
+# 既存の本番の表（create_table.sql で作成）に合わせるため、ID は integer（apps.py の AutoField）にし、
+# 外部キーの列には索引を作らない（db_index=False）。索引を足すときは、マイグレーションで明示的に足す。
 #
 # 注意事項：
 # ・models.pyのrelated_nameはそのままにしておいてください。（クエリで使用しているため）
@@ -12,11 +14,11 @@ from django.db import models
 class CategorisedBadges(models.Model):
     wisdom_badges = models.ForeignKey(
         "WisdomBadges",
-        models.DO_NOTHING,
+        models.DO_NOTHING, db_index=False,
         related_name="categorised_badges_wisdom_badges",
     )
     goal = models.ForeignKey(
-        "Goal", models.DO_NOTHING, related_name="categorised_badges_goal"
+        "Goal", models.DO_NOTHING, db_index=False, related_name="categorised_badges_goal"
     )
     description = models.TextField(blank=True, null=True)
 
@@ -38,10 +40,10 @@ class Field(models.Model):
 
 class Goal(models.Model):
     framework = models.ForeignKey(
-        "Framework", models.DO_NOTHING, related_name="goal_framework"
+        "Framework", models.DO_NOTHING, db_index=False, related_name="goal_framework"
     )
-    field = models.ForeignKey(Field, models.DO_NOTHING, related_name="goal_field")
-    stage = models.ForeignKey("Stage", models.DO_NOTHING, related_name="goal_stage")
+    field = models.ForeignKey(Field, models.DO_NOTHING, db_index=False, related_name="goal_field")
+    stage = models.ForeignKey("Stage", models.DO_NOTHING, db_index=False, related_name="goal_stage")
     description = models.TextField()
 
     class Meta:
@@ -61,7 +63,7 @@ class Consumer(models.Model):
 
 class Criteria(models.Model):
     knowledge_badges = models.ForeignKey(
-        "KnowledgeBadges", models.DO_NOTHING, related_name="criteria_knowledge_badges"
+        "KnowledgeBadges", models.DO_NOTHING, db_index=False, related_name="criteria_knowledge_badges"
     )
     type = models.CharField(max_length=32)
     name = models.CharField(max_length=256)
@@ -84,7 +86,7 @@ class Issuer(models.Model):
 
 class KnowledgeBadges(models.Model):
     wisdom_badges = models.ForeignKey(
-        "WisdomBadges", models.DO_NOTHING, related_name="knowledge_badges_wisdom_badges"
+        "WisdomBadges", models.DO_NOTHING, db_index=False, related_name="knowledge_badges_wisdom_badges"
     )
     badge_class_id = models.TextField()
     name = models.CharField(max_length=512)
@@ -96,7 +98,7 @@ class KnowledgeBadges(models.Model):
     version = models.TextField(blank=True, null=True)
     issuer = models.ForeignKey(
         Issuer,
-        models.DO_NOTHING,
+        models.DO_NOTHING, db_index=False,
         blank=True,
         null=True,
         related_name="knowledge_badges_issuer",
@@ -132,7 +134,7 @@ class Stage(models.Model):
 
 class Framework(models.Model):
     consumer = models.ForeignKey(
-        Consumer, models.DO_NOTHING, related_name="framework_consumer"
+        Consumer, models.DO_NOTHING, db_index=False, related_name="framework_consumer"
     )
     name = models.CharField(max_length=256)
     description = models.TextField(blank=True, null=True)
@@ -148,7 +150,7 @@ class Framework(models.Model):
 class WisdomBadges(models.Model):
     portal_category = models.ForeignKey(
         PortalCategory,
-        models.DO_NOTHING,
+        models.DO_NOTHING, db_index=False,
         blank=True,
         null=True,
         related_name="wisdom_badges_portal_category",
@@ -162,7 +164,7 @@ class WisdomBadges(models.Model):
     version = models.TextField(blank=True, null=True)
     issuer = models.ForeignKey(
         Issuer,
-        models.DO_NOTHING,
+        models.DO_NOTHING, db_index=False,
         blank=True,
         null=True,
         related_name="wisdom_badges_issuer",

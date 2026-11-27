@@ -32,11 +32,20 @@
    * バックエンドAPIの単体テスト：`chiloportal/tests/views/*.py`
 
 ## 備考
-### Pythonのパッケージのインストール時
-1. pipコマンドにより Python のパッケージをインストールした場合、下記コマンドを実行し `requirements.txt` を更新してください。  
+### 依存パッケージの更新
+直接使うパッケージは `requirements.in`（本番用）と `requirements-dev.in`（開発・テスト用）に書きます。`requirements.txt` と `requirements-dev.txt` は、そこから依存も含めてすべての版を固定したものです。本番のイメージには `requirements.txt` だけを入れます。
+
+1. `requirements.in` / `requirements-dev.in` の版を書き換える（パッケージを足すときもここに書く）
+1. backend ディレクトリで下記を実行し、固定した一覧を作り直す
    ```
-   pip freeze > requirements.txt
+   docker run --rm -v "$PWD":/w -w /w python:3.13-slim sh -c '
+     pip install -q -r requirements.in && pip freeze > /tmp/prod.txt &&
+     pip install -q -r requirements-dev.in && pip freeze > /tmp/all.txt &&
+     { sed -n 1,2p requirements.txt; cat /tmp/prod.txt; } > requirements.txt.new &&
+     { sed -n 1,2p requirements-dev.txt; grep -vxFf /tmp/prod.txt /tmp/all.txt; } > requirements-dev.txt.new &&
+     mv requirements.txt.new requirements.txt && mv requirements-dev.txt.new requirements-dev.txt'
    ```
+1. テストを実行して確認する
 
 ### 単体テストのカバレッジ取得
 1. 下記コマンド実行  

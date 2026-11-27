@@ -1,5 +1,5 @@
 import { BadgeStatus } from "pages/dashboard";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
 
 type Props = BadgeStatus & {
@@ -16,8 +16,10 @@ const messages = {
 } as const;
 
 function CurrentCourse(props: Props) {
+  // 表示した時点の時刻で有効期限を判定する（描画のたびに Date.now() を呼ばない）
+  const [now] = useState(() => Date.now());
   const isExpired = props.badge_expired_at
-    ? Date.parse(props.badge_expired_at) < Date.now()
+    ? Date.parse(props.badge_expired_at) < now
     : false;
   const earnable = !isExpired && props.issued;
   const ref = useRef<HTMLInputElement>(null);

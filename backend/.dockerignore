@@ -1,0 +1,13 @@
+# イメージに入れないもの（実行時は compose で ./ を /workspace にマウントする）
+# DB のデータ（開発・検証環境）。postgres の権限で読めず、ビルドが止まる
+postgresql/
+# 秘密の値。環境変数は compose から渡す
+.env
+.env.*
+# 実行時に作られるもの
+logs/
+static/
+output/
+image-versions.log
+docker-compose.yml
+docker-compose.override.yml

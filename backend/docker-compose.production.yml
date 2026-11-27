@@ -1,8 +1,7 @@
-version: '3.9'
-
 services:
   web:
-    image: nginx:1.23.1
+    # nginx は stable 系（1.30）。パッチ版はデプロイ時の pull で取り込み、毎年4月に次の stable 系へ上げる
+    image: nginx:1.30
     ports:
       - '80:80'
       - '443:443'
@@ -50,7 +49,7 @@ services:
 
   migration:
     build: .
-    command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; python /workspace/manage.py makemigrations; python /workspace/manage.py migrate'
+    command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; python /workspace/manage.py migrate --fake-initial'
     networks:
       - app_network
     volumes:
@@ -68,7 +67,8 @@ services:
       - db
 
   db:
-    image: postgres:13
+    # PostgreSQL は 19 系。パッチ版はデプロイ時の pull で取り込む
+    image: postgres:19
     networks:
       - app_network
     environment:
@@ -76,12 +76,12 @@ services:
       - POSTGRES_DB=$DB_NAME
       - POSTGRES_USER=$DB_USER
       - POSTGRES_PASSWORD=$DB_PASS
-      - PGDATA=/var/lib/postgresql/data/pgdata
     ports:
       - 5433:5432
     volumes:
-      - db_data:/var/lib/postgresql/data
-      - ./sql:/docker-entrypoint-initdb.d
+      # PostgreSQL 18 以降のイメージの置き場所（/var/lib/postgresql/<版>/docker）に合わせる。
+      # 13 のデータ（db_data）は切り戻し用に残し、19 は新しいボリュームに置く
+      - db_data_pg19:/var/lib/postgresql
     restart: always
 
 networks:
@@ -90,3 +90,4 @@ networks:
     external: true
 volumes:
   db_data:
+  db_data_pg19:

@@ -1,15 +1,13 @@
 import js from "@eslint/js";
-import { FlatCompat } from "@eslint/eslintrc";
 import canonical from "eslint-plugin-canonical";
+import next from "eslint-config-next";
 import prettier from "eslint-config-prettier/flat";
 import { defineConfig, globalIgnores } from "eslint/config";
 import tseslint from "typescript-eslint";
 
-const compat = new FlatCompat({ baseDirectory: import.meta.dirname });
-
 const eslintConfig = defineConfig([
   globalIgnores(["api/**/*.ts"]),
-  compat.config({ extends: ["next"] }),
+  ...next,
   tseslint.config(
     js.configs.recommended,
     tseslint.configs.recommended,

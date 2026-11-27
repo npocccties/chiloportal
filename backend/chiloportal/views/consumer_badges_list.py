@@ -6,7 +6,6 @@ from ..responses import *
 from .base_api_view import *
 from django.db.models import Prefetch
 from django.db.models import Count
-from distutils.util import strtobool
 from django.db.models import Q
 import bcrypt
 import os

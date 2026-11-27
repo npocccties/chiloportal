@@ -1,5 +1,5 @@
 import { BadgeStatus } from "pages/dashboard";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import {
   NEXT_PUBLIC_CHILOWALLET_BASE_URL,
   NEXT_PUBLIC_BASE_URL,
@@ -79,10 +79,12 @@ function normalizeBadgeJson(
 }
 
 function EarnedBadge(props: Props) {
+  // 表示した時点の時刻で有効期限を判定する（描画のたびに Date.now() を呼ばない）
+  const [now] = useState(() => Date.now());
   const parsedBadgeJson = parseBadgeJson(props.badge_json);
   const isValidBadgeJson = validateBadgeJson(parsedBadgeJson);
   const isExpired = props.badge_expired_at
-    ? Date.parse(props.badge_expired_at) < Date.now()
+    ? Date.parse(props.badge_expired_at) < now
     : false;
   const submittable = !isExpired && isValidBadgeJson;
   const badge = normalizeBadgeJson(parsedBadgeJson);

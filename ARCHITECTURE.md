@@ -41,7 +41,7 @@ Pythonで実装されたWebアプリケーションフレームワーク。
 
 ## DBテーブル定義
 
-https://github.com/npocccties/chiloportal/tree/main/backend/sql/create_table.sql
+テーブル定義はマイグレーションで管理しています：[backend/chiloportal/migrations/](backend/chiloportal/migrations/)（モデルは [backend/chiloportal/models.py](backend/chiloportal/models.py)）
 
 
 ## APIドキュメント
