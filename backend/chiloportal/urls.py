@@ -36,6 +36,7 @@ urlpatterns = [
     path("consumer/", ConsumerDetail.as_view(), name="consumer-detail"),
     path("consumer/list/", ConsumerList.as_view(), name="consumer-list"),
     path("issuer/list/", IssuerList.as_view(), name="issuer-list"),
+    path("admin/status/", AdminStatus.as_view(), name="admin-status"),
     path("stage/field/list/", StageFieldList.as_view(), name="stage-field-list"),
     path(
         "portalCategory/list/", PortalCategoryList.as_view(), name="portalCategory-list"

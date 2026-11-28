@@ -5,7 +5,7 @@ djangorestframework-api-key==3.1.0
 drf-yasg==1.21.18
 django-cors-headers==4.9.0
 django-ipware==8.0.0
-django-axes==9.1.0
+PyJWT[crypto]==2.15.1
 gunicorn==27.0.1
 psycopg2-binary==2.9.13
 requests==2.34.2

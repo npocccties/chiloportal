@@ -7,6 +7,7 @@ from django.test import TestCase
 from django.urls import reverse
 
 from ...models import IssuerMapping, Issuer, KnowledgeBadges, PortalCategory, WisdomBadges
+from ..shibboleth import ShibbolethLoginMixin, shibboleth_settings
 
 Status = WisdomBadges.Status
 
@@ -34,7 +35,8 @@ def create_badge(name, issuer, issuer_name, issuer_url, category=None, status=St
     return badge
 
 
-class AdminTestBase(TestCase):
+@shibboleth_settings
+class AdminTestBase(ShibbolethLoginMixin, TestCase):
     def setUp(self):
         User = get_user_model()
         self.overall = User.objects.create(username="overall@example.org", is_staff=True, is_superuser=True)
@@ -101,13 +103,13 @@ class RoleScopeTest(AdminTestBase):
         return {badge.name for badge in response.context["cl"].result_list}
 
     def test_overall_admin_sees_all(self):
-        self.client.force_login(self.overall)
+        self.login(self.overall)
         response = self.client.get(self.changelist)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(self.listed_names(response), {"a1", "a2", "a3", "b1"})
 
     def test_issuer_admin_sees_only_assigned(self):
-        self.client.force_login(self.admin_a)
+        self.login(self.admin_a)
         response = self.client.get(self.changelist)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(self.listed_names(response), {"a1", "a2", "a3"})
@@ -118,24 +120,24 @@ class RoleScopeTest(AdminTestBase):
 
     def test_issuer_admin_with_two_issuers(self):
         self.univ_b.admins.add(self.admin_a)
-        self.client.force_login(self.admin_a)
+        self.login(self.admin_a)
         response = self.client.get(self.changelist)
         self.assertEqual(self.listed_names(response), {"a1", "a2", "a3", "b1"})
 
     def test_issuer_admin_cannot_open_overall_pages(self):
-        self.client.force_login(self.admin_a)
+        self.login(self.admin_a)
         for name in ["issuer", "issuermapping", "portalcategory", "consumer", "goal"]:
             response = self.client.get(reverse(f"admin:chiloportal_{name}_changelist"))
             self.assertEqual(response.status_code, 403, name)
 
     def test_issuer_admin_sees_only_assigned_knowledge_badges(self):
-        self.client.force_login(self.admin_a)
+        self.login(self.admin_a)
         response = self.client.get(reverse("admin:chiloportal_knowledgebadges_changelist"))
         names = {badge.name for badge in response.context["cl"].result_list}
         self.assertEqual(names, {"a1 のスタンプ", "a2 のスタンプ", "a3 のスタンプ"})
 
     def test_issuer_admin_can_publish_assigned(self):
-        self.client.force_login(self.admin_a)
+        self.login(self.admin_a)
         response = self.client.post(
             self.change_url(self.badge_a1),
             {"status": Status.PUBLISHED, "portal_category": self.category.pk, **self.inline_management()},
@@ -146,7 +148,7 @@ class RoleScopeTest(AdminTestBase):
         self.assertIsNotNone(badge.published_at)
 
     def test_cannot_publish_without_category_in_form(self):
-        self.client.force_login(self.admin_a)
+        self.login(self.admin_a)
         response = self.client.post(
             self.change_url(self.badge_a3),
             {"status": Status.PUBLISHED, "portal_category": "", **self.inline_management()},
@@ -156,7 +158,7 @@ class RoleScopeTest(AdminTestBase):
         self.assertEqual(WisdomBadges.objects.get(pk=self.badge_a3.pk).status, Status.HIDDEN)
 
     def test_moodle_fields_are_read_only(self):
-        self.client.force_login(self.admin_a)
+        self.login(self.admin_a)
         self.client.post(
             self.change_url(self.badge_a1),
             {
@@ -169,7 +171,7 @@ class RoleScopeTest(AdminTestBase):
         self.assertEqual(WisdomBadges.objects.get(pk=self.badge_a1.pk).name, "a1")
 
     def test_publish_action(self):
-        self.client.force_login(self.admin_a)
+        self.login(self.admin_a)
         response = self.client.post(
             self.changelist,
             {
@@ -188,12 +190,12 @@ class RoleScopeTest(AdminTestBase):
         self.assertTrue(LogEntry.objects.filter(object_id=str(self.badge_a1.pk), user=self.admin_a).exists())
 
     def test_hide_action(self):
-        self.client.force_login(self.admin_a)
+        self.login(self.admin_a)
         self.client.post(self.changelist, {"action": "hide", "_selected_action": [self.badge_a2.pk]})
         self.assertEqual(WisdomBadges.objects.get(pk=self.badge_a2.pk).status, Status.HIDDEN)
 
     def test_badges_cannot_be_deleted(self):
-        self.client.force_login(self.overall)
+        self.login(self.overall)
         response = self.client.get(reverse("admin:chiloportal_wisdombadges_delete", args=[self.badge_a1.pk]))
         self.assertEqual(response.status_code, 403)
 
@@ -212,7 +214,7 @@ class IssuerMappingAdminTest(AdminTestBase):
         return reverse("admin:chiloportal_issuermapping_change", args=[mapping.pk])
 
     def test_change_requires_confirmation(self):
-        self.client.force_login(self.overall)
+        self.login(self.overall)
         url = self.change_url(self.map_a2)
         response = self.client.post(url, {"issuer": self.univ_b.pk})
         self.assertEqual(response.status_code, 200)
@@ -238,18 +240,18 @@ class IssuerMappingAdminTest(AdminTestBase):
     def test_unmapped_combination(self):
         unmapped = IssuerMapping.objects.create(issuer_name="C大学", issuer_url="https://lms.c.example.org")
         create_badge("c1", None, "C大学", "https://lms.c.example.org", self.category)
-        self.client.force_login(self.overall)
+        self.login(self.overall)
         response = self.client.get(
             reverse("admin:chiloportal_issuermapping_changelist"), {"mapped": "no"}
         )
         self.assertEqual(list(response.context["cl"].result_list), [unmapped])
         # 担当機関のないバッジは、機関管理者には見えない
-        self.client.force_login(self.admin_a)
+        self.login(self.admin_a)
         response = self.client.get(reverse("admin:chiloportal_wisdombadges_changelist"))
         self.assertNotIn("c1", {badge.name for badge in response.context["cl"].result_list})
 
     def test_mapping_with_badges_cannot_be_deleted(self):
-        self.client.force_login(self.overall)
+        self.login(self.overall)
         response = self.client.get(reverse("admin:chiloportal_issuermapping_delete", args=[self.map_a1.pk]))
         self.assertEqual(response.status_code, 403)
 

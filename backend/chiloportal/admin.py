@@ -5,19 +5,18 @@
 # ・全体管理者：Django の superuser。すべての操作ができる。
 # ・機関管理者：スタッフのユーザーで、バッジ発行機関の「機関管理者」に指定された人。
 #   担当機関のバッジだけを見て、公開・非表示とカテゴリを変えられる。
+# ログインは学認（auth.py・admin_site.py）。管理ユーザーは eppn をユーザー名にして、パスワードなしで登録する。
 #
 from django import forms
 from django.contrib import admin, messages
+from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.contrib.auth import admin as auth_admin  # noqa: F401  先に読み込んで、ユーザー・グループの画面を登録させる
+from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django.db import transaction
 from django.db.models import Count, F
 
 from . import models
-
-admin.site.site_header = "CHiLO-Portal 管理画面"
-admin.site.site_title = "CHiLO-Portal 管理画面"
-admin.site.index_title = "管理メニュー"
 
 # 権限はグループではなく役割（全体管理者・機関管理者）で分けるので、グループの画面は出さない
 admin.site.unregister(Group)
@@ -301,7 +300,7 @@ class IssuerAdmin(OverallAdminOnly):
             from django.contrib.auth import get_user_model
 
             # 全体管理者はすべての機関を操作できるので、選択肢には出さない
-            kwargs["queryset"] = get_user_model().objects.filter(is_superuser=False).order_by("username")
+            kwargs["queryset"] = get_user_model().objects.filter(is_staff=True, is_superuser=False).order_by("username")
         return super().formfield_for_manytomany(db_field, request, **kwargs)
 
 
@@ -494,3 +493,76 @@ class CategorisedBadgesAdmin(OverallAdminOnly):
     list_select_related = ["goal", "wisdom_badges"]
     search_fields = ["wisdom_badges__name", "goal__description"]
     autocomplete_fields = ["wisdom_badges"]
+
+
+# ---------------------------------------------------------------------------
+# 管理ユーザー（全体管理者だけ）
+# ---------------------------------------------------------------------------
+
+User = get_user_model()
+admin.site.unregister(User)
+
+
+class AdminUserForm(forms.ModelForm):
+    issuers = forms.ModelMultipleChoiceField(
+        queryset=models.Issuer.objects.order_by("name"),
+        required=False,
+        label="担当機関",
+        widget=FilteredSelectMultiple("担当機関", is_stacked=False),
+        help_text="機関管理者が操作できるバッジ発行機関。全体管理者は、指定しなくてもすべての機関を操作できる。",
+    )
+
+    class Meta:
+        model = User
+        fields = ["username", "first_name", "is_active", "is_superuser"]
+        labels = {
+            "username": "eppn",
+            "first_name": "表示名",
+            "is_active": "有効",
+            "is_superuser": "全体管理者",
+        }
+        help_texts = {
+            "username": "学認の eppn（例：user@example.ac.jp）。この eppn で学認にログインした人が、管理画面を使えるようになる。",
+            "first_name": "学認でログインしたときに、学認の表示名で上書きされる。",
+            "is_active": "外すと、管理画面を使えなくなる（停止）。",
+            "is_superuser": "すべての機関とポータル全体の設定を操作できる。外すと機関管理者になり、担当機関だけを操作できる。",
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance.pk:
+            self.fields["issuers"].initial = self.instance.assigned_issuers.all()
+
+
+@admin.register(User)
+class AdminUserAdmin(OverallAdminOnly):
+    form = AdminUserForm
+    fields = ["username", "first_name", "is_active", "is_superuser", "issuers", "last_login"]
+    readonly_fields = ["last_login"]
+    list_display = ["username", "first_name", "role", "is_active", "issuer_names", "last_login"]
+    list_filter = ["is_superuser", "is_active"]
+    search_fields = ["username", "first_name", "assigned_issuers__name"]
+    ordering = ["username"]
+
+    def get_queryset(self, request):
+        # 管理画面のユーザーだけを出す
+        return super().get_queryset(request).filter(is_staff=True).prefetch_related("assigned_issuers")
+
+    @admin.display(description="役割", ordering="is_superuser")
+    def role(self, obj):
+        return "全体管理者" if obj.is_superuser else "機関管理者"
+
+    @admin.display(description="担当機関")
+    def issuer_names(self, obj):
+        return "、".join(str(issuer) for issuer in obj.assigned_issuers.all())
+
+    def save_model(self, request, obj, form, change):
+        obj.is_staff = True
+        if not change:
+            # パスワードでのログインはしない
+            obj.set_unusable_password()
+        super().save_model(request, obj, form, change)
+
+    def save_related(self, request, form, formsets, change):
+        super().save_related(request, form, formsets, change)
+        form.instance.assigned_issuers.set(form.cleaned_data["issuers"])
