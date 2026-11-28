@@ -153,6 +153,13 @@
    * DBが `/var/chiloportal.dump` にダンプ出力されます  
    * 上記ファイルは、環境変数 `DUMP_BACKUP_DIR` のディレクトリへ .tar.gz 形式で圧縮および格納されます
    * 古い圧縮ファイルは削除されます（環境変数 `DUMP_BACKUP_COUNT` で保持する期間を日数で指定）
+
+   画像のバックアップ  
+   ```
+   chiloportal/backend/server_media_backup.sh
+   ```
+   * 管理画面でアップロードした画像（`backend/media`）を、`DUMP_BACKUP_DIR` に `chiloportal-media_{yyyyMMdd}.tar.gz` として控えます。保持する日数は DB と同じです
+   * DB のバックアップと同じタイミングで実行してください（下記の cron を参照）。戻すときは、このファイルを `backend` で展開します
    
    DBリストア  
    ```
@@ -211,6 +218,13 @@
    ```
 1. 2人目からは、全体管理者が管理画面の「ユーザー」で eppn を登録し、役割と担当機関を指定します。停止するときは「有効」を外します
 1. 登録されていない人が学認でログインして管理画面を開くと、その人の eppn が表示されます。その eppn で登録してください
+
+全体管理者は、ほかに次を設定できます。
+
+* ラベル：バッジ名の横に出す目印（表示する文字と色）。機関管理者は、担当機関のバッジにラベルを付けられます
+* 表示の設定：「NEW」を出す日数（公開した日から数える）と、バッジ一覧の最初の並び順
+
+バッジの表示用の画像（SVG・PNG）は `backend/media` に保存され、nginx が `/media/` で配信します。スクリプトや外部への参照を含む SVG は、アップロードのときに受け付けません。
 
 # 環境変数
 |環境変数名|説明|備考|
@@ -330,6 +344,7 @@ https://portal.example.org/admin
 * cron 式は以下の通り
    ```
    0 4 * * * /opt/chiloportal/backend/server_db_backup.sh
+   5 4 * * * /opt/chiloportal/backend/server_media_backup.sh
    ```
 
 ## 本番サーバー
