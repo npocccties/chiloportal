@@ -25,7 +25,7 @@ def create_badge(name, issuer, issuer_name, issuer_url, category=None, status=St
     )
     KnowledgeBadges.objects.create(
         wisdom_badges=badge,
-        name=f"{name} の知識バッジ",
+        name=f"{name} のスタンプ",
         badge_class_id=f"https://lms.example.org/badges/{name}-k",
         issuer=issuer,
         issuer_name=issuer_name,
@@ -132,7 +132,7 @@ class RoleScopeTest(AdminTestBase):
         self.client.force_login(self.admin_a)
         response = self.client.get(reverse("admin:chiloportal_knowledgebadges_changelist"))
         names = {badge.name for badge in response.context["cl"].result_list}
-        self.assertEqual(names, {"a1 の知識バッジ", "a2 の知識バッジ", "a3 の知識バッジ"})
+        self.assertEqual(names, {"a1 のスタンプ", "a2 のスタンプ", "a3 のスタンプ"})
 
     def test_issuer_admin_can_publish_assigned(self):
         self.client.force_login(self.admin_a)

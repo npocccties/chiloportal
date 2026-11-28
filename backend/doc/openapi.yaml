@@ -248,7 +248,7 @@ paths:
     get:
       tags:
         - badges
-      description: 指定されたバッジIDのバッジ関連情報を返却します。published_only が true のとき、ポータル非表示の能力バッジ（知識バッジは、その能力バッジ）を除き、1件もなければ 404 を返します
+      description: 指定されたバッジIDのバッジ関連情報を返却します。published_only が true のとき、ポータル非表示のバッジ（スタンプは、そのバッジ）を除き、1件もなければ 404 を返します
       operationId: findBadges
       parameters:
         - name: badges_ids
@@ -767,7 +767,7 @@ components:
           example: digitalbadge_classID
         status:
           type: string
-          description: 能力バッジの公開状態（published 公開／hidden ポータル非表示／auto_hidden Moodle で無効・削除されたため非表示）。知識バッジにはない
+          description: バッジの公開状態（published 公開／hidden ポータル非表示／auto_hidden Moodle で無効・削除されたため非表示）。スタンプにはない
           enum:
             - published
             - hidden
@@ -843,7 +843,7 @@ components:
           example: digitalbadge_classID
         status:
           type: string
-          description: 能力バッジの公開状態（published 公開／hidden ポータル非表示／auto_hidden Moodle で無効・削除されたため非表示）。知識バッジにはない
+          description: バッジの公開状態（published 公開／hidden ポータル非表示／auto_hidden Moodle で無効・削除されたため非表示）。スタンプにはない
           enum:
             - published
             - hidden

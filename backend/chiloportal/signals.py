@@ -1,6 +1,6 @@
 #
 # 保存・削除したときに、ポータルのページの作り直しを予約する（revalidate.py）。
-# 能力バッジの保存は models.WisdomBadges.save で扱う（前の担当機関も分かるため）。
+# バッジの保存は models.WisdomBadges.save で扱う（前の担当機関も分かるため）。
 #
 from django.db.models.signals import post_delete, post_save
 from django.dispatch import receiver

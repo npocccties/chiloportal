@@ -8,7 +8,7 @@ from django.db import migrations, models
 def migrate_existing_data(apps, schema_editor):
     """既存のデータを、担当機関の対応表と公開状態に移す。
 
-    - 今ある能力バッジは、今までどおりポータルに出ていたので「公開」にする（公開した日時は分からないので空のまま）。
+    - 今あるバッジは、今までどおりポータルに出ていたので「公開」にする（公開した日時は分からないので空のまま）。
     - バッジに、今の発行機関の名前と URL を issuer.name / issuer.url として残す。
     - 今ある発行機関は、それぞれ1つのバッジ発行機関にし、今の名前と URL を最初の対応にする。
     """
@@ -43,8 +43,8 @@ class Migration(migrations.Migration):
             name="categorisedbadges",
             options={
                 "managed": True,
-                "verbose_name": "ゴールと能力バッジの対応",
-                "verbose_name_plural": "ゴールと能力バッジの対応",
+                "verbose_name": "目標とバッジの対応",
+                "verbose_name_plural": "目標とバッジの対応",
             },
         ),
         migrations.AlterModelOptions(
@@ -59,32 +59,32 @@ class Migration(migrations.Migration):
             name="criteria",
             options={
                 "managed": True,
-                "verbose_name": "達成基準",
-                "verbose_name_plural": "達成基準",
+                "verbose_name": "クライテリア",
+                "verbose_name_plural": "クライテリア",
             },
         ),
         migrations.AlterModelOptions(
             name="field",
             options={
                 "managed": True,
-                "verbose_name": "育成指標の分野",
-                "verbose_name_plural": "育成指標の分野",
+                "verbose_name": "指標項目",
+                "verbose_name_plural": "指標項目",
             },
         ),
         migrations.AlterModelOptions(
             name="framework",
             options={
                 "managed": True,
-                "verbose_name": "育成指標",
-                "verbose_name_plural": "育成指標",
+                "verbose_name": "教員育成指標",
+                "verbose_name_plural": "教員育成指標",
             },
         ),
         migrations.AlterModelOptions(
             name="goal",
             options={
                 "managed": True,
-                "verbose_name": "育成指標のゴール",
-                "verbose_name_plural": "育成指標のゴール",
+                "verbose_name": "目標",
+                "verbose_name_plural": "目標",
             },
         ),
         migrations.AlterModelOptions(
@@ -99,8 +99,8 @@ class Migration(migrations.Migration):
             name="knowledgebadges",
             options={
                 "managed": True,
-                "verbose_name": "知識バッジ",
-                "verbose_name_plural": "知識バッジ",
+                "verbose_name": "スタンプ",
+                "verbose_name_plural": "スタンプ",
             },
         ),
         migrations.AlterModelOptions(
@@ -115,16 +115,16 @@ class Migration(migrations.Migration):
             name="stage",
             options={
                 "managed": True,
-                "verbose_name": "育成指標のステージ",
-                "verbose_name_plural": "育成指標のステージ",
+                "verbose_name": "成長段階",
+                "verbose_name_plural": "成長段階",
             },
         ),
         migrations.AlterModelOptions(
             name="wisdombadges",
             options={
                 "managed": True,
-                "verbose_name": "能力バッジ",
-                "verbose_name_plural": "能力バッジ",
+                "verbose_name": "バッジ",
+                "verbose_name_plural": "バッジ",
             },
         ),
         migrations.AddField(
@@ -192,7 +192,7 @@ class Migration(migrations.Migration):
                 on_delete=django.db.models.deletion.PROTECT,
                 related_name="categorised_badges_goal",
                 to="chiloportal.goal",
-                verbose_name="ゴール",
+                verbose_name="目標",
             ),
         ),
         migrations.AlterField(
@@ -203,7 +203,7 @@ class Migration(migrations.Migration):
                 on_delete=django.db.models.deletion.PROTECT,
                 related_name="categorised_badges_wisdom_badges",
                 to="chiloportal.wisdombadges",
-                verbose_name="能力バッジ",
+                verbose_name="バッジ",
             ),
         ),
         migrations.AlterField(
@@ -231,7 +231,7 @@ class Migration(migrations.Migration):
                 on_delete=django.db.models.deletion.PROTECT,
                 related_name="criteria_knowledge_badges",
                 to="chiloportal.knowledgebadges",
-                verbose_name="知識バッジ",
+                verbose_name="スタンプ",
             ),
         ),
         migrations.AlterField(
@@ -252,17 +252,17 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="field",
             name="field1_name",
-            field=models.CharField(max_length=128, verbose_name="分野1"),
+            field=models.CharField(max_length=128, verbose_name="指標項目（大）"),
         ),
         migrations.AlterField(
             model_name="field",
             name="field2_name",
-            field=models.CharField(max_length=128, verbose_name="分野2"),
+            field=models.CharField(max_length=128, verbose_name="指標項目（中）"),
         ),
         migrations.AlterField(
             model_name="field",
             name="field3_name",
-            field=models.CharField(max_length=128, verbose_name="分野3"),
+            field=models.CharField(max_length=128, verbose_name="指標項目（小）"),
         ),
         migrations.AlterField(
             model_name="field",
@@ -318,7 +318,7 @@ class Migration(migrations.Migration):
                 on_delete=django.db.models.deletion.PROTECT,
                 related_name="goal_field",
                 to="chiloportal.field",
-                verbose_name="分野",
+                verbose_name="指標項目",
             ),
         ),
         migrations.AlterField(
@@ -329,7 +329,7 @@ class Migration(migrations.Migration):
                 on_delete=django.db.models.deletion.PROTECT,
                 related_name="goal_framework",
                 to="chiloportal.framework",
-                verbose_name="育成指標",
+                verbose_name="教員育成指標",
             ),
         ),
         migrations.AlterField(
@@ -340,7 +340,7 @@ class Migration(migrations.Migration):
                 on_delete=django.db.models.deletion.PROTECT,
                 related_name="goal_stage",
                 to="chiloportal.stage",
-                verbose_name="ステージ",
+                verbose_name="成長段階",
             ),
         ),
         migrations.AlterField(
@@ -369,7 +369,7 @@ class Migration(migrations.Migration):
             model_name="knowledgebadges",
             name="criteria_narrative",
             field=models.TextField(
-                blank=True, null=True, verbose_name="達成基準（原文）"
+                blank=True, null=True, verbose_name="クライテリア（原文）"
             ),
         ),
         migrations.AlterField(
@@ -423,7 +423,7 @@ class Migration(migrations.Migration):
                 on_delete=django.db.models.deletion.PROTECT,
                 related_name="knowledge_badges_wisdom_badges",
                 to="chiloportal.wisdombadges",
-                verbose_name="能力バッジ",
+                verbose_name="バッジ",
             ),
         ),
         migrations.AlterField(

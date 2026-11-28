@@ -113,7 +113,7 @@ class KnowledgeBadgesInline(admin.TabularInline):
     extra = 0
     can_delete = False
     show_change_link = True
-    verbose_name_plural = "知識バッジ（Moodle の順番）"
+    verbose_name_plural = "スタンプ（Moodle の順番）"
 
     def get_queryset(self, request):
         return super().get_queryset(request).order_by("pk")
@@ -292,7 +292,7 @@ class IssuerAdmin(OverallAdminOnly):
     def mapping_count(self, obj):
         return obj._mapping_count
 
-    @admin.display(description="能力バッジの数", ordering="_badge_count")
+    @admin.display(description="バッジの数", ordering="_badge_count")
     def badge_count(self, obj):
         return obj._badge_count
 
@@ -357,7 +357,7 @@ class IssuerMappingForm(forms.ModelForm):
             )
         published = badges.filter(status=models.WisdomBadges.Status.PUBLISHED).count()
         raise forms.ValidationError(
-            f"この組み合わせの能力バッジ {count} 件が、{who}"
+            f"この組み合わせのバッジ {count} 件が、{who}"
             f"公開中の {published} 件はポータル非表示に戻り、新しい担当機関の公開待ちになります。"
             "よければ「上の内容を確認しました」にチェックして、もう一度保存してください。"
         )
@@ -383,7 +383,7 @@ class IssuerMappingAdmin(OverallAdminOnly):
         # 組み合わせそのものは、取り込んだバッジの値なので変えない
         return ["issuer_name", "issuer_url"] if obj is not None else []
 
-    @admin.display(description="能力バッジの数")
+    @admin.display(description="バッジの数")
     def badge_count(self, obj):
         return badges_of_mapping(obj).count()
 
@@ -400,7 +400,7 @@ class IssuerMappingAdmin(OverallAdminOnly):
                 if moved:
                     self.message_user(
                         request,
-                        f"能力バッジ {moved} 件の担当機関を「{obj.issuer or '決まっていない'}」に変え、ポータル非表示にしました。",
+                        f"バッジ {moved} 件の担当機関を「{obj.issuer or '決まっていない'}」に変え、ポータル非表示にしました。",
                         messages.SUCCESS,
                     )
 
@@ -445,7 +445,7 @@ class PortalCategoryAdmin(OverallAdminOnly):
     def get_queryset(self, request):
         return super().get_queryset(request).annotate(_badge_count=Count("wisdom_badges_portal_category"))
 
-    @admin.display(description="能力バッジの数", ordering="_badge_count")
+    @admin.display(description="バッジの数", ordering="_badge_count")
     def badge_count(self, obj):
         return obj._badge_count
 

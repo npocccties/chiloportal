@@ -23,38 +23,38 @@ class CategorisedBadges(models.Model):
         models.PROTECT,
         db_index=False,
         related_name="categorised_badges_wisdom_badges",
-        verbose_name="能力バッジ",
+        verbose_name="バッジ",
     )
     goal = models.ForeignKey(
         "Goal",
         models.PROTECT,
         db_index=False,
         related_name="categorised_badges_goal",
-        verbose_name="ゴール",
+        verbose_name="目標",
     )
     description = models.TextField("説明", blank=True, null=True)
 
     class Meta:
         managed = True
         db_table = "categorised_badges"
-        verbose_name = "ゴールと能力バッジの対応"
-        verbose_name_plural = "ゴールと能力バッジの対応"
+        verbose_name = "目標とバッジの対応"
+        verbose_name_plural = "目標とバッジの対応"
 
     def __str__(self):
         return f"{self.goal} - {self.wisdom_badges}"
 
 
 class Field(models.Model):
-    field1_name = models.CharField("分野1", max_length=128)
-    field2_name = models.CharField("分野2", max_length=128)
-    field3_name = models.CharField("分野3", max_length=128)
+    field1_name = models.CharField("指標項目（大）", max_length=128)
+    field2_name = models.CharField("指標項目（中）", max_length=128)
+    field3_name = models.CharField("指標項目（小）", max_length=128)
     sort_key = models.IntegerField("表示順")
 
     class Meta:
         managed = True
         db_table = "field"
-        verbose_name = "育成指標の分野"
-        verbose_name_plural = "育成指標の分野"
+        verbose_name = "指標項目"
+        verbose_name_plural = "指標項目"
 
     def __str__(self):
         return " / ".join(n for n in [self.field1_name, self.field2_name, self.field3_name] if n)
@@ -66,29 +66,29 @@ class Goal(models.Model):
         models.PROTECT,
         db_index=False,
         related_name="goal_framework",
-        verbose_name="育成指標",
+        verbose_name="教員育成指標",
     )
     field = models.ForeignKey(
         Field,
         models.PROTECT,
         db_index=False,
         related_name="goal_field",
-        verbose_name="分野",
+        verbose_name="指標項目",
     )
     stage = models.ForeignKey(
         "Stage",
         models.PROTECT,
         db_index=False,
         related_name="goal_stage",
-        verbose_name="ステージ",
+        verbose_name="成長段階",
     )
     description = models.TextField("説明")
 
     class Meta:
         managed = True
         db_table = "goal"
-        verbose_name = "育成指標のゴール"
-        verbose_name_plural = "育成指標のゴール"
+        verbose_name = "目標"
+        verbose_name_plural = "目標"
 
     def __str__(self):
         return self.description[:40]
@@ -115,7 +115,7 @@ class Criteria(models.Model):
         models.PROTECT,
         db_index=False,
         related_name="criteria_knowledge_badges",
-        verbose_name="知識バッジ",
+        verbose_name="スタンプ",
     )
     type = models.CharField("種類", max_length=32)
     name = models.CharField("名前", max_length=256)
@@ -124,8 +124,8 @@ class Criteria(models.Model):
     class Meta:
         managed = True
         db_table = "criteria"
-        verbose_name = "達成基準"
-        verbose_name_plural = "達成基準"
+        verbose_name = "クライテリア"
+        verbose_name_plural = "クライテリア"
 
     def __str__(self):
         return self.name
@@ -192,13 +192,13 @@ class KnowledgeBadges(models.Model):
         models.PROTECT,
         db_index=False,
         related_name="knowledge_badges_wisdom_badges",
-        verbose_name="能力バッジ",
+        verbose_name="バッジ",
     )
     badge_class_id = models.TextField("バッジクラスの ID")
     name = models.CharField("名前", max_length=512)
     description = models.TextField("説明", blank=True, null=True)
     tags = models.TextField("タグ", blank=True, null=True)
-    criteria_narrative = models.TextField("達成基準（原文）", blank=True, null=True)
+    criteria_narrative = models.TextField("クライテリア（原文）", blank=True, null=True)
     image_id = models.TextField("画像", blank=True, null=True)
     image_author = models.TextField("画像の作者", blank=True, null=True)
     version = models.TextField("版", blank=True, null=True)
@@ -217,8 +217,8 @@ class KnowledgeBadges(models.Model):
     class Meta:
         managed = True
         db_table = "knowledge_badges"
-        verbose_name = "知識バッジ"
-        verbose_name_plural = "知識バッジ"
+        verbose_name = "スタンプ"
+        verbose_name_plural = "スタンプ"
 
     def __str__(self):
         return self.name
@@ -258,8 +258,8 @@ class Stage(models.Model):
     class Meta:
         managed = True
         db_table = "stage"
-        verbose_name = "育成指標のステージ"
-        verbose_name_plural = "育成指標のステージ"
+        verbose_name = "成長段階"
+        verbose_name_plural = "成長段階"
 
     def __str__(self):
         return self.name
@@ -282,8 +282,8 @@ class Framework(models.Model):
     class Meta:
         managed = True
         db_table = "framework"
-        verbose_name = "育成指標"
-        verbose_name_plural = "育成指標"
+        verbose_name = "教員育成指標"
+        verbose_name_plural = "教員育成指標"
 
     def __str__(self):
         return self.name
@@ -336,8 +336,8 @@ class WisdomBadges(models.Model):
     class Meta:
         managed = True
         db_table = "wisdom_badges"
-        verbose_name = "能力バッジ"
-        verbose_name_plural = "能力バッジ"
+        verbose_name = "バッジ"
+        verbose_name_plural = "バッジ"
 
     def __str__(self):
         return self.name
