@@ -34,6 +34,7 @@ export async function getServerSideProps({
           query: {
             keyword: q,
             page_number: pageNumber,
+            published_only: true,
           },
         })
       : null;

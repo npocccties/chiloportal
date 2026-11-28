@@ -13,6 +13,7 @@ class BadgesDetail(BaseAPIView):
     swagger_query_params = [
         SwaggerQueryParam("badges_ids", True, schema="string"),
         SwaggerQueryParam("badges_type", True, schema="string"),
+        PUBLISHED_ONLY_PARAM,
     ]
     filter_backends = (SwaggerQueryParamFilter,)
 
@@ -27,10 +28,14 @@ class BadgesDetail(BaseAPIView):
             if utils.is_int(id) == False:
                 self.logger.error(f"Invalid badges_ids: {id}")
                 raise ParseError("Invalid parameters supplied")
+        published_only = self.get_published_only(request)
         result = []
         if type == BadgeType.WISDOM.name.lower():
+            queryset = WisdomBadges.objects.filter(pk__in=id_array)
+            if published_only:
+                queryset = queryset.filter(status=WisdomBadges.Status.PUBLISHED)
             queryset = (
-                WisdomBadges.objects.filter(pk__in=id_array)
+                queryset
                 .order_by("pk")
                 .distinct()
                 .prefetch_related(
@@ -39,6 +44,8 @@ class BadgesDetail(BaseAPIView):
                 .select_related("issuer", "portal_category")
             )
             if queryset.exists() == False:
+                if published_only:
+                    raise NotFound("Not found")
                 self.logger.error(f"Not found wisdom_badges. badges_ids: {id_str}")
                 raise ParseError("Invalid parameters supplied")
             result = to_wisdom_badges(
@@ -46,14 +53,19 @@ class BadgesDetail(BaseAPIView):
             )
         elif type == BadgeType.KNOWLEDGE.name.lower():
             criteria_queryset = Criteria.objects.order_by('sort_key')
+            queryset = KnowledgeBadges.objects.filter(pk__in=id_array)
+            if published_only:
+                queryset = queryset.filter(wisdom_badges__status=WisdomBadges.Status.PUBLISHED)
             queryset = (
-                KnowledgeBadges.objects.filter(pk__in=id_array)
+                queryset
                 .order_by("pk")
                 .distinct()
                 .prefetch_related(Prefetch("criteria_knowledge_badges", queryset=criteria_queryset))
                 .select_related("issuer")
             )
             if queryset.exists() == False:
+                if published_only:
+                    raise NotFound("Not found")
                 self.logger.error(f"Not found knowledge_badges. badges_ids: {id_str}")
                 raise ParseError("Invalid parameters supplied")
             result = to_knowledge_badges(queryset)

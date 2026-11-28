@@ -48,12 +48,13 @@ export async function getStaticProps({
   if (configs.length === 0)
     return { props: { title: "Issuer Not Found", statusCode: 404 } };
   const portalCategories = await client.portalCategory.list
-    .$get()
+    .$get({ query: { published_only: true } })
     .catch(() => []);
   const issuerBadgesCount = await client.badges.list
     .$get({
       query: {
         issuer_id: Number(issuerId),
+        published_only: true,
       },
     })
     .then(({ total_count }) => total_count)
@@ -65,6 +66,7 @@ export async function getStaticProps({
           query: {
             issuer_id: Number(issuerId),
             portal_category_id: portalCategory.portal_category_id,
+            published_only: true,
           },
         })
         .then(({ total_count }) => total_count)

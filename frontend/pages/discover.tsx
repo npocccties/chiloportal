@@ -96,7 +96,9 @@ export async function getServerSideProps({
 }: Context): Promise<GetServerSidePropsResult<ErrorProps | Props>> {
   try {
     const issuers = await client.issuer.list.$get();
-    const portalCategories = await client.portalCategory.list.$get();
+    const portalCategories = await client.portalCategory.list.$get({
+      query: { published_only: true },
+    });
     const consumers = await client.consumer.list.$get();
     const frameworks = await Promise.all(
       consumers.map(({ consumer_id }) =>
@@ -115,7 +117,11 @@ export async function getServerSideProps({
       if (!issuer)
         return { props: { title: "Issuer Not Found", statusCode: 404 } };
       const badges = await client.badges.list.$get({
-        query: { issuer_id: Number(query.issuer_id), page_number: pageNumber },
+        query: {
+          issuer_id: Number(query.issuer_id),
+          page_number: pageNumber,
+          published_only: true,
+        },
       });
       return {
         props: {
@@ -143,6 +149,7 @@ export async function getServerSideProps({
         query: {
           portal_category_id: Number(query.portal_category_id),
           page_number: pageNumber,
+          published_only: true,
         },
       });
       return {
@@ -174,7 +181,7 @@ export async function getServerSideProps({
       if (!stage)
         return { props: { title: "Stage Not Found", statusCode: 404 } };
       const field = await client.stage.field.list.$get({
-        query: { stage_id: Number(stage.stage_id) },
+        query: { stage_id: Number(stage.stage_id), published_only: true },
       });
       const badges = await Promise.all(
         field.field1.flatMap(({ field2 }) =>
@@ -185,6 +192,7 @@ export async function getServerSideProps({
                   query: {
                     badges_type: "wisdom",
                     badges_ids: wisdom_badges.join(","),
+                    published_only: true,
                   },
                 })
                 .then((result) => [field_id, result] as const),
@@ -210,7 +218,7 @@ export async function getServerSideProps({
     }
     const pageNumber = parsePageQuery(query.p);
     const badges = await client.badges.list.$get({
-      query: { page_number: pageNumber },
+      query: { page_number: pageNumber, published_only: true },
     });
     return {
       props: {

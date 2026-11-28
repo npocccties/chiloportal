@@ -7,7 +7,9 @@ const key = "portalCategory/list" as const;
 type Key = typeof key;
 
 async function fetcher(_: Key): Promise<PortalCategory[]> {
-  return client.portalCategory.list.$get();
+  return client.portalCategory.list.$get({
+    query: { published_only: true },
+  });
 }
 
 export default function usePortalCategories() {

@@ -13,6 +13,7 @@ class WisdomBadgesListKeyword(BaseAPIView):
     swagger_query_params = [
         SwaggerQueryParam("keyword", True, schema="string"),
         SwaggerQueryParam("page_number", False),
+        PUBLISHED_ONLY_PARAM,
     ]
     filter_backends = (SwaggerQueryParamFilter,)
 
@@ -42,6 +43,8 @@ class WisdomBadgesListKeyword(BaseAPIView):
             filter_args |= Q(
                 knowledge_badges_wisdom_badges__criteria_knowledge_badges__name__icontains=key
             )
+        if self.get_published_only(request):
+            filter_args = Q(filter_args) & Q(status=WisdomBadges.Status.PUBLISHED)
         queryset = (
             WisdomBadges.objects.filter(filter_args)
             .order_by("pk")

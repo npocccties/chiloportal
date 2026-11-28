@@ -119,7 +119,7 @@ function Chat({ className }: Props) {
     try {
       const { badges: badgesList, total_count } =
         await client.wisdomBadges.list.keyword.$get({
-          query: { keyword, page_number: 1 },
+          query: { keyword, page_number: 1, published_only: true },
         });
       popChat();
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
