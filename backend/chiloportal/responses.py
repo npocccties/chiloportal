@@ -1,4 +1,8 @@
 from collections import defaultdict
+from datetime import timedelta
+
+from django.utils import timezone
+
 from .enums import *
 from .utils import *
 
@@ -48,10 +52,18 @@ def to_criteria(criteria):
     }
 
 
+def new_badge_since():
+    """この日時より後に公開したバッジに「NEW」を付ける。"""
+    from .models import PortalSettings
+
+    return timezone.now() - timedelta(days=PortalSettings.load().new_badge_days)
+
+
 def to_pager_wisdom_badges(page, output_portal_category=False):
+    new_since = new_badge_since()
     badge_array = []
     for wisdom_badge in page.object_list:
-        badge_array.append(to_wisdom_badge(wisdom_badge, output_portal_category))
+        badge_array.append(to_wisdom_badge(wisdom_badge, output_portal_category, new_since=new_since))
     return {
         "badges": badge_array,
         "total_count": page.paginator.object_list.count(),
@@ -61,7 +73,8 @@ def to_pager_wisdom_badges(page, output_portal_category=False):
 
 
 def to_pager_wisdom_badges_all(queryset, output_portal_category=False):
-    badge_array = [to_wisdom_badge(badge, output_portal_category) for badge in queryset]
+    new_since = new_badge_since()
+    badge_array = [to_wisdom_badge(badge, output_portal_category, new_since=new_since) for badge in queryset]
     return {
         "badges": badge_array,
         "total_count": len(badge_array),
@@ -80,15 +93,18 @@ def to_pager_wisdom_badges_empty():
 
 
 def to_wisdom_badges(queryset, output_portal_category=False, output_alignments=False):
+    new_since = new_badge_since()
     return [
-        to_wisdom_badge(wisdom_badge, output_portal_category, output_alignments)
+        to_wisdom_badge(wisdom_badge, output_portal_category, output_alignments, new_since=new_since)
         for wisdom_badge in queryset
     ]
 
 
 def to_wisdom_badge(
-    wisdom_badge, output_portal_category=False, output_alignments=False
+    wisdom_badge, output_portal_category=False, output_alignments=False, new_since=None
 ):
+    if new_since is None:
+        new_since = new_badge_since()
     knowledge_badges = wisdom_badge.knowledge_badges_wisdom_badges
     knowledge_badges_id_list = sorted(
         [knowledge_badge.id for knowledge_badge in knowledge_badges.all()]
@@ -108,6 +124,15 @@ def to_wisdom_badge(
         "issuer_email": issuer.email if issuer else None,
         "digital_badge_class_id": wisdom_badge.badge_class_id,
         "status": wisdom_badge.status,
+        # ポータルで設定する表示用の画像（なければ null。そのときは image を使う）
+        "display_image": wisdom_badge.display_image.url if wisdom_badge.display_image else None,
+        # 公開した日から決まった日数のあいだ true（公開日の分からない既存のバッジと、NEW を外したバッジは false）
+        "is_new": bool(
+            wisdom_badge.published_at
+            and not wisdom_badge.new_dismissed
+            and wisdom_badge.published_at >= new_since
+        ),
+        "labels": [{"name": label.name, "color": label.color} for label in wisdom_badge.labels.all()],
         "detail": {
             "knowledge_badges_list": knowledge_badges_id_list,
         },

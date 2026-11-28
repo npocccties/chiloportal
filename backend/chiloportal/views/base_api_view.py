@@ -14,10 +14,30 @@ from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.decorators import api_view
 from django.utils.decorators import method_decorator
+from django.db.models import F
 from .. import utils
 
 # ポータルの表示用に、公開中のバッジだけに絞る指定。指定がなければ、今までどおり全件を返す（ポートフォリオなど）。
 PUBLISHED_ONLY_PARAM = SwaggerQueryParam("published_only", False, schema="boolean")
+# バッジ一覧の並び順。newest（公開した日の新しい順）/ oldest（古い順）/ default（表示の設定の初期値）。
+# 指定がなければ、今までどおり登録順（ID の順）で返す。
+SORT_PARAM = SwaggerQueryParam("sort", False, schema="string")
+
+
+def order_badges(queryset, sort):
+    if sort == PortalSettings.Sort.NEWEST:
+        # 公開日の分からない既存のバッジは後ろに、登録の新しい順で並べる
+        return queryset.order_by(F("published_at").desc(nulls_last=True), "-pk")
+    if sort == PortalSettings.Sort.OLDEST:
+        return queryset.order_by(F("published_at").asc(nulls_first=True), "pk")
+    return queryset.order_by("pk")
+
+
+def with_sort(result, sort):
+    """並び順を指定されたときは、使った並び順を応答に入れる（ポータルの並び順の選択に使う）。"""
+    if sort is not None:
+        result["sort"] = sort
+    return result
 
 
 class BaseAPIView(APIView):
@@ -48,6 +68,18 @@ class BaseAPIView(APIView):
 
     def _get(self, request):
         pass
+
+    def get_sort(self, request):
+        """並び順の指定。指定がなければ None（登録順）。"""
+        value = request.GET.get("sort")
+        if value is None:
+            return None
+        if value == "default":
+            return PortalSettings.load().default_sort
+        if value in PortalSettings.Sort.values:
+            return value
+        self.logger.error(f"Invalid sort: {value}")
+        raise ParseError("Invalid parameters supplied")
 
     def get_published_only(self, request):
         value = request.GET.get("published_only")

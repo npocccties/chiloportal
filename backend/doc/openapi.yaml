@@ -166,6 +166,16 @@ paths:
           required: false
           schema:
             type: boolean
+        - name: sort
+          in: query
+          description: 並び順。newest（公開した日の新しい順。公開日の分からないバッジは後ろ）、oldest（古い順）、default（管理画面の表示の設定の初期値）。指定がなければ登録順
+          required: false
+          schema:
+            type: string
+            enum:
+              - newest
+              - oldest
+              - default
       responses:
         '200':
           description: Successful operation
@@ -190,6 +200,12 @@ paths:
                     type: integer
                     format: int64
                     example: 30
+                  sort:
+                    type: string
+                    description: 使った並び順（sort を指定したときだけ）
+                    enum:
+                      - newest
+                      - oldest
                 additionalProperties: false
                 required:
                   - badges
@@ -318,6 +334,16 @@ paths:
           required: false
           schema:
             type: boolean
+        - name: sort
+          in: query
+          description: 並び順。newest（公開した日の新しい順。公開日の分からないバッジは後ろ）、oldest（古い順）、default（管理画面の表示の設定の初期値）。指定がなければ登録順
+          required: false
+          schema:
+            type: string
+            enum:
+              - newest
+              - oldest
+              - default
       responses:
         '200':
           description: Successful operation
@@ -342,6 +368,12 @@ paths:
                     type: integer
                     format: int64
                     example: 30
+                  sort:
+                    type: string
+                    description: 使った並び順（sort を指定したときだけ）
+                    enum:
+                      - newest
+                      - oldest
                 additionalProperties: false
                 required:
                   - badges
@@ -377,6 +409,16 @@ paths:
           required: false
           schema:
             type: boolean
+        - name: sort
+          in: query
+          description: 並び順。newest（公開した日の新しい順。公開日の分からないバッジは後ろ）、oldest（古い順）、default（管理画面の表示の設定の初期値）。指定がなければ登録順
+          required: false
+          schema:
+            type: string
+            enum:
+              - newest
+              - oldest
+              - default
       responses:
         '200':
           description: Successful operation
@@ -401,6 +443,12 @@ paths:
                     type: integer
                     format: int64
                     example: 30
+                  sort:
+                    type: string
+                    description: 使った並び順（sort を指定したときだけ）
+                    enum:
+                      - newest
+                      - oldest
                 additionalProperties: false
                 required:
                   - badges
@@ -713,6 +761,24 @@ components:
       type: integer
       format: int64
       example: 101, 102, 103
+    Label:
+      type: object
+      properties:
+        name:
+          type: string
+          example: 受講者限定
+        color:
+          type: string
+          enum:
+            - gray
+            - blue
+            - green
+            - orange
+            - red
+            - purple
+      required:
+        - name
+        - color
     BadgeDetail1:
       type: object
       properties:
@@ -772,6 +838,18 @@ components:
             - published
             - hidden
             - auto_hidden
+        display_image:
+          type: string
+          nullable: true
+          description: ポータルで設定した表示用の画像のパス（例：/media/badges/xxx.svg）。なければ null で、image を使う。バッジだけ
+        is_new:
+          type: boolean
+          description: 公開した日から、管理画面で設定した日数のあいだ true。バッジだけ
+        labels:
+          type: array
+          description: バッジに付けたラベル。バッジだけ
+          items:
+            $ref: '#/components/schemas/Label'
         alignments_targetname:
           type: string
           example: digitalbadge101 alignments_targetname
@@ -848,6 +926,18 @@ components:
             - published
             - hidden
             - auto_hidden
+        display_image:
+          type: string
+          nullable: true
+          description: ポータルで設定した表示用の画像のパス（例：/media/badges/xxx.svg）。なければ null で、image を使う。バッジだけ
+        is_new:
+          type: boolean
+          description: 公開した日から、管理画面で設定した日数のあいだ true。バッジだけ
+        labels:
+          type: array
+          description: バッジに付けたラベル。バッジだけ
+          items:
+            $ref: '#/components/schemas/Label'
         detail:
           oneOf:
             - $ref: '#/components/schemas/wisdom'

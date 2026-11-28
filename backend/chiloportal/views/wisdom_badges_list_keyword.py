@@ -14,6 +14,7 @@ class WisdomBadgesListKeyword(BaseAPIView):
         SwaggerQueryParam("keyword", True, schema="string"),
         SwaggerQueryParam("page_number", False),
         PUBLISHED_ONLY_PARAM,
+        SORT_PARAM,
     ]
     filter_backends = (SwaggerQueryParamFilter,)
 
@@ -45,19 +46,19 @@ class WisdomBadgesListKeyword(BaseAPIView):
             )
         if self.get_published_only(request):
             filter_args = Q(filter_args) & Q(status=WisdomBadges.Status.PUBLISHED)
-        queryset = (
+        sort = self.get_sort(request)
+        queryset = order_badges(
             WisdomBadges.objects.filter(filter_args)
-            .order_by("pk")
             .distinct()
-            .prefetch_related(
-                "knowledge_badges_wisdom_badges",
-            )
-            .select_related("issuer", "portal_category")
+            .prefetch_related("knowledge_badges_wisdom_badges", "labels")
+            .select_related("issuer", "portal_category"),
+            sort,
         )
         if queryset.exists() == False:
-            return Response(to_pager_wisdom_badges_empty())
+            return Response(with_sort(to_pager_wisdom_badges_empty(), sort))
         if page_number != None:
             page = self.get_page(queryset, page_number)
-            return Response(to_pager_wisdom_badges(page))
+            result = to_pager_wisdom_badges(page)
         else:
-            return Response(to_pager_wisdom_badges_all(queryset))
+            result = to_pager_wisdom_badges_all(queryset)
+        return Response(with_sort(result, sort))

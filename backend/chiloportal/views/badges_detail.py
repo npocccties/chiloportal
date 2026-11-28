@@ -39,7 +39,7 @@ class BadgesDetail(BaseAPIView):
                 .order_by("pk")
                 .distinct()
                 .prefetch_related(
-                    "knowledge_badges_wisdom_badges__criteria_knowledge_badges"
+                    "knowledge_badges_wisdom_badges__criteria_knowledge_badges", "labels"
                 )
                 .select_related("issuer", "portal_category")
             )

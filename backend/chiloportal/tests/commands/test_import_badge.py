@@ -538,6 +538,20 @@ class ImportBadgeCommandTests(TestCase):
         self.assertEqual(badge.status, WisdomBadges.Status.PUBLISHED)
         self.assertEqual(badge.portal_category, other_category)
 
+    def test_reimport_keeps_display_settings(self):
+        # 表示用の画像・ラベル・NEW を外す設定は、ポータルで設定した項目なので取り込み直しても残す
+        self.map_test_university()
+        badge, _ = self.import_wisdom_badge()
+        label = Label.objects.create(name="受講者限定")
+        badge.labels.set([label])
+        badge.display_image = "badges/0123456789abcdef0123456789abcdef.svg"
+        badge.new_dismissed = True
+        badge.save()
+        badge, _ = self.import_wisdom_badge()
+        self.assertEqual(list(badge.labels.all()), [label])
+        self.assertEqual(badge.display_image.name, "badges/0123456789abcdef0123456789abcdef.svg")
+        self.assertTrue(badge.new_dismissed)
+
     def test_reimport_unmapped_keeps_issuer_and_status(self):
         # 既存のバッジで組み合わせが対応づけられていなければ、今の担当機関と公開状態のまま
         issuer = self.map_test_university()

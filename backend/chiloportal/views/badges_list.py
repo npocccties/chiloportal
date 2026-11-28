@@ -14,6 +14,7 @@ class BadgesList(BaseAPIView):
         SwaggerQueryParam("portal_category_id", False),
         SwaggerQueryParam("page_number", False),
         PUBLISHED_ONLY_PARAM,
+        SORT_PARAM,
     ]
     filter_backends = (SwaggerQueryParamFilter,)
 
@@ -42,23 +43,25 @@ class BadgesList(BaseAPIView):
         if published_only:
             filter_args &= Q(status=WisdomBadges.Status.PUBLISHED)
         
-        queryset = (
+        sort = self.get_sort(request)
+        queryset = order_badges(
             WisdomBadges.objects.filter(filter_args)
-            .order_by("pk")
             .distinct()
             .select_related("issuer", "portal_category")
-            .prefetch_related("knowledge_badges_wisdom_badges")
+            .prefetch_related("knowledge_badges_wisdom_badges", "labels"),
+            sort,
         )
 
         if queryset.exists() == False:
             if published_only:
-                return Response(to_pager_wisdom_badges_empty())
+                return Response(with_sort(to_pager_wisdom_badges_empty(), sort))
             self.logger.error(f"Not found wisdom_badges: issuer_id: {issuer_id} portal_category_id: {portal_category_id}")
             raise ParseError("Invalid parameters supplied")
             
         output_portal_category = portal_category_id == None
         if page_number != None:
             page = self.get_page(queryset, page_number)
-            return Response(to_pager_wisdom_badges(page, output_portal_category))
+            result = to_pager_wisdom_badges(page, output_portal_category)
         else:
-            return Response(to_pager_wisdom_badges_all(queryset, output_portal_category))
+            result = to_pager_wisdom_badges_all(queryset, output_portal_category)
+        return Response(with_sort(result, sort))
