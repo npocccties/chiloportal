@@ -6,7 +6,7 @@ import Template from "templates/Issuer";
 import { readMarkdowns, Markdown } from "lib/markdown";
 import { readConfigs } from "lib/config";
 import { Post, Config } from "schemas";
-import { NEXT_PUBLIC_API_MOCKING } from "lib/env";
+import { NEXT_PUBLIC_API_MOCKING, REVALIDATE_INTERVAL_SECONDS } from "lib/env";
 import title from "lib/title";
 import { PortalCategory, Issuer } from "api/@types";
 import getStaticIssuerIds from "lib/get-static-issuer-ids";
@@ -40,13 +40,22 @@ export async function getStaticProps({
     issuerId: Number(issuerId),
   });
   if (markdowns instanceof globalThis.Error)
-    return { props: { title: markdowns.message, statusCode: 500 } };
+    return {
+      revalidate: REVALIDATE_INTERVAL_SECONDS,
+      props: { title: markdowns.message, statusCode: 500 },
+    };
   const posts = markdowns.map((markdown) => markdown.data.matter);
   const configs = await readConfigs({ issuerId: Number(issuerId) });
   if (configs instanceof globalThis.Error)
-    return { props: { title: configs.message, statusCode: 500 } };
+    return {
+      revalidate: REVALIDATE_INTERVAL_SECONDS,
+      props: { title: configs.message, statusCode: 500 },
+    };
   if (configs.length === 0)
-    return { props: { title: "Issuer Not Found", statusCode: 404 } };
+    return {
+      revalidate: REVALIDATE_INTERVAL_SECONDS,
+      props: { title: "Issuer Not Found", statusCode: 404 },
+    };
   const portalCategories = await client.portalCategory.list
     .$get({ query: { published_only: true } })
     .catch(() => []);
@@ -82,7 +91,10 @@ export async function getStaticProps({
   let issuer: Issuer | undefined;
   if (NEXT_PUBLIC_API_MOCKING) {
     if (!issuers[0])
-      return { props: { title: "Issuer Not Found", statusCode: 404 } };
+      return {
+        revalidate: REVALIDATE_INTERVAL_SECONDS,
+        props: { title: "Issuer Not Found", statusCode: 404 },
+      };
     issuer = {
       ...issuers[0],
       issuer_id: Number(issuerId),
@@ -90,9 +102,13 @@ export async function getStaticProps({
   } else {
     issuer = issuers.find((issuer) => issuer.issuer_id === Number(issuerId));
     if (!issuer)
-      return { props: { title: "Issuer Not Found", statusCode: 404 } };
+      return {
+        revalidate: REVALIDATE_INTERVAL_SECONDS,
+        props: { title: "Issuer Not Found", statusCode: 404 },
+      };
   }
   return {
+    revalidate: REVALIDATE_INTERVAL_SECONDS,
     props: {
       issuerBadgesCount,
       portalCategoryBadgesCounts,

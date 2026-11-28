@@ -6,3 +6,6 @@ class ChiloportalConfig(AppConfig):
     default_auto_field = 'django.db.models.AutoField'
     name = 'chiloportal'
     verbose_name = 'ポータル'
+
+    def ready(self):
+        from . import signals  # noqa: F401  保存・削除のときにページの作り直しを予約する

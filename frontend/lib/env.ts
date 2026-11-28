@@ -3,6 +3,12 @@ import yn from "yn";
 export const JWT_DEBUG_VALUE: string = process.env.JWT_DEBUG_VALUE ?? "";
 export const JWT_VERIFICATION_KEY_BASE64: string =
   process.env.JWT_VERIFICATION_KEY_BASE64 ?? "";
+/** ページの再生成の指示（pages/api/revalidate）に付ける秘密の値。空なら再生成の指示を受け付けない */
+export const REVALIDATE_SECRET: string = process.env.REVALIDATE_SECRET ?? "";
+/** 静的に生成したページを、指示がなくても作り直す間隔（秒）。指示が届かなかったときの保険 */
+export const REVALIDATE_INTERVAL_SECONDS: number = Number(
+  process.env.REVALIDATE_INTERVAL_SECONDS ?? 600,
+);
 export const NEXT_PUBLIC_API_BASE_URL: string =
   process.env.NEXT_PUBLIC_API_BASE_URL ?? "";
 export const NEXT_PUBLIC_API_MOCKING: boolean = yn(

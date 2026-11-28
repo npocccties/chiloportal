@@ -27,6 +27,8 @@ services:
       - JUDGE_BADGE=$JUDGE_BADGE
       - PER_PAGE=$PER_PAGE
       - BCRYPT_SALT=$BCRYPT_SALT
+      - REVALIDATE_URL=$REVALIDATE_URL
+      - REVALIDATE_SECRET=$REVALIDATE_SECRET
     depends_on:
       - db
       - migration

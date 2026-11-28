@@ -11,7 +11,7 @@ import rehypeImageSize from "lib/rehype-image-size";
 import title from "lib/title";
 import { Issuer } from "api/@types";
 import { client } from "lib/client";
-import { NEXT_PUBLIC_API_MOCKING } from "lib/env";
+import { NEXT_PUBLIC_API_MOCKING, REVALIDATE_INTERVAL_SECONDS } from "lib/env";
 
 type Context = {
   params: { issuerId: string; slug: string };
@@ -38,11 +38,18 @@ export async function getStaticProps({
   });
 
   if (markdowns instanceof globalThis.Error)
-    return { props: { title: markdowns.message, statusCode: 500 } };
+    return {
+      revalidate: REVALIDATE_INTERVAL_SECONDS,
+      props: { title: markdowns.message, statusCode: 500 },
+    };
   const markdown = markdowns.find(
     (markdown) => markdown.data.matter.slug === slug,
   );
-  if (!markdown) return { props: { title: "Post Not Found", statusCode: 404 } };
+  if (!markdown)
+    return {
+      revalidate: REVALIDATE_INTERVAL_SECONDS,
+      props: { title: "Post Not Found", statusCode: 404 },
+    };
   const source = await serialize(markdown.value.toString(), {
     mdxOptions: {
       rehypePlugins: [rehypeImageSize],
@@ -53,7 +60,10 @@ export async function getStaticProps({
   let issuer: Issuer | undefined;
   if (NEXT_PUBLIC_API_MOCKING) {
     if (!issuers[0])
-      return { props: { title: "Issuer Not Found", statusCode: 404 } };
+      return {
+        revalidate: REVALIDATE_INTERVAL_SECONDS,
+        props: { title: "Issuer Not Found", statusCode: 404 },
+      };
     issuer = {
       ...issuers[0],
       issuer_id: Number(issuerId),
@@ -61,9 +71,13 @@ export async function getStaticProps({
   } else {
     issuer = issuers.find((issuer) => issuer.issuer_id === Number(issuerId));
     if (!issuer)
-      return { props: { title: "Issuer Not Found", statusCode: 404 } };
+      return {
+        revalidate: REVALIDATE_INTERVAL_SECONDS,
+        props: { title: "Issuer Not Found", statusCode: 404 },
+      };
   }
   return {
+    revalidate: REVALIDATE_INTERVAL_SECONDS,
     props: {
       issuer,
       source,

@@ -14,6 +14,8 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
 
+from . import revalidate
+
 
 class CategorisedBadges(models.Model):
     wisdom_badges = models.ForeignKey(
@@ -350,6 +352,7 @@ class WisdomBadges(models.Model):
         instance = super().from_db(db, field_names, values)
         # 読み込んだ時点の公開状態。公開に切り替わったかどうかを save で判定する
         instance._loaded_status = instance.__dict__.get("status")
+        instance._loaded_issuer_id = instance.__dict__.get("issuer_id")
         return instance
 
     def save(self, *args, **kwargs):
@@ -366,4 +369,7 @@ class WisdomBadges(models.Model):
             if update_fields is not None:
                 kwargs["update_fields"] = {*update_fields, "published_at"}
         super().save(*args, **kwargs)
+        # 機関ページのバッジの数が変わるので、前と今の担当機関のページを作り直す
+        revalidate.request(getattr(self, "_loaded_issuer_id", None), self.issuer_id)
         self._loaded_status = self.status
+        self._loaded_issuer_id = self.issuer_id
