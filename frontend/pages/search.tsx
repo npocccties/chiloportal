@@ -5,8 +5,9 @@ import { client, getErrorProps } from "lib/client";
 import Template from "templates/Search";
 import title from "lib/title";
 import parsePageQuery from "lib/parse-page-query";
+import { Sort, parseSortQuery } from "lib/sort";
 
-export type Query = { q?: string; p?: string };
+export type Query = { q?: string; p?: string; sort?: Sort };
 
 export type Context = {
   query: Query;
@@ -25,7 +26,7 @@ export type Props = {
 };
 
 export async function getServerSideProps({
-  query: { q = "", p },
+  query: { q = "", p, sort },
 }: Context): Promise<GetServerSidePropsResult<ErrorProps | Props>> {
   try {
     const pageNumber = parsePageQuery(p);
@@ -35,6 +36,7 @@ export async function getServerSideProps({
             keyword: q,
             page_number: pageNumber,
             published_only: true,
+            sort: parseSortQuery(sort),
           },
         })
       : null;

@@ -19,13 +19,19 @@ import {
 import { pagesPath } from "lib/$path";
 import Pagination from "components/Pagination";
 import WisdomBadgesItem from "components/WisdomBadgesItem";
+import SortLinks from "components/SortLinks";
+import { Sort } from "lib/sort";
 
 function All(props: AllBadges) {
+  const sort = props.badges.sort;
   const handleHref = (page: number) =>
-    pagesPath.discover.$url({ query: { by: "all", p: String(page) } });
+    pagesPath.discover.$url({ query: { by: "all", p: String(page), sort } });
+  const handleSortHref = (sort: Sort) =>
+    pagesPath.discover.$url({ query: { by: "all", sort } });
   return (
     <>
-      <h2 className="text-2xl font-bold mb-8">すべてのコース</h2>
+      <h2 className="text-2xl font-bold mb-4">すべてのコース</h2>
+      <SortLinks className="mb-6" current={sort} handleHref={handleSortHref} />
       <ul className="mb-10">
         {props.badges.badges.map((badge) => (
           <li key={badge.badges_id}>
@@ -45,12 +51,22 @@ function All(props: AllBadges) {
 }
 
 function Issuer(props: IssuerBadges) {
+  const currentSort = props.badges.sort;
   const handleHref = (page: number) =>
     pagesPath.discover.$url({
       query: {
         by: "issuer",
         issuer_id: String(props.issuer.issuer_id),
         p: String(page),
+        sort: currentSort,
+      },
+    });
+  const handleSortHref = (sort: Sort) =>
+    pagesPath.discover.$url({
+      query: {
+        by: "issuer",
+        issuer_id: String(props.issuer.issuer_id),
+        sort,
       },
     });
   return (
@@ -67,6 +83,11 @@ function Issuer(props: IssuerBadges) {
       >
         {props.issuer.name}のページへ
       </Link>
+      <SortLinks
+        className="mb-6"
+        current={currentSort}
+        handleHref={handleSortHref}
+      />
       <ul className="mb-10">
         {props.badges.badges.map((badge) => (
           <li key={badge.badges_id}>
@@ -86,20 +107,35 @@ function Issuer(props: IssuerBadges) {
 }
 
 function Category(props: CategoryBadges) {
+  const currentSort = props.badges.sort;
   const handleHref = (page: number) =>
     pagesPath.discover.$url({
       query: {
         by: "category",
         portal_category_id: String(props.portalCategory.portal_category_id),
         p: String(page),
+        sort: currentSort,
+      },
+    });
+  const handleSortHref = (sort: Sort) =>
+    pagesPath.discover.$url({
+      query: {
+        by: "category",
+        portal_category_id: String(props.portalCategory.portal_category_id),
+        sort,
       },
     });
   return (
     <>
-      <header className="mb-8">
+      <header className="mb-4">
         <p className="text-sm mb-2">カテゴリ</p>
         <h2 className="text-2xl font-bold">{props.portalCategory.name}</h2>
       </header>
+      <SortLinks
+        className="mb-6"
+        current={currentSort}
+        handleHref={handleSortHref}
+      />
       <ul className="mb-10">
         {props.badges.badges.map((badge) => (
           <li key={badge.badges_id}>

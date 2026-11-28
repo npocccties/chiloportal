@@ -14,6 +14,7 @@ import CriteriaSurvey from "public/criteria-survey.svg";
 import CriteriaLesson from "public/criteria-lesson.svg";
 import { getImageUrl } from "lib/issuer";
 import Category from "public/category.svg";
+import BadgeMarks from "components/BadgeMarks";
 
 export default function WisdomBadges({
   wisdomBadges,
@@ -49,19 +50,36 @@ export default function WisdomBadges({
         leaf={wisdomBadges.name}
       />
       <aside className="shrink-0 flex flex-col items-center [grid-area:aside] mb-6 md:mb-0 lg:mr-4">
-        <Image
-          className="shrink-0 w-7/12 max-w-[260px] md:w-[40vw] md:max-w-[280px] lg:max-w-[320px]"
-          src={`/images/${wisdomBadges.image}`}
-          width={320}
-          height={320}
-          alt=""
-        />
+        {wisdomBadges.display_image ? (
+          // 管理画面で設定した表示用の画像（/media/。再ビルドなしで変わるので、画像の最適化は通さない）
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            className="shrink-0 w-7/12 max-w-[260px] md:w-[40vw] md:max-w-[280px] lg:max-w-[320px] object-contain"
+            src={wisdomBadges.display_image}
+            width={320}
+            height={320}
+            alt=""
+          />
+        ) : (
+          <Image
+            className="shrink-0 w-7/12 max-w-[260px] md:w-[40vw] md:max-w-[280px] lg:max-w-[320px]"
+            src={`/images/${wisdomBadges.image}`}
+            width={320}
+            height={320}
+            alt=""
+          />
+        )}
       </aside>
       <article className="[grid-area:article]">
         <header className="mb-6">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2">
             {wisdomBadges.name}
           </h1>
+          <BadgeMarks
+            className="mb-2"
+            isNew={wisdomBadges.is_new}
+            labels={wisdomBadges.labels}
+          />
           <ul className="flex items-center gap-4 mb-2">
             <li className="flex items-center gap-1 font-bold">
               {/* eslint-disable @next/next/no-img-element */}

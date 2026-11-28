@@ -18,21 +18,25 @@ import {
   Field3d,
 } from "api/@types";
 import parsePageQuery from "lib/parse-page-query";
+import { Sort, parseSortQuery } from "lib/sort";
 import { NEXT_PUBLIC_API_MOCKING } from "lib/env";
 
 type AllBadgesQuery = {
   by?: "all";
   p?: string;
+  sort?: Sort;
 };
 type IssuerBadgesQuery = {
   by: "issuer";
   issuer_id: string;
   p?: string;
+  sort?: Sort;
 };
 type CategoryBadgesQuery = {
   by: "category";
   portal_category_id: string;
   p?: string;
+  sort?: Sort;
 };
 type FrameworkBadgesQuery = {
   by: "framework";
@@ -121,6 +125,7 @@ export async function getServerSideProps({
           issuer_id: Number(query.issuer_id),
           page_number: pageNumber,
           published_only: true,
+          sort: parseSortQuery("sort" in query ? query.sort : undefined),
         },
       });
       return {
@@ -150,6 +155,7 @@ export async function getServerSideProps({
           portal_category_id: Number(query.portal_category_id),
           page_number: pageNumber,
           published_only: true,
+          sort: parseSortQuery("sort" in query ? query.sort : undefined),
         },
       });
       return {
@@ -218,7 +224,11 @@ export async function getServerSideProps({
     }
     const pageNumber = parsePageQuery(query.p);
     const badges = await client.badges.list.$get({
-      query: { page_number: pageNumber, published_only: true },
+      query: {
+        page_number: pageNumber,
+        published_only: true,
+        sort: parseSortQuery("sort" in query ? query.sort : undefined),
+      },
     });
     return {
       props: {
