@@ -168,7 +168,7 @@ class Command(BaseCommand):
                 break
         image_path = self.download_file(image_id)
         image_fname = os.path.basename(image_path)
-        issuer = self.update_issuer(issuer_name, issuer_url, issuer_email)
+        mapping = self.find_issuer_mapping(issuer_name, issuer_url)
         wisdom_badge_set = WisdomBadges.objects.filter(badge_class_id=id)
         if wisdom_badge_set.exists():
             logger.debug("--- update ---")
@@ -190,10 +190,19 @@ class Command(BaseCommand):
             wisdom_badge.image_id = image_fname
             wisdom_badge.image_author = image_author
             wisdom_badge.version = version
-            wisdom_badge.issuer = issuer
+            wisdom_badge.issuer_name = issuer_name
+            wisdom_badge.issuer_url = issuer_url
             wisdom_badge.alignments_targetname = target_name
             wisdom_badge.alignments_targeturl = target_url
-            wisdom_badge.portal_category = portal_category
+            # 担当機関は組み合わせの対応から決める。対応づけていない組み合わせなら、今の担当機関と公開状態のまま
+            if mapping.issuer_id is not None and mapping.issuer_id != wisdom_badge.issuer_id:
+                wisdom_badge.issuer_id = mapping.issuer_id
+                # 担当機関が変わったら、新しい担当機関が公開するまで非表示にする
+                if wisdom_badge.status == WisdomBadges.Status.PUBLISHED:
+                    wisdom_badge.status = WisdomBadges.Status.HIDDEN
+            # カテゴリはポータル（管理画面）で設定したものを残す。まだなければ指定のカテゴリにする
+            if wisdom_badge.portal_category_id is None:
+                wisdom_badge.portal_category = portal_category
             wisdom_badge.save()
             self.wisdom_badge_id = wisdom_badge.id
         else:
@@ -205,10 +214,14 @@ class Command(BaseCommand):
                 image_id=image_fname,
                 image_author=image_author,
                 version=version,
-                issuer=issuer,
+                issuer_id=mapping.issuer_id,
+                issuer_name=issuer_name,
+                issuer_url=issuer_url,
                 alignments_targeturl=target_url,
                 alignments_targetname=target_name,
                 portal_category=portal_category,
+                # 取り込んだバッジは、担当機関の管理者が公開するまでポータルに出さない
+                status=WisdomBadges.Status.HIDDEN,
             )
             self.wisdom_badge_id = wisdom_badge.id
         self.create_knowledge_badges(alignments, wisdom_badge)
@@ -216,21 +229,26 @@ class Command(BaseCommand):
         msg = f"wisdom_badge.id: {self.wisdom_badge_id}"
         logger.info(msg)
         self.stdout.write(msg)
+        if mapping.issuer_id is None:
+            msg = (
+                "issuer.name と issuer.url の組み合わせが、まだバッジ発行機関に対応づけられていません。"
+                f"管理画面で対応づけてください。issuer.name: {issuer_name} issuer.url: {issuer_url}"
+            )
+            logger.warning(msg)
+            self.stdout.write(msg)
         logger.info("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
 
-    def update_issuer(self, issuer_name, issuer_url, issuer_email):
-        queryset = Issuer.objects.filter(name=issuer_name)
-        if queryset.exists():
-            issuer = queryset.first()
-            issuer.name = issuer_name
-            issuer.url = issuer_url
-            issuer.email = issuer_email
-            issuer.save()
-            return issuer
-        else:
-            return Issuer.objects.create(
-                name=issuer_name, url=issuer_url, email=issuer_email
-            )
+    def find_issuer_mapping(self, issuer_name, issuer_url):
+        """issuer.name と issuer.url の組み合わせの対応を返す。初めての組み合わせは、対応づけていない状態で登録する。
+
+        バッジ発行機関（Issuer）のデータは書き換えない（名前・URL・ロゴはポータルで管理する）。
+        """
+        mapping, created = IssuerMapping.objects.get_or_create(
+            issuer_name=issuer_name or "", issuer_url=issuer_url or ""
+        )
+        if created:
+            logger.info(f"New issuer mapping: issuer.name: {issuer_name} issuer.url: {issuer_url}")
+        return mapping
 
     def create_knowledge_badges(self, alignments, wisdom_badge):
         for alignment in alignments:
@@ -267,7 +285,7 @@ class Command(BaseCommand):
             issuer_url,
             issuer_email,
         ) = self.get_badge_data(json)
-        issuer = self.update_issuer(issuer_name, issuer_url, issuer_email)
+        mapping = self.find_issuer_mapping(issuer_name, issuer_url)
         knowledge_badge = KnowledgeBadges.objects.create(
             badge_class_id=id,
             name=name,
@@ -276,7 +294,9 @@ class Command(BaseCommand):
             image_id=os.path.basename(image_path),
             image_author=image_author,
             version=version,
-            issuer=issuer,
+            issuer_id=mapping.issuer_id,
+            issuer_name=issuer_name,
+            issuer_url=issuer_url,
             wisdom_badges=wisdom_badge,
         )
         logger.debug(f"knowledge_badge.id: {knowledge_badge.id}")
