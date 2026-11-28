@@ -13,7 +13,8 @@ async function fetcher(): Promise<boolean> {
     "admin/status/",
     NEXT_PUBLIC_API_BASE_URL.replace(/\/?$/, "/"),
   );
-  const res = await fetch(url, { credentials: "include" });
+  // ポータルと同じオリジンの API に、session_cookie を付けて問い合わせる
+  const res = await fetch(url, { credentials: "same-origin" });
   if (!res.ok) return false;
   const { is_admin: isAdmin } = (await res.json()) as { is_admin: boolean };
   return isAdmin === true;

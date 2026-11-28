@@ -18,7 +18,8 @@ from django.db import transaction
 
 logger = logging.getLogger(__name__)
 
-TIMEOUT_SECONDS = 10
+# カテゴリの保存では全機関のページを作り直すので、長めにする
+TIMEOUT_SECONDS = 30
 
 def _settings():
     return os.environ.get("REVALIDATE_URL", ""), os.environ.get("REVALIDATE_SECRET", "")
@@ -73,11 +74,15 @@ def request(*issuer_ids):
         return
     connection = transaction.get_connection()
     if connection.in_atomic_block:
-        # 同じトランザクションで予約済みなら、そこに足す
-        for _savepoint_ids, func, _robust in connection.run_on_commit:
-            if isinstance(func, _Pending):
-                func.issuer_ids.update(ids)
-                return
+        # 同じトランザクションで予約済みなら、そこに足す（Django の内部の形が変わっていたら、まとめずに別に送る）
+        try:
+            for entry in connection.run_on_commit:
+                func = entry[1]
+                if isinstance(func, _Pending):
+                    func.issuer_ids.update(ids)
+                    return
+        except (AttributeError, IndexError, TypeError):
+            pass
     pending = _Pending()
     pending.issuer_ids.update(ids)
     transaction.on_commit(pending)

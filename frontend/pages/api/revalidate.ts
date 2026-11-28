@@ -1,4 +1,4 @@
-import { timingSafeEqual } from "node:crypto";
+import { createHash, timingSafeEqual } from "node:crypto";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { REVALIDATE_SECRET } from "lib/env";
 import { readMarkdowns } from "lib/markdown";
@@ -16,12 +16,20 @@ type Body = { issuer_ids?: unknown };
 
 type Result = { revalidated: string[]; failed: string[] };
 
+// 長さの違いも漏らさないよう、ハッシュにしてから比べる
+const digest = (value: string): Buffer =>
+  createHash("sha256").update(value).digest();
+
 function authorized(req: NextApiRequest): boolean {
   if (!REVALIDATE_SECRET) return false;
-  const expected = Buffer.from(`Bearer ${REVALIDATE_SECRET}`);
-  const actual = Buffer.from(req.headers.authorization ?? "");
-  return actual.length === expected.length && timingSafeEqual(actual, expected);
+  return timingSafeEqual(
+    digest(req.headers.authorization ?? ""),
+    digest(`Bearer ${REVALIDATE_SECRET}`),
+  );
 }
+
+/** 同時に作り直すページの数（カテゴリの保存では全機関のページを作り直すので、並べて速くする） */
+const CONCURRENCY = 4;
 
 async function pathsOfIssuer(issuerId: number): Promise<string[]> {
   const paths = [`/issuers/${issuerId}`];
@@ -51,8 +59,13 @@ export default async function handler(
     return res.status(400).send("400 Bad Request");
   }
   const result: Result = { revalidated: [], failed: [] };
-  for (const issuerId of new Set(issuerIds as number[])) {
-    for (const path of await pathsOfIssuer(issuerId)) {
+  const queue = (
+    await Promise.all(
+      [...new Set(issuerIds as number[])].map((id) => pathsOfIssuer(id)),
+    )
+  ).flat();
+  const worker = async () => {
+    for (let path = queue.shift(); path; path = queue.shift()) {
       try {
         await res.revalidate(path);
         result.revalidated.push(path);
@@ -61,6 +74,7 @@ export default async function handler(
         result.failed.push(path);
       }
     }
-  }
+  };
+  await Promise.all(Array.from({ length: CONCURRENCY }, worker));
   return res.status(200).json(result);
 }
