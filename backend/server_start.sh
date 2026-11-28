@@ -16,7 +16,11 @@ for image in "$BACKEND_BASE_IMAGE" $(docker compose config --images | sort -u); 
     IMAGE_VERSIONS="$IMAGE_VERSIONS $(docker image inspect --format '{{if .RepoDigests}}{{index .RepoDigests 0}}{{else}}{{index .RepoTags 0}}@{{.Id}}{{end}}' "$image" 2>/dev/null)"
 done
 echo "$(date '+%Y-%m-%d %H:%M:%S') backend$IMAGE_VERSIONS" >> image-versions.log
-# 表はマイグレーション（chiloportal/migrations/）で作る。既存の DB では最初のマイグレーションを適用済みとして記録する（--fake-initial）
-docker compose exec -T app python /workspace/manage.py migrate --fake-initial
+# 表はマイグレーション（chiloportal/migrations/）で作る。up -d で migration サービスが migrate --fake-initial を実行するので、
+# ここでは実行せずに終わるのを待つ（ここでも実行すると、2つが同時に同じ表を作ろうとして片方が失敗する）
+if ! docker compose wait migration; then
+    echo "マイグレーションに失敗しました。docker compose logs migration を確認してください。" >&2
+    exit 1
+fi
 docker compose exec -d app python /workspace/manage.py collectstatic --no-input --clear
 # コンテナ作成直後だとDB接続できないことがあるので、とりあえず遅らせてみる
