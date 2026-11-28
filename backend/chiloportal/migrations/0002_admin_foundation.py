@@ -583,8 +583,8 @@ class Migration(migrations.Migration):
                 ),
             ],
             options={
-                "verbose_name": "issuer.name と issuer.url の組み合わせ",
-                "verbose_name_plural": "issuer.name と issuer.url の組み合わせ",
+                "verbose_name": "組み合わせ（issuer.name と issuer.url）",
+                "verbose_name_plural": "組み合わせ（issuer.name と issuer.url）",
                 "db_table": "issuer_mapping",
                 "managed": True,
                 "constraints": [

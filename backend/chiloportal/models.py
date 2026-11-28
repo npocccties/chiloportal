@@ -172,8 +172,8 @@ class IssuerMapping(models.Model):
     class Meta:
         managed = True
         db_table = "issuer_mapping"
-        verbose_name = "issuer.name と issuer.url の組み合わせ"
-        verbose_name_plural = "issuer.name と issuer.url の組み合わせ"
+        verbose_name = "組み合わせ（issuer.name と issuer.url）"
+        verbose_name_plural = "組み合わせ（issuer.name と issuer.url）"
         constraints = [
             models.UniqueConstraint(
                 fields=["issuer_name", "issuer_url"], name="issuer_mapping_unique"
