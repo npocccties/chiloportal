@@ -46,27 +46,29 @@ docker run --rm -p 3000:3000 frontend # Docker コンテナの起動
 
 ## 環境変数
 
-| 変数名                               | 説明                                           | デフォルト値                               |
-| :----------------------------------- | :--------------------------------------------- | :----------------------------------------- |
-| JWT_DEBUG_VALUE                      | デバッグ用 JWT                                 | なし                                       |
-| JWT_VERIFICATION_KEY_BASE64          | JWT 署名検証鍵（PEM 形式）の Base64 エンコード | なし                                       |
-| NEXT_PUBLIC_API_BASE_URL             | API のベースとなる URL                         | なし                                       |
-| NEXT_PUBLIC_API_MOCKING              | API モックの使用をするか否か（真偽値[^yn]）    | 偽                                         |
-| NEXT_PUBLIC_API_PER_PAGE             | API におけるページネーションのページあたり件数 | `30`                                       |
-| NEXT_PUBLIC_BADGES_ISSUER_IMAGE_PATH | バッジ発行者の画像のパス                       | `"issuer/image.png"`                       |
-| NEXT_PUBLIC_BADGE_ANALYSIS_URL       | バッジ分析の URL                               | "https://badge-analysis.example.org/"      |
-| NEXT_PUBLIC_BASE_URL                 | ベースとなる URL                               | "https://portal.example.org/"              |
-| NEXT_PUBLIC_CHILOWALLET_API_BASE_URL | バッジウォレット API のベースとなる URL        | "https://chilowallet.example.org/api/v1/"  |
-| NEXT_PUBLIC_CHILOWALLET_BASE_URL     | バッジウォレットのベースとなる URL             | "https://chilowallet.example.org/"         |
-| NEXT_PUBLIC_GOOGLE_TAG_ID            | Google Analytics に使用する Google タグ ID     | なし                                       |
-| NEXT_PUBLIC_SHIBBOLETH_SP_LOGIN_URL  | Shibboleth SP ログイン URL                     | "https://shibboleth-sp.example.org/login"  |
-| NEXT_PUBLIC_SHIBBOLETH_SP_LOGOUT_URL | Shibboleth SP ログアウト URL                   | "https://shibboleth-sp.example.org/logout" |
+| 変数名                               | 説明                                                                                                                          | デフォルト値                               |
+| :----------------------------------- | :---------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------- |
+| JWT_DEBUG_VALUE                      | デバッグ用 JWT                                                                                                                | なし                                       |
+| JWT_VERIFICATION_KEY_BASE64          | JWT 署名検証鍵（PEM 形式）の Base64 エンコード                                                                                | なし                                       |
+| NEXT_PUBLIC_API_BASE_URL             | API のベースとなる URL                                                                                                        | なし                                       |
+| NEXT_PUBLIC_API_MOCKING              | API モックの使用をするか否か（真偽値[^yn]）                                                                                   | 偽                                         |
+| NEXT_PUBLIC_API_PER_PAGE             | API におけるページネーションのページあたり件数                                                                                | `30`                                       |
+| NEXT_PUBLIC_BADGES_ISSUER_IMAGE_PATH | バッジ発行者の画像のパス                                                                                                      | `"issuer/image.png"`                       |
+| NEXT_PUBLIC_BADGE_ANALYSIS_URL       | バッジ分析の URL                                                                                                              | "https://badge-analysis.example.org/"      |
+| NEXT_PUBLIC_BASE_URL                 | ベースとなる URL                                                                                                              | "https://portal.example.org/"              |
+| NEXT_PUBLIC_CHILOWALLET_API_BASE_URL | バッジウォレット API のベースとなる URL                                                                                       | "https://chilowallet.example.org/api/v1/"  |
+| NEXT_PUBLIC_CHILOWALLET_BASE_URL     | バッジウォレットのベースとなる URL                                                                                            | "https://chilowallet.example.org/"         |
+| NEXT_PUBLIC_GOOGLE_TAG_ID            | Google Analytics に使用する Google タグ ID                                                                                    | なし                                       |
+| NEXT_PUBLIC_SHIBBOLETH_SP_LOGIN_URL  | Shibboleth SP ログイン URL                                                                                                    | "https://shibboleth-sp.example.org/login"  |
+| NEXT_PUBLIC_SHIBBOLETH_SP_LOGOUT_URL | Shibboleth SP ログアウト URL                                                                                                  | "https://shibboleth-sp.example.org/logout" |
+| REVALIDATE_SECRET                    | ページの作り直しの指示（`/api/revalidate`）に付ける秘密の値。バックエンドの同名の変数と同じ値にする。空なら指示を受け付けない | なし                                       |
+| REVALIDATE_INTERVAL_SECONDS          | 機関ページを、指示がなくても作り直す間隔（秒）。指示が届かなかったときの保険                                                  | `600`                                      |
 
 [^yn]: [yn](https://github.com/sindresorhus/yn#readme)によって truly/falsy な値として解釈されます
 
 > [!NOTE]
 >
-> NEXT_PUBLIC\_\* に始まる環境変数はビルド時に参照され、アプリケーションのコードに埋め込まれますが、JWT_VERIFICATION_KEY_BASE64 環境変数は実行時（`yarn start` あるいは `docker run`）に環境変数の指定が必要です。
+> NEXT_PUBLIC\_\* に始まる環境変数はビルド時に参照され、アプリケーションのコードに埋め込まれますが、JWT_VERIFICATION_KEY_BASE64・REVALIDATE_SECRET・REVALIDATE_INTERVAL_SECONDS 環境変数は実行時（`yarn start` あるいは `docker run`）に環境変数の指定が必要です。
 >
 > `frontend_build.sh`（`deploy.sh` から呼ばれます）でコンテナを起動する場合は、実行時の環境変数を `frontend/.env.runtime` に `KEY=VALUE` の形式で 1 行ずつ書いてください。このファイルがあれば `docker run --env-file` で渡されます。Git の管理対象外で、Docker イメージにも含まれません。値を引用符で囲まないでください（`docker run --env-file` は引用符を外しません）。
 

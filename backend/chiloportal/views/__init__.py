@@ -10,3 +10,4 @@ from .badges_detail import *
 from .wisdom_badges_list_keyword import *
 from .wisdom_badges_consumer_list import *
 from .consumer_framework_list import *
+from .admin_status import *

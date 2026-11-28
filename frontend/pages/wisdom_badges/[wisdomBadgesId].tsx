@@ -1,4 +1,5 @@
 import { GetServerSidePropsResult } from "next";
+import type { ServerResponse } from "node:http";
 import Error from "next/error";
 import Head from "next/head";
 import { client, getErrorProps } from "lib/client";
@@ -8,6 +9,7 @@ import Template from "templates/WisdomBadges";
 
 export type Context = {
   params: { wisdomBadgesId: string };
+  res: ServerResponse;
 };
 
 type ErrorProps = {
@@ -22,12 +24,14 @@ export type Props = {
 
 export async function getServerSideProps({
   params: { wisdomBadgesId },
+  res,
 }: Context): Promise<GetServerSidePropsResult<ErrorProps | Props>> {
   try {
     const [wisdomBadges] = await client.badges.$get({
       query: {
         badges_ids: wisdomBadgesId,
         badges_type: "wisdom" as const,
+        published_only: true,
       },
     });
     if (!("portal_category_id" in wisdomBadges))
@@ -43,13 +47,20 @@ export async function getServerSideProps({
       query: {
         badges_ids: wisdomBadges.detail.knowledge_badges_list.join(","),
         badges_type: "knowledge",
+        published_only: true,
       },
     });
     return {
       props: { wisdomBadges, knowledgeBadgesList },
     };
   } catch (e) {
-    return { props: await getErrorProps(e) };
+    const errorProps = await getErrorProps(e);
+    // ポータル非表示のバッジは、URL を直接開いても中身を出さない（API が 404 を返す）
+    if (errorProps.statusCode === 404) {
+      res.statusCode = 404;
+      return { props: { ...errorProps, title: "バッジが見つかりません" } };
+    }
+    return { props: errorProps };
   }
 }
 

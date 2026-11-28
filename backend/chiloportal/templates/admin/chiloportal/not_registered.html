@@ -1,0 +1,12 @@
+{% extends "admin/base_site.html" %}
+{% comment %}学認にはログインしているが、管理ユーザーとして登録されていない（または停止されている）人に出す画面{% endcomment %}
+{% block breadcrumbs %}{% endblock %}
+{% block nav-sidebar %}{% endblock %}
+{% block usertools %}{% endblock %}
+{% block content %}
+<div id="content-main">
+  <p>学認でのログインは確認できましたが、この管理画面の管理ユーザーとして登録されていないか、停止されています。</p>
+  <p>あなたの eppn：<strong>{{ eppn }}</strong></p>
+  <p>管理画面を使う必要がある場合は、上の eppn を添えて、全体管理者に登録を依頼してください。</p>
+</div>
+{% endblock %}

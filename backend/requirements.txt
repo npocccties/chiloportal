@@ -4,9 +4,10 @@ asgiref==3.13.0
 attrs==26.1.0
 bcrypt==4.3.0
 certifi==2026.11.20
+cffi==2.1.1
 charset-normalizer==3.5.3
+cryptography==50.0.2
 Django==5.2.19
-django-axes==9.1.0
 django-cors-headers==4.9.0
 django-ipware==8.0.0
 djangorestframework==3.18.3
@@ -20,6 +21,8 @@ jsonschema==4.26.0
 jsonschema-specifications==2025.9.1
 packaging==26.4
 psycopg2-binary==2.9.13
+pycparser==3.12
+PyJWT==2.15.1
 python-ipware==4.1.1
 pytz==2026.6
 PyYAML==6.0.4

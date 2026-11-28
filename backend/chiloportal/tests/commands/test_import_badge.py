@@ -85,6 +85,19 @@ class ImportBadgeCommandTests(TestCase):
         self.unexpected_urls.append(url)
         raise requests.exceptions.ConnectionError(f"unexpected url: {url}")
 
+    def map_issuer(self, issuer_name, issuer_url, **issuer_fields):
+        """組み合わせを、指定した内容のバッジ発行機関に対応づけておく（管理画面での対応づけにあたる）。"""
+        issuer = Issuer.objects.create(**issuer_fields)
+        IssuerMapping.objects.create(issuer_name=issuer_name, issuer_url=issuer_url, issuer=issuer)
+        return issuer
+
+    def map_test_university(self):
+        # fixtures のバッジの issuer.name と issuer.url
+        return self.map_issuer(
+            "テスト大学", "https://moodle.example.org/",
+            name="テスト大学", url="https://moodle.example.org/", email="",
+        )
+
     def test_run_ok(self):
         stdout = StringIO()
         stderr = StringIO()
@@ -329,6 +342,7 @@ class ImportBadgeCommandTests(TestCase):
         self.assertEqual(e.exception.args[0], "image.idのURLのContent-Typeがimageではありません。")
 
     def test_update_wisdom_badge_isert(self):
+        self.map_test_university()
         cmd = import_badge.Command()
         self.assertEqual(WisdomBadges.objects.all().count(), 0)
         json = cmd.request_get_json(self.wisdom_badge_url)
@@ -446,33 +460,106 @@ class ImportBadgeCommandTests(TestCase):
         wisdom_badge_id_2nd = WisdomBadges.objects.all().first().id
         self.assertEqual(wisdom_badge_id_1st, wisdom_badge_id_2nd)
 
-    def test_update_issuer_insert(self):
+    def test_find_issuer_mapping_insert(self):
+        # 初めての組み合わせは、対応づけていない状態で登録する。バッジ発行機関は作らない
         cmd = import_badge.Command()
-        cmd.update_issuer(
-            issuer_name="hoge", issuer_url="www.hoge.com", issuer_email="hoge@hoge.com"
-        )
-        self.assertEqual(Issuer.objects.all().count(), 1)
+        mapping = cmd.find_issuer_mapping("hoge", "https://www.hoge.example.org/")
+        self.assertIsNone(mapping.issuer)
+        self.assertEqual(IssuerMapping.objects.count(), 1)
+        self.assertEqual(Issuer.objects.count(), 0)
+        # 同じ組み合わせなら、同じものを返す
+        self.assertEqual(cmd.find_issuer_mapping("hoge", "https://www.hoge.example.org/"), mapping)
+        self.assertEqual(IssuerMapping.objects.count(), 1)
 
-    def test_update_issuer_update(self):
+    def test_find_issuer_mapping_does_not_overwrite_issuer(self):
+        # #7 取り込んでも、ポータルで登録したバッジ発行機関の名前・URL・連絡先を上書きしない
+        issuer = self.map_issuer(
+            "hoge", "https://www.hoge.example.org/",
+            name="ほげ大学", url="https://www.hoge.example.org/portal", email="contact@hoge.example.org",
+        )
         cmd = import_badge.Command()
-        cmd.update_issuer(
-            issuer_name="hoge", issuer_url="www.hoge.com", issuer_email="hoge@hoge.com"
-        )
-        self.assertEqual(Issuer.objects.all().count(), 1)
-        issur = Issuer.objects.all().first()
-        self.assertEqual(issur.name, "hoge")
-        self.assertEqual(issur.url, "www.hoge.com")
-        self.assertEqual(issur.email, "hoge@hoge.com")
-        cmd.update_issuer(
-            issuer_name="hoge",
-            issuer_url="www.fugafuga.com",
-            issuer_email="hoge@fugafuga.com",
-        )
-        self.assertEqual(Issuer.objects.all().count(), 1)
-        issur = Issuer.objects.all().first()
-        self.assertEqual(issur.name, "hoge")
-        self.assertEqual(issur.url, "www.fugafuga.com")
-        self.assertEqual(issur.email, "hoge@fugafuga.com")
+        self.assertEqual(cmd.find_issuer_mapping("hoge", "https://www.hoge.example.org/").issuer, issuer)
+        # 同じ名前で URL が違う組み合わせは、別の組み合わせとして対応づけ待ちになる
+        other = cmd.find_issuer_mapping("hoge", "https://www.fugafuga.example.org/")
+        self.assertIsNone(other.issuer)
+        issuer.refresh_from_db()
+        self.assertEqual(issuer.name, "ほげ大学")
+        self.assertEqual(issuer.url, "https://www.hoge.example.org/portal")
+        self.assertEqual(issuer.email, "contact@hoge.example.org")
+        self.assertEqual(Issuer.objects.count(), 1)
+
+    def import_wisdom_badge(self):
+        cmd = import_badge.Command(stdout=StringIO())
+        cmd.update_wisdom_badge(cmd.request_get_json(self.wisdom_badge_url), self.portal_category)
+        return WisdomBadges.objects.get(badge_class_id=self.wisdom_badge_url), cmd.stdout.getvalue()
+
+    def test_import_new_badge_is_hidden(self):
+        issuer = self.map_test_university()
+        badge, _ = self.import_wisdom_badge()
+        self.assertEqual(badge.status, WisdomBadges.Status.HIDDEN)
+        self.assertEqual(badge.issuer, issuer)
+        self.assertEqual(badge.issuer_name, "テスト大学")
+        self.assertEqual(badge.issuer_url, "https://moodle.example.org/")
+        self.assertEqual(badge.portal_category, self.portal_category)
+        for knowledge_badge in KnowledgeBadges.objects.filter(wisdom_badges=badge):
+            self.assertEqual(knowledge_badge.issuer, issuer)
+            self.assertEqual(knowledge_badge.issuer_name, "テスト大学")
+
+    def test_import_unmapped_combination(self):
+        badge, stdout = self.import_wisdom_badge()
+        self.assertIsNone(badge.issuer)
+        self.assertEqual(badge.status, WisdomBadges.Status.HIDDEN)
+        self.assertEqual(Issuer.objects.count(), 0)
+        mapping = IssuerMapping.objects.get()
+        self.assertEqual((mapping.issuer_name, mapping.issuer_url, mapping.issuer), ("テスト大学", "https://moodle.example.org/", None))
+        self.assertIn("まだバッジ発行機関に対応づけられていません", stdout)
+
+    def test_import_without_issuer_uses_blank_combination(self):
+        # issuer.name・issuer.url がないバッジは、"" の組み合わせとして扱う（NULL にしない）
+        cmd = import_badge.Command(stdout=StringIO())
+        json = cmd.request_get_json(self.wisdom_badge_url)
+        json["issuer"] = {}
+        cmd.update_wisdom_badge(json, self.portal_category)
+        badge = WisdomBadges.objects.get(badge_class_id=self.wisdom_badge_url)
+        self.assertEqual((badge.issuer_name, badge.issuer_url), ("", ""))
+        self.assertTrue(IssuerMapping.objects.filter(issuer_name="", issuer_url="").exists())
+
+    def test_reimport_keeps_portal_settings(self):
+        self.map_test_university()
+        badge, _ = self.import_wisdom_badge()
+        other_category = PortalCategory.objects.create(name="管理画面で選んだカテゴリ")
+        badge.status = WisdomBadges.Status.PUBLISHED
+        badge.portal_category = other_category
+        badge.name = "古い名前"
+        badge.save()
+        badge, _ = self.import_wisdom_badge()
+        # Moodle から来る項目は更新し、公開状態とカテゴリはポータルで設定したものを残す
+        self.assertEqual(badge.name, 'バッジ "テスト用能力バッジ"')
+        self.assertEqual(badge.status, WisdomBadges.Status.PUBLISHED)
+        self.assertEqual(badge.portal_category, other_category)
+
+    def test_reimport_unmapped_keeps_issuer_and_status(self):
+        # 既存のバッジで組み合わせが対応づけられていなければ、今の担当機関と公開状態のまま
+        issuer = self.map_test_university()
+        badge, _ = self.import_wisdom_badge()
+        badge.status = WisdomBadges.Status.PUBLISHED
+        badge.save()
+        IssuerMapping.objects.update(issuer=None)
+        badge, _ = self.import_wisdom_badge()
+        self.assertEqual(badge.issuer, issuer)
+        self.assertEqual(badge.status, WisdomBadges.Status.PUBLISHED)
+
+    def test_reimport_mapped_to_other_issuer_hides(self):
+        self.map_test_university()
+        badge, _ = self.import_wisdom_badge()
+        badge.status = WisdomBadges.Status.PUBLISHED
+        badge.save()
+        other = Issuer.objects.create(name="別の大学")
+        IssuerMapping.objects.update(issuer=other)
+        badge, _ = self.import_wisdom_badge()
+        # 担当機関が変わったら、新しい担当機関が公開するまで非表示
+        self.assertEqual(badge.issuer, other)
+        self.assertEqual(badge.status, WisdomBadges.Status.HIDDEN)
 
     def test_create_knowledge_badges(self):
         cmd = import_badge.Command()
@@ -537,6 +624,7 @@ class ImportBadgeCommandTests(TestCase):
             issuer=issuer,
         )
         json = self.make_default_json()
+        self.map_issuer("name7", "url8", name="name7", url="url8", email="email9")
         knowledge_badge, criteria_list = cmd.create_knowledge_badge(
             json, wisdom_badge, "tmp/hoge.png"
         )

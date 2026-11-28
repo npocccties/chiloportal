@@ -107,6 +107,7 @@ def to_wisdom_badge(
         "issuer_url": issuer.url if issuer else None,
         "issuer_email": issuer.email if issuer else None,
         "digital_badge_class_id": wisdom_badge.badge_class_id,
+        "status": wisdom_badge.status,
         "detail": {
             "knowledge_badges_list": knowledge_badges_id_list,
         },

@@ -119,6 +119,9 @@
      https://lms.example.org/badges/badge_json.php?id=20,101
      ```
    * インポートの結果は `chiloportal/backend/import_result.csv` に出力されます
+   * 取り込んだ新しいバッジは「ポータル非表示」で登録されます。管理画面の「バッジ」で内容を確かめ、公開にしてください
+   * バッジの担当機関は、バッジの issuer.name と issuer.url の組み合わせで決まります。初めての組み合わせは、管理画面の「組み合わせ（issuer.name と issuer.url）」に対応づけ待ちとして登録されるので、バッジ発行機関に対応づけてください（取り込みでバッジ発行機関の名前・URL は変わりません）
+   * 取り込み直したときは、名前・説明・画像・スタンプなど Moodle から来る項目だけを更新します。公開状態とカテゴリは管理画面で設定したものを残します（カテゴリが未設定のバッジだけ、CSV のカテゴリを設定します）
    * インポート結果CSVファイル書式：OK/NG,ポータル独自カテゴリの主キー,インポート済みバッジのID
    * インポート後は　`chiloportal/frontend/build.sh` を実行してください（バッジの画像をフロントエンドに取り込むため）
    * インポートとフロントエンドのビルドを併せて行いたい場合は `chiloportal/import.sh` を実行してください
@@ -165,16 +168,9 @@
 
    管理者作成  
    ```
-   docker compose exec app python /workspace/manage.py createsuperuser
+   docker compose exec app python /workspace/manage.py createadmin {eppn} --superuser
    ```
-   * Django の管理画面からログインするための管理者アカウントを作成します  
-   * 本番環境では類推されにくいユーザ名およびパスワードを設定してください  
-
-   アカウントロック解除  
-   ```
-   docker compose exec app python /workspace/manage.py axes_reset
-   ```
-   * Django の管理画面からログインに 3 回失敗するとアカウントロックが行われますので、上記コマンドにより解除してください  
+   * 管理画面に学認でログインする最初の全体管理者を、eppn で登録します（パスワードは設定しません）。詳しくは「管理画面」を参照してください  
 
 ## 動作確認
 ### バックエンドAPI
@@ -203,6 +199,19 @@
    ```
 
 
+# 管理画面
+管理画面（`/admin/`）には、ポータルと同じ学認のログインで入ります。ID・パスワードでのログインはありません。管理ユーザーは、学認の eppn をユーザー名にして登録します。
+
+* 全体管理者：すべての機関とポータル全体の設定を操作できます
+* 機関管理者：担当機関（バッジ発行機関の「機関管理者」）のバッジだけを操作できます
+
+1. 最初の全体管理者を登録する（サーバー上で実行）
+   ```
+   docker compose exec app python manage.py createadmin {eppn} --superuser
+   ```
+1. 2人目からは、全体管理者が管理画面の「ユーザー」で eppn を登録し、役割と担当機関を指定します。停止するときは「有効」を外します
+1. 登録されていない人が学認でログインして管理画面を開くと、その人の eppn が表示されます。その eppn で登録してください
+
 # 環境変数
 |環境変数名|説明|備考|
 |:--|:--|:--|
@@ -221,6 +230,12 @@
 |LETS_ENCRYPT|無料のSSL証明書の要否|無料のSSL証明書を使用するか否か<br>`true`: 使用する ※動作確認用<br>`false`: 使用しない ※本番リリース用|
 |DUMP_BACKUP_DIR|DBの圧縮ファイルのバックアップディレクトリ（絶対パス指定）|DBバックアップを実行すると `/var/chiloportal.dump` をダンプ出力するが、そのダンプファイルを下記命名で圧縮したうえで左記ディレクトリに格納する<br>`chiloportal.dump_{yyyyMMdd}.tar.gz`|
 |DUMP_BACKUP_COUNT|DBの圧縮ファイルの保持日数|・保持日数を経過したDBの圧縮ファイルは削除される (例)1週間、保持したい場合は `7` を指定する<br>・削除の契機は、DBバックアップの実行時<br>・起点は昨日|
+|REVALIDATE_URL|ポータルのページの作り直しを指示する URL|管理画面でバッジや機関を保存したときに、機関ページを作り直すようフロントエンドに指示する<br>例：`http://frontend:3000/api/revalidate`（同じ Docker ネットワークのフロントエンド）<br>空なら指示しない（フロントエンドが `REVALIDATE_INTERVAL_SECONDS` ごとに作り直すまで反映されない）|
+|REVALIDATE_SECRET|ページの作り直しの指示に付ける秘密の値|フロントエンドの `REVALIDATE_SECRET` と同じ値にする。推測されにくい長い値にすること（例：`openssl rand -hex 32` の出力）|
+|JWT_VERIFICATION_KEY_BASE64|学認の SP が発行する session_cookie（JWT）の署名を検証する公開鍵|管理画面のログインに使う。フロントエンドの同名の変数と同じ値（PEM 形式の公開鍵を Base64 にしたもの）|
+|SHIBBOLETH_SP_LOGIN_URL|学認の SP のログイン URL|ログインしていない人が管理画面を開いたときの移動先。フロントエンドの `NEXT_PUBLIC_SHIBBOLETH_SP_LOGIN_URL` と同じ値|
+|SHIBBOLETH_SP_LOGOUT_URL|学認の SP のログアウト URL|管理画面でログアウトしたときの移動先。フロントエンドの `NEXT_PUBLIC_SHIBBOLETH_SP_LOGOUT_URL` と同じ値|
+|JWT_DEBUG_VALUE|開発用の JWT|`DEBUG` が `True` のときだけ、session_cookie がなければこの値を使う（ローカルでの動作確認用）|
 |BCRYPT_SALT|成長段階のパスワードのハッシュ値のソルト<br>※値はシングルクォートで囲う形で設定してください。例: BCRYPT_SALT='$2a$12$aqYLqFynQDdDs5CeyIcKFO'|-|
 
 

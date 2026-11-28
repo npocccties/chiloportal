@@ -93,7 +93,7 @@ paths:
     get:
       tags:
         - stage field list
-      description: 指定された成長段階IDに関連する指標項目情報を返却します
+      description: 指定された成長段階IDに関連する指標項目情報を返却します。published_only が true のとき、ポータル非表示のバッジを除き、該当がなければ 400 ではなく空の一覧を返します
       operationId: findStageFieldList
       parameters:
         - name: stage_id
@@ -102,6 +102,12 @@ paths:
           required: true
           schema:
             type: number
+        - name: published_only
+          in: query
+          description: true のとき、ポータルに公開中のバッジだけを返す（ポータルの表示用）。指定がなければ、ポータル非表示のバッジも含めて返す
+          required: false
+          schema:
+            type: boolean
       responses:
         '200':
           description: Successful operation
@@ -115,8 +121,15 @@ paths:
     get:
       tags:
         - portal category list
-      description: 登録されているポータルカテゴリ情報を一覧で返却します
+      description: 登録されているポータルカテゴリ情報を一覧で返却します。published_only が true のとき、badges_count は公開中のバッジの数になります
       operationId: findPortalCategoryList
+      parameters:
+        - name: published_only
+          in: query
+          description: true のとき、ポータルに公開中のバッジだけを返す（ポータルの表示用）。指定がなければ、ポータル非表示のバッジも含めて返す
+          required: false
+          schema:
+            type: boolean
       responses:
         '200':
           description: successful operation
@@ -130,7 +143,7 @@ paths:
     get:
       tags:
         - portal category badges list
-      description: バッジ一覧を返却します
+      description: バッジ一覧を返却します。published_only が true のとき、該当がなければ 400 ではなく 0 件を返します
       operationId: findPortalCategoryBadgesList
       parameters:
         - name: portal_category_id
@@ -147,6 +160,12 @@ paths:
           schema:
             type: integer
             format: int64
+        - name: published_only
+          in: query
+          description: true のとき、ポータルに公開中のバッジだけを返す（ポータルの表示用）。指定がなければ、ポータル非表示のバッジも含めて返す
+          required: false
+          schema:
+            type: boolean
       responses:
         '200':
           description: Successful operation
@@ -229,7 +248,7 @@ paths:
     get:
       tags:
         - badges
-      description: 指定されたバッジIDのバッジ関連情報を返却します
+      description: 指定されたバッジIDのバッジ関連情報を返却します。published_only が true のとき、ポータル非表示のバッジ（スタンプは、そのバッジ）を除き、1件もなければ 404 を返します
       operationId: findBadges
       parameters:
         - name: badges_ids
@@ -244,6 +263,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: published_only
+          in: query
+          description: true のとき、ポータルに公開中のバッジだけを返す（ポータルの表示用）。指定がなければ、ポータル非表示のバッジも含めて返す
+          required: false
+          schema:
+            type: boolean
       responses:
         '200':
           description: Successful operation
@@ -257,11 +282,13 @@ paths:
                     - $ref: '#/components/schemas/BadgeDetail2'
         '400':
           description: Invalid parameters supplied
+        '404':
+          description: Not found (published_only が true で、公開中のバッジがないとき)
   /badges/list:
     get:
       tags:
         - badges list
-      description: バッジ一覧を返却します
+      description: バッジ一覧を返却します。published_only が true のとき、該当がなければ 400 ではなく 0 件を返します
       operationId: findBadgesList
       parameters:
         - name: issuer_id
@@ -285,6 +312,12 @@ paths:
           schema:
             type: integer
             format: int64
+        - name: published_only
+          in: query
+          description: true のとき、ポータルに公開中のバッジだけを返す（ポータルの表示用）。指定がなければ、ポータル非表示のバッジも含めて返す
+          required: false
+          schema:
+            type: boolean
       responses:
         '200':
           description: Successful operation
@@ -338,6 +371,12 @@ paths:
           schema:
             type: integer
             format: int64
+        - name: published_only
+          in: query
+          description: true のとき、ポータルに公開中のバッジだけを返す（ポータルの表示用）。指定がなければ、ポータル非表示のバッジも含めて返す
+          required: false
+          schema:
+            type: boolean
       responses:
         '200':
           description: Successful operation
@@ -726,6 +765,13 @@ components:
         digital_badge_class_id:
           type: string
           example: digitalbadge_classID
+        status:
+          type: string
+          description: バッジの公開状態（published 公開／hidden ポータル非表示／auto_hidden Moodle で無効・削除されたため非表示）。スタンプにはない
+          enum:
+            - published
+            - hidden
+            - auto_hidden
         alignments_targetname:
           type: string
           example: digitalbadge101 alignments_targetname
@@ -795,6 +841,13 @@ components:
         digital_badge_class_id:
           type: string
           example: digitalbadge_classID
+        status:
+          type: string
+          description: バッジの公開状態（published 公開／hidden ポータル非表示／auto_hidden Moodle で無効・削除されたため非表示）。スタンプにはない
+          enum:
+            - published
+            - hidden
+            - auto_hidden
         detail:
           oneOf:
             - $ref: '#/components/schemas/wisdom'

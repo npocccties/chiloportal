@@ -14,6 +14,10 @@ from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.decorators import api_view
 from django.utils.decorators import method_decorator
+from .. import utils
+
+# ポータルの表示用に、公開中のバッジだけに絞る指定。指定がなければ、今までどおり全件を返す（ポートフォリオなど）。
+PUBLISHED_ONLY_PARAM = SwaggerQueryParam("published_only", False, schema="boolean")
 
 
 class BaseAPIView(APIView):
@@ -44,6 +48,16 @@ class BaseAPIView(APIView):
 
     def _get(self, request):
         pass
+
+    def get_published_only(self, request):
+        value = request.GET.get("published_only")
+        if value is None:
+            return False
+        try:
+            return utils.str_to_bool(value)
+        except ValueError:
+            self.logger.error(f"Invalid published_only: {value}")
+            raise ParseError("Invalid parameters supplied")
 
     def get_page(self, queryset, page_num):
         paginator = Paginator(queryset, self.per_page)

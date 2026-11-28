@@ -4,6 +4,7 @@ import {
   NEXT_PUBLIC_SHIBBOLETH_SP_LOGIN_URL,
   NEXT_PUBLIC_SHIBBOLETH_SP_LOGOUT_URL,
 } from "lib/env";
+import useAdminStatus, { adminUrl } from "lib/use-admin-status";
 import useUserAttributes from "lib/use-user-attributes";
 import { useId } from "react";
 
@@ -13,6 +14,7 @@ type Props = {
 
 function UserPopover({ className }: Props) {
   const { data } = useUserAttributes();
+  const { data: isAdmin } = useAdminStatus(Boolean(data));
   const id = useId();
 
   if (!data)
@@ -50,6 +52,16 @@ function UserPopover({ className }: Props) {
           role="menu"
           onClick={() => close()}
         >
+          {isAdmin && (
+            <li role="menuitem">
+              <a
+                className="block w-max min-w-full px-4 py-3 rounded-sm hover:bg-gray-700"
+                href={adminUrl()}
+              >
+                管理
+              </a>
+            </li>
+          )}
           <li role="menuitem">
             <a
               className="block w-max min-w-full px-4 py-3 rounded-sm hover:bg-gray-700"

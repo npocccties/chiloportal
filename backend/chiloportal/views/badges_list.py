@@ -13,6 +13,7 @@ class BadgesList(BaseAPIView):
         SwaggerQueryParam("issuer_id", False),
         SwaggerQueryParam("portal_category_id", False),
         SwaggerQueryParam("page_number", False),
+        PUBLISHED_ONLY_PARAM,
     ]
     filter_backends = (SwaggerQueryParamFilter,)
 
@@ -20,6 +21,7 @@ class BadgesList(BaseAPIView):
         issuer_id = self.request.GET.get("issuer_id")
         portal_category_id = self.request.GET.get("portal_category_id")
         page_number = self.request.GET.get("page_number")
+        published_only = self.get_published_only(request)
 
         if issuer_id != None and utils.is_int(issuer_id) == False:
             self.logger.error(f"Invalid issuer_id: {issuer_id}")
@@ -37,6 +39,8 @@ class BadgesList(BaseAPIView):
             filter_args &= Q(issuer_id=issuer_id)
         if portal_category_id is not None:
             filter_args &= Q(portal_category_id=portal_category_id)
+        if published_only:
+            filter_args &= Q(status=WisdomBadges.Status.PUBLISHED)
         
         queryset = (
             WisdomBadges.objects.filter(filter_args)
@@ -47,6 +51,8 @@ class BadgesList(BaseAPIView):
         )
 
         if queryset.exists() == False:
+            if published_only:
+                return Response(to_pager_wisdom_badges_empty())
             self.logger.error(f"Not found wisdom_badges: issuer_id: {issuer_id} portal_category_id: {portal_category_id}")
             raise ParseError("Invalid parameters supplied")
             

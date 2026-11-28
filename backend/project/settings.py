@@ -43,13 +43,13 @@ INSTALLED_APPS = [
     "rest_framework_api_key",
     "corsheaders",
     "drf_yasg",
-    "django.contrib.admin",
+    # 管理画面。ログインを学認にした独自の AdminSite を使う（chiloportal/admin_site.py）
+    "chiloportal.apps.ChiloportalAdminConfig",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "axes",
 ]
 
 MIDDLEWARE = [
@@ -59,15 +59,24 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    # 管理画面へのアクセスのたびに、学認のログイン（session_cookie）と管理画面のログインを合わせる
+    "chiloportal.auth.ShibbolethSessionMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "axes.middleware.AxesMiddleware",
 ]
 
+# 管理画面のログインは学認だけ（ID・パスワードでのログインは用意しない）
 AUTHENTICATION_BACKENDS = [
-    "axes.backends.AxesBackend",
-    "django.contrib.auth.backends.ModelBackend",
+    "chiloportal.auth.ShibbolethBackend",
 ]
+
+# 学認の SP が発行する session_cookie（JWT）の署名を検証する公開鍵（PEM を Base64 にしたもの）。フロントエンドと同じ値
+JWT_VERIFICATION_KEY_BASE64 = os.environ.get("JWT_VERIFICATION_KEY_BASE64", "")
+# 開発用：session_cookie の代わりに使う JWT（DEBUG のときだけ使う）
+JWT_DEBUG_VALUE = os.environ.get("JWT_DEBUG_VALUE", "")
+# 学認の SP のログイン・ログアウトの URL（フロントエンドの NEXT_PUBLIC_SHIBBOLETH_SP_LOGIN_URL / LOGOUT_URL と同じ値）
+SHIBBOLETH_SP_LOGIN_URL = os.environ.get("SHIBBOLETH_SP_LOGIN_URL", "")
+SHIBBOLETH_SP_LOGOUT_URL = os.environ.get("SHIBBOLETH_SP_LOGOUT_URL", "")
 
 CORS_ORIGIN_ALLOW_ALL = True
 
@@ -79,6 +88,12 @@ if host in "localhost":
 else:
     allowed_url = "https://" + host
 CSRF_TRUSTED_ORIGINS = [allowed_url]
+
+# 管理画面のログインの cookie。https の環境では Secure を付け、ブラウザを閉じたら消す
+SESSION_COOKIE_SECURE = allowed_url.startswith("https://")
+CSRF_COOKIE_SECURE = allowed_url.startswith("https://")
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_COOKIE_AGE = 60 * 60 * 8
 
 ROOT_URLCONF = "project.urls"
 
