@@ -1,3 +1,4 @@
+from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -10,6 +11,7 @@ class AdminStatus(APIView):
     swagger_schema = None
     authentication_classes = []
     permission_classes = []
+    renderer_classes = [JSONRenderer]
 
     def get(self, request):
         attributes = get_shibboleth_attributes(request)
