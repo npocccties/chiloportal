@@ -1,0 +1,8 @@
+/* ラベルの見え方（ポータルの表示と同じ色） */
+.chiloportal-label { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 12px; font-weight: bold; color: #fff; }
+.chiloportal-label--gray { background: #5f6368; }
+.chiloportal-label--blue { background: #1a5fb4; }
+.chiloportal-label--green { background: #26734d; }
+.chiloportal-label--orange { background: #a8510b; }
+.chiloportal-label--red { background: #b3261e; }
+.chiloportal-label--purple { background: #6b3fa0; }

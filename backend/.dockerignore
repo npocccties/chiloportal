@@ -7,6 +7,7 @@ postgresql/
 # 実行時に作られるもの
 logs/
 static/
+media/
 output/
 image-versions.log
 docker-compose.yml

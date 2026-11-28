@@ -14,13 +14,18 @@ from django.contrib.auth import admin as auth_admin  # noqa: F401  先に読み�
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django.core import signing
+from django.core.exceptions import PermissionDenied
 from django.db import transaction
 from django.db.models import Count, F, Q
+from django.shortcuts import redirect
 
 from . import models
 
 # 権限はグループではなく役割（全体管理者・機関管理者）で分けるので、グループの画面は出さない
 admin.site.unregister(Group)
+
+
+from django.utils.html import format_html
 
 
 def is_overall_admin(user):
@@ -128,7 +133,8 @@ class KnowledgeBadgesInline(admin.TabularInline):
 class WisdomBadgesForm(forms.ModelForm):
     class Meta:
         model = models.WisdomBadges
-        fields = ["status", "portal_category"]
+        fields = ["status", "portal_category", "labels", "new_dismissed", "display_image"]
+        widgets = {"labels": forms.CheckboxSelectMultiple}
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -162,13 +168,20 @@ class WisdomBadgesAdmin(IssuerScoped):
         "issuer_url",
     ]
     fieldsets = [
-        ("ポータルでの掲載", {"fields": ["status", "portal_category", "issuer", "published_at"]}),
+        (
+            "ポータルでの掲載",
+            {"fields": ["status", "portal_category", "labels", "new_dismissed", "issuer", "published_at"]},
+        ),
+        (
+            "表示用の画像（取り込み直しても変わらない）",
+            {"fields": ["image_preview", "display_image"]},
+        ),
         ("Moodle から取り込んだ内容", {"fields": moodle_fields}),
     ]
-    readonly_fields = ["issuer", "published_at", *moodle_fields]
-    list_display = ["name", "status", "portal_category", "issuer", "published_at", "issuer_name"]
+    readonly_fields = ["issuer", "published_at", "image_preview", *moodle_fields]
+    list_display = ["name", "status", "portal_category", "label_names", "issuer", "published_at", "issuer_name"]
     list_display_links = ["name"]
-    list_filter = ["status", UnmappedFilter, "issuer", "portal_category"]
+    list_filter = ["status", UnmappedFilter, "issuer", "portal_category", "labels"]
     list_select_related = ["issuer", "portal_category"]
     search_fields = ["name", "description", "tags", "alignments_targetname", "issuer_name", "issuer_url", "badge_class_id"]
     ordering = ["-pk"]
@@ -182,6 +195,27 @@ class WisdomBadgesAdmin(IssuerScoped):
     def has_delete_permission(self, request, obj=None):
         # 不要になったバッジは削除せず、ポータル非表示にする
         return False
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).prefetch_related("labels")
+
+    @admin.display(description="ラベル")
+    def label_names(self, obj):
+        return "、".join(label.name for label in obj.labels.all())
+
+    @admin.display(description="ポータルで表示する画像")
+    def image_preview(self, obj):
+        if obj.display_image:
+            return format_html(
+                '<img src="{}" alt="" style="max-width:160px;max-height:160px"><br>表示用の画像を表示しています。',
+                obj.display_image.url,
+            )
+        if obj.image_id:
+            return format_html(
+                '<img src="/images/{}" alt="" style="max-width:160px;max-height:160px"><br>Moodle から取り込んだ画像を表示しています。',
+                obj.image_id,
+            )
+        return "（画像なし）"
 
     def get_list_filter(self, request):
         if is_overall_admin(request.user):
@@ -468,6 +502,47 @@ def reassign_badges(mapping):
 # ---------------------------------------------------------------------------
 # マスタ（全体管理者だけ）
 # ---------------------------------------------------------------------------
+
+
+@admin.register(models.Label)
+class LabelAdmin(OverallAdminOnly):
+    list_display = ["name", "sample", "color", "sort_key", "badge_count"]
+    list_editable = ["color", "sort_key"]
+    search_fields = ["name"]
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).annotate(_badge_count=Count("badges"))
+
+    @admin.display(description="見え方")
+    def sample(self, obj):
+        return format_html(
+            '<span class="chiloportal-label chiloportal-label--{}">{}</span>', obj.color, obj.name
+        )
+
+    @admin.display(description="付けているバッジの数", ordering="_badge_count")
+    def badge_count(self, obj):
+        return obj._badge_count
+
+    class Media:
+        css = {"all": ["chiloportal/admin.css"]}
+
+
+@admin.register(models.PortalSettings)
+class PortalSettingsAdmin(OverallAdminOnly):
+    fields = ["new_badge_days", "default_sort"]
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    def changelist_view(self, request, extra_context=None):
+        # 1件だけなので、一覧を出さずに設定の画面を開く
+        if not self.has_view_permission(request):
+            raise PermissionDenied
+        settings = models.PortalSettings.load()
+        return redirect("admin:chiloportal_portalsettings_change", settings.pk)
 
 
 @admin.register(models.PortalCategory)

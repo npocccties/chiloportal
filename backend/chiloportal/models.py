@@ -15,6 +15,7 @@ from django.db import models
 from django.utils import timezone
 
 from . import revalidate
+from .images import RandomName, validate_badge_image
 
 
 class CategorisedBadges(models.Model):
@@ -289,6 +290,78 @@ class Framework(models.Model):
         return self.name
 
 
+class Label(models.Model):
+    """バッジ名の横に出す目印（例：受講者限定）。"""
+
+    class Color(models.TextChoices):
+        GRAY = "gray", "灰"
+        BLUE = "blue", "青"
+        GREEN = "green", "緑"
+        ORANGE = "orange", "橙"
+        RED = "red", "赤"
+        PURPLE = "purple", "紫"
+
+    name = models.CharField("表示する文字", max_length=32, unique=True)
+    color = models.CharField("色", max_length=16, choices=Color.choices, default=Color.GRAY)
+    sort_key = models.IntegerField(
+        "表示順", blank=True, help_text="小さい順に表示する。空のまま保存すると末尾の番号が入る。"
+    )
+
+    class Meta:
+        managed = True
+        db_table = "label"
+        verbose_name = "ラベル"
+        verbose_name_plural = "ラベル"
+        ordering = ["sort_key", "pk"]
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        if self.sort_key is None:
+            last = Label.objects.aggregate(models.Max("sort_key"))["sort_key__max"]
+            self.sort_key = (last or 0) + 1
+        super().save(*args, **kwargs)
+
+
+class PortalSettings(models.Model):
+    """ポータル全体の表示の設定（1件だけ）。"""
+
+    class Sort(models.TextChoices):
+        NEWEST = "newest", "新しい順"
+        OLDEST = "oldest", "古い順"
+
+    new_badge_days = models.PositiveIntegerField(
+        "NEW を表示する日数", default=180, help_text="バッジを公開した日から、この日数のあいだ「NEW」を表示する。"
+    )
+    default_sort = models.CharField(
+        "バッジ一覧の最初の並び順",
+        max_length=16,
+        choices=Sort.choices,
+        default=Sort.OLDEST,
+        help_text="利用者が並び順を選ぶ前の並び順。新しい順は、公開した日の新しい順（公開日の分からない既存のバッジは後ろ）。",
+    )
+
+    class Meta:
+        managed = True
+        db_table = "portal_settings"
+        verbose_name = "表示の設定"
+        verbose_name_plural = "表示の設定"
+
+    def __str__(self):
+        return "表示の設定"
+
+    def save(self, *args, **kwargs):
+        # 1件だけにする
+        self.pk = 1
+        super().save(*args, **kwargs)
+
+    @classmethod
+    def load(cls):
+        settings, _ = cls.objects.get_or_create(pk=1)
+        return settings
+
+
 class WisdomBadges(models.Model):
     class Status(models.TextChoices):
         PUBLISHED = "published", "公開"
@@ -332,6 +405,18 @@ class WisdomBadges(models.Model):
         default=Status.HIDDEN,
     )
     published_at = models.DateTimeField("公開した日時", blank=True, null=True)
+    # ポータルで設定する項目（取り込み直しても変わらない）
+    display_image = models.FileField(
+        "表示用の画像",
+        upload_to=RandomName("badges"),
+        validators=[validate_badge_image],
+        blank=True,
+        help_text="SVG か PNG（2MB まで）。設定するとポータルではこの画像を表示する。スクリプトを含む SVG は受け付けない。",
+    )
+    new_dismissed = models.BooleanField(
+        "NEW を外す", default=False, help_text="公開した日から決まった日数のあいだ出る「NEW」を、このバッジだけ外す。"
+    )
+    labels = models.ManyToManyField(Label, blank=True, related_name="badges", verbose_name="ラベル")
 
     class Meta:
         managed = True
