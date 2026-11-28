@@ -534,19 +534,38 @@ class AdminUserForm(forms.ModelForm):
             self.fields["issuers"].initial = self.instance.assigned_issuers.all()
 
 
+class RoleFilter(admin.SimpleListFilter):
+    title = "役割"
+    parameter_name = "role"
+
+    def lookups(self, request, model_admin):
+        return [("overall", "全体管理者"), ("issuer", "機関管理者")]
+
+    def queryset(self, request, queryset):
+        if self.value() == "overall":
+            return queryset.filter(is_superuser=True)
+        if self.value() == "issuer":
+            return queryset.filter(is_superuser=False)
+        return queryset
+
+
 @admin.register(User)
 class AdminUserAdmin(OverallAdminOnly):
     form = AdminUserForm
     fields = ["username", "first_name", "is_active", "is_superuser", "issuers", "last_login"]
     readonly_fields = ["last_login"]
-    list_display = ["username", "first_name", "role", "is_active", "issuer_names", "last_login"]
-    list_filter = ["is_superuser", "is_active"]
+    list_display = ["username", "display_name", "role", "is_active", "issuer_names", "last_login"]
+    list_filter = [RoleFilter, "is_active"]
     search_fields = ["username", "first_name", "assigned_issuers__name"]
     ordering = ["username"]
 
     def get_queryset(self, request):
         # 管理画面のユーザーだけを出す
         return super().get_queryset(request).filter(is_staff=True).prefetch_related("assigned_issuers")
+
+    @admin.display(description="表示名", ordering="first_name")
+    def display_name(self, obj):
+        return obj.first_name
 
     @admin.display(description="役割", ordering="is_superuser")
     def role(self, obj):
