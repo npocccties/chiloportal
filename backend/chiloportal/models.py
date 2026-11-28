@@ -346,6 +346,10 @@ class WisdomBadges(models.Model):
         super().clean()
         if self.status == self.Status.PUBLISHED and self.portal_category_id is None:
             raise ValidationError({"status": "カテゴリを設定しないと公開できません。"})
+        if self.status == self.Status.PUBLISHED and getattr(self, "_loaded_status", None) == self.Status.AUTO_HIDDEN:
+            raise ValidationError(
+                {"status": "Moodle で無効・削除されているため公開できません。Moodle で有効にしてから取り込み直してください。"}
+            )
 
     @classmethod
     def from_db(cls, db, field_names, values):

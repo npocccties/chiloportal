@@ -168,6 +168,8 @@ class Command(BaseCommand):
                 break
         image_path = self.download_file(image_id)
         image_fname = os.path.basename(image_path)
+        # 対応表と同じく、空のときは "" にそろえる（NULL のままだと対応表と照合できない）
+        issuer_name, issuer_url = issuer_name or "", issuer_url or ""
         mapping = self.find_issuer_mapping(issuer_name, issuer_url)
         wisdom_badge_set = WisdomBadges.objects.filter(badge_class_id=id)
         if wisdom_badge_set.exists():
@@ -285,6 +287,7 @@ class Command(BaseCommand):
             issuer_url,
             issuer_email,
         ) = self.get_badge_data(json)
+        issuer_name, issuer_url = issuer_name or "", issuer_url or ""
         mapping = self.find_issuer_mapping(issuer_name, issuer_url)
         knowledge_badge = KnowledgeBadges.objects.create(
             badge_class_id=id,

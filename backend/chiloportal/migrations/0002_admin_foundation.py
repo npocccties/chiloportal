@@ -20,8 +20,9 @@ def migrate_existing_data(apps, schema_editor):
     WisdomBadges.objects.update(status="published")
     for model in (WisdomBadges, KnowledgeBadges):
         for badge in model.objects.filter(issuer__isnull=False).select_related("issuer"):
-            badge.issuer_name = badge.issuer.name
-            badge.issuer_url = badge.issuer.url
+            # 対応表と同じく、空のときは "" にそろえる（NULL のままだと対応表と照合できない）
+            badge.issuer_name = badge.issuer.name or ""
+            badge.issuer_url = badge.issuer.url or ""
             badge.save(update_fields=["issuer_name", "issuer_url"])
     for issuer in Issuer.objects.all():
         IssuerMapping.objects.get_or_create(

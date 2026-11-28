@@ -514,6 +514,16 @@ class ImportBadgeCommandTests(TestCase):
         self.assertEqual((mapping.issuer_name, mapping.issuer_url, mapping.issuer), ("テスト大学", "https://moodle.example.org/", None))
         self.assertIn("まだバッジ発行機関に対応づけられていません", stdout)
 
+    def test_import_without_issuer_uses_blank_combination(self):
+        # issuer.name・issuer.url がないバッジは、"" の組み合わせとして扱う（NULL にしない）
+        cmd = import_badge.Command(stdout=StringIO())
+        json = cmd.request_get_json(self.wisdom_badge_url)
+        json["issuer"] = {}
+        cmd.update_wisdom_badge(json, self.portal_category)
+        badge = WisdomBadges.objects.get(badge_class_id=self.wisdom_badge_url)
+        self.assertEqual((badge.issuer_name, badge.issuer_url), ("", ""))
+        self.assertTrue(IssuerMapping.objects.filter(issuer_name="", issuer_url="").exists())
+
     def test_reimport_keeps_portal_settings(self):
         self.map_test_university()
         badge, _ = self.import_wisdom_badge()

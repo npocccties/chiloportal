@@ -87,6 +87,13 @@ class WisdomBadgesModelTest(AdminTestBase):
         badge.save()
         self.assertIsNone(WisdomBadges.objects.get(pk=badge.pk).published_at)
 
+    def test_cannot_publish_auto_hidden(self):
+        WisdomBadges.objects.filter(pk=self.badge_a1.pk).update(status=Status.AUTO_HIDDEN)
+        badge = WisdomBadges.objects.get(pk=self.badge_a1.pk)
+        badge.status = Status.PUBLISHED
+        with self.assertRaises(ValidationError):
+            badge.full_clean()
+
     def test_cannot_publish_without_category(self):
         self.badge_a3.status = Status.PUBLISHED
         with self.assertRaises(ValidationError):
@@ -189,6 +196,22 @@ class RoleScopeTest(AdminTestBase):
         self.assertEqual(WisdomBadges.objects.get(pk=self.badge_b1.pk).status, Status.HIDDEN)
         self.assertTrue(LogEntry.objects.filter(object_id=str(self.badge_a1.pk), user=self.admin_a).exists())
 
+    def test_auto_hidden_cannot_be_published(self):
+        # Moodle で無効・削除されたバッジは、全体管理者でも手では公開できない
+        WisdomBadges.objects.filter(pk=self.badge_a1.pk).update(status=Status.AUTO_HIDDEN)
+        self.login(self.overall)
+        response = self.client.post(
+            self.changelist, {"action": "publish", "_selected_action": [self.badge_a1.pk]}, follow=True
+        )
+        self.assertContains(response, "Moodle で無効・削除されているので")
+        self.assertEqual(WisdomBadges.objects.get(pk=self.badge_a1.pk).status, Status.AUTO_HIDDEN)
+        # 変更の画面からも変えられない（項目が無効になっていて、送っても無視される）
+        response = self.client.post(
+            self.change_url(self.badge_a1),
+            {"status": Status.PUBLISHED, "portal_category": self.category.pk, **self.inline_management()},
+        )
+        self.assertEqual(WisdomBadges.objects.get(pk=self.badge_a1.pk).status, Status.AUTO_HIDDEN)
+
     def test_hide_action(self):
         self.login(self.admin_a)
         self.client.post(self.changelist, {"action": "hide", "_selected_action": [self.badge_a2.pk]})
@@ -223,7 +246,9 @@ class IssuerMappingAdminTest(AdminTestBase):
         self.assertEqual(IssuerMapping.objects.get(pk=self.map_a2.pk).issuer, self.univ_a)
         self.assertEqual(WisdomBadges.objects.get(pk=self.badge_a2.pk).issuer, self.univ_a)
 
-        response = self.client.post(url, {"issuer": self.univ_b.pk, "confirmed": "on"})
+        # 確認の画面で表示した内容（署名付き）を付けて、もう一度保存する
+        confirmation = response.context["adminform"].form["confirmation"].value()
+        response = self.client.post(url, {"issuer": self.univ_b.pk, "confirmation": confirmation})
         self.assertEqual(response.status_code, 302)
         self.assertEqual(IssuerMapping.objects.get(pk=self.map_a2.pk).issuer, self.univ_b)
         badge = WisdomBadges.objects.get(pk=self.badge_a2.pk)
@@ -237,6 +262,27 @@ class IssuerMappingAdminTest(AdminTestBase):
         entry = LogEntry.objects.filter(object_id=str(self.map_a2.pk)).latest("action_time")
         self.assertIn("B大学", entry.get_change_message())
 
+    def test_confirmation_cannot_be_skipped(self):
+        self.login(self.overall)
+        url = self.change_url(self.map_a2)
+        # 確認の画面を見ずに、それらしい値を付けても保存しない
+        response = self.client.post(url, {"issuer": self.univ_b.pk, "confirmation": "on"})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(IssuerMapping.objects.get(pk=self.map_a2.pk).issuer, self.univ_a)
+
+    def test_confirmation_is_asked_again_when_admins_change(self):
+        self.login(self.overall)
+        url = self.change_url(self.map_a2)
+        response = self.client.post(url, {"issuer": self.univ_b.pk})
+        confirmation = response.context["adminform"].form["confirmation"].value()
+        # 確認したあとに、管理できるようになる機関管理者が増えた
+        newcomer = get_user_model().objects.create(username="c@example.org", is_staff=True)
+        self.univ_b.admins.add(newcomer)
+        response = self.client.post(url, {"issuer": self.univ_b.pk, "confirmation": confirmation})
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "c@example.org")
+        self.assertEqual(IssuerMapping.objects.get(pk=self.map_a2.pk).issuer, self.univ_a)
+
     def test_unmapped_combination(self):
         unmapped = IssuerMapping.objects.create(issuer_name="C大学", issuer_url="https://lms.c.example.org")
         create_badge("c1", None, "C大学", "https://lms.c.example.org", self.category)
@@ -249,6 +295,18 @@ class IssuerMappingAdminTest(AdminTestBase):
         self.login(self.admin_a)
         response = self.client.get(reverse("admin:chiloportal_wisdombadges_changelist"))
         self.assertNotIn("c1", {badge.name for badge in response.context["cl"].result_list})
+
+    def test_blank_combination_matches_null_values(self):
+        # 空の組み合わせは、古いデータで NULL のバッジにも当てる
+        mapping = IssuerMapping.objects.create(issuer_name="", issuer_url="")
+        badge = create_badge("blank", None, None, None, self.category)
+        self.login(self.overall)
+        url = self.change_url(mapping)
+        response = self.client.post(url, {"issuer": self.univ_b.pk})
+        self.assertContains(response, "バッジ 1 件")
+        confirmation = response.context["adminform"].form["confirmation"].value()
+        self.client.post(url, {"issuer": self.univ_b.pk, "confirmation": confirmation})
+        self.assertEqual(WisdomBadges.objects.get(pk=badge.pk).issuer, self.univ_b)
 
     def test_mapping_with_badges_cannot_be_deleted(self):
         self.login(self.overall)

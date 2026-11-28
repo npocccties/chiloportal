@@ -13,8 +13,9 @@ from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.contrib.auth import admin as auth_admin  # noqa: F401  先に読み込んで、ユーザー・グループの画面を登録させる
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
+from django.core import signing
 from django.db import transaction
-from django.db.models import Count, F
+from django.db.models import Count, F, Q
 
 from . import models
 
@@ -132,8 +133,14 @@ class WisdomBadgesForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         status = self.fields.get("status")
-        # 「自動で非表示」は Moodle との連携だけが設定する。手で選べるのは公開と非表示
-        if status is not None and self.instance.status != models.WisdomBadges.Status.AUTO_HIDDEN:
+        if status is None:
+            return
+        if self.instance.status == models.WisdomBadges.Status.AUTO_HIDDEN:
+            # Moodle で無効・削除されたバッジは、Moodle で有効にして取り込み直すまで公開できない
+            status.disabled = True
+            status.help_text = "Moodle で無効・削除されているため、ここでは変えられません。Moodle で有効にしてから取り込み直してください。"
+        else:
+            # 「自動で非表示」は Moodle との連携だけが設定する。手で選べるのは公開と非表示
             status.choices = [c for c in status.choices if c[0] != models.WisdomBadges.Status.AUTO_HIDDEN]
 
 
@@ -183,10 +190,13 @@ class WisdomBadgesAdmin(IssuerScoped):
 
     @admin.action(description="選んだバッジを公開する")
     def publish(self, request, queryset):
-        published, skipped = 0, []
+        published, skipped, disabled = 0, [], []
         with transaction.atomic():
             for badge in locked(queryset):
                 if badge.status == models.WisdomBadges.Status.PUBLISHED:
+                    continue
+                if badge.status == models.WisdomBadges.Status.AUTO_HIDDEN:
+                    disabled.append(badge.name)
                     continue
                 if badge.portal_category_id is None:
                     skipped.append(badge.name)
@@ -201,6 +211,12 @@ class WisdomBadgesAdmin(IssuerScoped):
             self.message_user(
                 request,
                 f"カテゴリが設定されていないので、次の {len(skipped)} 件は公開していません：" + "、".join(skipped),
+                messages.WARNING,
+            )
+        if disabled:
+            self.message_user(
+                request,
+                f"Moodle で無効・削除されているので、次の {len(disabled)} 件は公開していません：" + "、".join(disabled),
                 messages.WARNING,
             )
 
@@ -319,18 +335,26 @@ class MappingUnmappedFilter(admin.SimpleListFilter):
         return queryset
 
 
+def combination_filter(issuer_name, issuer_url):
+    """組み合わせに当たるバッジの条件。空の値は "" と NULL のどちらでも当てる（古いデータに NULL が残っていても漏らさない）。"""
+
+    def field(name, value):
+        condition = Q(**{name: value})
+        return condition | Q(**{f"{name}__isnull": True}) if value == "" else condition
+
+    return field("issuer_name", issuer_name) & field("issuer_url", issuer_url)
+
+
 def badges_of_mapping(mapping):
-    return models.WisdomBadges.objects.filter(
-        issuer_name=mapping.issuer_name, issuer_url=mapping.issuer_url
-    )
+    return models.WisdomBadges.objects.filter(combination_filter(mapping.issuer_name, mapping.issuer_url))
 
 
 class IssuerMappingForm(forms.ModelForm):
-    confirmed = forms.BooleanField(
-        label="上の内容を確認しました",
-        required=False,
-        help_text="対応づけを変えるときは、確認のうえチェックして保存してください。",
-    )
+    # 確認の画面を出したときの内容（署名付き）。もう一度保存したときに、同じ内容かを照合する
+    confirmation = forms.CharField(required=False, widget=forms.HiddenInput)
+
+    CONFIRMATION_SALT = "chiloportal.issuer-mapping-confirmation"
+    CONFIRMATION_MAX_AGE = 60 * 60
 
     class Meta:
         model = models.IssuerMapping
@@ -343,22 +367,34 @@ class IssuerMappingForm(forms.ModelForm):
         new_issuer = cleaned.get("issuer")
         badges = badges_of_mapping(self.instance).exclude(issuer=new_issuer)
         count = badges.count()
-        if count == 0 or cleaned.get("confirmed"):
+        if count == 0:
             return cleaned
+        names = [user.get_username() for user in new_issuer.admins.order_by("username")] if new_issuer else []
+        published = badges.filter(status=models.WisdomBadges.Status.PUBLISHED).count()
+        summary = [self.instance.pk, new_issuer.pk if new_issuer else None, count, published, names]
+        try:
+            confirmed = signing.loads(
+                cleaned.get("confirmation") or "", salt=self.CONFIRMATION_SALT, max_age=self.CONFIRMATION_MAX_AGE
+            )
+        except signing.BadSignature:
+            confirmed = None
+        if confirmed == summary:
+            return cleaned
+        # 確認の画面を出す。表示した内容を署名して持たせ、もう一度保存したときに照合する
+        self.data = self.data.copy()
+        self.data[self.add_prefix("confirmation")] = signing.dumps(summary, salt=self.CONFIRMATION_SALT)
         if new_issuer is None:
             who = "担当機関が決まっていない状態になり、全体管理者だけが管理します。"
         else:
-            names = [user.get_username() for user in new_issuer.admins.order_by("username")]
             who = (
                 f"「{new_issuer}」の担当になり、次の機関管理者が管理できるようになります："
                 + ("、".join(names) if names else "（機関管理者がいません）")
                 + "。"
             )
-        published = badges.filter(status=models.WisdomBadges.Status.PUBLISHED).count()
         raise forms.ValidationError(
             f"この組み合わせのバッジ {count} 件が、{who}"
             f"公開中の {published} 件はポータル非表示に戻り、新しい担当機関の公開待ちになります。"
-            "よければ「上の内容を確認しました」にチェックして、もう一度保存してください。"
+            "よければ、もう一度「保存」を押してください。"
         )
 
 
@@ -375,7 +411,7 @@ class IssuerMappingAdmin(OverallAdminOnly):
     def get_fields(self, request, obj=None):
         fields = ["issuer_name", "issuer_url", "issuer"]
         if obj is not None:
-            fields.append("confirmed")
+            fields.append("confirmation")
         return fields
 
     def get_readonly_fields(self, request, obj=None):
@@ -424,7 +460,7 @@ def reassign_badges(mapping):
         badge.save(update_fields=["issuer", "status"])
         moved += 1
     models.KnowledgeBadges.objects.filter(
-        issuer_name=mapping.issuer_name, issuer_url=mapping.issuer_url
+        combination_filter(mapping.issuer_name, mapping.issuer_url)
     ).exclude(issuer=mapping.issuer).update(issuer=mapping.issuer)
     return moved
 
