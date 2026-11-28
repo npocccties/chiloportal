@@ -10,7 +10,9 @@
 # ・外部キーは PROTECT にする。紐づくデータがあるものは削除できず、管理画面に理由が出る。
 #
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.db import models
+from django.utils import timezone
 
 
 class CategorisedBadges(models.Model):
@@ -337,3 +339,31 @@ class WisdomBadges(models.Model):
 
     def __str__(self):
         return self.name
+
+    def clean(self):
+        super().clean()
+        if self.status == self.Status.PUBLISHED and self.portal_category_id is None:
+            raise ValidationError({"status": "カテゴリを設定しないと公開できません。"})
+
+    @classmethod
+    def from_db(cls, db, field_names, values):
+        instance = super().from_db(db, field_names, values)
+        # 読み込んだ時点の公開状態。公開に切り替わったかどうかを save で判定する
+        instance._loaded_status = instance.__dict__.get("status")
+        return instance
+
+    def save(self, *args, **kwargs):
+        # 非表示から公開に切り替えたときに、最初に公開した日時を記録する（NEW の表示に使う）。
+        # すでに公開中のバッジを保存しても記録しないので、公開日が分からない既存のバッジは空のまま。
+        loaded_status = getattr(self, "_loaded_status", None)
+        if (
+            self.status == self.Status.PUBLISHED
+            and loaded_status != self.Status.PUBLISHED
+            and self.published_at is None
+        ):
+            self.published_at = timezone.now()
+            update_fields = kwargs.get("update_fields")
+            if update_fields is not None:
+                kwargs["update_fields"] = {*update_fields, "published_at"}
+        super().save(*args, **kwargs)
+        self._loaded_status = self.status
